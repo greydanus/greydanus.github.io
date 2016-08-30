@@ -23,7 +23,7 @@ Like most elementary school kids in the 2000’s, I was a master of WordArt. I g
 In this post, I will demonstrate the power of deep learning by using it to generate human-like handwriting (including some cursive). This work is based on the methods from a famous 2014 paper, [Generating Sequences With Recurrent Neural Networks](https://arxiv.org/abs/1308.0850) by Alex Graves. With this post, I am releasing
 
 1. the [code](https://github.com/greydanus/scribe) I used to build and train the model
-2. an [iPython notebook](https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb) which explains the code in a step-by-step manner.
+2. an [Jupyter notebook](https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb) which explains the code in a step-by-step manner.
 
 
 ## Building the Graves handwriting model
@@ -74,7 +74,7 @@ It's easy to think of the Graves handwriting model is as three separate models. 
 
 These networks use a differentiable form of memory to keep track of time-dependent patterns in data. LSTMs, for example, use three different tensors to perform 'erase', 'write', and 'read' operations on a 'memory' tensor: the \\(f\\), \\(i\\), \\(o\\), and \\(C\\) tensors respectively ([more](https://mr-london.herokuapp.com/index) on this). For the purposes of this post, just remember that RNNs are extremely good at modeling sequential data.
 
-**The Mixture Density Network (MDN).** Think of Mixture Density Networks as neural networks which can measure their own uncertainty. Their output parameters are \\(\mu\\), \\(\sigma\\), and \\(\rho\\) for several multivariate Gaussian components. They also estimate a parameter \\(\pi\\) for each of these distributions. Think of \\(\pi\\) as the probability that the output value was drawn from that particular component's distribution. Last year, I wrote an [iPython notebook](https://nbviewer.jupyter.org/github/greydanus/adventures/blob/master/mixture_density/mdn.ipynb) about MDNs.
+**The Mixture Density Network (MDN).** Think of Mixture Density Networks as neural networks which can measure their own uncertainty. Their output parameters are \\(\mu\\), \\(\sigma\\), and \\(\rho\\) for several multivariate Gaussian components. They also estimate a parameter \\(\pi\\) for each of these distributions. Think of \\(\pi\\) as the probability that the output value was drawn from that particular component's distribution. Last year, I wrote an [Jupyter notebook](https://nbviewer.jupyter.org/github/greydanus/adventures/blob/master/mixture_density/mdn.ipynb) about MDNs.
 
 <div class="imgcap">
 	<img src="/assets/scribe/MDN.png" width="50%">
@@ -118,7 +118,7 @@ $$
 \pi^{j}_{t} = \frac{ \exp \left( \hat \pi (1+b) \right) } { \sum_{j'=1}^{M} \exp \left( \hat \pi (1+b) \right) }
 $$
 
-To better understand what is happening here, check out my [iPython notebook](https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb) or the [original paper](https://arxiv.org/abs/1308.0850). Below are results for \\(b={0.5,0.75,1.0}\\)
+To better understand what is happening here, check out my [Jupyter notebook](https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb) or the [original paper](https://arxiv.org/abs/1308.0850). Below are results for \\(b={0.5,0.75,1.0}\\)
 
 <div class="imgcap_noborder">
 	<img src="/assets/scribe/bias-1.png" width="60%">
