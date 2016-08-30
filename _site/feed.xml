@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Thought for Food</title>
+    <title>Sam's Research Blog</title>
     <description>An informal science blog.</description>
     <link>http://greydanus.github.io/</link>
     <atom:link href="http://greydanus.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 29 Aug 2016 23:20:30 -0400</pubDate>
-    <lastBuildDate>Mon, 29 Aug 2016 23:20:30 -0400</lastBuildDate>
+    <pubDate>Mon, 29 Aug 2016 23:25:28 -0400</pubDate>
+    <lastBuildDate>Mon, 29 Aug 2016 23:25:28 -0400</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
