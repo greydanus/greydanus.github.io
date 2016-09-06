@@ -2,12 +2,180 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sam's Research Blog</title>
-    <description>An informal science blog.</description>
+    <description>Science with a spirit of adventure.</description>
     <link>http://greydanus.github.io/</link>
     <atom:link href="http://greydanus.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 29 Aug 2016 23:25:28 -0400</pubDate>
-    <lastBuildDate>Mon, 29 Aug 2016 23:25:28 -0400</lastBuildDate>
+    <pubDate>Tue, 06 Sep 2016 18:07:54 -0400</pubDate>
+    <lastBuildDate>Tue, 06 Sep 2016 18:07:54 -0400</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>The Art of Regularization **WORK IN PROGRESS**</title>
+        <description>&lt;p&gt;Regularization seems fairly insignificant at first glance but it has a huge impact on deep models. I’ll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.&lt;/p&gt;
+
+&lt;h2 id=&quot;mnist-classification&quot;&gt;MNIST Classification&lt;/h2&gt;
+
+&lt;div class=&quot;imgcap&quot;&gt;
+	&lt;img src=&quot;/assets/regularization/mnist.png&quot; width=&quot;30%&quot; /&gt;
+	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;MNIST training samples&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The basic idea here is to train a learning model to classify 28x28 images of handwritten digits (0-9). The dataset is relatively small (60k training examples) so it’s a classic benchmark for evaluating small models. TensorFlow provides a really simple API for loading the training data:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tensorflow&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tf&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;tensorflow.examples.tutorials.mnist&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input_data&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;mnist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;input_data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_data_sets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'MNIST_data'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;one_hot&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;batch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mnist&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;train&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;next_batch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now &lt;code class=&quot;highlighter-rouge&quot;&gt;batch[0]&lt;/code&gt; holds the training data and &lt;code class=&quot;highlighter-rouge&quot;&gt;batch[1]&lt;/code&gt; holds the training labels. Making the model itself is really easy as well. For a fully-connected model without any regularization, we simply write:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;x&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# xlen is 28x28 = 784&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;y_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;placeholder&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;float32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ylen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;y_&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# ylen is 10&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;W&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;softmax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matmul&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# no bias because meh&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The full code is available on &lt;a href=&quot;https://github.com/greydanus&quot;&gt;GitHub&lt;/a&gt;. I trained each model for 150,000 interations (well beyond convergence) to accentuate the differences between regularization methods.&lt;/p&gt;
+
+&lt;h2 id=&quot;visualizing-regularization&quot;&gt;Visualizing regularization&lt;/h2&gt;
+
+&lt;p&gt;Since the model uses a 784x10 matrix of weights to map pixels to the probabilities that they represent a given digit, we can visualize which pixels are the most important for predicting a given digit. For example, to visualize which pixels are the most important for predicting the digit ‘0’, we would take the first column of the weight matrix and reshape it into a 28x28 image.&lt;/p&gt;
+
+&lt;h3 id=&quot;no-regularization&quot;&gt;No regularization&lt;/h3&gt;
+
+&lt;p&gt;Can overfit by making the magnitudes of some weights very large, provided the dataset is small&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;# no additional code&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;imgcap&quot;&gt;
+	&lt;img src=&quot;/assets/regularization/noreg.png&quot; width=&quot;70%&quot; /&gt;
+	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;&lt;b&gt;No regularization:&lt;/b&gt; these 'weight images' have a salt-and-pepper texture which suggests overfitting. Even so, the shadows of each of the digits are clearly visible&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;dropout&quot;&gt;Dropout&lt;/h3&gt;
+
+&lt;p&gt;At each training step, dropout clamps some weights to 0, effectively stopping the flow of information through these connections. This causes the model to distribute computations across the entire network and prevents it from depending heavily on a subset features. In the MNIST example, dropout has a smoothing effect on the weights&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;x = tf.nn.dropout(x, 0.5)&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;imgcap&quot;&gt;
+	&lt;img src=&quot;/assets/regularization/drop.png&quot; width=&quot;70%&quot; /&gt;
+	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;&lt;b&gt;Dropout:&lt;/b&gt; these 'weight images' are much smoother because dropout prevents the model from placing too much trust in any one of its input features.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;adaptive-weight-noise-work-in-progress-im-not-sure-if-this-is-actually-implemented-correctly&quot;&gt;Adaptive weight noise &lt;strong&gt;WORK IN PROGRESS: I’m not sure if this is actually implemented correctly&lt;/strong&gt;*&lt;/h3&gt;
+
+&lt;p&gt;text&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;S_hat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;S_hat&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;S&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S_hat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# make sure sigma matrix is positive&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;mu&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gaussian&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;noise_source&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# draw each weight from a gaussian distribution&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&quot;imgcap&quot;&gt;
+	&lt;img src=&quot;/assets/regularization/awn.png&quot; width=&quot;70%&quot; /&gt;
+	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;&lt;b&gt;Adaptive weight noise:&lt;/b&gt; these 'weight images' are really different but the model reaches roughly the same training accuracy as the unregularized version.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;l2-regularization&quot;&gt;L2 Regularization&lt;/h3&gt;
+
+&lt;p&gt;L2 regularization penalizes weights with large magnitudes. Large weights are the most obvious symptom of overfitting, so it’s an obvious fix. It’s less obvious that L2 regularization actually has a Bayesian interpretation: since we initialize weights to very small values and L2 regression keeps these values small, we’re actually biasing the model towards the prior.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l2_loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;output&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylen&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;batch_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; \
+		 &lt;span class=&quot;nb&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_collection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GraphKeys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;REGULARIZATION_LOSSES&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&quot;imgcap&quot;&gt;
+	&lt;img src=&quot;/assets/regularization/mag.png&quot; width=&quot;70%&quot; /&gt;
+	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;&lt;b&gt;L2 regularization:&lt;/b&gt; these 'weight images' are very smooth and the digits are very clear. Even though the model has a better representation of what each digit 'looks like', the test accuracy is lower because messy/unusual examples are frequently misclassified.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;weight-normalization&quot;&gt;Weight normalization&lt;/h3&gt;
+
+&lt;p&gt;Normalizing the weight matrix is another way of keeping weights close to zero and, again, increases confidence in the prior. However, this form of regularization is not equivalent to L2 regularization and may behave differently in wider/deeper models.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;nn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;l2_normalize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&quot;imgcap&quot;&gt;
+	&lt;img src=&quot;/assets/regularization/norm.png&quot; width=&quot;70%&quot; /&gt;
+	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;&lt;b&gt;Weight normalization:&lt;/b&gt; it's interesting to note that normalizing the weight matrix has the same effect as L2 regularization&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;comparison&quot;&gt;Comparison&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Type&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Test accuracy\(^1\)&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Runtime\(^2\) (relative to first entry)&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Min value\(^3\)&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Max value&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;No regularization&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;93.2%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.00&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-1.95&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.64&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Dropout&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;89.5%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.49&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-1.42&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.18&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Adaptive weight noise&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;93.0%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2.16&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;\(\approx\)0&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;3.23&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;L2 Regularization&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;76.0%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.25&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-0.062&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;0.094&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Weight normalization&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;71.1%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.58&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;-0.05&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;0.08&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;\(^1\)Accuracy doesn’t matter much at this stage because it changes dramatically as we alter hyperparameters and model width/depth. In fact, I deliberately made the hyperparameters very large to accentuate differences between each of the techniques. One thing to note is that Adaptive Weight Noise (AWN) achieves nearly the same accuracy as the unregularized model even though its weight matrix is very different.&lt;/p&gt;
+
+&lt;p&gt;\(^2\)Since AWN solves for a \(\sigma\) and \(\mu\) for every single parameter, it ends up optimizing twice as many parameters which also roughly doubles runtime.&lt;/p&gt;
+
+&lt;p&gt;\(^3\)L2 regularization and weight normalization are designed to keep all weights small, which is why the min/max values are small. Meanwhile, AWN produces an exclusively positive weight matrix because the Gaussian function is always positive.&lt;/p&gt;
+
+&lt;h2 id=&quot;closing-thoughts&quot;&gt;Closing thoughts&lt;/h2&gt;
+
+&lt;p&gt;Regularization matters! Not only is it a way of preventing overfitting; it’s also the easiest way to control what a model learns.&lt;/p&gt;
+
+&lt;p&gt;In a simple model such as the one we used for this post, we can easily understand how regularization does this. How can we extend what we’ve learned here to larger, more complex models? First of all, many of the intuitions apply directly to models of any size.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 05 Sep 2016 07:00:00 -0400</pubDate>
+        <link>http://greydanus.github.io/2016/09/05/regularization/</link>
+        <guid isPermaLink="true">http://greydanus.github.io/2016/09/05/regularization/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Scribe: Realistic Handwriting with TensorFlow</title>
@@ -28,7 +196,7 @@
 
 &lt;ol&gt;
   &lt;li&gt;the &lt;a href=&quot;https://github.com/greydanus/scribe&quot;&gt;code&lt;/a&gt; I used to build and train the model&lt;/li&gt;
-  &lt;li&gt;an &lt;a href=&quot;https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb&quot;&gt;iPython notebook&lt;/a&gt; which explains the code in a step-by-step manner.&lt;/li&gt;
+  &lt;li&gt;an &lt;a href=&quot;https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb&quot;&gt;Jupyter notebook&lt;/a&gt; which explains the code in a step-by-step manner.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;h2 id=&quot;building-the-graves-handwriting-model&quot;&gt;Building the Graves handwriting model&lt;/h2&gt;
@@ -79,7 +247,7 @@
 
 &lt;p&gt;These networks use a differentiable form of memory to keep track of time-dependent patterns in data. LSTMs, for example, use three different tensors to perform ‘erase’, ‘write’, and ‘read’ operations on a ‘memory’ tensor: the \(f\), \(i\), \(o\), and \(C\) tensors respectively (&lt;a href=&quot;https://mr-london.herokuapp.com/index&quot;&gt;more&lt;/a&gt; on this). For the purposes of this post, just remember that RNNs are extremely good at modeling sequential data.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;The Mixture Density Network (MDN).&lt;/strong&gt; Think of Mixture Density Networks as neural networks which can measure their own uncertainty. Their output parameters are \(\mu\), \(\sigma\), and \(\rho\) for several multivariate Gaussian components. They also estimate a parameter \(\pi\) for each of these distributions. Think of \(\pi\) as the probability that the output value was drawn from that particular component’s distribution. Last year, I wrote an &lt;a href=&quot;https://nbviewer.jupyter.org/github/greydanus/adventures/blob/master/mixture_density/mdn.ipynb&quot;&gt;iPython notebook&lt;/a&gt; about MDNs.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Mixture Density Network (MDN).&lt;/strong&gt; Think of Mixture Density Networks as neural networks which can measure their own uncertainty. Their output parameters are \(\mu\), \(\sigma\), and \(\rho\) for several multivariate Gaussian components. They also estimate a parameter \(\pi\) for each of these distributions. Think of \(\pi\) as the probability that the output value was drawn from that particular component’s distribution. Last year, I wrote an &lt;a href=&quot;https://nbviewer.jupyter.org/github/greydanus/adventures/blob/master/mixture_density/mdn.ipynb&quot;&gt;Jupyter notebook&lt;/a&gt; about MDNs.&lt;/p&gt;
 
 &lt;div class=&quot;imgcap&quot;&gt;
 	&lt;img src=&quot;/assets/scribe/MDN.png&quot; width=&quot;50%&quot; /&gt;
@@ -119,7 +287,7 @@
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;\pi^{j}_{t} = \frac{ \exp \left( \hat \pi (1+b) \right) } { \sum_{j'=1}^{M} \exp \left( \hat \pi (1+b) \right) }&lt;/script&gt;
 
-&lt;p&gt;To better understand what is happening here, check out my &lt;a href=&quot;https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb&quot;&gt;iPython notebook&lt;/a&gt; or the &lt;a href=&quot;https://arxiv.org/abs/1308.0850&quot;&gt;original paper&lt;/a&gt;. Below are results for \(b={0.5,0.75,1.0}\)&lt;/p&gt;
+&lt;p&gt;To better understand what is happening here, check out my &lt;a href=&quot;https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb&quot;&gt;Jupyter notebook&lt;/a&gt; or the &lt;a href=&quot;https://arxiv.org/abs/1308.0850&quot;&gt;original paper&lt;/a&gt;. Below are results for \(b={0.5,0.75,1.0}\)&lt;/p&gt;
 
 &lt;div class=&quot;imgcap_noborder&quot;&gt;
 	&lt;img src=&quot;/assets/scribe/bias-1.png&quot; width=&quot;60%&quot; /&gt;
