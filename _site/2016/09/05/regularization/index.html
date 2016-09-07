@@ -79,7 +79,11 @@
   </header>
 
   <article class="post-content">
-  <p>Regularization seems fairly insignificant at first glance but it has a huge impact on deep models. I’ll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.</p>
+  <div class="imgcap_noborder">
+	<img src="/assets/regularization/intro.png" width="20%" />
+</div>
+
+<p>Regularization seems fairly insignificant at first glance but it has a huge impact on deep models. I’ll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.</p>
 
 <h2 id="mnist-classification">MNIST Classification</h2>
 
@@ -143,7 +147,7 @@
 	<div class="thecap" style="text-align:center">How to represent an optimal point in weight space</div>
 </div>
 
-<p>In the process of learning all this, I devised my own method for estimating \(\mu\) and a \(\sigma\). I’m not sure how to interpret the result theoretically but I thought I’d include it because 1) the weights look far different from those of the other models 2) the test accuracy is still quite high (91.4%).</p>
+<p>In the process of learning all this, I devised my own method for estimating \(\mu\) and a \(\sigma\). I’m not sure how to interpret the result theoretically but I thought I’d include it because 1) the weights look far different from those of the other models 2) the test accuracy is still quite high (91.5%).</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">S_hat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"S_hat"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
 <span class="n">S</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">S_hat</span><span class="p">)</span> <span class="c"># make sure sigma matrix is positive</span>
@@ -211,10 +215,10 @@
     </tr>
     <tr>
       <td style="text-align: left">Gaussian weight regularization</td>
-      <td style="text-align: center">91.3%</td>
-      <td style="text-align: center">2.16</td>
+      <td style="text-align: center">91.5%</td>
+      <td style="text-align: center">1.</td>
       <td style="text-align: center">\(\approx\)0</td>
-      <td style="text-align: center">3.23</td>
+      <td style="text-align: center">0.80</td>
     </tr>
     <tr>
       <td style="text-align: left">L2 regularization</td>
@@ -241,13 +245,9 @@
 
 <h2 id="closing-thoughts">Closing thoughts</h2>
 
-<p>Regularization matters! Not only is it a way of preventing overfitting; it’s also the easiest way to control what a model learns.</p>
+<p>Regularization matters! Not only is it a way of preventing overfitting; it’s also the easiest way to control what a model learns. For further reading on the subject, check out <a href="http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf">these slides</a>.</p>
 
-<p>In a simple model such as the one we used for this post, we can easily understand how regularization does this. How can we extend what we’ve learned here to larger, more complex models?</p>
-
-<p>Many of the intuitions apply directly to models of any size. We can expect that dropout will smooths out multilayer networks in the same way it does here. Although L2 regularization and weight normalization are very different computations, the qualititive similarity we discovered probably extends to larger models (though we should to test this theory before making any strong claims). Finally, Gaussian weight regularization offers a promising avenue for further investigation because it clearly produces an unusual distribution of weights but still achieves good performance on the test set.</p>
-
-<p>Another interesting regularization method is to cast the weights to binary values during forward passes but perform backpropagation as usual on float values. I’ll add that technique to this post soon.</p>
+<p>We can expect that dropout will smooth out multilayer networks in the same way it does here. Although L2 regularization and weight normalization are very different computations, the qualititive similarity we discovered here probably extends to larger models. Gaussian weight regularization, finally, offers a promising avenue for further investigation.</p>
 
   </article>
 

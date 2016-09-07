@@ -5,13 +5,17 @@
     <description>Science with a spirit of adventure.</description>
     <link>http://greydanus.github.io/</link>
     <atom:link href="http://greydanus.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Tue, 06 Sep 2016 22:43:44 -0400</pubDate>
-    <lastBuildDate>Tue, 06 Sep 2016 22:43:44 -0400</lastBuildDate>
+    <pubDate>Tue, 06 Sep 2016 23:31:53 -0400</pubDate>
+    <lastBuildDate>Tue, 06 Sep 2016 23:31:53 -0400</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
         <title>The Art of Regularization</title>
-        <description>&lt;p&gt;Regularization seems fairly insignificant at first glance but it has a huge impact on deep models. I’ll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.&lt;/p&gt;
+        <description>&lt;div class=&quot;imgcap_noborder&quot;&gt;
+	&lt;img src=&quot;/assets/regularization/intro.png&quot; width=&quot;20%&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Regularization seems fairly insignificant at first glance but it has a huge impact on deep models. I’ll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.&lt;/p&gt;
 
 &lt;h2 id=&quot;mnist-classification&quot;&gt;MNIST Classification&lt;/h2&gt;
 
@@ -75,7 +79,7 @@
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;How to represent an optimal point in weight space&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;p&gt;In the process of learning all this, I devised my own method for estimating \(\mu\) and a \(\sigma\). I’m not sure how to interpret the result theoretically but I thought I’d include it because 1) the weights look far different from those of the other models 2) the test accuracy is still quite high (91.4%).&lt;/p&gt;
+&lt;p&gt;In the process of learning all this, I devised my own method for estimating \(\mu\) and a \(\sigma\). I’m not sure how to interpret the result theoretically but I thought I’d include it because 1) the weights look far different from those of the other models 2) the test accuracy is still quite high (91.5%).&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;S_hat&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get_variable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;S_hat&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;initializer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tf&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;exp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;S_hat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# make sure sigma matrix is positive&lt;/span&gt;
@@ -143,10 +147,10 @@
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;Gaussian weight regularization&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;91.3%&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;2.16&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;91.5%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1.&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;\(\approx\)0&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;3.23&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;0.80&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;L2 regularization&lt;/td&gt;
@@ -173,13 +177,9 @@
 
 &lt;h2 id=&quot;closing-thoughts&quot;&gt;Closing thoughts&lt;/h2&gt;
 
-&lt;p&gt;Regularization matters! Not only is it a way of preventing overfitting; it’s also the easiest way to control what a model learns.&lt;/p&gt;
+&lt;p&gt;Regularization matters! Not only is it a way of preventing overfitting; it’s also the easiest way to control what a model learns. For further reading on the subject, check out &lt;a href=&quot;http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf&quot;&gt;these slides&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;In a simple model such as the one we used for this post, we can easily understand how regularization does this. How can we extend what we’ve learned here to larger, more complex models?&lt;/p&gt;
-
-&lt;p&gt;Many of the intuitions apply directly to models of any size. We can expect that dropout will smooths out multilayer networks in the same way it does here. Although L2 regularization and weight normalization are very different computations, the qualititive similarity we discovered probably extends to larger models (though we should to test this theory before making any strong claims). Finally, Gaussian weight regularization offers a promising avenue for further investigation because it clearly produces an unusual distribution of weights but still achieves good performance on the test set.&lt;/p&gt;
-
-&lt;p&gt;Another interesting regularization method is to cast the weights to binary values during forward passes but perform backpropagation as usual on float values. I’ll add that technique to this post soon.&lt;/p&gt;
+&lt;p&gt;We can expect that dropout will smooth out multilayer networks in the same way it does here. Although L2 regularization and weight normalization are very different computations, the qualititive similarity we discovered here probably extends to larger models. Gaussian weight regularization, finally, offers a promising avenue for further investigation.&lt;/p&gt;
 </description>
         <pubDate>Mon, 05 Sep 2016 07:00:00 -0400</pubDate>
         <link>http://greydanus.github.io/2016/09/05/regularization/</link>
