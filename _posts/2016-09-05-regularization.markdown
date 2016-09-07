@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "The Art of Regularization **WORK IN PROGRESS**"
+title:  "The Art of Regularization"
 excerpt: "Regularization seems fairly insignificant at first glance, but it has a huge impact on deep models. I'll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning."
 date:   2016-09-05 11:00:00
 mathjax: true
@@ -44,7 +44,7 @@ Since the model uses a 784x10 matrix of weights to map pixels to the probabiliti
 
 ### No regularization
 
-Can overfit by making the magnitudes of some weights very large, provided the dataset is small
+Provided the dataset is small, the model can easily overfit by making the magnitudes of some weights very large.
 
 `# no additional code`
 <div class="imgcap">
@@ -54,7 +54,7 @@ Can overfit by making the magnitudes of some weights very large, provided the da
 
 ### Dropout
 
-At each training step, dropout clamps some weights to 0, effectively stopping the flow of information through these connections. This causes the model to distribute computations across the entire network and prevents it from depending heavily on a subset features. In the MNIST example, dropout has a smoothing effect on the weights
+At each training step, dropout clamps some weights to 0, effectively stopping the flow of information through these connections. This forces the model to distribute computations across the entire network and prevents it from depending heavily on a subset features. In the MNIST example, dropout has a smoothing effect on the weights
 
 `x = tf.nn.dropout(x, 0.5)`
 <div class="imgcap">
@@ -62,23 +62,30 @@ At each training step, dropout clamps some weights to 0, effectively stopping th
 	<div class="thecap" style="text-align:center"><b>Dropout:</b> these 'weight images' are much smoother because dropout prevents the model from placing too much trust in any one of its input features.</div>
 </div>
 
-### Adaptive weight noise **WORK IN PROGRESS: I'm not sure if this is actually implemented correctly***
+### Gaussian Weight Regularization
 
-text
+The idea here is that some uncertainty is associated with every weight in the model. Weights exist in weight space not as points but as probability distributions (see below). Making a conditional independence assumption and choosing to draw a Gaussian distribution, we can represent each weight using a \\(\mu\\) and a \\(\sigma\\). Alex Graves indroduced used this concept in his [adaptive weight noise poster](http://www.cs.toronto.edu/~graves/nips_2011_poster.pdf) and it also appears to be a fundamental idea in [Variational Bayes models](https://en.wikipedia.org/wiki/Variational_Bayesian_methods).
+
+<div class="imgcap">
+	<img src="/assets/regularization/gweight_compare.png" width="60%">
+	<div class="thecap" style="text-align:center">How to represent an optimal point in weight space</div>
+</div>
+
+In the process of learning all this, I devised my own method for estimating \\(\mu\\) and a \\(\sigma\\). I'm not sure how to interpret the result theoretically but I thought I'd include it because 1) the weights look far different from those of the other models 2) the test accuracy is still quite high (91.4%).
 
 ```python
 S_hat = tf.get_variable("S_hat", shape=[xlen,ylen], initializer=init)
 S = tf.exp(S_hat) # make sure sigma matrix is positive
 
 mu = tf.get_variable("mu", shape=[xlen,ylen], initializer=init)
-W = gaussian(noise_source, mu, S) # draw each weight from a gaussian distribution
+W = gaussian(noise_source, mu, S) # draw each weight from a Gaussian distribution
 ```
 <div class="imgcap">
-	<img src="/assets/regularization/awn.png" width="70%">
-	<div class="thecap" style="text-align:center"><b>Adaptive weight noise:</b> these 'weight images' are really different but the model reaches roughly the same training accuracy as the unregularized version.</div>
+	<img src="/assets/regularization/gauss.png" width="70%">
+	<div class="thecap" style="text-align:center"><b>Gaussian weight regularization:</b> these 'weight images' are really different but the model approaches the same training accuracy as the unregularized version.</div>
 </div>
 
-### L2 Regularization
+### L2 regularization
 
 L2 regularization penalizes weights with large magnitudes. Large weights are the most obvious symptom of overfitting, so it's an obvious fix. It's less obvious that L2 regularization actually has a Bayesian interpretation: since we initialize weights to very small values and L2 regression keeps these values small, we're actually biasing the model towards the prior.
 
@@ -88,19 +95,19 @@ loss = tf.nn.l2_loss( y_ - output ) / (ylen*batch_size) + \
 ```
 <div class="imgcap">
 	<img src="/assets/regularization/mag.png" width="70%">
-	<div class="thecap" style="text-align:center"><b>L2 regularization:</b> these 'weight images' are very smooth and the digits are very clear. Even though the model has a better representation of what each digit 'looks like', the test accuracy is lower because messy/unusual examples are frequently misclassified.</div>
+	<div class="thecap" style="text-align:center"><b>L2 regularization:</b> these 'weight images' are very smooth and the digits are clear. Though the model has a better representation of how each digit appears, the test accuracy is low because messy/unusual examples don't fit the template well.</div>
 </div>
 
 ### Weight normalization
 
-Normalizing the weight matrix is another way of keeping weights close to zero and, again, increases confidence in the prior. However, this form of regularization is not equivalent to L2 regularization and may behave differently in wider/deeper models.
+Normalizing the weight matrix is another way of keeping weights close to zero so it behaves similarly to L2 regularization. However, this form of regularization is not equivalent to L2 regularization and may behave differently in wider/deeper models.
 
 ```python
 W = tf.nn.l2_normalize(W, [0,1])
 ```
 <div class="imgcap">
 	<img src="/assets/regularization/norm.png" width="70%">
-	<div class="thecap" style="text-align:center"><b>Weight normalization:</b> it's interesting to note that normalizing the weight matrix has the same effect as L2 regularization</div>
+	<div class="thecap" style="text-align:center"><b>Weight normalization:</b> it's interesting to note that normalizing the weight matrix has the same effect here as L2 regularization</div>
 </div>
 
 ## Comparison
@@ -109,18 +116,22 @@ Type | Test accuracy\\(^1\\) | Runtime\\(^2\\) (relative to first entry) | Min v
 :--- | :---: | :---: | :---: | :---:
 No regularization | 93.2% | 1.00 | -1.95 | 1.64
 Dropout | 89.5% | 1.49 | -1.42 | 1.18
-Adaptive weight noise | 93.0% | 2.16 | \\(\approx\\)0 | 3.23
-L2 Regularization | 76.0% | 1.25 | -0.062 | 0.094
+Gaussian weight regularization | 91.3% | 2.16 | \\(\approx\\)0 | 3.23
+L2 regularization | 76.0% | 1.25 | -0.062 | 0.094
 Weight normalization | 71.1% | 1.58 | -0.05 | 0.08
 
-\\(^1\\)Accuracy doesn't matter much at this stage because it changes dramatically as we alter hyperparameters and model width/depth. In fact, I deliberately made the hyperparameters very large to accentuate differences between each of the techniques. One thing to note is that Adaptive Weight Noise (AWN) achieves nearly the same accuracy as the unregularized model even though its weight matrix is very different.
+\\(^1\\)Accuracy doesn't matter much at this stage because it changes dramatically as we alter hyperparameters and model width/depth. In fact, I deliberately made the hyperparameters very large to accentuate differences between each of the techniques. One thing to note is that Gaussian weight regularization achieves nearly the same accuracy as the unregularized model even though its weights are very different.
 
-\\(^2\\)Since AWN solves for a \\(\sigma\\) and \\(\mu\\) for every single parameter, it ends up optimizing twice as many parameters which also roughly doubles runtime.
+\\(^2\\)Since Gaussian weight regularization solves for a \\(\mu\\) and \\(\sigma\\) for every single parameter, it ends up optimizing twice as many parameters which also roughly doubles runtime.
 
-\\(^3\\)L2 regularization and weight normalization are designed to keep all weights small, which is why the min/max values are small. Meanwhile, AWN produces an exclusively positive weight matrix because the Gaussian function is always positive. 
+\\(^3\\)L2 regularization and weight normalization are designed to keep all weights small, which is why the min/max values are small. Meanwhile, Gaussian weight regularization produces an exclusively positive weight matrix because the Gaussian function is always positive. 
 
 ## Closing thoughts
 
 Regularization matters! Not only is it a way of preventing overfitting; it's also the easiest way to control what a model learns.
 
-In a simple model such as the one we used for this post, we can easily understand how regularization does this. How can we extend what we've learned here to larger, more complex models? First of all, many of the intuitions apply directly to models of any size. 
+In a simple model such as the one we used for this post, we can easily understand how regularization does this. How can we extend what we've learned here to larger, more complex models?
+
+Many of the intuitions apply directly to models of any size. We can expect that dropout will smooths out multilayer networks in the same way it does here. Although L2 regularization and weight normalization are very different computations, the qualititive similarity we discovered probably extends to larger models (though we should to test this theory before making any strong claims). Finally, Gaussian weight regularization offers a promising avenue for further investigation because it clearly produces an unusual distribution of weights but still achieves good performance on the test set.
+
+Another interesting regularization method is to cast the weights to binary values during forward passes but perform backpropagation as usual on float values. I'll add that technique to this post soon.
