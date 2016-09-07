@@ -7,6 +7,10 @@ date:   2016-09-05 11:00:00
 mathjax: true
 ---
 
+<div class="imgcap_noborder">
+	<img src="/assets/regularization/intro.png" width="20%">
+</div>
+
 Regularization seems fairly insignificant at first glance but it has a huge impact on deep models. I'll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.
 
 ## MNIST Classification
@@ -71,7 +75,7 @@ The idea here is that some uncertainty is associated with every weight in the mo
 	<div class="thecap" style="text-align:center">How to represent an optimal point in weight space</div>
 </div>
 
-In the process of learning all this, I devised my own method for estimating \\(\mu\\) and a \\(\sigma\\). I'm not sure how to interpret the result theoretically but I thought I'd include it because 1) the weights look far different from those of the other models 2) the test accuracy is still quite high (91.4%).
+In the process of learning all this, I devised my own method for estimating \\(\mu\\) and a \\(\sigma\\). I'm not sure how to interpret the result theoretically but I thought I'd include it because 1) the weights look far different from those of the other models 2) the test accuracy is still quite high (91.5%).
 
 ```python
 S_hat = tf.get_variable("S_hat", shape=[xlen,ylen], initializer=init)
@@ -116,7 +120,7 @@ Type | Test accuracy\\(^1\\) | Runtime\\(^2\\) (relative to first entry) | Min v
 :--- | :---: | :---: | :---: | :---:
 No regularization | 93.2% | 1.00 | -1.95 | 1.64
 Dropout | 89.5% | 1.49 | -1.42 | 1.18
-Gaussian weight regularization | 91.3% | 2.16 | \\(\approx\\)0 | 3.23
+Gaussian weight regularization | 91.5% | 1. | \\(\approx\\)0 | 0.80
 L2 regularization | 76.0% | 1.25 | -0.062 | 0.094
 Weight normalization | 71.1% | 1.58 | -0.05 | 0.08
 
@@ -128,10 +132,6 @@ Weight normalization | 71.1% | 1.58 | -0.05 | 0.08
 
 ## Closing thoughts
 
-Regularization matters! Not only is it a way of preventing overfitting; it's also the easiest way to control what a model learns.
+Regularization matters! Not only is it a way of preventing overfitting; it's also the easiest way to control what a model learns. For further reading on the subject, check out [these slides](http://www.cs.toronto.edu/~tijmen/csc321/slides/lecture_slides_lec6.pdf).
 
-In a simple model such as the one we used for this post, we can easily understand how regularization does this. How can we extend what we've learned here to larger, more complex models?
-
-Many of the intuitions apply directly to models of any size. We can expect that dropout will smooths out multilayer networks in the same way it does here. Although L2 regularization and weight normalization are very different computations, the qualititive similarity we discovered probably extends to larger models (though we should to test this theory before making any strong claims). Finally, Gaussian weight regularization offers a promising avenue for further investigation because it clearly produces an unusual distribution of weights but still achieves good performance on the test set.
-
-Another interesting regularization method is to cast the weights to binary values during forward passes but perform backpropagation as usual on float values. I'll add that technique to this post soon.
+We can expect that dropout will smooth out multilayer networks in the same way it does here. Although L2 regularization and weight normalization are very different computations, the qualititive similarity we discovered here probably extends to larger models. Gaussian weight regularization, finally, offers a promising avenue for further investigation.
