@@ -40,7 +40,7 @@ W = tf.get_variable("W", shape=[xlen,ylen])
 output = tf.nn.softmax(tf.matmul(x, W)) # no bias because meh
 ```
 
-The full code is available on [GitHub](https://github.com/greydanus). I trained each model for 150,000 interations (well beyond convergence) to accentuate the differences between regularization methods.
+The full code is available on [GitHub](https://github.com/greydanus/regularization). I trained each model for 150,000 interations (well beyond convergence) to accentuate the differences between regularization methods.
 
 ## Visualizing regularization
 
