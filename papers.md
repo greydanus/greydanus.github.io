@@ -28,7 +28,10 @@ permalink: /papers/
           </a>
         </div>
         	<div class="tdesc">
-        		This will be a readable abstract of the paper and comments about why it is useful. First of all, it should be about twice as readable and half as technical as the original abstract. Second of all, I should comment on each one about why I think it is useful/interesting. Each of these abstracts should contribute to a picture of the field as a whole. With a little thought, someone with my level of education (undergraduate, strong in sciences, some basic background knowledge of the field) should be able to grasp all the information here.
+            <p>
+              Approximating parameters in deep networks with binary weights leads to 32x memory savings so there is a lot of interest in binarization. In this paper, researchers binarized a vision model and approximated convolutions with binary add and subtract operations, obtaining a 58x speedup for convolutions. Classification accuracy only dropped 2.9% on AlexNet. The paper's main idea was to train a set of scalar parameters with gradient descent as usual and then convert them to binary representations using the sign function during forward passes.</p>
+            <p>
+              One of the major drawbacks of running deep vision models on phones and personal computers is computation time. This paper is a big step towards solving this problem. Researchers might be able extend this work to other deep architectures (recurrent nets, for example) that are used for NLP/translation.</p>
         	</div>
         </div>
       </div>
