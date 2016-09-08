@@ -128,9 +128,10 @@ li {
 }
 .ttitle {
   font-size: 20px;
-  font-weight: 400;
-  color: #333;
+  font-weight: 425;
+  color: rgb(0,0,132);
 }
+
 .tauthor {
   font-size: 15px;
   font-weight: 300;
@@ -156,7 +157,7 @@ li {
   height: 150px;
   color: rgb(132,0,0);
   position: relative;
-  margin: 10px 20px 10px 5px;
+  margin: 5px 20px 5px 5px;
 }
 
 .timage {
