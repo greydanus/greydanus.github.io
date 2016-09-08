@@ -5,8 +5,8 @@
     <description>Science with a spirit of adventure.</description>
     <link>http://greydanus.github.io/</link>
     <atom:link href="http://greydanus.github.io/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Thu, 08 Sep 2016 14:29:15 -0400</pubDate>
-    <lastBuildDate>Thu, 08 Sep 2016 14:29:15 -0400</lastBuildDate>
+    <pubDate>Thu, 08 Sep 2016 14:50:06 -0400</pubDate>
+    <lastBuildDate>Thu, 08 Sep 2016 14:50:06 -0400</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -216,11 +216,11 @@
 &lt;p&gt;First let’s look at the data. I used the &lt;a href=&quot;http://www.fki.inf.unibe.ch/databases/iam-handwriting-database&quot;&gt;IAM Handwriting Database&lt;/a&gt; to train my model. As far as datasets go, it’s very small (less than 50 MB once parsed). A total of 657 writers contributed to the dataset and each has a unique handwriting style:&lt;/p&gt;
 
 &lt;div class=&quot;imgcap_noborder&quot;&gt;
-	&lt;img src=&quot;/assets/scribe/style_0.png&quot; width=&quot;100%&quot; /&gt;
-	&lt;img src=&quot;/assets/scribe/style_1.png&quot; width=&quot;100%&quot; /&gt;
-	&lt;img src=&quot;/assets/scribe/style_2.png&quot; width=&quot;100%&quot; /&gt;
-	&lt;img src=&quot;/assets/scribe/style_3.png&quot; width=&quot;100%&quot; /&gt;
-	&lt;img src=&quot;/assets/scribe/style_4.png&quot; width=&quot;100%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/style_0.png&quot; width=&quot;75%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/style_1.png&quot; width=&quot;75%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/style_2.png&quot; width=&quot;75%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/style_3.png&quot; width=&quot;75%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/style_4.png&quot; width=&quot;75%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;Five different handwriting styles. The average character contains about 25 points.&lt;/div&gt;
 &lt;/div&gt;
 
@@ -230,13 +230,13 @@
 &lt;p&gt;The data is three dimensional, sequential, and highly correlated both in space and in time. In other words, it’s a big ugly mess. It was originally meant for training online handwriting recognition models which learn that a series of pen points represents, say, the letter ‘a’:&lt;/p&gt;
 
 &lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/scribe/stroke_to_ascii.png&quot; width=&quot;60%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/stroke_to_ascii.png&quot; width=&quot;50%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;Online handwriting recognition (the original purpose of this dataset. RNN graphic courtesy of &lt;a href=&quot;https://colah.github.io/posts/2015-08-Understanding-LSTMs/&quot;&gt;colah&lt;/a&gt;.&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Ok, that is a tough challenge but it can be done using out-of-the-box sequential models such as recurrent neural networks (RNNs). A much more difficult challenge is to reverse the process, ie. to train a model that takes the letter ‘a’ as an input and produces a series of points that we can connect to make the letter ‘a.’&lt;/p&gt;
 &lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/scribe/ascii_to_stroke.png&quot; width=&quot;60%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/ascii_to_stroke.png&quot; width=&quot;50%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;Handwriting generation from ascii characters (a much harder challenge!).&lt;/div&gt;
 &lt;/div&gt;
 &lt;p&gt;In order to make this happen, we’ll start with a recurrent neural network structure and then add some bells and whistles.&lt;/p&gt;
@@ -261,7 +261,7 @@
 &lt;p&gt;&lt;strong&gt;The Mixture Density Network (MDN).&lt;/strong&gt; Think of Mixture Density Networks as neural networks which can measure their own uncertainty. Their output parameters are \(\mu\), \(\sigma\), and \(\rho\) for several multivariate Gaussian components. They also estimate a parameter \(\pi\) for each of these distributions. Think of \(\pi\) as the probability that the output value was drawn from that particular component’s distribution. Last year, I wrote an &lt;a href=&quot;https://nbviewer.jupyter.org/github/greydanus/adventures/blob/master/mixture_density/mdn.ipynb&quot;&gt;Jupyter notebook&lt;/a&gt; about MDNs.&lt;/p&gt;
 
 &lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/scribe/MDN.png&quot; width=&quot;50%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/MDN.png&quot; width=&quot;40%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;The importance of π: what is the probability the red point was drawn from each of the three distributions?&lt;/div&gt;
 &lt;/div&gt;
 
@@ -270,12 +270,12 @@
 &lt;p&gt;&lt;strong&gt;The Attention Mechanism.&lt;/strong&gt; Imagine that we want our model to write &lt;i&gt;‘You know nothing Jon Snow.’&lt;/i&gt; In order to get the information about which characters make up this sentence, the model uses a differentiable attention mechanism. In technical terms, it is a Gaussian convolution over a &lt;a href=&quot;https://en.wikipedia.org/wiki/One-hot&quot;&gt;one-hot&lt;/a&gt; ascii encoding. Think of this convolution operation as a soft window through which the handwriting model can look at a small subset of characters, ie. the letters ‘kn’ in the word ‘know’. Since all the parameters of this window are differentiable, the model learns to shift the window from character to character as it writes them&lt;/p&gt;
 
 &lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/scribe/diag_window.png&quot; width=&quot;60%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/diag_window.png&quot; width=&quot;50%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;A time series plot of the window's position. The vertical axis is time (descending) and the horizontal axis is the sequence of ascii characters that the model is drawing.&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/scribe/onehot_window.png&quot; width=&quot;60%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/onehot_window.png&quot; width=&quot;50%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;A time series of one-hot encodings produced by the attention mechanism. Again, the vertical axis is time. The horizontal axis is what the model sees when it looks through the soft window.&lt;/div&gt;
 &lt;/div&gt;
 
@@ -286,9 +286,9 @@
 &lt;p&gt;It works! After a couple hours on a Tesla K40 GPU, the model generates legible letters and after a day or so it writes sentences with only a few small errors. Even though most of the training sequences were 256 points long, I was able to sample sequences of up to 750.&lt;/p&gt;
 
 &lt;div class=&quot;imgcap_noborder&quot;&gt;
-	&lt;img src=&quot;/assets/scribe/jon_print.png&quot; width=&quot;100%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/jon_print.png&quot; width=&quot;80%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;You know nothing Jon Snow&lt;/div&gt;
-	&lt;img src=&quot;/assets/scribe/jon_cursive.png&quot; width=&quot;100%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/jon_cursive.png&quot; width=&quot;80%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;cursive is still hard :(&lt;/div&gt;
 &lt;/div&gt;
 
@@ -301,11 +301,11 @@
 &lt;p&gt;To better understand what is happening here, check out my &lt;a href=&quot;https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb&quot;&gt;Jupyter notebook&lt;/a&gt; or the &lt;a href=&quot;https://arxiv.org/abs/1308.0850&quot;&gt;original paper&lt;/a&gt;. Below are results for \(b={0.5,0.75,1.0}\)&lt;/p&gt;
 
 &lt;div class=&quot;imgcap_noborder&quot;&gt;
-	&lt;img src=&quot;/assets/scribe/bias-1.png&quot; width=&quot;60%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/bias-1.png&quot; width=&quot;50%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;bias = 1.0&lt;/div&gt;
-	&lt;img src=&quot;/assets/scribe/bias-0.75.png&quot; width=&quot;60%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/bias-0.75.png&quot; width=&quot;50%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;bias = 0.75&lt;/div&gt;
-	&lt;img src=&quot;/assets/scribe/bias-0.5.png&quot; width=&quot;60%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/bias-0.5.png&quot; width=&quot;50%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;bias = 0.5&lt;/div&gt;
 &lt;/div&gt;
 
@@ -319,7 +319,7 @@
 &lt;p&gt;The Graves handwriting model is one of the first examples of the Lego Effect. As I explained above, it’s actually a combination of three different types of models. The RNN cell learns to reproduce sequences of pen points, the MDN models randomness and style in the handwriting, and the attention mechanism tells the model what to write.&lt;/p&gt;
 
 &lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/scribe/densecap.jpg&quot; width=&quot;60%&quot; /&gt;
+	&lt;img src=&quot;/assets/scribe/densecap.jpg&quot; width=&quot;50%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;Image captioning using a ConvNet + LSTM model. More info &lt;a href=&quot;https://cs.stanford.edu/people/karpathy/densecap/&quot;&gt;here&lt;/a&gt;&lt;/div&gt;
 &lt;/div&gt;
 
@@ -349,7 +349,7 @@
 &lt;p&gt;When &lt;a href=&quot;https://en.wikipedia.org/wiki/Demis_Hassabis&quot;&gt;Demis Hassabis&lt;/a&gt; opened his lecture at the 2015 CERN Data Science conference with this claim, I blinked in disbelief. Hundreds of brilliant scientists have spent their lives pondering the mysteries of the human eye. How could he make that claim so casually? Determined to prove him wrong, I looked at the latest computer vision research and… indeed, certain areas are &lt;a href=&quot;https://arxiv.org/abs/1502.01852v1&quot;&gt;at human performance&lt;/a&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/what_is/neural_style.png&quot; width=&quot;70%&quot; /&gt;
+	&lt;img src=&quot;/assets/what_is/neural_style.png&quot; width=&quot;55%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;Deep learning magic: a ConvNet-based architecture can capture artistic style and apply it to a new image (from &lt;a href=&quot;https://github.com/jcjohnson/neural-style&quot;&gt;jcjohnson&lt;/a&gt;)&lt;/div&gt;
 &lt;/div&gt;
 
@@ -383,7 +383,7 @@
 &lt;p&gt;Mathematicians will tell you that deep learning is just complicated regression. Regression is the art of finding a function that explains the relationship between an input and an output. The simplest example is from middle school math when we used two points on a Cartesian plane to find the variables \(m\) and \(b\) in \(f(x)=mx+b\).&lt;/p&gt;
 
 &lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/what_is/regression.png&quot; width=&quot;100%&quot; /&gt;
+	&lt;img src=&quot;/assets/what_is/regression.png&quot; width=&quot;70%&quot; /&gt;
 	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;Deep learning as a type of regression (images from 2015 &lt;a href=&quot;https://arxiv.org/abs/1409.0575&quot;&gt;ImageNet paper&lt;/a&gt;)&lt;/div&gt;
 &lt;/div&gt;
 
@@ -398,6 +398,7 @@
 
 &lt;div class=&quot;imgcap_noborder&quot;&gt;
 	&lt;img src=&quot;/assets/what_is/trends.png&quot; width=&quot;150%&quot; /&gt;
+	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Research.&lt;/strong&gt; Even in academia, researchers tend to prioritize results over understanding; deep learning theory lags woefully behind practice. If you do not have a background in computer science, you’ll get the best answers to the question “What can deep learning do?” and the worst answers to the question, “What is deep learning?” from people in tech.&lt;/p&gt;

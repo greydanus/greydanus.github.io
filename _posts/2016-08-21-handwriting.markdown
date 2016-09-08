@@ -32,11 +32,11 @@ In this post, I will demonstrate the power of deep learning by using it to gener
 First let’s look at the data. I used the [IAM Handwriting Database](http://www.fki.inf.unibe.ch/databases/iam-handwriting-database) to train my model. As far as datasets go, it's very small (less than 50 MB once parsed). A total of 657 writers contributed to the dataset and each has a unique handwriting style:
 
 <div class="imgcap_noborder">
-	<img src="/assets/scribe/style_0.png" width="100%">
-	<img src="/assets/scribe/style_1.png" width="100%">
-	<img src="/assets/scribe/style_2.png" width="100%">
-	<img src="/assets/scribe/style_3.png" width="100%">
-	<img src="/assets/scribe/style_4.png" width="100%">
+	<img src="/assets/scribe/style_0.png" width="75%">
+	<img src="/assets/scribe/style_1.png" width="75%">
+	<img src="/assets/scribe/style_2.png" width="75%">
+	<img src="/assets/scribe/style_3.png" width="75%">
+	<img src="/assets/scribe/style_4.png" width="75%">
 	<div class="thecap" style="text-align:center">Five different handwriting styles. The average character contains about 25 points.</div>
 </div>
 
@@ -46,13 +46,13 @@ The data itself is a three-dimensional time series. The first two dimensions are
 The data is three dimensional, sequential, and highly correlated both in space and in time. In other words, it's a big ugly mess. It was originally meant for training online handwriting recognition models which learn that a series of pen points represents, say, the letter 'a':
 
 <div class="imgcap">
-	<img src="/assets/scribe/stroke_to_ascii.png" width="60%">
+	<img src="/assets/scribe/stroke_to_ascii.png" width="50%">
 	<div class="thecap" style="text-align:center">Online handwriting recognition (the original purpose of this dataset. RNN graphic courtesy of <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">colah</a>.</div>
 </div>
 
 Ok, that is a tough challenge but it can be done using out-of-the-box sequential models such as recurrent neural networks (RNNs). A much more difficult challenge is to reverse the process, ie. to train a model that takes the letter ‘a’ as an input and produces a series of points that we can connect to make the letter ‘a.’
 <div class="imgcap">
-	<img src="/assets/scribe/ascii_to_stroke.png" width="60%">
+	<img src="/assets/scribe/ascii_to_stroke.png" width="50%">
 	<div class="thecap" style="text-align:center">Handwriting generation from ascii characters (a much harder challenge!).</div>
 </div>
 In order to make this happen, we’ll start with a recurrent neural network structure and then add some bells and whistles.
@@ -77,7 +77,7 @@ These networks use a differentiable form of memory to keep track of time-depende
 **The Mixture Density Network (MDN).** Think of Mixture Density Networks as neural networks which can measure their own uncertainty. Their output parameters are \\(\mu\\), \\(\sigma\\), and \\(\rho\\) for several multivariate Gaussian components. They also estimate a parameter \\(\pi\\) for each of these distributions. Think of \\(\pi\\) as the probability that the output value was drawn from that particular component's distribution. Last year, I wrote an [Jupyter notebook](https://nbviewer.jupyter.org/github/greydanus/adventures/blob/master/mixture_density/mdn.ipynb) about MDNs.
 
 <div class="imgcap">
-	<img src="/assets/scribe/MDN.png" width="50%">
+	<img src="/assets/scribe/MDN.png" width="40%">
 	<div class="thecap" style="text-align:center">The importance of π: what is the probability the red point was drawn from each of the three distributions?</div>
 </div>
 
@@ -86,12 +86,12 @@ Since MDNs parameterize probability distributions, they are a great way to captu
 **The Attention Mechanism.** Imagine that we want our model to write <i>'You know nothing Jon Snow.'</i> In order to get the information about which characters make up this sentence, the model uses a differentiable attention mechanism. In technical terms, it is a Gaussian convolution over a [one-hot](https://en.wikipedia.org/wiki/One-hot) ascii encoding. Think of this convolution operation as a soft window through which the handwriting model can look at a small subset of characters, ie. the letters 'kn' in the word 'know'. Since all the parameters of this window are differentiable, the model learns to shift the window from character to character as it writes them
 
 <div class="imgcap">
-	<img src="/assets/scribe/diag_window.png" width="60%">
+	<img src="/assets/scribe/diag_window.png" width="50%">
 	<div class="thecap" style="text-align:center">A time series plot of the window's position. The vertical axis is time (descending) and the horizontal axis is the sequence of ascii characters that the model is drawing.</div>
 </div>
 
 <div class="imgcap">
-	<img src="/assets/scribe/onehot_window.png" width="60%">
+	<img src="/assets/scribe/onehot_window.png" width="50%">
 	<div class="thecap" style="text-align:center">A time series of one-hot encodings produced by the attention mechanism. Again, the vertical axis is time. The horizontal axis is what the model sees when it looks through the soft window.</div>
 </div>
 
@@ -102,9 +102,9 @@ The model learns to control the window parameters remarkably well. For example, 
 It works! After a couple hours on a Tesla K40 GPU, the model generates legible letters and after a day or so it writes sentences with only a few small errors. Even though most of the training sequences were 256 points long, I was able to sample sequences of up to 750.
 
 <div class="imgcap_noborder">
-	<img src="/assets/scribe/jon_print.png" width="100%">
+	<img src="/assets/scribe/jon_print.png" width="80%">
 	<div class="thecap" style="text-align:center">You know nothing Jon Snow</div>
-	<img src="/assets/scribe/jon_cursive.png" width="100%">
+	<img src="/assets/scribe/jon_cursive.png" width="80%">
 	<div class="thecap" style="text-align:center">cursive is still hard :(</div>
 </div>
 
@@ -121,11 +121,11 @@ $$
 To better understand what is happening here, check out my [Jupyter notebook](https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb) or the [original paper](https://arxiv.org/abs/1308.0850). Below are results for \\(b={0.5,0.75,1.0}\\)
 
 <div class="imgcap_noborder">
-	<img src="/assets/scribe/bias-1.png" width="60%">
+	<img src="/assets/scribe/bias-1.png" width="50%">
 	<div class="thecap" style="text-align:center">bias = 1.0</div>
-	<img src="/assets/scribe/bias-0.75.png" width="60%">
+	<img src="/assets/scribe/bias-0.75.png" width="50%">
 	<div class="thecap" style="text-align:center">bias = 0.75</div>
-	<img src="/assets/scribe/bias-0.5.png" width="60%">
+	<img src="/assets/scribe/bias-0.5.png" width="50%">
 	<div class="thecap" style="text-align:center">bias = 0.5</div>
 </div>
 
@@ -138,7 +138,7 @@ Deep learning used to be divided neatly according to algorithms. There were conv
 The Graves handwriting model is one of the first examples of the Lego Effect. As I explained above, it's actually a combination of three different types of models. The RNN cell learns to reproduce sequences of pen points, the MDN models randomness and style in the handwriting, and the attention mechanism tells the model what to write.
 
 <div class="imgcap">
-	<img src="/assets/scribe/densecap.jpg" width="60%">
+	<img src="/assets/scribe/densecap.jpg" width="50%">
 	<div class="thecap" style="text-align:center">Image captioning using a ConvNet + LSTM model. More info <a href="https://cs.stanford.edu/people/karpathy/densecap/">here</a></div>
 </div>
 
