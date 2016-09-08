@@ -17,42 +17,57 @@ permalink: /papers/
 
   	 <div id="visionpapers" class="timelineitem">
       <div class="tdate">August 2016</div>
-      <div class="ttitle"><a href="https://arxiv.org/abs/1603.05279">XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks</a></div>
-      <div class="tauthor">Mohammad Rastegari, Vicente Ordonez, Joseph Redmon, Ali Farhadi</div>
-      <div class="taffiliation">Allen Institute for AI</div>
-      <div class="tcontent">
-      	<div class="timg_border"><img class="timage" src="/assets/papers/karman.png"></div>
-      	<div class="tdesc">
-      		This will be a readable abstract of the paper and comments about why it is useful. First of all, it should be about twice as readable and half as technical as the original abstract. Second of all, I should comment on each one about why I think it is useful/interesting. Each of these abstracts should contribute to a picture of the field as a whole. With a little thought, someone with my level of education (undergraduate, strong in sciences, some basic background knowledge of the field) should be able to grasp all the information here.
-      	</div>
+      <div id="ttitle" onClick="showDetails('xor_net')">
+        XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks</div>
+      <div id="xor_net" style="display:none;">
+        <div class="tauthor">Mohammad Rastegari, Vicente Ordonez, Joseph Redmon, Ali Farhadi</div>
+        <div class="taffiliation">Allen Institute for AI</div>
+        <div class="tcontent">
+          <a href="https://arxiv.org/abs/1603.05279">
+            <div class="timg_border"><img class="timage" src="/assets/papers/xor_net.png"></div>
+          </a>
+        </div>
+        	<div class="tdesc">
+        		This will be a readable abstract of the paper and comments about why it is useful. First of all, it should be about twice as readable and half as technical as the original abstract. Second of all, I should comment on each one about why I think it is useful/interesting. Each of these abstracts should contribute to a picture of the field as a whole. With a little thought, someone with my level of education (undergraduate, strong in sciences, some basic background knowledge of the field) should be able to grasp all the information here.
+        	</div>
+        </div>
       </div>
-    </div>
 
-    <div id="physicspapers" class="timelineitem">
+     <div id="physicspapers" class="timelineitem">
       <div class="tdate">July 2016</div>
-      <div class="ttitle"><a href="https://arxiv.org/abs/1607.03597v2">Accelerating Eulerian Fluid Simulation With Convolutional Networks</a></div>
-      <div class="tauthor">Jonathan Tompson, Kristofer Schlachter, Pablo Sprechmann, Ken Perlin</div>
-      <div class="taffiliation">Google, NYU</div>
-      <div class="tcontent">
-      	<div class="timg_border"><img class="timage" src="/assets/papers/karman.png"></div>
-      	<div class="tdesc">
-      		This will be a readable abstract of the paper and comments about why it is useful. First of all, it should be about twice as readable and half as technical as the original abstract. Second of all, I should comment on each one about why I think it is useful/interesting. Each of these abstracts should contribute to a picture of the field as a whole. With a little thought, someone with my level of education (undergraduate, strong in sciences, some basic background knowledge of the field) should be able to grasp all the information here.
-      	</div>
+      <div id="ttitle" onClick="showDetails('eulerian_fluids')">
+        Accelerating Eulerian Fluid Simulation With Convolutional Networks</div>
+      <div id="eulerian_fluids" style="display:none;">
+        <div class="tauthor">Jonathan Tompson, Kristofer Schlachter, Pablo Sprechmann, Ken Perlin</div>
+        <div class="taffiliation">Google, NYU</div>
+        <div class="tcontent">
+          <a href="https://arxiv.org/abs/1607.03597v2">
+            <div class="timg_border"><img class="timage" src="/assets/papers/eulerian_fluids.png"></div>
+          </a>
+        </div>
+          <div class="tdesc">
+            This will be a readable abstract of the paper and comments about why it is useful. First of all, it should be about twice as readable and half as technical as the original abstract. Second of all, I should comment on each one about why I think it is useful/interesting. Each of these abstracts should contribute to a picture of the field as a whole. With a little thought, someone with my level of education (undergraduate, strong in sciences, some basic background knowledge of the field) should be able to grasp all the information here.
+          </div>
+        </div>
       </div>
-    </div>
 
     <div id="generativepapers" class="timelineitem">
       <div class="tdate">June 2014</div>
-      <div class="ttitle"><a href="https://arxiv.org/abs/1308.0850">Generating Sequences With Recurrent Neural Networks</a></div>
-      <div class="tauthor">Alex Graves</div>
-      <div class="taffiliation">U Toronto</div>
-      <div class="tcontent">
-      	<div class="timg_border"><img class="timage" src="/assets/papers/karman.png"></div>
-      	<div class="tdesc">
-      		This will be a readable abstract of the paper and comments about why it is useful. First of all, it should be about twice as readable and half as technical as the original abstract. Second of all, I should comment on each one about why I think it is useful/interesting. Each of these abstracts should contribute to a picture of the field as a whole. With a little thought, someone with my level of education (undergraduate, strong in sciences, some basic background knowledge of the field) should be able to grasp all the information here.
-      	</div>
+      <div id="ttitle" onClick="showDetails('graves_handwriting')">
+        Generating Sequences With Recurrent Neural Networks</div>
+      <div id="graves_handwriting" style="display:none;">
+        <div class="tauthor">Alex Graves</div>
+        <div class="taffiliation">U Toronto</div>
+        <div class="tcontent">
+          <a href="https://arxiv.org/abs/1308.0850">
+            <div class="timg_border"><img class="timage" src="/assets/papers/graves_handwriting.png"></div>
+          </a>
+        </div>
+          <div class="tdesc">
+            This will be a readable abstract of the paper and comments about why it is useful. First of all, it should be about twice as readable and half as technical as the original abstract. Second of all, I should comment on each one about why I think it is useful/interesting. Each of these abstracts should contribute to a picture of the field as a whole. With a little thought, someone with my level of education (undergraduate, strong in sciences, some basic background knowledge of the field) should be able to grasp all the information here.
+          </div>
+        </div>
       </div>
-    </div>
 
   </div>
 
@@ -118,4 +133,17 @@ function start() {
 
 }
 
+</script>
+
+<script type="text/javascript">
+
+function showDetails(name) {
+    $('#' + name).toggle(); 
+}
+
+// $(function(){
+//   $('#ttitle').click(function(){
+//      $('#xor_details').toggle(); 
+//   });
+// });
 </script>
