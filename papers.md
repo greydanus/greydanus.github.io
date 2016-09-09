@@ -49,7 +49,10 @@ permalink: /papers/
           </a>
         </div>
           <div class="tdesc">
-            This will be a readable abstract of the paper and comments about why it is useful. First of all, it should be about twice as readable and half as technical as the original abstract. Second of all, I should comment on each one about why I think it is useful/interesting. Each of these abstracts should contribute to a picture of the field as a whole. With a little thought, someone with my level of education (undergraduate, strong in sciences, some basic background knowledge of the field) should be able to grasp all the information here.
+            <p>
+            Simulating fluit and smoke with physics-based methods requires a lot of compute time. In this paper, researchers trained a 3D ConvNet to approximate the mapping from geometry, pressure, and velocity to pressure in the next step of the simulation and used it to speed up the process.</p>
+            <p>
+              This paper is exciting for two reasons: 1) it's a really impressive example of training a 3D generative model with a ConvNet and 2) it captures the more general idea that deep learning can approximate arbitrarily complex functions from physics. They could just as easily have modeled a raindrop, a charged plasma, or an evolving quantum system. </p>
           </div>
         </div>
       </div>
@@ -67,7 +70,11 @@ permalink: /papers/
           </a>
         </div>
           <div class="tdesc">
-            This will be a readable abstract of the paper and comments about why it is useful. First of all, it should be about twice as readable and half as technical as the original abstract. Second of all, I should comment on each one about why I think it is useful/interesting. Each of these abstracts should contribute to a picture of the field as a whole. With a little thought, someone with my level of education (undergraduate, strong in sciences, some basic background knowledge of the field) should be able to grasp all the information here.
+            <p>
+              Recurrent neural networks excel at generating complex sequences and this is one of the first major papers to explore their full potential. Graves found that LSTMs can generate text one character at a time and even handwriting one pen coordinate at a time. A note of interest is that Graves trained his models with adaptive weight noise, a form of regularization that is not very common and which I want to learn more about.</p>
+            <p>
+              The paper is significant because 1) it showcases the huge potential of RNNs and 2) it is one of the first good examples of the Lego Effect (see my <a href="https://greydanus.github.io/2016/08/21/handwriting/">blog post</a> inspired by this paper)
+            </p>
           </div>
         </div>
       </div>
