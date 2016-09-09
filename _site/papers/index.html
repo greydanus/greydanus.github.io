@@ -38,7 +38,7 @@
   <div class="wrap">
 
     <div style="float:left; margin-top:10px; margin-right:10px;">
-    <a href="/feed.xml">
+    <a href="https://en.wikipedia.org/wiki/K%C3%A1rm%C3%A1n_vortex_street">
       <img src="/assets/karman.png" width="40">
     </a>
     </div>
@@ -58,8 +58,6 @@
         </svg>
       </a>
       <div class="trigger">
-        
-          
         
           
         
@@ -87,14 +85,20 @@
 
 <center>
 	<div class="showmore" id="showphysicspapers" style="display:inline-block;">Physics</div> 
-	<div class="showmore" id="showvisionpapers" style="display:inline-block;">Vision</div>
-	<div class="showmore" id="showgenerativepapers" style="display:inline-block;">Generative</div>
+  <div class="showmore" id="showneuropapers" style="display:inline-block;">Neuroscience</div>
+  <div class="showmore" id="showmiscpapers" style="display:inline-block;">Misc</div>
+	<div class="showmore" id="showpredictivepapers" style="display:inline-block;">Predictive DL</div>
+  <div class="showmore" id="showgenerativepapers" style="display:inline-block;">Generative DL</div>
+  <div class="showmore" id="showalgpapers" style="display:inline-block;">Algorithmic DL</div>
+  <div class="showmore" id="showtheorypapers" style="display:inline-block;">DL Theory</div>
 </center>
 
 <div class="container">
   <div id="timeline">
 
-  	 <div id="visionpapers" class="timelineitem">
+    <div class="tyear">2016</div>
+
+  	 <div id="predictivepapers" class="timelineitem">
       <div class="tdate">August 2016</div>
       <div id="ttitle" onclick="showDetails('xor_net')">
         XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks</div>
@@ -132,6 +136,91 @@
             Simulating fluit and smoke with physics-based methods requires a lot of compute time. In this paper, researchers trained a 3D ConvNet to approximate the mapping from geometry, pressure, and velocity to pressure in the next step of the simulation and used it to speed up the process.</p>
             <p>
               This paper is exciting for two reasons: 1) it's a really impressive example of training a 3D generative model with a ConvNet and 2) it captures the more general idea that deep learning can approximate arbitrarily complex functions from physics. They could just as easily have modeled a raindrop, a charged plasma, or an evolving quantum system. </p>
+          </div>
+        </div>
+      </div>
+
+    <div id="theorypapers" class="timelineitem">
+      <div class="tdate">May 2016</div>
+      <div id="ttitle" onclick="showDetails('kenji_minima')">
+        Deep Learning without Poor Local Minima</div>
+      <div id="kenji_minima" style="display:none;">
+        <div class="tauthor">Kenji Kawaguchi</div>
+        <div class="taffiliation">MIT</div>
+        <div class="tcontent">
+          <a href="https://arxiv.org/abs/1605.07110">
+            <div class="timg_border"><img class="timage" src="/assets/papers/kenji_minima.png" /></div>
+          </a>
+        </div>
+          <div class="tdesc">
+            <p>
+              Really important theoretical result for deep learning. Oral presentation at NIPS 2016.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    <div id="neuropapers" class="timelineitem">
+      <div class="tdate">April 2016</div>
+      <div id="ttitle" onclick="showDetails('semantic_map')">
+        Natural speech reveals the semantic maps that tile human cerebral cortex</div>
+      <div id="semantic_map" style="display:none;">
+        <div class="tauthor">Alexander G. Huth, Wendy A. de Heer, Thomas L. Griffiths,  Frédéric E. Theunissen, Jack L. Gallant</div>
+        <div class="taffiliation">Berkeley</div>
+        <div class="tcontent">
+          <a href="http://gallantlab.org/index.php/publications/natural-speech-reveals-the-semantic-maps-that-tile-human-cerebral-cortex/">
+            <div class="timg_border"><img class="timage" src="/assets/papers/semantic_map.png" /></div>
+          </a>
+        </div>
+          <div class="tdesc">
+            <p>
+              The Gallant lab is awesome. In this study, subjects listened to podcasts while their brain activity was recorded in an fMRI. Researchers then built a model to predict brain activations from transcripts of the podcasts. They found that the model was able to predict brain activity well in many areas of the cortex. To create the semantic map, they reduced the coefficients of the generative model with PCA and somehow mapped regions of the cortex to words that most consistently generated a response.</p>
+            <p>
+              Definitely check out the interactive 3D 'atlas' they <a href="http://gallantlab.org/huth2016/">released</a>. The result is interesting because it is one of the most detailed analyses of language in the brain and a really cool glimpse at how the brain organizes information about the world. I also like the paper because it represents a new wave of neuro research aimed at extracting more detailed/precise patterns from data using ML techniques.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    <div class="tyear">2015</div>
+
+    <div id="miscpapers" class="timelineitem">
+      <div class="tdate">May 2016</div>
+      <div id="ttitle" onclick="showDetails('twin_heritability')">
+        Meta-analysis of the heritability of human traits based on fifty years of twin studies</div>
+      <div id="twin_heritability" style="display:none;">
+        <div class="tauthor">Tinca J C Polderman, Beben Benyamin, Christiaan A de Leeuw,  Patrick F Sullivan, Arjen van Bochoven, Peter M Visscher, Danielle Posthuma</div>
+        <div class="taffiliation">Large collaboration, mostly Dutch</div>
+        <div class="tcontent">
+          <a href="http://www.nature.com/ng/journal/v47/n7/full/ng.3285.html">
+            <div class="timg_border"><img class="timage" src="/assets/papers/twin_heritability.png" /></div>
+          </a>
+        </div>
+          <div class="tdesc">
+            <p>
+              Very precise findings. Nature vs nurture?</p>
+          </div>
+        </div>
+      </div>
+
+    <div class="tyear">2014</div>
+
+    <div id="algpapers" class="timelineitem">
+      <div class="tdate">October 2014</div>
+      <div id="ttitle" onclick="showDetails('graves_turing')">
+        Neural Turing Machines</div>
+      <div id="graves_turing" style="display:none;">
+        <div class="tauthor">Alex Graves, Greg Wayne, Ivo Danihelka</div>
+        <div class="taffiliation">Google DeepMind</div>
+        <div class="tcontent">
+          <a href="https://arxiv.org/abs/1410.5401">
+            <div class="timg_border"><img class="timage" src="/assets/papers/placeholder.png" /></div>
+          </a>
+        </div>
+          <div class="tdesc">
+            <p>
+              Summary goes here
+            </p>
           </div>
         </div>
       </div>
@@ -182,22 +271,60 @@ function start() {
     }
   });
 
-	var show_vision_papers = true;
-  $("#showvisionpapers").click(function() {
-    if(!show_vision_papers) {
-      $('[id=visionpapers]').each(function() {
-      	$('[id=visionpapers]').slideDown('fast', function() {
-      		$("#showvisionpapers").css('border', '2px solid #777');
-      	})
+    var show_neuro_papers = true;
+  $("#showneuropapers").click(function() {
+    if(!show_neuro_papers) {
+      $('[id=neuropapers]').each(function() {
+        $('[id=neuropapers]').slideDown('fast', function() {
+          $("#showneuropapers").css('border', '2px solid #777');
+        })
       });
-      show_vision_papers = true;
+      show_neuro_papers = true;
     } else {
-      $('[id=visionpapers]').each(function() {
-      	$('[id=visionpapers]').slideUp('fast', function() {
-      		$("#showvisionpapers").css('border', '2px solid #CCC');
+      $('[id=neuropapers]').each(function() {
+        $('[id=neuropapers]').slideUp('fast', function() {
+          $("#showneuropapers").css('border', '2px solid #CCC');
+        })
+      });
+      show_neuro_papers = false;
+    }
+  });
+
+    var show_misc_papers = true;
+  $("#showmiscpapers").click(function() {
+    if(!show_misc_papers) {
+      $('[id=miscpapers]').each(function() {
+        $('[id=miscpapers]').slideDown('fast', function() {
+          $("#showmiscpapers").css('border', '2px solid #777');
+        })
+      });
+      show_misc_papers = true;
+    } else {
+      $('[id=miscpapers]').each(function() {
+        $('[id=miscpapers]').slideUp('fast', function() {
+          $("#showmiscpapers").css('border', '2px solid #CCC');
+        })
+      });
+      show_misc_papers = false;
+    }
+  });
+
+	var show_predictive_papers = true;
+  $("#showpredictivepapers").click(function() {
+    if(!show_predictive_papers) {
+      $('[id=predictivepapers]').each(function() {
+      	$('[id=predictivepapers]').slideDown('fast', function() {
+      		$("#showpredictivepapers").css('border', '2px solid #777');
       	})
       });
-      show_vision_papers = false;
+      show_predictive_papers = true;
+    } else {
+      $('[id=predictivepapers]').each(function() {
+      	$('[id=predictivepapers]').slideUp('fast', function() {
+      		$("#showpredictivepapers").css('border', '2px solid #CCC');
+      	})
+      });
+      show_predictive_papers = false;
     }
   });
 
@@ -217,6 +344,44 @@ function start() {
       	})
       });
       show_generative_papers = false;
+    }
+  });
+
+    var show_alg_papers = true;
+  $("#showalgpapers").click(function() {
+    if(!show_alg_papers) {
+      $('[id=algpapers]').each(function() {
+        $('[id=algpapers]').slideDown('fast', function() {
+          $("#showalgpapers").css('border', '2px solid #777');
+        })
+      });
+      show_alg_papers = true;
+    } else {
+      $('[id=algpapers]').each(function() {
+        $('[id=algpapers]').slideUp('fast', function() {
+          $("#showalgpapers").css('border', '2px solid #CCC');
+        })
+      });
+      show_alg_papers = false;
+    }
+  });
+
+    var show_theory_papers = true;
+  $("#showtheorypapers").click(function() {
+    if(!show_theory_papers) {
+      $('[id=theorypapers]').each(function() {
+        $('[id=theorypapers]').slideDown('fast', function() {
+          $("#showtheorypapers").css('border', '2px solid #777');
+        })
+      });
+      show_theory_papers = true;
+    } else {
+      $('[id=theorypapers]').each(function() {
+        $('[id=theorypapers]').slideUp('fast', function() {
+          $("#showtheorypapers").css('border', '2px solid #CCC');
+        })
+      });
+      show_theory_papers = false;
     }
   });
 

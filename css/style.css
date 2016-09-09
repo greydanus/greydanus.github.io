@@ -79,7 +79,7 @@ ul {
   position: relative;
   padding: 0px 0px 20px 10px;
   margin-left: 5%;
-  border-left: 5px solid #333;
+  border-left: 5px solid #119;
   text-align: left;
 }
 
@@ -87,12 +87,23 @@ ul {
   left: -8px;
   width: 11px;
   height: 11px;
-  background: #333;
+  background: #119;
   content: "";
   display: block;
   position: absolute;
   top: 0;
   border-radius: 5px;
+}
+
+.tyear {
+  font-size: 30px;
+  font-weight: 200;
+  width: 100%;
+  position: relative;
+  padding: 10px 0px 0px 5px;
+  margin-left: 10px;
+  text-align: left;
+  color: #119;
 }
 
 .tdate {
@@ -189,7 +200,7 @@ hr.soft {
   color: #999;
   margin: 0px auto;
   cursor: pointer;
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 .showmore:hover {
   color: #333;
