@@ -4,7 +4,7 @@ title: Interesting Papers
 permalink: /papers/
 ---
 <body onload="start()">
-<p>This is a fairly random set of papers that caught my eye. Updated weekly. Filter by subject using buttons below, click for details</p>
+<p>A fairly random set of papers that caught my eye. Updated weekly. Filter by subject using buttons below, click for details</p>
 
 <center>
 	<div class="showmore" id="showphysicspapers" style="display:inline-block;">Physics</div> 
