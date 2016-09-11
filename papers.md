@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Interesting Papers
+title: Interesting papers
 permalink: /papers/
 ---
 <body onload="start()">
@@ -142,7 +142,7 @@ permalink: /papers/
         </div>
           <div class="tdesc">
             <p>
-              Abstract says it all (paraphrase): this paper extends the capabilities of neural networks by coupling them to external memory sources, which they can interact with by attentional processes. The system is analagous to a Turing Machine but is end-to-end differentiable and so it can be trained with gradient descent. Neural Turing Machines can learn to infer algorithms such as copy, sort, and associative recall.
+              This paper extends the capabilities of neural networks by coupling them to external memory sources, which they can interact with by attentional processes. The system is analagous to a Turing Machine but is end-to-end differentiable and so it can be trained with gradient descent. Neural Turing Machines can learn to infer algorithms such as copy, sort, and associative recall.
             </p>
             <p>
               In this architecture, memory access requires training read/write heads over the entire memory space, which is impractical for scalable memory. However, it is a huge algorithmic breakthrough in the sense that it incorporates long term memory storage into a differentiable architecture. Giving deep networks access to long term memory will drastically expand their effectiveness in most tasks. The challenge now is to make a long term neural memory architecture which is both differentiable <em>and</em> scalable!
