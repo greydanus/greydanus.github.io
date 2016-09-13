@@ -140,6 +140,28 @@
         </div>
       </div>
 
+    <div id="algpapers" class="timelineitem">
+      <div class="tdate">May 2016</div>
+      <div id="ttitle" onclick="showDetails('foerster_agent_language')">
+        Learning to Communicate with Deep Multi-Agent Reinforcement Learning</div>
+      <div id="foerster_agent_language" style="display:none;">
+        <div class="tauthor">Jakob N. Foerster, Yannis M. Assael, Nando de Freitas, Shimon Whiteson</div>
+        <div class="taffiliation">Google DeepMind</div>
+        <div class="tcontent">
+          <a href="https://arxiv.org/abs/1605.06676v2">
+            <div class="timg_border"><img class="timage" src="/assets/papers/foerster_agent_language.png" /></div>
+          </a>
+        </div>
+          <div class="tdesc">
+            <p>
+              This paper lays out a framework for training dep multi-agent reinforcement learning systems which can communicate with each other to solve tasks. The two main structures it introduces are Reinforced Inter-Agent Learning (RIAL) and Differentiable Inter-Agent Learning (DIAL). The only difference between these is that in DIAL, gradients can flow between agents. Next, the authors use two simple tasks which require communication to show that DIAL has significant advantages of RIAL. Furthermore, sharing parameters between agents (ie training one brain for all agents) turns out to be necessary for convergence in some cases. Adding noise to messages was found to improve communication by <em>forcing messages to be discrete!</em></p>
+            <p>
+              This is a very well-written paper which develops an extremely important framework for learning communication in multi-agent systems. There are also several practical notes for training these models. There are only a few papers in this field at this point - this one is probably the best.
+            </p>
+          </div>
+        </div>
+      </div>
+
     <div id="theorypapers" class="timelineitem">
       <div class="tdate">May 2016</div>
       <div id="ttitle" onclick="showDetails('kenji_minima')">
