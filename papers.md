@@ -143,7 +143,9 @@ permalink: /papers/
         </div>
           <div class="tdesc">
             <p>
-              Very precise findings. Nature vs nurture?</p>
+              This is a meta study on genetic heritability of traits (both mental and physical) in twins. Heritability across all domains of traits ends up being 49% which leaves the question of nature vs. nurture in a statistically overwhelming deadlock.</p>
+              <p>
+              I like the paper because it surveys an extremely broad range of traits and thus obtains the highest statistical significance possible for a twin study. Usually these studies are limited by statistical uncertainty, but this one actually has enough data to make some strong claims. I think the most exciting finding is the 49% heritability statistic; either it's the cumulative effect of confirmation bias in the original papers or the impacts of nature and nurture are truly equal.</p>
           </div>
         </div>
       </div>
@@ -191,6 +193,30 @@ permalink: /papers/
             <p>
               The paper is significant because 1) it showcases the huge potential of RNNs and 2) it is one of the first good examples of the Lego Effect (see my <a href="https://greydanus.github.io/2016/08/21/handwriting/">blog post</a> inspired by this paper)
             </p>
+          </div>
+        </div>
+      </div>
+
+
+    <div class="tyear">2011</div>
+
+    <div id="physicspapers" class="timelineitem">
+      <div class="tdate">January 2011</div>
+      <div id="ttitle" onClick="showDetails('walking_running_rain')">
+        Walking or running in the rain — a simple derivation of a general solution</div>
+      <div id="walking_running_rain" style="display:none;">
+        <div class="tauthor">Andrea Ehrmann and Tomasz Blachowicz</div>
+        <div class="taffiliation">German and Polish Universities</div>
+        <div class="tcontent">
+          <a href="http://iopscience.iop.org/article/10.1088/0143-0807/32/2/008/pdf">
+            <div class="timg_border"><img class="timage" src="/assets/papers/walking_running_rain.png"></div>
+          </a>
+        </div>
+          <div class="tdesc">
+            <p>
+              This paper addresses an age-old physics question: what is the optimal speed for a person to walk in the rain to minimize the number of raindrops which strike them? The authors make a couple questionable simplifications - for example, they approximate the human as a tall cylinder. This allows them to solve for optimal walking speeds analytically. Apparently, it's best to match the horizontal component of the rain's velocity.</p>
+            <p>
+              I love this paper not because it's great physics but because it captures the heart and soul of physics. Doing physics is a way of playing with the world around you. It's about asking simple, clever questions and then taking delight in finding a creative solution. While exploring the original question, I was surprised to find dozens of academic papers on the subject. I chose this paper because it's approachable and well written. Probably the best way to answer the original question would be with a sophisticated simulation...but where's the fun in that?</p>
           </div>
         </div>
       </div>
