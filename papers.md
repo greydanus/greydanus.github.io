@@ -64,6 +64,28 @@ permalink: /papers/
       </div>
 
     <div id="algpapers" class="timelineitem">
+      <div class="tdate">June 2016</div>
+      <div id="ttitle" onClick="showDetails('trpo')">
+        Trust Region Policy Optimization</div>
+      <div id="trpo" style="display:none;">
+        <div class="tauthor">John Schulman, Sergey Levine, Philipp Moritz, Michael I. Jordan, Pieter Abbeel</div>
+        <div class="taffiliation">UC Berkeley EECS</div>
+        <div class="tcontent">
+          <a href="https://arxiv.org/abs/1502.05477">
+            <div class="timg_border"><img class="timage" src="/assets/papers/trpo.png"></div>
+          </a>
+        </div>
+          <div class="tdesc">
+            <p>
+              Trust Region Policy Optimization (TRPO) is a procedure for optimizing the policy function, which maps an agent's states to future actions, with respect to the advantage function. The entire first part of this paper is spent deriving a new theoretical result: <em>the <a href="https://people.eecs.berkeley.edu/~pabbeel/cs287-fa09/readings/KakadeLangford-icml2002.pdf">Kakade and Langford (2002)</a> policy improvement bound can be extended to general stochastic policies</em> using, in this case, Kullback-Liebler (KL) divergence as a distance measure between the old and new policies. The authors use this theoretical result to suggest a new method for optimizing large, nonlinear policies; think of TRPO as a new way to estimate the gradients in a policy network. Then, they demonstrate that it works well in practice on a variety of tasks including simulated robotic gaits and the Atari games.</p>
+            <p>
+              This paper, especially the first several pages, is extremely dense. That said, it's a great glimpse at the theoretical frontiers of reinforcement learning. Furthermore, the TRPO algorithm is quite powerful and general so I suspect that it will gain a lot of usage. In particular, <b>OpenAI</b> seems to favor TRPO over other RL learning algorithms. I noticed that the 2015 DQN paper by Mnih et al. had consistently higher scores on the Atari games so I wonder what advantages TRPO has over DQN.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    <div id="algpapers" class="timelineitem">
       <div class="tdate">May 2016</div>
       <div id="ttitle" onClick="showDetails('foerster_agent_language')">
         Learning to Communicate with Deep Multi-Agent Reinforcement Learning</div>
@@ -99,7 +121,10 @@ permalink: /papers/
         </div>
           <div class="tdesc">
             <p>
-              Really important theoretical result for deep learning. Oral presentation at NIPS 2016.
+              <b>Taken from the abstract:</b> For the squared loss function of a deep linear neural network with any depth and any width, 1) the function is non-convex and non-concave 2) every local minimum is a global minimum, 3) every critical point that is not a global minimum is a saddle point, and 4) there exist "bad" saddle points (where the Hessian has no negative eigenvalue) for networks with more than three layers but not for networks with fewer than three layers.
+            </p>
+            <p>
+              One of the biggest issues in deep learning is the gap between theory and practice so this paper is an important step in the right direction! Training deep networks used to be considered intractible by many researchers in part because their cost functions are neither convex nor concave. People thought that nets would get 'stuck' in poor local minimal during training. This paper finally lays that issue to rest by showing that (at least in the linear case) deep nets do not have poor local minima.
             </p>
           </div>
         </div>
