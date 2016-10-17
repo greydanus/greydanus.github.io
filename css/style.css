@@ -118,6 +118,12 @@ ul {
   color: rgb(0,0,132);
 }
 
+.tlink {
+  font-size:14px;
+  font-style:italic;
+  color: #B00;
+}
+
 .tauthor {
   font-size: 15px;
   font-weight: 300;
