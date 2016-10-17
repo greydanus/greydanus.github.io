@@ -24,14 +24,16 @@ permalink: /papers/
   	 <div id="predictivepapers" class="timelineitem">
       <div class="tdate">August 2016</div>
       <div id="ttitle" onClick="showDetails('xor_net')">
-        XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks</div>
+        XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks
+        <a href="https://arxiv.org/abs/1603.05279">
+          <sup class="tlink">link</sup>
+        </a>
+      </div>
       <div id="xor_net" style="display:none;">
-        <div class="tauthor">Mohammad Rastegari, Vicente Ordonez, Joseph Redmon, Ali Farhadi</div>
+        <div class="tauthor">Mohammad Rastegari, Vicente Ordonez, Joseph Redmon, Ali Farhadi </div>
         <div class="taffiliation">Allen Institute for AI</div>
         <div class="tcontent">
-          <a href="https://arxiv.org/abs/1603.05279">
-            <div class="timg_border"><img class="timage" src="/assets/papers/xor_net.png"></div>
-          </a>
+          <div class="timg_border"><img class="timage" src="/assets/papers/xor_net.png"></div>
         </div>
         	<div class="tdesc">
             <p>
@@ -45,14 +47,16 @@ permalink: /papers/
      <div id="physicspapers" class="timelineitem">
       <div class="tdate">July 2016</div>
       <div id="ttitle" onClick="showDetails('eulerian_fluids')">
-        Accelerating Eulerian Fluid Simulation With Convolutional Networks</div>
+        Accelerating Eulerian Fluid Simulation With Convolutional Networks
+        <a href="https://arxiv.org/abs/1607.03597v2">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
       <div id="eulerian_fluids" style="display:none;">
         <div class="tauthor">Jonathan Tompson, Kristofer Schlachter, Pablo Sprechmann, Ken Perlin</div>
         <div class="taffiliation">Google, NYU</div>
         <div class="tcontent">
-          <a href="https://arxiv.org/abs/1607.03597v2">
             <div class="timg_border"><img class="timage" src="/assets/papers/eulerian_fluids.png"></div>
-          </a>
         </div>
           <div class="tdesc">
             <p>
@@ -66,14 +70,16 @@ permalink: /papers/
     <div id="algpapers" class="timelineitem">
       <div class="tdate">June 2016</div>
       <div id="ttitle" onClick="showDetails('trpo')">
-        Trust Region Policy Optimization</div>
+        Trust Region Policy Optimization
+        <a href="https://arxiv.org/abs/1502.05477">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
       <div id="trpo" style="display:none;">
         <div class="tauthor">John Schulman, Sergey Levine, Philipp Moritz, Michael I. Jordan, Pieter Abbeel</div>
         <div class="taffiliation">UC Berkeley EECS</div>
         <div class="tcontent">
-          <a href="https://arxiv.org/abs/1502.05477">
             <div class="timg_border"><img class="timage" src="/assets/papers/trpo.png"></div>
-          </a>
         </div>
           <div class="tdesc">
             <p>
@@ -88,14 +94,16 @@ permalink: /papers/
     <div id="algpapers" class="timelineitem">
       <div class="tdate">May 2016</div>
       <div id="ttitle" onClick="showDetails('foerster_agent_language')">
-        Learning to Communicate with Deep Multi-Agent Reinforcement Learning</div>
+        Learning to Communicate with Deep Multi-Agent Reinforcement Learning
+        <a href="https://arxiv.org/abs/1605.06676v2">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
       <div id="foerster_agent_language" style="display:none;">
         <div class="tauthor">Jakob N. Foerster, Yannis M. Assael, Nando de Freitas, Shimon Whiteson</div>
         <div class="taffiliation">Google DeepMind</div>
         <div class="tcontent">
-          <a href="https://arxiv.org/abs/1605.06676v2">
             <div class="timg_border"><img class="timage" src="/assets/papers/foerster_agent_language.png"></div>
-          </a>
         </div>
           <div class="tdesc">
             <p>
@@ -110,14 +118,16 @@ permalink: /papers/
     <div id="theorypapers" class="timelineitem">
       <div class="tdate">May 2016</div>
       <div id="ttitle" onClick="showDetails('kenji_minima')">
-        Deep Learning without Poor Local Minima</div>
+        Deep Learning without Poor Local Minima
+        <a href="https://arxiv.org/abs/1605.07110">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
       <div id="kenji_minima" style="display:none;">
         <div class="tauthor">Kenji Kawaguchi</div>
         <div class="taffiliation">MIT</div>
         <div class="tcontent">
-          <a href="https://arxiv.org/abs/1605.07110">
             <div class="timg_border"><img class="timage" src="/assets/papers/kenji_minima.png"></div>
-          </a>
         </div>
           <div class="tdesc">
             <p>
@@ -133,14 +143,16 @@ permalink: /papers/
     <div id="neuropapers" class="timelineitem">
       <div class="tdate">April 2016</div>
       <div id="ttitle" onClick="showDetails('semantic_map')">
-        Natural speech reveals the semantic maps that tile human cerebral cortex</div>
+        Natural speech reveals the semantic maps that tile human cerebral cortex
+        <a href="http://gallantlab.org/index.php/publications/natural-speech-reveals-the-semantic-maps-that-tile-human-cerebral-cortex/">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
       <div id="semantic_map" style="display:none;">
         <div class="tauthor">Alexander G. Huth, Wendy A. de Heer, Thomas L. Griffiths,  Frédéric E. Theunissen, Jack L. Gallant</div>
         <div class="taffiliation">Berkeley</div>
         <div class="tcontent">
-          <a href="http://gallantlab.org/index.php/publications/natural-speech-reveals-the-semantic-maps-that-tile-human-cerebral-cortex/">
             <div class="timg_border"><img class="timage" src="/assets/papers/semantic_map.png"></div>
-          </a>
         </div>
           <div class="tdesc">
             <p>
@@ -157,14 +169,16 @@ permalink: /papers/
     <div id="miscpapers" class="timelineitem">
       <div class="tdate">May 2016</div>
       <div id="ttitle" onClick="showDetails('twin_heritability')">
-        Meta-analysis of the heritability of human traits based on fifty years of twin studies</div>
+        Meta-analysis of the heritability of human traits based on fifty years of twin studies
+        <a href="http://www.nature.com/ng/journal/v47/n7/full/ng.3285.html">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
       <div id="twin_heritability" style="display:none;">
         <div class="tauthor">Tinca J C Polderman, Beben Benyamin, Christiaan A de Leeuw,  Patrick F Sullivan, Arjen van Bochoven, Peter M Visscher, Danielle Posthuma</div>
         <div class="taffiliation">Large collaboration, mostly Dutch</div>
         <div class="tcontent">
-          <a href="http://www.nature.com/ng/journal/v47/n7/full/ng.3285.html">
             <div class="timg_border"><img class="timage" src="/assets/papers/twin_heritability.png"></div>
-          </a>
         </div>
           <div class="tdesc">
             <p>
@@ -180,14 +194,16 @@ permalink: /papers/
     <div id="algpapers" class="timelineitem">
       <div class="tdate">October 2014</div>
       <div id="ttitle" onClick="showDetails('graves_turing')">
-        Neural Turing Machines</div>
+        Neural Turing Machines
+        <a href="https://arxiv.org/abs/1410.5401">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
       <div id="graves_turing" style="display:none;">
         <div class="tauthor">Alex Graves, Greg Wayne, Ivo Danihelka</div>
         <div class="taffiliation">Google DeepMind</div>
         <div class="tcontent">
-          <a href="https://arxiv.org/abs/1410.5401">
             <div class="timg_border"><img class="timage" src="/assets/papers/graves_turing.png"></div>
-          </a>
         </div>
           <div class="tdesc">
             <p>
@@ -203,14 +219,16 @@ permalink: /papers/
     <div id="generativepapers" class="timelineitem">
       <div class="tdate">June 2014</div>
       <div id="ttitle" onClick="showDetails('graves_handwriting')">
-        Generating Sequences With Recurrent Neural Networks</div>
+        Generating Sequences With Recurrent Neural Networks
+        <a href="https://arxiv.org/abs/1308.0850">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
       <div id="graves_handwriting" style="display:none;">
         <div class="tauthor">Alex Graves</div>
         <div class="taffiliation">U Toronto</div>
         <div class="tcontent">
-          <a href="https://arxiv.org/abs/1308.0850">
             <div class="timg_border"><img class="timage" src="/assets/papers/graves_handwriting.png"></div>
-          </a>
         </div>
           <div class="tdesc">
             <p>
@@ -228,14 +246,16 @@ permalink: /papers/
     <div id="physicspapers" class="timelineitem">
       <div class="tdate">January 2011</div>
       <div id="ttitle" onClick="showDetails('walking_running_rain')">
-        Walking or running in the rain — a simple derivation of a general solution</div>
+        Walking or running in the rain — a simple derivation of a general solution
+        <a href="http://iopscience.iop.org/article/10.1088/0143-0807/32/2/008/pdf">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
       <div id="walking_running_rain" style="display:none;">
         <div class="tauthor">Andrea Ehrmann and Tomasz Blachowicz</div>
         <div class="taffiliation">German and Polish Universities</div>
         <div class="tcontent">
-          <a href="http://iopscience.iop.org/article/10.1088/0143-0807/32/2/008/pdf">
             <div class="timg_border"><img class="timage" src="/assets/papers/walking_running_rain.png"></div>
-          </a>
         </div>
           <div class="tdesc">
             <p>
