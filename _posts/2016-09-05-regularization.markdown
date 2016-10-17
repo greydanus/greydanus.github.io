@@ -120,7 +120,7 @@ Type | Test accuracy\\(^1\\) | Runtime\\(^2\\) (relative to first entry) | Min v
 :--- | :---: | :---: | :---: | :---:
 No regularization | 93.2% | 1.00 | -1.95 | 1.64
 Dropout | 89.5% | 1.49 | -1.42 | 1.18
-Gaussian weight regularization | 91.5% | 1. | \\(\approx\\)0 | 0.80
+Gaussian weight regularization | 91.5% | 1.85 | \\(\approx\\)0 | 0.80
 L2 regularization | 76.0% | 1.25 | -0.062 | 0.094
 Weight normalization | 71.1% | 1.58 | -0.05 | 0.08
 
