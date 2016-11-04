@@ -22,7 +22,7 @@ permalink: /papers/
     <div class="tyear">2016</div>
 
     <div id="theorypapers" class="timelineitem">
-      <div class="tdate">October 2016</div>
+      <div class="tdate">October</div>
       <div class="ttitle" onClick="showDetails('nn_crypto')">
         Learning to Protect Communications with Adversarial Neural Cryptography
         <a href="https://arxiv.org/abs/1610.06918v1">
@@ -46,7 +46,7 @@ permalink: /papers/
       </div>
 
   	 <div id="predictivepapers" class="timelineitem">
-      <div class="tdate">August 2016</div>
+      <div class="tdate">August</div>
       <div class="ttitle" onClick="showDetails('xor_net')">
         XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks
         <a href="https://arxiv.org/abs/1603.05279">
@@ -69,7 +69,7 @@ permalink: /papers/
       </div>
 
      <div id="physicspapers" class="timelineitem">
-      <div class="tdate">July 2016</div>
+      <div class="tdate">July</div>
       <div class="ttitle" onClick="showDetails('eulerian_fluids')">
         Accelerating Eulerian Fluid Simulation With Convolutional Networks
         <a href="https://arxiv.org/abs/1607.03597v2">
@@ -92,7 +92,7 @@ permalink: /papers/
       </div>
 
     <div id="algpapers" class="timelineitem">
-      <div class="tdate">June 2016</div>
+      <div class="tdate">June</div>
       <div class="ttitle" onClick="showDetails('trpo')">
         Trust Region Policy Optimization
         <a href="https://arxiv.org/abs/1502.05477">
@@ -116,7 +116,7 @@ permalink: /papers/
       </div>
 
     <div id="algpapers" class="timelineitem">
-      <div class="tdate">May 2016</div>
+      <div class="tdate">May</div>
       <div class="ttitle" onClick="showDetails('foerster_agent_language')">
         Learning to Communicate with Deep Multi-Agent Reinforcement Learning
         <a href="https://arxiv.org/abs/1605.06676v2">
@@ -140,7 +140,7 @@ permalink: /papers/
       </div>
 
     <div id="theorypapers" class="timelineitem">
-      <div class="tdate">May 2016</div>
+      <div class="tdate">May</div>
       <div class="ttitle" onClick="showDetails('kenji_minima')">
         Deep Learning without Poor Local Minima
         <a href="https://arxiv.org/abs/1605.07110">
@@ -165,7 +165,7 @@ permalink: /papers/
       </div>
 
     <div id="neuropapers" class="timelineitem">
-      <div class="tdate">April 2016</div>
+      <div class="tdate">April</div>
       <div class="ttitle" onClick="showDetails('semantic_map')">
         Natural speech reveals the semantic maps that tile human cerebral cortex
         <a href="http://gallantlab.org/index.php/publications/natural-speech-reveals-the-semantic-maps-that-tile-human-cerebral-cortex/">
@@ -191,7 +191,7 @@ permalink: /papers/
     <div class="tyear">2015</div>
 
     <div id="miscpapers" class="timelineitem">
-      <div class="tdate">May 2016</div>
+      <div class="tdate">May</div>
       <div class="ttitle" onClick="showDetails('twin_heritability')">
         Meta-analysis of the heritability of human traits based on fifty years of twin studies
         <a href="http://www.nature.com/ng/journal/v47/n7/full/ng.3285.html">
@@ -216,7 +216,7 @@ permalink: /papers/
     <div class="tyear">2014</div>
 
     <div id="algpapers" class="timelineitem">
-      <div class="tdate">October 2014</div>
+      <div class="tdate">October</div>
       <div class="ttitle" onClick="showDetails('graves_turing')">
         Neural Turing Machines
         <a href="https://arxiv.org/abs/1410.5401">
@@ -241,7 +241,7 @@ permalink: /papers/
       </div>
 
     <div id="generativepapers" class="timelineitem">
-      <div class="tdate">June 2014</div>
+      <div class="tdate">June</div>
       <div class="ttitle" onClick="showDetails('graves_handwriting')">
         Generating Sequences With Recurrent Neural Networks
         <a href="https://arxiv.org/abs/1308.0850">
@@ -268,7 +268,7 @@ permalink: /papers/
     <div class="tyear">2011</div>
 
     <div id="physicspapers" class="timelineitem">
-      <div class="tdate">January 2011</div>
+      <div class="tdate">January</div>
       <div class="ttitle" onClick="showDetails('walking_running_rain')">
         Walking or running in the rain — a simple derivation of a general solution
         <a href="http://iopscience.iop.org/article/10.1088/0143-0807/32/2/008/pdf">
@@ -286,6 +286,31 @@ permalink: /papers/
               This paper addresses an age-old physics question: what is the optimal speed for a person to walk in the rain to minimize the number of raindrops which strike them? The authors make a couple questionable simplifications - for example, they approximate the human as a tall cylinder. This allows them to solve for optimal walking speeds analytically. Apparently, it's best to match the horizontal component of the rain's velocity.</p>
             <p>
               I love this paper not because it's great physics but because it captures the heart and soul of physics. Doing physics is a way of playing with the world around you. It's about asking simple, clever questions and then taking delight in finding a creative solution. While exploring the original question, I was surprised to find dozens of academic papers on the subject. I chose this paper because it's approachable and well written. Probably the best way to answer the original question would be with a sophisticated simulation...but where's the fun in that?</p>
+          </div>
+        </div>
+      </div>
+
+    <div class="tyear">1989</div>
+
+    <div id="algpapers" class="timelineitem">
+      <div class="tdate">January</div>
+      <div class="ttitle" onClick="showDetails('nn-univ-apprx')">
+        Multilayer feedforward networks are universal approximators
+        <a href="http://www.sciencedirect.com/science/article/pii/0893608089900208">
+          <sup  class="tlink">link</sup>
+        </a>
+      </div>
+      <div id="nn-univ-apprx" style="display:none;">
+        <div class="tauthor">Kur Hornik, Maxwell Stinchcombe and Halber White</div>
+        <div class="taffiliation">Vienna University of Technology, UC San Diego</div>
+        <div class="tcontent">
+            <div class="timg_border"><img class="timage" src="/assets/papers/nn-univ-apprx.png"></div>
+        </div>
+          <div class="tdesc">
+            <p>
+              <b>Highlight reel from the abstract:</b> Standard feedforward networks with as few as one hidden layer and an arbitrary number of hidden units are universal function approximators. They can approximate any <a href="https://en.wikipedia.org/wiki/Borel_measure">Borel</a> measureable function from one finite dimensional space to another with arbitrary accuracy.</p>
+            <p>
+              This is a math paper, so it's pretty dry. It's also one of the most important theoretical pillars of deep learning. Knowing that, in theory, neural networks can approximate any function sets our mind at ease every time we throw a neural network at a new challenge. Unfortunately, there are still a lot of functions that neural networks can't approximate in practice. More recent papers have also shown that deep neural networks have better convergence properties/are easier to train than shallow networks for some function classes. In depth summary <a href="http://deeplearning.cs.cmu.edu/notes/Sonia_Hornik.pdf">here</a>.</p>
           </div>
         </div>
       </div>
