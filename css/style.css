@@ -114,8 +114,10 @@ ul {
 }
 .ttitle {
   font-size: 20px;
-  font-weight: 425;
-  color: rgb(0,0,132);
+}
+
+.ttitle:hover {
+  color: #119;
 }
 
 .tlink {
