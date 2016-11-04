@@ -81,7 +81,7 @@
 
   <article class="post-content">
   <body onload="start()">
-<p>A fairly random set of papers that caught my eye. Updated weekly. Filter by subject using buttons below, click for details</p>
+<p>A fairly random set of papers that I found interesting. Updated weekly. Filter by subject, click for details</p>
 
 <center>
 	<div class="showmore" id="showphysicspapers" style="display:inline-block;">Physics</div> 
@@ -100,7 +100,7 @@
 
     <div id="theorypapers" class="timelineitem">
       <div class="tdate">October 2016</div>
-      <div id="ttitle" onclick="showDetails('nn_crypto')">
+      <div class="ttitle" onclick="showDetails('nn_crypto')">
         Learning to Protect Communications with Adversarial Neural Cryptography
         <a href="https://arxiv.org/abs/1610.06918v1">
           <sup class="tlink">link</sup>
@@ -114,17 +114,17 @@
         </div>
           <div class="tdesc">
             <p>
-              This is an awesome proof-of-concept paper. Though not strictly theoretical, the paper proves that neural networks can, "learn to use secret keys to protect information from other neural networks." This is a very interesting property in its own right. Furthermore, while these results are not immediately applicable, they could become very important in the long term.</p>
-            <p>
-              TODO: another paragraph goes here
+              It looks like the researchers trained two neural networks (Alice and Bob) to establish a communication protocol with one another, then penalized the cost function whenever a third network (Eve) was able to decipher messages in that communication. As an extra flourish, they showed that it's possible for the Alice and Bob networks to selectively encrypt information - in other words, learn to keep only some of the information in their messages private.
             </p>
+            <p>
+              This is an awesome proof-of-concept paper. <u>Though not strictly theoretical</u>, the paper shows that neural networks can <i>"learn to use secret keys to protect information from other neural networks."</i> This is a very interesting property in its own right. While these results are not immediately applicable, they could become important several years down the road (when neural networks are more ubiquitous).</p>
           </div>
         </div>
       </div>
 
   	 <div id="predictivepapers" class="timelineitem">
       <div class="tdate">August 2016</div>
-      <div id="ttitle" onclick="showDetails('xor_net')">
+      <div class="ttitle" onclick="showDetails('xor_net')">
         XNOR-Net: ImageNet Classification Using Binary Convolutional Neural Networks
         <a href="https://arxiv.org/abs/1603.05279">
           <sup class="tlink">link</sup>
@@ -147,7 +147,7 @@
 
      <div id="physicspapers" class="timelineitem">
       <div class="tdate">July 2016</div>
-      <div id="ttitle" onclick="showDetails('eulerian_fluids')">
+      <div class="ttitle" onclick="showDetails('eulerian_fluids')">
         Accelerating Eulerian Fluid Simulation With Convolutional Networks
         <a href="https://arxiv.org/abs/1607.03597v2">
           <sup class="tlink">link</sup>
@@ -170,7 +170,7 @@
 
     <div id="algpapers" class="timelineitem">
       <div class="tdate">June 2016</div>
-      <div id="ttitle" onclick="showDetails('trpo')">
+      <div class="ttitle" onclick="showDetails('trpo')">
         Trust Region Policy Optimization
         <a href="https://arxiv.org/abs/1502.05477">
           <sup class="tlink">link</sup>
@@ -194,7 +194,7 @@
 
     <div id="algpapers" class="timelineitem">
       <div class="tdate">May 2016</div>
-      <div id="ttitle" onclick="showDetails('foerster_agent_language')">
+      <div class="ttitle" onclick="showDetails('foerster_agent_language')">
         Learning to Communicate with Deep Multi-Agent Reinforcement Learning
         <a href="https://arxiv.org/abs/1605.06676v2">
           <sup class="tlink">link</sup>
@@ -218,7 +218,7 @@
 
     <div id="theorypapers" class="timelineitem">
       <div class="tdate">May 2016</div>
-      <div id="ttitle" onclick="showDetails('kenji_minima')">
+      <div class="ttitle" onclick="showDetails('kenji_minima')">
         Deep Learning without Poor Local Minima
         <a href="https://arxiv.org/abs/1605.07110">
           <sup class="tlink">link</sup>
@@ -243,7 +243,7 @@
 
     <div id="neuropapers" class="timelineitem">
       <div class="tdate">April 2016</div>
-      <div id="ttitle" onclick="showDetails('semantic_map')">
+      <div class="ttitle" onclick="showDetails('semantic_map')">
         Natural speech reveals the semantic maps that tile human cerebral cortex
         <a href="http://gallantlab.org/index.php/publications/natural-speech-reveals-the-semantic-maps-that-tile-human-cerebral-cortex/">
           <sup class="tlink">link</sup>
@@ -269,7 +269,7 @@
 
     <div id="miscpapers" class="timelineitem">
       <div class="tdate">May 2016</div>
-      <div id="ttitle" onclick="showDetails('twin_heritability')">
+      <div class="ttitle" onclick="showDetails('twin_heritability')">
         Meta-analysis of the heritability of human traits based on fifty years of twin studies
         <a href="http://www.nature.com/ng/journal/v47/n7/full/ng.3285.html">
           <sup class="tlink">link</sup>
@@ -294,7 +294,7 @@
 
     <div id="algpapers" class="timelineitem">
       <div class="tdate">October 2014</div>
-      <div id="ttitle" onclick="showDetails('graves_turing')">
+      <div class="ttitle" onclick="showDetails('graves_turing')">
         Neural Turing Machines
         <a href="https://arxiv.org/abs/1410.5401">
           <sup class="tlink">link</sup>
@@ -319,7 +319,7 @@
 
     <div id="generativepapers" class="timelineitem">
       <div class="tdate">June 2014</div>
-      <div id="ttitle" onclick="showDetails('graves_handwriting')">
+      <div class="ttitle" onclick="showDetails('graves_handwriting')">
         Generating Sequences With Recurrent Neural Networks
         <a href="https://arxiv.org/abs/1308.0850">
           <sup class="tlink">link</sup>
@@ -346,7 +346,7 @@
 
     <div id="physicspapers" class="timelineitem">
       <div class="tdate">January 2011</div>
-      <div id="ttitle" onclick="showDetails('walking_running_rain')">
+      <div class="ttitle" onclick="showDetails('walking_running_rain')">
         Walking or running in the rain — a simple derivation of a general solution
         <a href="http://iopscience.iop.org/article/10.1088/0143-0807/32/2/008/pdf">
           <sup class="tlink">link</sup>
