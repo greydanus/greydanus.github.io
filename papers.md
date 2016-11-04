@@ -292,7 +292,7 @@ permalink: /papers/
 
     <div class="tyear">1989</div>
 
-    <div id="algpapers" class="timelineitem">
+    <div id="theorypapers" class="timelineitem">
       <div class="tdate">January</div>
       <div class="ttitle" onClick="showDetails('nn-univ-apprx')">
         Multilayer feedforward networks are universal approximators
