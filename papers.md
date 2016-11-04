@@ -308,9 +308,11 @@ permalink: /papers/
         </div>
           <div class="tdesc">
             <p>
-              <b>Highlight reel from the abstract:</b> Standard feedforward networks with as few as one hidden layer and an arbitrary number of hidden units are universal function approximators. They can approximate any <a href="https://en.wikipedia.org/wiki/Borel_measure">Borel</a> measureable function from one finite dimensional space to another with arbitrary accuracy.</p>
+              <b>Highlight reel:</b> Standard feedforward networks with as few as one hidden layer and an arbitrary number of hidden units can approximate any measurable function to any degree of accuracy. There are no theoretical constraints on the success of a feedforward network; lack of success is due to insufficient number of hidden units, poor learning, or lack of deterministic relationship between input and target. In depth summary <a href="http://deeplearning.cs.cmu.edu/notes/Sonia_Hornik.pdf">here</a>
+            </p>
             <p>
-              This is a math paper, so it's pretty dry. It's also one of the most important theoretical pillars of deep learning. Knowing that, in theory, neural networks can approximate any function sets our mind at ease every time we throw a neural network at a new challenge. Unfortunately, there are still a lot of functions that neural networks can't approximate in practice. More recent papers have also shown that deep neural networks have better convergence properties/are easier to train than shallow networks for some function classes. In depth summary <a href="http://deeplearning.cs.cmu.edu/notes/Sonia_Hornik.pdf">here</a>.</p>
+              This is a math paper so it's pretty dry. It's also one of the most important theoretical pillars of deep learning. Another old paper (Barron, 1993) adds convergence bounds to this theoretical framework, <i>"Because of the economy of number of parameters, order </i>nd<i> instead of n^d, these approximation rates permit satisfactory estimation...even in moderately high-dimensional problems."</i> Knowing these guarantees enables deep learning researchers to use neural networks to make new and ever more creative approximations without worrying about whether there are theoretical restrictions.
+            </p>
           </div>
         </div>
       </div>
