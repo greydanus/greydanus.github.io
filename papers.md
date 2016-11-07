@@ -15,11 +15,62 @@ permalink: /papers/
   <div class="showmore" id="showalgpapers" style="display:inline-block;">Algorithmic DL</div>
   <div class="showmore" id="showtheorypapers" style="display:inline-block;">DL Theory</div>
 </center>
+<!-- <div id="sparse-ntm" style="display:none;"> -->
 
 <div class="container">
   <div id="timeline">
 
     <div class="tyear">2016</div>
+
+    <div id="algpapers" class="timelineitem">
+      <div class="tdate">October</div>
+      <div class="ttitle" onClick="showDetails('sparse-ntm')">
+        Scaling Memory-Augmented Neural Networks with Sparse Reads and Writes
+        <a href="https://arxiv.org/abs/1610.09027v1">
+          <sup class="tlink">link</sup>
+        </a>
+      </div>
+      <div id="sparse-ntm" style="display:none;">
+        <div class="tauthor">Jack W Rae, Jonathan J Hunt, Tim Harley, Ivo Danihelka, Andrew Senior, Greg Wayne, Alex Graves, Timothy P Lillicrap</div>
+        <div class="taffiliation">Google DeepMind</div>
+        <div class="tcontent">
+          <div class="timg_border"><img class="timage" src="/assets/papers/sparse-ntm.png"></div>
+        </div>
+          <div class="tdesc">
+            <p>
+              DeepMind researchers used a bag of really clever tricks to <i>drastically</i> improve the memory and computational efficiency of a <a href="https://arxiv.org/abs/1410.5401">Neural Turing Machine</a>. Sparse Access Memory (SAM), as they call it, is 1000x faster and uses 3000x less physical memory than non-sparse model. As a cherry on top, they provide a convincing argument for why an optimal content-based addresing scheme of memory management cannot be much more efficient than this model. The sparse reads and writes are chosen by a tree data structure sorted according to nearest-neighbors. For a million memory vectors, the SAM only reads/writes to ~8 locations at a time (huge improvement).
+            </p>
+            <p>
+              This is a very personal reaction...BUT I FREAKING LOVE THIS PAPER!!! It's not particularly creative or shocking. Indeed, the most exciting and original work was presented in the original Neural Turing Machine paper and the recent <a href="http://www.nature.com/nature/journal/v538/n7626/full/nature20101.html">Differentiable Neural Computer</a> (DNC) paper. What I love about this paper is that with just a few simple but clever adjustments to those algorithms it achieves dramatically better results. Plus the acronym spells my name...
+            </p>
+          </div>
+        </div>
+      </div>
+
+    <div id="algpapers" class="timelineitem">
+      <div class="tdate">October</div>
+      <div class="ttitle" onClick="showDetails('commnet')">
+        Learning Multiagent Communication with Backpropagation
+        <a href="https://arxiv.org/abs/1605.07736">
+          <sup class="tlink">link</sup>
+        </a>
+      </div>
+      <div id="commnet" style="display:none;">
+        <div class="tauthor">Sainbayar Sukhbaatar, Arthur Szlam, Rob Fergus</div>
+        <div class="taffiliation">Facebook AI Research, Courant Institute (NYU)</div>
+        <div class="tcontent">
+          <div class="timg_border"><img class="timage" src="/assets/papers/commnet.png"></div>
+        </div>
+          <div class="tdesc">
+            <p>
+              The authors introduce a formalism for multi-agent communication with a single communication channel and use it to solve several proof-of-concept tasks. <em>You can understand almost all of the paper by looking at the diagram at the top of page 3.</em> There are three proof-of-concept tasks 1) decentralized traffic control 2) predation 3) cooperative bAbI. There is a fourth sanity-check task but it's not especially interesting. Tasks 1) and 2) appear to have been invented by the authors but provide reasonable metrics.
+            </p>
+            <p>
+              The true strength of the paper lies in the formalism it introduces for multi-agent RL communication tasks: it's both scalable and modular. The ideas in this paper compliment DeepMind's recent <a href="https://arxiv.org/abs/1605.06676v2">communication paper</a> but I wish that the authors had made more of an effort to build on DeepMind's work. Sometimes it seems as though they are reinventing the wheel...even if the end result is a very elegant wheel.
+            </p>
+          </div>
+        </div>
+      </div>
 
     <div id="theorypapers" class="timelineitem">
       <div class="tdate">October</div>
@@ -41,6 +92,59 @@ permalink: /papers/
             </p>
             <p>
               This is an awesome proof-of-concept paper. <u>Though not strictly theoretical</u>, the paper shows that neural networks can <i>"learn to use secret keys to protect information from other neural networks."</i> This is a very interesting property in its own right. While these results are not immediately applicable, they could become important several years down the road (when neural networks are more ubiquitous).</p>
+          </div>
+        </div>
+      </div>
+
+    <div id="generativepapers" class="timelineitem">
+      <div class="tdate">September</div>
+      <div class="ttitle" onClick="showDetails('hm-rnn')">
+        Hierarchical Multiscale Recurrent Neural Networks
+        <a href="https://arxiv.org/abs/1609.01704">
+          <sup class="tlink">link</sup>
+        </a>
+      </div>
+      <div id="hm-rnn" style="display:none;">
+        <div class="tauthor">Junyoung Chung, Sungjin Ahn, Yoshua Bengio</div>
+        <div class="taffiliation">University of Montreal</div>
+        <div class="tcontent">
+          <div class="timg_border"><img class="timage" src="/assets/papers/hm-rnn.png"></div>
+        </div>
+          <div class="tdesc">
+            <p>
+              Abbreviated HM-RNN, this architecture is a cleverly modified stack of LSTMs. Previous papers (going back to the <a href="ftp://ftp.idsia.ch/pub/juergen/chunker.pdf">early 90's</a>) have dreamed of using multiple stacked recurrent neural networks to process data at different timescales. This looks to be the most successful attempt so far. The key to this paper's success is 1) allowing the RNNs to choose whether they want to COPY, UPDATE, or FLUSH their memory state and 2) having Yoshua Bengio as an author :). In all seriousness, point 1) is a very effective innovation. Look at Figure 4 on page 9 if nothing else!
+            </p>
+            <p>
+              Yes, this is state of the art in recurrent architectures and the authors got some cool results. That said, it doesn't really inspire me. There's nothing particularly exciting but a lot of programming heavy-lifting clearly went into making all this work. The ability to learn patterns at different timescales is key to improving RNNs but I think there must be a way to do it in a less artificial, hand-crafted fashion. I think differentiable memory might help.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    <div id="theorypapers" class="timelineitem">
+      <div class="tdate">August</div>
+      <div class="ttitle" onClick="showDetails('synthgrad')">
+        Decoupled Neural Interfaces using Synthetic Gradients
+        <a href="https://arxiv.org/abs/1608.05343">
+          <sup class="tlink">link</sup>
+        </a>
+      </div>
+      <div id="synthgrad" style="display:none;">
+        <div class="tauthor">Max Jaderberg, Wojciech Marian Czarnecki, Simon Osindero, Oriol Vinyals, Alex Graves, Koray Kavukcuoglu</div>
+        <div class="taffiliation">Google DeepMind</div>
+        <div class="tcontent">
+          <div class="timg_border"><img class="timage" src="/assets/papers/synthgrad.png"></div>
+        </div>
+          <div class="tdesc">
+            <p><i>
+              I implemented ideas from this paper in a <a href="https://nbviewer.jupyter.org/github/greydanus/np_nets/blob/master/synthetic_gradients.ipynb">Jupyter notebook</a> and a <a href="https://gist.github.com/greydanus/1cb90875f24015660ae91fa637f167a9">145-line Gist</a>.
+            </i></p>
+            <p>
+              DeepMind researchers used linear regression to approximate gradients between each layer in a deep neural network computation graph. This effectively 'decoupled' the layers and enabled the model to update its layers asynchronously. The paper remarks that this technique could be very useful in multi-agent systems, recurrent architectures (to extend backpropagation through time), and distributed/parallel computing. This <a href="https://deepmind.com/blog/decoupled-neural-networks-using-synthetic-gradients/">blog post</a> gives a few more details and has some great GIFs.
+            </p>
+            <p>
+              I LOVE THIS PAPER! It's the kind of paper that you do not understand at first because it is such an unexpected idea. Then, when you understand what is going on, you think it's a really stupid idea that could not possibly work. Then you read a little further and realize that it <i>really does work</i>. Then you finally start to admire the authors for having the gumption to try out such an insane idea and follow it to fruition.
+            </p>
           </div>
         </div>
       </div>
