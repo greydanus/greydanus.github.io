@@ -121,7 +121,7 @@ permalink: /papers/
         </div>
       </div>
 
-    <div id="theorypapers" class="timelineitem">
+    <div id="algpapers" class="timelineitem">
       <div class="tdate">August</div>
       <div class="ttitle" onClick="showDetails('synthgrad')">
         Decoupled Neural Interfaces using Synthetic Gradients
