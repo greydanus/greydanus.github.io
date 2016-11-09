@@ -3,7 +3,7 @@ layout: post
 comments: true
 title:  "Learning to Accept Synthetic Gradients"
 excerpt: "Synthetic gradients achieve the perfect balance of stupid and brilliant. In a 100-line Gist I'll introduce this exotic and powerful technique and use it to train a neural network."
-date:   2016-11-05 11:00:00
+date:   2017-11-05 11:00:00
 mathjax: true
 ---
 
