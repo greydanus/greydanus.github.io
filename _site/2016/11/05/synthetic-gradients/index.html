@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sam's Research Blog</title>
+    <title>Learning to Accept Synthetic Gradients</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Science with a spirit of adventure.">
-    <link rel="canonical" href="http://greydanus.github.io/">
+    <link rel="canonical" href="http://greydanus.github.io/2016/11/05/synthetic-gradients/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Sam's Research Blog posts" />
 
     <!-- Custom CSS -->
@@ -73,42 +73,89 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="home">
-  
-  <ul class="posts">
-    
-      <li>
-        <span class="post-date">Nov 5, 2016</span>
-        <a class="post-link" href="/2016/11/05/synthetic-gradients/">Learning to Accept Synthetic Gradients</a>
-        <br>
-        Synthetic gradients achieve the perfect balance of stupid and brilliant. In a 100-line Gist I'll introduce this exotic and powerful technique and use it to train a neural network.
-      </li>
-    
-      <li>
-        <span class="post-date">Sep 5, 2016</span>
-        <a class="post-link" href="/2016/09/05/regularization/">The Art of Regularization</a>
-        <br>
-        Regularization seems fairly insignificant at first glance, but it has a huge impact on deep models. I'll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.
-      </li>
-    
-      <li>
-        <span class="post-date">Aug 21, 2016</span>
-        <a class="post-link" href="/2016/08/21/handwriting/">Scribe: Realistic Handwriting with TensorFlow</a>
-        <br>
-        In this post, I will demonstrate the power of deep learning by using it to generate human-like handwriting. This work is based on <em>Generating Sequences With Recurrent Neural Networks</em> by Alex Graves
-      </li>
-    
-      <li>
-        <span class="post-date">Aug 5, 2016</span>
-        <a class="post-link" href="/2016/08/05/what-is/">What is Deep Learning?</a>
-        <br>
-        After being obsessed with this field for more than a year, I should have a concise and satisfying answer. Strangely, I have three.
-      </li>
-    
-  </ul>
+      <div class="post">
 
+  <header class="post-header">
+    <h1>Learning to Accept Synthetic Gradients</h1>
+    <p class="meta">Nov 5, 2016</p>
+  </header>
+
+  <article class="post-content">
+  <div class="imgcap_noborder">
+	<img src="/assets/papers/synthgrad.png" width="20%" />
 </div>
 
+<p>Synthetic gradients achieve the perfect balance of stupid and brilliant. In a 100-line Gist I’ll introduce this exotic and powerful technique and use it to train a neural network.</p>
+
+<h2 id="the-idea">The Idea</h2>
+
+<p>Just introduce the basic idea and comment on its strengths and weaknesses. Talk about the findings in the paper</p>
+
+<h2 id="the-model">The Model</h2>
+
+<div class="imgcap">
+	<img src="/assets/regularization/mnist.png" width="30%" />
+	<div class="thecap" style="text-align:center">MNIST training samples</div>
+</div>
+
+<p>Just as in my <a href="https://greydanus.github.io/2016/09/05/regularization/">regularization post</a>, we’ll be training an MNIST classifier. Take some code snippets from the Gist.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<span class="kn">from</span> <span class="nn">tensorflow.examples.tutorials.mnist</span> <span class="kn">import</span> <span class="n">input_data</span>
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s">'MNIST_data'</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">batch</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Use diagrams of the model 1) taken from the DeepMind blog post and 2) customized for my code. Write about differences between DeepMind version and my version</p>
+
+<h2 id="results">Results</h2>
+
+<p>Include a graph of 1) regular model 2) stale gradients 3) synthetic gradients. Include a visual of gradients at a random time step, showing that the synthetic ones closely match the real ones</p>
+
+<p>Talk about applications of synthetic gradients to various deep learning models. Multi agent systems</p>
+
+<h2 id="sloth-or-croissant">Sloth or Croissant?</h2>
+
+<p>Closing thoughts go here. Just as with the sloth or croissant meme, it’s hard to tell the different between stupid ideas and really creative/brilliant ideas. How can we tell the difference? Discussion about this</p>
+
+  </article>
+
+  <!-- mathjax -->
+  
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <!-- disqus comments -->
+ 
+  <div id="disqus_thread"></div>
+  <script>
+      /**
+       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+       *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+       */
+      /*
+      var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+      */
+      (function() {  // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          
+          s.src = '//greydanus-blog.disqus.com/embed.js';
+          
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+
+  
+</div>
       </div>
     </div>
 
