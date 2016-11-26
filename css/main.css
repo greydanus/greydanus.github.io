@@ -10,7 +10,7 @@ html, body { height: 100%; }
 
 body {
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.5;
   font-weight: 300;
   background-color: #fdfdfd;
@@ -191,7 +191,6 @@ a:visited { color: #205caa; }
 .post-header h1 {
   font-size: 36px;
   letter-spacing: -1.75px;
-  line-height: 1;
   font-weight: 300;
 }
 
@@ -218,12 +217,12 @@ a:visited { color: #205caa; }
 }
 
 .post-content h2 {
-  font-size: 32px;
+  font-size: 30px;
   letter-spacing: -1.25px;
 }
 
 .post-content h3 {
-  font-size: 26px;
+  font-size: 24px;
   letter-spacing: -1px;
 }
 
@@ -255,6 +254,7 @@ a:visited { color: #205caa; }
   border-radius: 3px;
   font-size: 15px;
   overflow:auto;
+  line-height: 1.25;
 }
 
 .post code { padding: 1px 5px; }
