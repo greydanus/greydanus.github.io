@@ -155,7 +155,11 @@ As we would expect for a small model, stale and synthetic gradients are evenly m
 
 There is a definite correspondence between actual and synthetic gradients, particularly for the darker points. Even though the synthetic model makes mistakes, it seems to be making a good overall approximation. <u>Medium pro</u>.
 
-**Runtime.** The DeepMind paper was mysteriously quiet about runtime. Why? Because it's <i>horrific!</i> For my toy model, normal backprop is 100-1000x faster. Why? Well, let's count parameters.
+**Runtime.**
+
+<i>**EDIT:** I made a mistake in my implementation of synthetic gradients. Runtime is not the issue I imagined it was because the targets of the synthetic gradient models should be the output activations of each layer rather than the actual gradients on the weights. I'm in the process of fixing this in my code. For now, ignore this portion of the post.</i>
+
+The DeepMind paper was mysteriously quiet about runtime. Why? Because it's <i>horrific!</i> For my toy model, normal backprop is 100-1000x faster. Why? Well, let's count parameters.
 
 <div class="imgcap_noborder">
     <img src="/assets/synthetic-gradients/param-count.svg" width="100%">
