@@ -90,7 +90,7 @@ The model needed to be very large to capture all the Enigma's transformations. I
 
 You can find the code on my [GitHub](https://github.com/greydanus/crypto-rnn).
 
-## The Holy Grail of RSA
+## The Holy Grail: RSA
 
 Decoding the Enigma is interesting, but these days it has no practical use. Modern encryption uses public-key factoring algorithms such as [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)). RSA is a different beast from the Enigma, but in theory we could also decode it with deep learning. In practice, this is difficult because RSA uses modulus and multiplication of large integers. These operations are difficult to approximate with RNNs. We need further algorithmic advances in deep learning like the [Neural GPU](https://arxiv.org/abs/1511.08228) or the [Differential Neural Computer](https://deepmind.com/blog/differentiable-neural-computers/) to make this problem feasible.
 
@@ -103,7 +103,7 @@ Decoding the Enigma is interesting, but these days it has no practical use. Mode
 
 **Cryptanalysis.** In this post I've shown that it is possible to use deep learning to decode several polyalphabetic ciphers including the Enigma. This approach is interesting because it's very general: given any "blackbox" cipher, we can learn the function that maps the ciphertext to the plaintext. There are countless programs that can analyze only one type or class of cypher, but this is the first instance$$^{*}$$ of a cipher-agnostic cryptanalysis program powered by deep learning.
 
-**AI.** In the past several years, Deep Reinforcement Learning has enabled an impressive series of breakthroughs in the field of Artificial Intelligence (AI). Many believe that these breakthroughs will enable machines to perform complex tasks such as [driving cars](https://waymo.com/), [understanding text](http://www.maluuba.com/), and even [symbolic thought](https://deepmind.com/blog/differentiable-neural-computers/). This project suggests that AIs built from neural networks could also become effective code breakers.
+**AI.** In the past several years, Deep Reinforcement Learning has enabled an impressive series of breakthroughs in the field of Artificial Intelligence (AI). Many believe that these breakthroughs will enable machines to perform complex tasks such as [driving cars](https://waymo.com/), [understanding text](http://www.maluuba.com/), and even [reasoning over memory](https://deepmind.com/blog/differentiable-neural-computers/). This project suggests that AIs built from neural networks could also become effective code breakers.
 
 <div class="imgcap">
     <img src="/assets/enigma-rnn/bombe.jpg" width="60%">
