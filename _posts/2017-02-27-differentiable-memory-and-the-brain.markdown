@@ -158,7 +158,7 @@ The DNC's weakness lies in context-based recall. If it rains outside, your brain
 There are a few ways to get around the backpropagation issue. Geoffrey Hinton points to [spike-time-dependent plasticity](https://www.cs.toronto.edu/~hinton/backpropincortex2014.pdf). A 2016 paper by neuroscientist Greg Wayne steps over the issue by arguing that the [brain optimizes cost functions](https://arxiv.org/abs/1606.03813) just like deep learning algorithms, regardless of the technical details. While these papers take research in the right direction, they don't offer convincing proof one way or another.
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/backpropagation.svg" width="70%">
+    <img src="/assets/dnc/backpropagation.png" width="70%">
     <div class="thecap" style="text-align:center">Visualizing backpropagation in a 2-layer neural network (see my <a href="https://greydanus.github.io/2016/11/26/synthetic-gradients/">synthetic gradients</a> post)</div>
 </div>
 
