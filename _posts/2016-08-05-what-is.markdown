@@ -31,7 +31,7 @@ The field of deep learning got started when scientists tried to approximate cert
 Skeptics claim that deep learning stretches the brain metaphor too far. Some of their critiques are:
 
 1. _Scale:_ The largest neural nets have around 100 million 'connections'. The human brain has over a 100 _trillion_ connections. With faster GPUs and cluster computing, the size of deep learning models has increased by orders of magnitude in the past few years. This pattern will probably continue.
-2. _Backprop:_ Some scientists believe that the [backpropagation algorithm](https://en.wikipedia.org/wiki/Backpropagation) has no biological correlate. Google DeepMind researchers [disagree](http://biorxiv.org/content/early/2016/06/13/058545).
+2. _Backprop:_ Some scientists believe that the [backpropagation algorithm](https://en.wikipedia.org/wiki/Backpropagation) has no biological correlate. Others [disagree](https://www.cs.toronto.edu/~hinton/backpropincortex2014.pdf).
 3. _Architecture:_ Certain areas of the brain are able to store really complicated memories, perform symbolic operations, and build models of the outside world. These are things that state-of-the art deep learning cannot do.  There’s been a push in research to [change this](https://arxiv.org/abs/1604.00289). 
 
 ## Mathematical picture
