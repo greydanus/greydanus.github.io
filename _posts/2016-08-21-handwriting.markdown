@@ -23,7 +23,7 @@ Like most elementary school kids in the 2000’s, I was a master of WordArt. I g
 In this post, I will demonstrate the power of deep learning by using it to generate human-like handwriting (including some cursive). This work is based on the methods from a famous 2014 paper, [Generating Sequences With Recurrent Neural Networks](https://arxiv.org/abs/1308.0850) by Alex Graves. With this post, I am releasing
 
 1. the [code](https://github.com/greydanus/scribe) I used to build and train the model
-2. an [Jupyter notebook](https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb) which explains the code in a step-by-step manner.
+2. a [Jupyter notebook](https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb) which explains the code in a step-by-step manner.
 
 
 ## Building the Graves handwriting model
