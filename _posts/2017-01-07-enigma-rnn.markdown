@@ -59,7 +59,7 @@ $$\mathbf{ciphertext} = f_{Enigma}(\mathbf{key}, \mathbf{plaintext}) \approx f_{
     <div class="thecap" style="text-align:center">A sample output from the model I trained on the Vigenere cipher.</div>
 </div>
 
-You can find the code on my [GitHub](https://github.com/greydanus/vigenere-rnn).
+You can find the code on my [GitHub](https://github.com/greydanus/crypto-rnn).
 
 ## Decoding the Enigma
 
