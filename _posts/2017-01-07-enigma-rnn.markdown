@@ -1,18 +1,18 @@
 ---
 layout: post
 comments: true
-title:  "Decoding the Enigma with Recurrent Neural Networks"
-excerpt: "Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to decode the Nazi Enigma."
+title:  "Learning the Enigma with Recurrent Neural Networks"
+excerpt: "Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to learn the Nazi Enigma."
 date:   2017-01-07 11:00:00
 mathjax: true
 ---
 
 <div class="imgcap_noborder">
     <img src="/assets/enigma-rnn/enigma-machine.jpg" width="30%">
-    <div class="thecap" style="text-align:center">An ~Enigma~ machine. Turing cracked it; can we?</div>
+    <div class="thecap" style="text-align:center">An ~Enigma~ machine, famed for its inner complexity.</div>
 </div>
 
-Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to decode the Nazi Enigma.
+Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to learn the Nazi Enigma.
 
 ## A Brief History of Cryptanalysis
 
@@ -52,7 +52,7 @@ $$\mathbf{ciphertext} = f_{Enigma}(\mathbf{key}, \mathbf{plaintext}) \approx f_{
     <div class="thecap" style="text-align:center">Using the Vigenere cipher to encrypt plaintext "CALCUL" with keyword "MATHS" (repeated).</div>
 </div>
 
-**Results.** The Vigenere cipher was easy. A mere 150,000 steps of gradient descent produced a model which decoded the ciphertext with 99% accuracy.
+**Results.** The Vigenere cipher was easy. A mere 100,000 steps of gradient descent produced a model which learned the decryption function with 99% accuracy.
 
 <div class="imgcap_noborder">
     <img src="/assets/enigma-rnn/vigenere-rnn.png" width="80%">
@@ -61,7 +61,7 @@ $$\mathbf{ciphertext} = f_{Enigma}(\mathbf{key}, \mathbf{plaintext}) \approx f_{
 
 You can find the code on my [GitHub](https://github.com/greydanus/crypto-rnn).
 
-## Decoding the Enigma
+## Learning the Enigma
 
 **The Enigma.** Now we're ready for something a lot more complex: the Nazi Enigma. Its innards consisted of three rotating alphabet wheels, several switchboards, and ten cables. All told, the machine had [150,738,274,900,000 possible configurations](http://www.cryptomuseum.com/crypto/enigma/working.htm)!
 
@@ -70,7 +70,7 @@ You can find the code on my [GitHub](https://github.com/greydanus/crypto-rnn).
     <div class="thecap" style="text-align:center">How the Enigma works. Note that the three wheels can rotate as the decoding process unfolds</div>
 </div>
 
-**Background.** Breaking the Enigma was an incredible feat - it even inspired the 2014 film <i>The Imitation Game</i> starring Benedict Cumberbatch as Alan Turing. Turing was one of the most important figures in the project. He also introduced the notion of Turing-completeness. In an ironic twist, we'll be using a Turing-complete algorithm (the LSTM) to decode the Enigma.
+**Background.** Breaking the Enigma was an incredible feat - it even inspired the 2014 film <i>The Imitation Game</i> starring Benedict Cumberbatch as Alan Turing. Turing was one of the most important figures in the project. He also introduced the notion of Turing-completeness. In an ironic twist, we'll be using a Turing-complete algorithm (the LSTM) to learn the Enigma.
 
 We'll train the model on only one permutation of switchboards, cables, and wheels. The keyword, then, is three letters which tell the model the initial positions of the wheels.
 
@@ -92,16 +92,16 @@ You can find the code on my [GitHub](https://github.com/greydanus/crypto-rnn).
 
 ## The Holy Grail: RSA
 
-Decoding the Enigma is interesting, but these days it has no practical use. Modern encryption uses public-key factoring algorithms such as [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)). RSA is a different beast from the Enigma, but in theory we could also decode it with deep learning. In practice, this is difficult because RSA uses modulus and multiplication of large integers. These operations are difficult to approximate with RNNs. We need further algorithmic advances in deep learning like the [Neural GPU](https://arxiv.org/abs/1511.08228) or the [Differential Neural Computer](https://deepmind.com/blog/differentiable-neural-computers/) to make this problem feasible.
+Learning the Enigma is interesting, but these days it has no practical use. Modern encryption uses public-key factoring algorithms such as [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)). RSA is a different beast from the Enigma, but in theory we could also learn it with deep learning. In practice, this is difficult because RSA uses modulus and multiplication of large integers. These operations are difficult to approximate with RNNs. We need further algorithmic advances in deep learning like the [Neural GPU](https://arxiv.org/abs/1511.08228) or the [Differential Neural Computer](https://deepmind.com/blog/differentiable-neural-computers/) to make this problem feasible.
 
 <div class="imgcap_noborder">
     <img src="/assets/enigma-rnn/rsa.gif" width="40%">
-    <div class="thecap" style="text-align:center">Public-key encryption. In theory, we could decode RSA with deep learning but it presents many practical difficulties</div>
+    <div class="thecap" style="text-align:center">Public-key encryption. In theory, we could learn the RSA with deep learning but it presents many practical difficulties</div>
 </div>
 
 ## Implications
 
-**Cryptanalysis.** In this post I've shown that it is possible to use deep learning to decode several polyalphabetic ciphers including the Enigma. This approach is interesting because it's very general: given any "blackbox" cipher, we can learn the function that maps the ciphertext to the plaintext. There are countless programs that can analyze only one type or class of cypher, but this is the first instance$$^{*}$$ of a cipher-agnostic cryptanalysis program powered by deep learning.
+**Cryptanalysis.** In this post I've shown that it is possible to use deep learning to learn several polyalphabetic ciphers including the Enigma. This approach is interesting because it's very general: given any "blackbox" cipher, we can learn the function that maps the ciphertext to the plaintext. There are countless programs that can analyze only one type or class of cypher, but this is the first instance$$^{*}$$ of a cipher-agnostic cryptanalysis program powered by deep learning.
 
 **AI.** In the past several years, Deep Reinforcement Learning has enabled an impressive series of breakthroughs in the field of Artificial Intelligence (AI). Many believe that these breakthroughs will enable machines to perform complex tasks such as [driving cars](https://waymo.com/), [understanding text](http://www.maluuba.com/), and even [reasoning over memory](https://deepmind.com/blog/differentiable-neural-computers/). This project suggests that AIs built from neural networks could also become effective code breakers.
 
