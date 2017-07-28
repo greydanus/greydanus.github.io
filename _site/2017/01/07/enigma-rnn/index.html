@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Decoding the Enigma with Recurrent Neural Networks</title>
+    <title>Learning the Enigma with Recurrent Neural Networks</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Science with a spirit of adventure.">
     <link rel="canonical" href="http://greydanus.github.io/2017/01/07/enigma-rnn/">
@@ -76,17 +76,17 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>Decoding the Enigma with Recurrent Neural Networks</h1>
+    <h1>Learning the Enigma with Recurrent Neural Networks</h1>
     <p class="meta">Jan 7, 2017</p>
   </header>
 
   <article class="post-content">
   <div class="imgcap_noborder">
     <img src="/assets/enigma-rnn/enigma-machine.jpg" width="30%" />
-    <div class="thecap" style="text-align:center">An ~Enigma~ machine. Turing cracked it; can we?</div>
+    <div class="thecap" style="text-align:center">An ~Enigma~ machine, famed for its inner complexity.</div>
 </div>
 
-<p>Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let’s see if we can use them to decode the Nazi Enigma.</p>
+<p>Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let’s see if we can use them to learn the Nazi Enigma.</p>
 
 <h2 id="a-brief-history-of-cryptanalysis">A Brief History of Cryptanalysis</h2>
 
@@ -127,16 +127,16 @@
     <div class="thecap" style="text-align:center">Using the Vigenere cipher to encrypt plaintext "CALCUL" with keyword "MATHS" (repeated).</div>
 </div>
 
-<p><strong>Results.</strong> The Vigenere cipher was easy. A mere 150,000 steps of gradient descent produced a model which decoded the ciphertext with 99% accuracy.</p>
+<p><strong>Results.</strong> The Vigenere cipher was easy. A mere 100,000 steps of gradient descent produced a model which learned the decryption function with 99% accuracy.</p>
 
 <div class="imgcap_noborder">
     <img src="/assets/enigma-rnn/vigenere-rnn.png" width="80%" />
     <div class="thecap" style="text-align:center">A sample output from the model I trained on the Vigenere cipher.</div>
 </div>
 
-<p>You can find the code on my <a href="https://github.com/greydanus/vigenere-rnn">GitHub</a>.</p>
+<p>You can find the code on my <a href="https://github.com/greydanus/crypto-rnn">GitHub</a>.</p>
 
-<h2 id="decoding-the-enigma">Decoding the Enigma</h2>
+<h2 id="learning-the-enigma">Learning the Enigma</h2>
 
 <p><strong>The Enigma.</strong> Now we’re ready for something a lot more complex: the Nazi Enigma. Its innards consisted of three rotating alphabet wheels, several switchboards, and ten cables. All told, the machine had <a href="http://www.cryptomuseum.com/crypto/enigma/working.htm">150,738,274,900,000 possible configurations</a>!</p>
 
@@ -145,7 +145,7 @@
     <div class="thecap" style="text-align:center">How the Enigma works. Note that the three wheels can rotate as the decoding process unfolds</div>
 </div>
 
-<p><strong>Background.</strong> Breaking the Enigma was an incredible feat - it even inspired the 2014 film <i>The Imitation Game</i> starring Benedict Cumberbatch as Alan Turing. Turing was one of the most important figures in the project. He also introduced the notion of Turing-completeness. In an ironic twist, we’ll be using a Turing-complete algorithm (the LSTM) to decode the Enigma.</p>
+<p><strong>Background.</strong> Breaking the Enigma was an incredible feat - it even inspired the 2014 film <i>The Imitation Game</i> starring Benedict Cumberbatch as Alan Turing. Turing was one of the most important figures in the project. He also introduced the notion of Turing-completeness. In an ironic twist, we’ll be using a Turing-complete algorithm (the LSTM) to learn the Enigma.</p>
 
 <p>We’ll train the model on only one permutation of switchboards, cables, and wheels. The keyword, then, is three letters which tell the model the initial positions of the wheels.</p>
 
@@ -167,16 +167,16 @@
 
 <h2 id="the-holy-grail-rsa">The Holy Grail: RSA</h2>
 
-<p>Decoding the Enigma is interesting, but these days it has no practical use. Modern encryption uses public-key factoring algorithms such as <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">RSA</a>. RSA is a different beast from the Enigma, but in theory we could also decode it with deep learning. In practice, this is difficult because RSA uses modulus and multiplication of large integers. These operations are difficult to approximate with RNNs. We need further algorithmic advances in deep learning like the <a href="https://arxiv.org/abs/1511.08228">Neural GPU</a> or the <a href="https://deepmind.com/blog/differentiable-neural-computers/">Differential Neural Computer</a> to make this problem feasible.</p>
+<p>Learning the Enigma is interesting, but these days it has no practical use. Modern encryption uses public-key factoring algorithms such as <a href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">RSA</a>. RSA is a different beast from the Enigma, but in theory we could also learn it with deep learning. In practice, this is difficult because RSA uses modulus and multiplication of large integers. These operations are difficult to approximate with RNNs. We need further algorithmic advances in deep learning like the <a href="https://arxiv.org/abs/1511.08228">Neural GPU</a> or the <a href="https://deepmind.com/blog/differentiable-neural-computers/">Differential Neural Computer</a> to make this problem feasible.</p>
 
 <div class="imgcap_noborder">
     <img src="/assets/enigma-rnn/rsa.gif" width="40%" />
-    <div class="thecap" style="text-align:center">Public-key encryption. In theory, we could decode RSA with deep learning but it presents many practical difficulties</div>
+    <div class="thecap" style="text-align:center">Public-key encryption. In theory, we could learn the RSA with deep learning but it presents many practical difficulties</div>
 </div>
 
 <h2 id="implications">Implications</h2>
 
-<p><strong>Cryptanalysis.</strong> In this post I’ve shown that it is possible to use deep learning to decode several polyalphabetic ciphers including the Enigma. This approach is interesting because it’s very general: given any “blackbox” cipher, we can learn the function that maps the ciphertext to the plaintext. There are countless programs that can analyze only one type or class of cypher, but this is the first instance<script type="math/tex">^{*}</script> of a cipher-agnostic cryptanalysis program powered by deep learning.</p>
+<p><strong>Cryptanalysis.</strong> In this post I’ve shown that it is possible to use deep learning to learn several polyalphabetic ciphers including the Enigma. This approach is interesting because it’s very general: given any “blackbox” cipher, we can learn the function that maps the ciphertext to the plaintext. There are countless programs that can analyze only one type or class of cypher, but this is the first instance<script type="math/tex">^{*}</script> of a cipher-agnostic cryptanalysis program powered by deep learning.</p>
 
 <p><strong>AI.</strong> In the past several years, Deep Reinforcement Learning has enabled an impressive series of breakthroughs in the field of Artificial Intelligence (AI). Many believe that these breakthroughs will enable machines to perform complex tasks such as <a href="https://waymo.com/">driving cars</a>, <a href="http://www.maluuba.com/">understanding text</a>, and even <a href="https://deepmind.com/blog/differentiable-neural-computers/">reasoning over memory</a>. This project suggests that AIs built from neural networks could also become effective code breakers.</p>
 
