@@ -3,7 +3,7 @@ layout: post
 comments: true
 title:  "Taming Wave Functions with Neural Networks"
 excerpt: "The wave function psi is essential to most calculations in quantum mechanics, and yet it's a difficult beast to tame. Can neural networks help?"
-date:   2017-08-28 11:00:00
+date:   2017-07-28 11:00:00
 mathjax: true
 ---
 
