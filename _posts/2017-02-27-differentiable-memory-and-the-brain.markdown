@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Differentiable Memory and the Brain"
+title:  "Differentiable memory and the brain"
 excerpt: "DeepMind's Differentiable Neural Computer (DNC) represents the state of the art in differentiable memory models. I introduce an analogy between the DNC and human memory, then discuss where it breaks down."
 date:   2017-02-27 11:00:00
 mathjax: true

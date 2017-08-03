@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "What is Deep Learning?"
+title:  "What is deep learning?"
 excerpt: "After being obsessed with this field for more than a year, I should have a concise and satisfying answer. Strangely, I have three."
 date:   2016-08-05 11:00:00
 mathjax: true
