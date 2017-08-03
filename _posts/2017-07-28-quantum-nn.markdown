@@ -7,6 +7,7 @@ date:   2017-07-28 11:00:00
 mathjax: true
 ---
 
+_NOTE: This is a repost from an article I wrote for _[Quantum Frontiers](https://quantumfrontiers.com/2017/08/02/taming-wave-functions-with-neural-networks/)_, the blog of the Institute for Quantum Information and Matter at Caltech_
 
 <div class="imgcap">
     <img src="/assets/quantum-nn/wavf-ski.jpg" width="30%">
