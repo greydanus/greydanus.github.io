@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "The Art of Regularization"
+title:  "The art of regularization"
 excerpt: "Regularization seems fairly insignificant at first glance, but it has a huge impact on deep models. I'll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning."
 date:   2016-09-05 11:00:00
 mathjax: true
