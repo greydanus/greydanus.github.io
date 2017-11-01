@@ -86,7 +86,7 @@ PyTorch | 1,000 | 93.5%
     <img src="/assets/subspace-nn/fc-accuracy.png" width="70%">
 </div> -->
 
-## What does this tell us?
+## Takeaways
 
 **Update.** My friend Jason Yosinski (Uber AI) just finished a [paper about this](https://openreview.net/forum?id=ryup8-WCW&noteId=ryup8-WCW). Much more **#rigorous** than this post and definitely worth checking out: _"solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST."_
 
