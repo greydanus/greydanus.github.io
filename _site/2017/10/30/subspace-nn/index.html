@@ -7,7 +7,7 @@
     <title>Parameter bloat</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Science with a spirit of adventure.">
-    <link rel="canonical" href="http://greydanus.github.io/2017/07/28/subspace-nn/">
+    <link rel="canonical" href="http://greydanus.github.io/2017/10/30/subspace-nn/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Sam's Research Blog posts" />
 
     <!-- Custom CSS -->
@@ -77,7 +77,7 @@
 
   <header class="post-header">
     <h1>Parameter bloat</h1>
-    <p class="meta">Jul 28, 2017</p>
+    <p class="meta">Oct 30, 2017</p>
   </header>
 
   <article class="post-content">
@@ -289,7 +289,7 @@
 
 <h2 id="takeaways">Takeaways</h2>
 
-<p><strong>Update.</strong> My friend Jason Yosinski (Uber AI) just finished a <a href="https://openreview.net/forum?id=ryup8-WCW&amp;noteId=ryup8-WCW">paper about this</a>. Much more <strong>#rigorous</strong> than this post and definitely worth checking out: <em>“solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST.”</em></p>
+<p><strong>Update.</strong> My friend, Jason Yosinski (Uber AI), just finished a <a href="https://openreview.net/forum?id=ryup8-WCW&amp;noteId=ryup8-WCW">paper about this</a>. Much more <strong>#rigorous</strong> than this post and definitely worth checking out: <em>“solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST.”</em></p>
 
 <p><strong>Literature.</strong> The idea that MNIST classifiers are dramatically overparameterized is not new. The most common way to manage this issue is by adding a sparsity term (weight decay) to the loss function. At the end of the day, this doesn’t exactly place a hard limit on the number of free parameters. One interesting approach, from <a href="https://arxiv.org/pdf/1606.02580.pdf">Convolution by Evolution</a><script type="math/tex">^\dagger</script>, is to <em>evolve</em> a neural network with 200 parameters. The authors used this technique to train a denoising autoencoder so it’s difficult to directly compare their results to ours.</p>
 

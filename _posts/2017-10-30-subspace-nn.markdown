@@ -3,7 +3,7 @@ layout: post
 comments: true
 title:  "Parameter bloat"
 excerpt: "Do we REALLY need over 100,000 free parameters to build a good MNIST classifier? It turns out that we can eliminate 80-90% of them."
-date:   2017-07-28 11:00:00
+date:   2017-10-30 11:00:00
 mathjax: true
 ---
 
@@ -88,7 +88,7 @@ PyTorch | 1,000 | 93.5%
 
 ## Takeaways
 
-**Update.** My friend Jason Yosinski (Uber AI) just finished a [paper about this](https://openreview.net/forum?id=ryup8-WCW&noteId=ryup8-WCW). Much more **#rigorous** than this post and definitely worth checking out: _"solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST."_
+**Update.** My friend, Jason Yosinski (Uber AI), just finished a [paper about this](https://openreview.net/forum?id=ryup8-WCW&noteId=ryup8-WCW). Much more **#rigorous** than this post and definitely worth checking out: _"solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST."_
 
 **Literature.** The idea that MNIST classifiers are dramatically overparameterized is not new. The most common way to manage this issue is by adding a sparsity term (weight decay) to the loss function. At the end of the day, this doesn't exactly place a hard limit on the number of free parameters. One interesting approach, from [Convolution by Evolution](https://arxiv.org/pdf/1606.02580.pdf)$$^\dagger$$, is to _evolve_ a neural network with 200 parameters. The authors used this technique to train a denoising autoencoder so it's difficult to directly compare their results to ours.
 
