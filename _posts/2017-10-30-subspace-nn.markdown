@@ -48,7 +48,7 @@ PyTorch | 784 $$\mapsto$$ 32 $$\mapsto$$ 10 | Fully connected | 25,450 | 96.5%
 PyTorch | 784 $$\mapsto$$ (6,4x4) $$\mapsto$$ (6,4x4) $$\mapsto$$ 25 $$\mapsto$$ 10 | Convolutional | 3,369 | 95.6%
 PyTorch | 784 $$\mapsto$$ (8,4x4) $$\mapsto$$ (16,4x4) $$\mapsto$$ 32 $$\mapsto$$ 10 | Convolutional | 10,754 | 97.6%
 
-You can find the code on my [GitHub]((https://github.com/greydanus/subspace-nn)). As you can see, it's still possible to obtain models that get 95\\(^+\\)% accuracy with fewer than 10$$^4$$ parameters. That said, we can do even better...
+You can find the code on my [GitHub](https://github.com/greydanus/subspace-nn). As you can see, it's still possible to obtain models that get 95\\(^+\\)% accuracy with fewer than 10$$^4$$ parameters. That said, we can do even better...
 
 ## Optimizing subspaces
 
