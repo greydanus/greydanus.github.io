@@ -289,6 +289,8 @@
 
 <h2 id="what-does-this-tell-us">What does this tell us?</h2>
 
+<p><strong>Update.</strong> My friend Jason Yosinski (Uber AI) just finished a <a href="https://openreview.net/forum?id=ryup8-WCW&amp;noteId=ryup8-WCW">paper about this</a>. Much more <strong>#rigorous</strong> than this post and definitely worth checking out: <em>“solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST.”</em></p>
+
 <p><strong>Literature.</strong> The idea that MNIST classifiers are dramatically overparameterized is not new. The most common way to manage this issue is by adding a sparsity term (weight decay) to the loss function. At the end of the day, this doesn’t exactly place a hard limit on the number of free parameters. One interesting approach, from <a href="https://arxiv.org/pdf/1606.02580.pdf">Convolution by Evolution</a><script type="math/tex">^\dagger</script>, is to <em>evolve</em> a neural network with 200 parameters. The authors used this technique to train a denoising autoencoder so it’s difficult to directly compare their results to ours.</p>
 
 <p>There are several other papers that try to minimize the number of free parameters. However, I couldn’t find any papers that used the subspace optimization trick. Perhaps it is a new and interesting tool.</p>
