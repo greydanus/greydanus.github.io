@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sam's Research Blog</title>
+    <title>Visualizing and Understanding Atari Agents</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="Science with a spirit of adventure.">
-    <link rel="canonical" href="http://greydanus.github.io/">
+    <link rel="canonical" href="http://greydanus.github.io/2017/11/01/visualize-atari/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Sam's Research Blog posts" />
 
     <!-- Custom CSS -->
@@ -73,77 +73,105 @@
 
     <div class="page-content">
       <div class="wrap">
-      <div class="home">
-  
-  <ul class="posts">
-    
-      <li>
-        <span class="post-date">Nov 1, 2017</span>
-        <a class="post-link" href="/2017/11/01/visualize-atari/">Visualizing and Understanding Atari Agents</a>
-        <br>
-        Deep RL agents are effective at maximizing rewards, but it's often unclear what strategies they use to do so. I'll talk about a paper I just finished, aimed at solving this problem.
-      </li>
-    
-      <li>
-        <span class="post-date">Oct 30, 2017</span>
-        <a class="post-link" href="/2017/10/30/subspace-nn/">Parameter bloat</a>
-        <br>
-        Do we REALLY need over 100,000 free parameters to build a good MNIST classifier? It turns out that we can eliminate 80-90% of them.
-      </li>
-    
-      <li>
-        <span class="post-date">Jul 28, 2017</span>
-        <a class="post-link" href="/2017/07/28/quantum-nn/">Taming wave functions with neural networks</a>
-        <br>
-        The wave function is essential to most calculations in quantum mechanics, and yet it's a difficult beast to tame. Can neural networks help?
-      </li>
-    
-      <li>
-        <span class="post-date">Feb 27, 2017</span>
-        <a class="post-link" href="/2017/02/27/differentiable-memory-and-the-brain/">Differentiable memory and the brain</a>
-        <br>
-        DeepMind's Differentiable Neural Computer (DNC) represents the state of the art in differentiable memory models. I introduce an analogy between the DNC and human memory, then discuss where it breaks down.
-      </li>
-    
-      <li>
-        <span class="post-date">Jan 7, 2017</span>
-        <a class="post-link" href="/2017/01/07/enigma-rnn/">Learning the Enigma with Recurrent Neural Networks</a>
-        <br>
-        Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to learn the Nazi Enigma.
-      </li>
-    
-      <li>
-        <span class="post-date">Nov 26, 2016</span>
-        <a class="post-link" href="/2016/11/26/synthetic-gradients/">A bird's eye view of synthetic gradients</a>
-        <br>
-        Synthetic gradients achieve the perfect balance of crazy and brilliant. In a 100-line Gist I'll introduce this exotic technique and use it to train a neural network.
-      </li>
-    
-      <li>
-        <span class="post-date">Sep 5, 2016</span>
-        <a class="post-link" href="/2016/09/05/regularization/">The art of regularization</a>
-        <br>
-        Regularization seems fairly insignificant at first glance, but it has a huge impact on deep models. I'll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.
-      </li>
-    
-      <li>
-        <span class="post-date">Aug 21, 2016</span>
-        <a class="post-link" href="/2016/08/21/handwriting/">Scribe: realistic handwriting with TensorFlow</a>
-        <br>
-        In this post, I will demonstrate the power of deep learning by using it to generate human-like handwriting. This work is based on <em>Generating Sequences With Recurrent Neural Networks</em> by Alex Graves
-      </li>
-    
-      <li>
-        <span class="post-date">Aug 5, 2016</span>
-        <a class="post-link" href="/2016/08/05/what-is/">What is deep learning?</a>
-        <br>
-        After being obsessed with this field for more than a year, I should have a concise and satisfying answer. Strangely, I have three.
-      </li>
-    
-  </ul>
+      <div class="post">
 
+  <header class="post-header">
+    <h1>Visualizing and Understanding Atari Agents</h1>
+    <p class="meta">Nov 1, 2017</p>
+  </header>
+
+  <article class="post-content">
+  <div class="imgcap">
+    <img src="/assets/visualize-atari/robots.png" width="40%" />
 </div>
 
+<p>Deep RL agents are effective at maximizing rewards, but it’s often unclear what strategies they use to do so. I’ll talk about a paper I just finished, aimed at solving this problem.</p>
+
+<h2 id="solving-atari-in-180-lines">Solving Atari in 180 lines</h2>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/breakout-v0.gif" width="20%" style="margin: 0px 20px" />
+    <img src="/assets/visualize-atari/pong-v0.gif" width="20%" style="margin: 0px 20px" />
+    <img src="/assets/visualize-atari/spaceinvaders-v0.gif" width="20%" style="margin: 0px 20px" />
+    <div class="thecap" style="text-align:center"><a href="https://github.com/greydanus/baby-a3c">Baby-A3C</a> after training on 40M frames.</div>
+</div>
+
+<h2 id="why-should-i-trust-you">Why should I trust you?</h2>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/divination.jpg" width="50%" />
+    <div class="thecap" style="text-align:center">Deep learning algorithms are often perceived as black boxes.</div>
+</div>
+
+<h2 id="catching-cheaters">Catching cheaters</h2>
+
+<div class="imgcap_noborder">
+	<iframe width="240" height="370" style="margin: 0px 20px" src="https://www.youtube.com/embed/xXGC6CQW97E?showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+    <iframe width="240" height="370" style="margin: 0px 20px" src="https://www.youtube.com/embed/eeXLUI73RTo?showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+	<div class="thecap" style="text-align:center">Left: a regular agent. Right: an overfit agent</div>
+</div>
+
+<h2 id="watching-agents-learn">Watching agents learn</h2>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/breakout-learning.png" width="80%" />
+    <div class="thecap" style="text-align:center">A Breakout agent learns a tunneling strategy.</div>
+</div>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/pong-learning.png" width="80%" />
+    <div class="thecap" style="text-align:center">A Pong agent learns a kill shot.</div>
+</div>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/spaceinvaders-learning.png" width="80%" />
+    <div class="thecap" style="text-align:center">A SpaceInvaders agent learns an aiming strategy.</div>
+</div>
+
+<h2 id="going-forward">Going forward</h2>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/darpa-xai.jpg" width="50%" />
+    <div class="thecap" style="text-align:center">Obtaining explanations that truly satisfy human users will require not just one, but many tools.</div>
+</div>
+
+
+  </article>
+
+  <!-- mathjax -->
+  
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <!-- disqus comments -->
+ 
+  <div id="disqus_thread"></div>
+  <script>
+      /**
+       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+       *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+       */
+      /*
+      var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+      */
+      (function() {  // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          
+          s.src = '//greydanus-blog.disqus.com/embed.js';
+          
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+
+  
+</div>
       </div>
     </div>
 
