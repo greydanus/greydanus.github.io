@@ -61,7 +61,7 @@ For better or worse, AI (I'm using AI and machine learning interchangeably here,
     <div class="thecap" style="text-align:center">Strategies of strong Atari agents: <b>a)</b> the Breakout agent has learned a tunneling strategy <b>b)</b> the Pong agent has learned to make a killshot <b>c)</b> the SpaceInvaders agent has learned to aim at individual targets. We're visualizing and actor-critic model here (blue=actor and red=critic)</div>
 </div>
 
-Before looking at saliency videos for our agents, we made guesses about that they were doing. After watching the videos (above), we found that _all three agents_ were doing things somewhat differently from we had imagined (see paper for details).
+Before looking at saliency videos for our agents, we made guesses about that they were doing. After watching the videos (above), we found that _all three agents_ were doing things somewhat differently from we had imagined (see paper for details). [GitHub link](https://github.com/greydanus/visualize_atari).
 
 ## Catching cheaters
 
