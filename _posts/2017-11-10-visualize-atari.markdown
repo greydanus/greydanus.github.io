@@ -24,7 +24,7 @@ Deep RL agents are effective at maximizing rewards, but it's often unclear what 
 
 ## Why should I trust you?
 
-[Paper link](https://goo.gl/FQMeYN)
+[Paper link](https://goo.gl/AMAoSc)
 
 <div class="imgcap_noborder">
     <img src="/assets/visualize-atari/divination.jpg" width="50%">
