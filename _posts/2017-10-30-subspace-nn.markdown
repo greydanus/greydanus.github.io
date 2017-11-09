@@ -54,7 +54,7 @@ You can find the code on my [GitHub](https://github.com/greydanus/subspace-nn). 
 
 > "Make everything as simple as possible, but not simpler." -- Albert Einstein
 
-**The trick.** When I interviewed with [Jason Yosinski](http://yosinski.com/) at [Uber AI Labs](https://www.uber.com/info/ailabs/) earlier this year, he and I discussed the idea of optimizing _subspaces_. In other words, if the vector $$\theta$$ contains all the parameters of a deep network, you might define $$\theta = P \omega$$ where the vector $$\omega$$ lives in some smaller-dimensional space and $$P$$ is a projector matrix. Then, instead of optimizing $$\theta$$, you could optimize $$\omega$$. With this trick, we can choose an arbitrary number of free parameters to optimize without changing the model's architecture. In math, the training objective becomes:
+**The trick.** When I interviewed with _anonymous_ at _anonymous_ earlier this year, we discussed the idea of optimizing _subspaces_. In other words, if the vector $$\theta$$ contains all the parameters of a deep network, you might define $$\theta = P \omega$$ where the vector $$\omega$$ lives in some smaller-dimensional space and $$P$$ is a projector matrix. Then, instead of optimizing $$\theta$$, you could optimize $$\omega$$. With this trick, we can choose an arbitrary number of free parameters to optimize without changing the model's architecture. In math, the training objective becomes:
 
 $$\omega = \arg\min_{\mathbf{\omega}}  -\frac{1}{n} \sum_X (y\ln \hat y +(1-y)\ln (1-\hat y)) \quad \mathrm{where} \quad \hat y = f_{NN}(\theta, X) \quad \mathrm{and} \quad \theta = P \omega$$
 
@@ -88,7 +88,7 @@ PyTorch | 1,000 | 93.5%
 
 ## Takeaways
 
-**Update.** My friend, Jason Yosinski (Uber AI), just finished a [paper about this](https://openreview.net/forum?id=ryup8-WCW&noteId=ryup8-WCW). Much more **#rigorous** than this post and definitely worth checking out: _"solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST."_
+**Update.** My friend, _(anonymous)_, just finished a [paper about this](https://openreview.net/forum?id=ryup8-WCW&noteId=ryup8-WCW). Much more **#rigorous** than this post and definitely worth checking out: _"solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST."_
 
 **Literature.** The idea that MNIST classifiers are dramatically overparameterized is not new. The most common way to manage this issue is by adding a sparsity term (weight decay) to the loss function. At the end of the day, this doesn't exactly place a hard limit on the number of free parameters. One interesting approach, from [Convolution by Evolution](https://arxiv.org/pdf/1606.02580.pdf)$$^\dagger$$, is to _evolve_ a neural network with 200 parameters. The authors used this technique to train a denoising autoencoder so it's difficult to directly compare their results to ours.
 
