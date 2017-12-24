@@ -11,7 +11,7 @@ mathjax: true
     <img src="/assets/visualize-atari/robots.png" width="50%">
 </div>
 
-Deep RL agents are effective at maximizing rewards but it's often unclear what strategies they use to do so. I'll talk about a paper I just finished, aimed at solving this problem.
+Deep RL agents are effective at maximizing rewards but it's often unclear what strategies they use to do so. I'll talk about a paper[^fn1] I just finished, aimed at solving this problem.
 
 ## Solving Atari in 180 lines
 
@@ -117,4 +117,4 @@ Deep RL agents are known to transition through a broad spectrum of strategies. S
 
 **More than one tool.** I think the comment about memory suggests a fundamental truth about explanations for deep RL: we need more than one. To produce explanations that satisfy human users, researchers will need to assemble _many_ complimentary explanation techniques. To this end, I see this project as something which compliments previous efforts while motivating future efforts, taking the field one step closer to producing _truly_ satisfying explanations.
 
-
+[^fn1]: Selected for an oral presentation at the NIPS 2017 Interpretability Workshop!
