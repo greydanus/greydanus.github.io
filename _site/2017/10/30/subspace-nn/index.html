@@ -230,7 +230,7 @@
   <p>“Make everything as simple as possible, but not simpler.” – Albert Einstein</p>
 </blockquote>
 
-<p><strong>The trick.</strong> When I interviewed with <a href="http://yosinski.com/">Jason Yosinski</a> at <a href="https://www.uber.com/info/ailabs/">Uber AI Labs</a> earlier this year, he and I discussed the idea of optimizing <em>subspaces</em>. In other words, if the vector <script type="math/tex">\theta</script> contains all the parameters of a deep network, you might define <script type="math/tex">\theta = P \omega</script> where the vector <script type="math/tex">\omega</script> lives in some smaller-dimensional space and <script type="math/tex">P</script> is a projector matrix. Then, instead of optimizing <script type="math/tex">\theta</script>, you could optimize <script type="math/tex">\omega</script>. With this trick, we can choose an arbitrary number of free parameters to optimize without changing the model’s architecture. In math, the training objective becomes:</p>
+<p><strong>The trick.</strong> When I interviewed with <em>anonymous</em> at <em>anonymous</em> earlier this year, we discussed the idea of optimizing <em>subspaces</em>. In other words, if the vector <script type="math/tex">\theta</script> contains all the parameters of a deep network, you might define <script type="math/tex">\theta = P \omega</script> where the vector <script type="math/tex">\omega</script> lives in some smaller-dimensional space and <script type="math/tex">P</script> is a projector matrix. Then, instead of optimizing <script type="math/tex">\theta</script>, you could optimize <script type="math/tex">\omega</script>. With this trick, we can choose an arbitrary number of free parameters to optimize without changing the model’s architecture. In math, the training objective becomes:</p>
 
 <script type="math/tex; mode=display">\omega = \arg\min_{\mathbf{\omega}}  -\frac{1}{n} \sum_X (y\ln \hat y +(1-y)\ln (1-\hat y)) \quad \mathrm{where} \quad \hat y = f_{NN}(\theta, X) \quad \mathrm{and} \quad \theta = P \omega</script>
 
@@ -289,7 +289,7 @@
 
 <h2 id="takeaways">Takeaways</h2>
 
-<p><strong>Update.</strong> My friend, Jason Yosinski (Uber AI), just finished a <a href="https://openreview.net/forum?id=ryup8-WCW&amp;noteId=ryup8-WCW">paper about this</a>. Much more <strong>#rigorous</strong> than this post and definitely worth checking out: <em>“solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST.”</em></p>
+<p><strong>Update.</strong> My friend, (anonymous), just finished a <a href="https://openreview.net/forum?id=ryup8-WCW&amp;noteId=ryup8-WCW">paper about this</a>. Much more <strong>#rigorous</strong> than this post and definitely worth checking out: <em>“solving the cart-pole RL problem is in a sense 100 times easier than classifying digits from MNIST.”</em></p>
 
 <p><strong>Literature.</strong> The idea that MNIST classifiers are dramatically overparameterized is not new. The most common way to manage this issue is by adding a sparsity term (weight decay) to the loss function. At the end of the day, this doesn’t exactly place a hard limit on the number of free parameters. One interesting approach, from <a href="https://arxiv.org/pdf/1606.02580.pdf">Convolution by Evolution</a><script type="math/tex">^\dagger</script>, is to <em>evolve</em> a neural network with 200 parameters. The authors used this technique to train a denoising autoencoder so it’s difficult to directly compare their results to ours.</p>
 
