@@ -290,10 +290,10 @@ Whereas Hamiltonian mechanics is an old and well-established theory, the science
 
 Thanks to the Google AI Residency for providing me with all the mentorship and resources that a young researcher could dare to dream of. Thanks to Nic Ford, Trevor Gale, Rapha Gontijo Lopes, Keren Gu, Ben Caine, Mark Woodward, Stephan Hoyer, and Jascha Sohl-Dickstein for insightful conversations and advice. Thanks to Jason Yosinski and Misko Dzumba for being awesome coathors and for the informal conversations that sparked this work. 
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%">
+<!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%">
 	<img style="width:50%" src="/assets/hamiltonian-nns/cat.png">
 		<div class="thecap" style="text-align:left"><b>Figure 9:</b> Thanks To Misko's cat, Daisy, for being the most chaotic physical system of all the ones we considered.</div>
-</div>
+</div> -->
 
 ## Footnotes
 
