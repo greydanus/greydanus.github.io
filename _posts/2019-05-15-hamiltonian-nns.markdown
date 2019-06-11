@@ -158,11 +158,11 @@ $$
 \end{equation}
 $$
 
-Now this expression is beginning to look like the \\(\mathcal{L_2}\\) loss function used in supervised learning. The \\(\mathcal{L_2}\\) loss term usually takes the form \\(\big \Vert y - f_{\theta}(x) \big \Vert^2 \\) where \\(x\\) is input and \\(y\\) is the target. The key difference is that here we are minimizing something of the form \\( \big \Vert y - \frac{\partial f_{\theta}(x)}{\partial x} \big \Vert^2 \\). In other words, we are optimizing the gradient of a neural network.
+Now this expression is beginning to look like the \\(\mathcal{L_2}\\) loss function used in supervised learning. The \\(\mathcal{L_2}\\) loss term usually takes the form \\(\big \Vert y - f_{\theta}(x) \big \Vert^2 \\) where \\(x\\) is the input and \\(y\\) is the target. The key difference is that here we are minimizing something of the form \\( \big \Vert y - \frac{\partial f_{\theta}(x)}{\partial x} \big \Vert^2 \\). In other words, we are optimizing the gradient of a neural network.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
 	<img src="/assets/hamiltonian-nns/overall-schema.png">
-	<div class="thecap" style="text-align:left"><b>Figure 4:</b> Schema of the Baseline and HNN models. The Baseline NN in the figure above represents the supervised learning approach to modeling the time derivatives of (<b>q</b>,<b>p</b>). In both cases, the inputs are the coordinates of the system and the targets are their time derivatives.</div>
+	<div class="thecap" style="text-align:left"><b>Figure 4:</b> Schema of the Baseline and HNN models. The Baseline NN in the figure above represents the supervised learning approach to modeling the time derivatives of (<b>q</b>, <b>p</b>). In both cases, the inputs are the coordinates of the system and the targets are their time derivatives.</div>
 </div>
 
 There are not many previous works that optimize the gradients of a neural network. Work by Schmidt and Lipson[^fn7] uses a loss function of this form, but they do not use it to optimize a neural network. Wang et al.[^fn8] optimize the gradients of a neural network, but not for the purpose of learning Hamiltonians. But not only is this technique possible; we also found that it works reasonably well.
@@ -260,7 +260,7 @@ While the main purpose of HNNs is to endow neural networks with better physics p
 	<button id="energyButton" onclick="toggleEnergy()" class="playbutton">Play</button>
 	<img src="/assets/hamiltonian-nns/addenergy-static.png" style="width:60%">
     <img alt="" src="/assets/hamiltonian-nns/addenergy.png" style="width:20%;padding-bottom:65px" id="energyImage"/>
-	<div class="thecap" style="text-align:left"><b>Figure 8 (click image to play or pause):</b> Visualizing integration in the latent space of the Pixel Pendulum model. We alternately integrate the symplectic gradient at low energy (blue circle), the regular gradient (purple line), and then the symplectic gradient at higher energy (red circle).</div>
+	<div class="thecap" style="text-align:left"><b>Figure 8:</b> Visualizing integration in the latent space of the Pixel Pendulum model. We alternately integrate the symplectic gradient at low energy (blue circle), the regular gradient (purple line), and then the symplectic gradient at higher energy (red circle).</div>
 </div>
 
 <script language="javascript">
