@@ -93,7 +93,7 @@
 
 <div class="container" style="font-size:18px; font-weight:300;margin-top:50px;margin-bottom:50px;">
   <!-- Before joining Google Brain,  -->
-  <b>Bio</b>. I am a recent graduate of Dartmouth College, where I majored in physics and dabbled in everything else. I have interned at CERN, Microsoft Azure, and the DARPA Explainable AI Project. I like to use memory-based models to generate sequences and policies. So far, I have used them to approximate the Enigma cipher, generate realistic handwriting, and visualize how reinforcement-learning agents play Atari games. One of my priorities as a scientist is to explain my work clearly and make it easy to replicate.
+  <b>About</b>. I am a recent graduate of Dartmouth College, where I majored in physics and dabbled in everything else. I have worked/interned at Google Brain, CERN, Microsoft, and the DARPA Explainable AI Project. So far, I'm most proud of showing how to learn Hamiltonians from data, visualizing reinforcement learning agents, and training RNNs to generate handwriting. I like to do adventurous and original science. I care a lot about communicating my work well and making it easy to replicate.
 
   <br><br>Outside of research, I like to run endurance races, camp, read Steinbeck, and make things out of wood. Ask me about raising pigs.
   
@@ -104,6 +104,55 @@
 <div class="container">
   <h2>Research</h2>
   <div id="pubs">
+
+    <div class="pubwrap">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="pubimg">
+            <img src="./static/orbits-compare.png" height=150px>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="pub">
+            <div class="pubt">Hamiltonian Neural Networks</div>
+            <div class="pubd"><em>Under review for <a href="https://nips.cc/">NeurIPS 2019</a>.</em> Instead of crafting a Hamiltonian by hand, we parameterize it with a neural network and then learn it directly from data. This lets us learn <em>exact</em> conservation of energy-like quantities straight from noisy (pixel) data.</div>
+            <div class="puba">Sam Greydanus, Misko Dzamba, Jason Yosinski</div>
+            <div class="pubv"></div>
+            <div class="publ">
+              <ul>
+                <li><a target="_blank" href="https://arxiv.org/abs/1906.01563">arXiv</a></li>
+                <li><a target="_blank" href="https://github.com/greydanus/hamiltonian-nn">GitHub</a></li>
+                <li><a target="_blank" href="https://greydanus.github.io/2019/05/15/hamiltonian-nns/">Blog post</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pubwrap">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="pubimg">
+            <img src="./static/fsm.png" height=200px>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="pub">
+            <div class="pubt">Finite State Representations of Policy Networks</div>
+            <div class="pubd"><em>Accepted paper at <a href="https://iclr.cc/">ICLR 2019</a>.</em> RNN policies, which use continuous-valued memory and observation vectors, are hard to interpret. We extract minimal policy representations from Atari agents and show that Pong agents, for example, only need 3 discrete memory states and 10 observations.</div>
+            <div class="puba">Anurag Koul, Sam Greydanus, Alan Fern</div>
+            <div class="pubv"></div>
+            <div class="publ">
+              <ul>
+                <li><a href="https://arxiv.org/abs/1811.12530">arXiv</a></li>
+                <li><a href="https://github.com/koulanurag/mmn">GitHub</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="pubwrap">
       <div class="row">
