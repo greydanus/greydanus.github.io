@@ -288,7 +288,7 @@ Whereas Hamiltonian mechanics is an old and well-established theory, the science
 
 ## Acknowledgements
 
-Thanks to the Google AI Residency for providing me with all the mentorship and resources that a young researcher could dare to dream of. Thanks to Nic Ford, Trevor Gale, Rapha Gontijo Lopes, Keren Gu, Ben Caine, Mark Woodward, Stephan Hoyer, and Jascha Sohl-Dickstein for insightful conversations and advice. Thanks to Jason Yosinski and Misko Dzumba for being awesome coathors and for the informal conversations that sparked this work. 
+Thanks to the Google AI Residency for providing me with all the mentorship and resources that a young researcher could dare to dream of. Thanks to Nic Ford, Trevor Gale, Rapha Gontijo Lopes, Keren Gu, Ben Caine, Mark Woodward, Stephan Hoyer, and Jascha Sohl-Dickstein for insightful conversations and advice. Thanks to Jason Yosinski and Misko Dzamba for being awesome coauthors and for the informal conversations that sparked this work. 
 
 <!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%">
 	<img style="width:50%" src="/assets/hamiltonian-nns/cat.png">
