@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   width="199.89999pt"
+   height="229.0229pt"
+   viewBox="0 0 199.89999 229.0229"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg2"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="google_scholar.svg">
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview10"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.7375"
+     inkscape:cx="133.125"
+     inkscape:cy="146.27863"
+     inkscape:window-x="65"
+     inkscape:window-y="34"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg2" />
+  <metadata
+     id="metadata4">
+Created by potrace 1.13, written by Peter Selinger 2001-2015
+<rdf:RDF>
+  <cc:Work
+     rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type
+       rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+    <dc:title></dc:title>
+  </cc:Work>
+</rdf:RDF>
+</metadata>
+  <g
+     transform="matrix(0.1,0,0,-0.1,-21.5,240)"
+     id="g6"
+     style="fill:#ffffff;stroke:none">
+    <path
+       d="m 545,2070 -330,-330 218,0 c 130,0 216,-4 213,-9 -13,-21 15,-159 45,-219 38,-78 126,-170 198,-206 63,-32 164,-56 241,-56 l 55,0 -3,-79 c -3,-65 0,-86 18,-121 12,-23 19,-44 16,-47 -2,-3 -42,-9 -88,-14 C 986,973 873,941 768,887 656,830 594,771 551,680 529,631 526,612 525,510 c 0,-99 3,-121 22,-155 54,-102 187,-194 332,-231 98,-25 470,-15 558,14 126,43 265,129 322,201 17,21 47,74 68,116 30,64 37,92 41,157 3,45 -1,104 -7,134 -18,77 -94,189 -175,255 -110,89 -208,183 -217,207 -15,39 16,85 122,183 109,101 149,157 173,238 20,68 21,179 2,251 l -15,55 135,135 134,135 0,-43 c 0,-29 -6,-48 -20,-62 -19,-19 -20,-33 -20,-390 0,-357 1,-371 20,-390 27,-27 93,-27 120,0 19,19 20,33 20,390 l 0,371 -25,23 c -22,21 -25,31 -25,97 l 0,73 62,63 62,63 -669,0 -670,0 -330,-330 z m 702,41 c 73,-34 132,-98 174,-188 51,-110 72,-193 72,-288 0,-124 -32,-183 -128,-233 -77,-40 -154,-37 -227,7 -96,58 -157,161 -194,327 -40,183 19,329 152,378 54,20 102,19 151,-3 z M 1373,868 c 51,-27 200,-155 226,-194 62,-94 63,-187 2,-284 -54,-87 -141,-126 -308,-137 -183,-12 -336,38 -430,140 -50,54 -67,103 -67,188 0,108 60,186 186,244 96,44 340,71 391,43 z"
+       id="path8"
+       inkscape:connector-curvature="0" />
+  </g>
+</svg>
