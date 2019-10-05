@@ -5,6 +5,8 @@ title:  "What is deep learning?"
 excerpt: "After being obsessed with this field for more than a year, I should have a concise and satisfying answer. Strangely, I have three."
 date:   2016-08-05 11:00:00
 mathjax: true
+thumbnail: /assets/what-is/thumbnail.png
+author: Sam Greydanus
 ---
 
 > “Deep learning has solved vision...” - Demis Hassabis (Google DeepMind)

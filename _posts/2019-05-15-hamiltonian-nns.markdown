@@ -5,6 +5,7 @@ title:  "Hamiltonian Neural Networks"
 excerpt: "Instead of crafting Hamiltonians by hand, we propose parameterizing them with neural networks and then learning them directly from data."
 date:   2019-05-15 11:00:00
 mathjax: true
+thumbnail: /assets/hamiltonian-nns/thumbnail.png
 author: Sam Greydanus, Misko Dzamba, and Jason Yosinski
 ---
 

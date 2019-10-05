@@ -5,6 +5,8 @@ title:  "A bird's eye view of synthetic gradients"
 excerpt: "Synthetic gradients achieve the perfect balance of crazy and brilliant. In a 100-line Gist I'll introduce this exotic technique and use it to train a neural network."
 date:   2016-11-26 11:00:00
 mathjax: true
+thumbnail: /assets/synthetic-gradients/thumbnail.png
+author: Sam Greydanus
 ---
 
 <!-- <center>

@@ -7,10 +7,35 @@ layout: default
   <ul class="posts">
     {% for post in site.posts %}
       <li>
-        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        <div style="display:inline-block;vertical-align:top; padding-top:20px; text-align:center;width:15%">
+
+            {% if post.thumbnail %}
+              <img src="{{ post.thumbnail }}" style="width:85px; height:85px" align="center"/>
+            {% else %}
+              <img src="/assets/shell.png" style="width:85px; height:85px" align="center"/> <!-- border: 0px solid #ccc; -->
+            {% endif %}
+        </div>
+        <div style="display:inline-block;width:80%">
+            <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+            <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
         <br>
         {{ post.excerpt }}
+        </div>
+
+
+
+
+<!--           <p>
+            {% if post.thumbnail %}
+              <img src="{{ post.thumbnail }}" style="height: 40px;" align="center" />
+            {% else %}
+              <img src="/assets/scientific-bee.png" style="height: 40px" align="center" />
+            {% endif %}
+          </p>
+        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span> </nobr>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        <br>
+        {{ post.excerpt }} -->
       </li>
     {% endfor %}
   </ul>
