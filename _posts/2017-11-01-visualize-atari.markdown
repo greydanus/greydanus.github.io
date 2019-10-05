@@ -5,6 +5,8 @@ title:  "Visualizing and Understanding Atari Agents"
 excerpt: "Deep RL agents are effective at maximizing rewards but it's often unclear what strategies they use to do so. I'll talk about a paper I just finished, aimed at solving this problem."
 date:   2017-11-1 11:00:00
 mathjax: true
+thumbnail: /assets/visualize-atari/thumbnail.png
+author: Sam Greydanus
 ---
 
 <div class="imgcap">

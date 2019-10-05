@@ -5,6 +5,8 @@ title:  "Taming wave functions with neural networks"
 excerpt: "The wave function is essential to most calculations in quantum mechanics, and yet it's a difficult beast to tame. Can neural networks help?"
 date:   2017-07-28 11:00:00
 mathjax: true
+thumbnail: /assets/quantum-nn/thumbnail.png
+author: Sam Greydanus
 ---
 
 _NOTE: This is a repost from [an article I wrote for **Quantum Frontiers**](https://quantumfrontiers.com/2017/08/02/taming-wave-functions-with-neural-networks/), the blog of the Institute for Quantum Information and Matter at Caltech_

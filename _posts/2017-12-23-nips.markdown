@@ -5,6 +5,8 @@ title:  "Making sense of NIPS 2017"
 excerpt: "Billion dollar investments. Top-tier scientists. Flo Rida. NIPS 2017 was a confusing, absurd, and inspirational roller coaster ride. Let's try to understand what happened."
 date:   2017-12-23 11:00:00
 mathjax: true
+thumbnail: /assets/nips/thumbnail.png
+author: Sam Greydanus
 ---
 
 <div class="imgcap">

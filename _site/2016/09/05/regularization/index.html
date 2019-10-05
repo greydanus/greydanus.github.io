@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>The art of regularization</title>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Science with a spirit of adventure.">
-    <link rel="canonical" href="http://greydanus.github.io/2016/09/05/regularization/">
-    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Sam's Research Blog posts" />
+    <meta name="description" content="The natural science of cognition.">
+    <link rel="canonical" href="http://localhost:4000/2016/09/05/regularization/">
+    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="A Field Guide to Sam's Research posts" />
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
@@ -38,12 +38,13 @@
   <div class="wrap">
 
     <div style="float:left; margin-top:10px; margin-right:10px;">
-    <a href="https://en.wikipedia.org/wiki/K%C3%A1rm%C3%A1n_vortex_street">
+<!--     <a href="https://en.wikipedia.org/wiki/K%C3%A1rm%C3%A1n_vortex_street">
       <img src="/assets/karman.png" width="40">
-    </a>
+    </a> -->
+    <img src="/assets/bee.png" width="80">
     </div>
 
-    <a class="site-title" href="/">Sam's Research Blog</a>
+    <a class="site-title" style="padding-top:15px; font-size:25px" href="/ ">A Field Guide to Sam's Research</a>
     
     <nav class="site-nav">
       <a href="#" class="menu-icon">
@@ -57,13 +58,13 @@
             c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
         </svg>
       </a>
-      <div class="trigger">
+      <div class="trigger" style="padding-top:17px; font-size:20px">
         
           
         
           <a class="page-link" href="/papers/">Interesting papers</a>
         
-        <a class="page-link" href="https://greydanus.github.io/about.html">About</a>
+        <a class="page-link" href="https://greydanus.github.io/about.html">About me</a>
       </div>
     </nav>
   </div>
@@ -77,7 +78,7 @@
 
   <header class="post-header">
     <h1>The art of regularization</h1>
-    <p class="meta">Sep 5, 2016</p>
+    <p class="meta">Sep 5, 2016 • Sam Greydanus</p>
   </header>
 
   <article class="post-content">
@@ -86,6 +87,8 @@
 </div>
 
 <p>Regularization seems fairly insignificant at first glance but it has a huge impact on deep models. I’ll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.</p>
+
+<p><strong>Disclaimer (January 2018): I’ve come a long ways as a researcher since writing this post. I’m worried that some of the stuff I wrote here is not exactly rigorous. I still encourage you to read this it, but do so with skepticism. When I have more time I’ll try and make fixes.</strong></p>
 
 <h2 id="mnist-classification">MNIST Classification</h2>
 
@@ -96,23 +99,21 @@
 
 <p>The basic idea here is to train a learning model to classify 28x28 images of handwritten digits (0-9). The dataset is relatively small (60k training examples) so it’s a classic benchmark for evaluating small models. TensorFlow provides a really simple API for loading the training data:</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="kn">as</span> <span class="nn">tf</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
 <span class="kn">from</span> <span class="nn">tensorflow.examples.tutorials.mnist</span> <span class="kn">import</span> <span class="n">input_data</span>
 <span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s">'MNIST_data'</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="n">batch</span> <span class="o">=</span> <span class="n">mnist</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">next_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Now <code class="highlighter-rouge">batch[0]</code> holds the training data and <code class="highlighter-rouge">batch[1]</code> holds the training labels. Making the model itself is really easy as well. For a fully-connected model without any regularization, we simply write:</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">xlen</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">"x"</span><span class="p">)</span> <span class="c"># xlen is 28x28 = 784</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">xlen</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">"x"</span><span class="p">)</span> <span class="c"># xlen is 28x28 = 784</span>
 <span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">ylen</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">"y_"</span><span class="p">)</span> <span class="c"># ylen is 10</span>
 
 <span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"W"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">])</span>
 <span class="n">output</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">))</span> <span class="c"># no bias because meh</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The full code is available on <a href="https://github.com/greydanus/regularization">GitHub</a>. I trained each model for 150,000 interations (well beyond convergence) to accentuate the differences between regularization methods.</p>
 
@@ -151,13 +152,12 @@
 
 <p>In the process of learning all this, I devised my own method for estimating \(\mu\) and a \(\sigma\). I’m not sure how to interpret the result theoretically but I thought I’d include it because 1) the weights look far different from those of the other models 2) the test accuracy is still quite high (91.5%).</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">S_hat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"S_hat"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">S_hat</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"S_hat"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
 <span class="n">S</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">S_hat</span><span class="p">)</span> <span class="c"># make sure sigma matrix is positive</span>
 
 <span class="n">mu</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"mu"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
 <span class="n">W</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">noise_source</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span> <span class="c"># draw each weight from a Gaussian distribution</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <div class="imgcap">
 	<img src="/assets/regularization/gauss.png" width="70%" />
 	<div class="thecap" style="text-align:center"><b>Gaussian weight regularization:</b> these 'weight images' are really different but the model approaches the same training accuracy as the unregularized version.</div>
@@ -167,10 +167,9 @@
 
 <p>L2 regularization penalizes weights with large magnitudes. Large weights are the most obvious symptom of overfitting, so it’s an obvious fix. It’s less obvious that L2 regularization actually has a Bayesian interpretation: since we initialize weights to very small values and L2 regression keeps these values small, we’re actually biasing the model towards the prior.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">l2_loss</span><span class="p">(</span> <span class="n">y_</span> <span class="o">-</span> <span class="n">output</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ylen</span><span class="o">*</span><span class="n">batch_size</span><span class="p">)</span> <span class="o">+</span> \
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">l2_loss</span><span class="p">(</span> <span class="n">y_</span> <span class="o">-</span> <span class="n">output</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ylen</span><span class="o">*</span><span class="n">batch_size</span><span class="p">)</span> <span class="o">+</span> \
 		 <span class="nb">sum</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">GraphKeys</span><span class="o">.</span><span class="n">REGULARIZATION_LOSSES</span><span class="p">))</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 <div class="imgcap">
 	<img src="/assets/regularization/mag.png" width="70%" />
 	<div class="thecap" style="text-align:center"><b>L2 regularization:</b> these 'weight images' are very smooth and the digits are clear. Though the model has a better representation of how each digit appears, the test accuracy is low because messy/unusual examples don't fit the template well.</div>
@@ -180,9 +179,8 @@
 
 <p>Normalizing the weight matrix is another way of keeping weights close to zero so it behaves similarly to L2 regularization. However, this form of regularization is not equivalent to L2 regularization and may behave differently in wider/deeper models.</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">l2_normalize</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-</code></pre>
-</div>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">l2_normalize</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
 <div class="imgcap">
 	<img src="/assets/regularization/norm.png" width="70%" />
 	<div class="thecap" style="text-align:center"><b>Weight normalization:</b> it's interesting to note that normalizing the weight matrix has the same effect here as L2 regularization</div>
@@ -294,12 +292,12 @@
 
   <div class="wrap">
 
-    <!-- <h2 class="footer-heading">Sam's Research Blog</h2> -->
+    <!-- <h2 class="footer-heading">A Field Guide to Sam's Research</h2> -->
 
     <div class="footer-col-1 column">
       <ul>
-        <li>Sam's Research Blog</li>
-        <!-- <li><a href="mailto:sam.17(at)dartmouth.edu">sam.17(at)dartmouth.edu</a></li> -->
+        <li>A Field Guide to Sam's Research</li>
+        <!-- <li><a href="mailto:greydanus.17(at)gmail.com">greydanus.17(at)gmail.com</a></li> -->
       </ul>
     </div>
 
@@ -324,12 +322,28 @@
             <span class="username">greydanus</span>
           </a>
         </li>
-        
+        <li>
+          <a href="https://twitter.com/samgreydanus">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">samgreydanus</span>
+          </a>
+        </li>
       </ul>
     </div>
 
     <div class="footer-col-3 column">
-      <p class="text">Science with a spirit of adventure.</p>
+      <p class="text">The natural science of cognition.</p>
     </div>
 
   </div>
