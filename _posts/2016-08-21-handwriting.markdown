@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Scribe: realistic handwriting with TensorFlow"
+title:  "Scribe: Generating Realistic Handwriting with TensorFlow"
 excerpt: "In this post, I will demonstrate the power of deep learning by using it to generate human-like handwriting. This work is based on <em>Generating Sequences With Recurrent Neural Networks</em> by Alex Graves"
 date:   2016-08-21 10:00:00
 mathjax: true
