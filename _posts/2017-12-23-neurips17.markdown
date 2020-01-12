@@ -1,27 +1,27 @@
 ---
 layout: post
 comments: true
-title:  "Making sense of NIPS 2017"
-excerpt: "Billion dollar investments. Top-tier scientists. Flo Rida. NIPS 2017 was a confusing, absurd, and inspirational roller coaster ride. Let's try to understand what happened."
+title:  "A Review of NeurIPS 2017"
+excerpt: "Billion dollar investments. Top-tier scientists. Flo Rida. NeurIPS 2017 was a confusing, absurd, and inspirational roller coaster ride. Let's try to understand what happened."
 date:   2017-12-23 11:00:00
 mathjax: true
-thumbnail: /assets/nips/thumbnail.png
+thumbnail: /assets/neurips17/thumbnail.png
 author: Sam Greydanus
 ---
 
 <div class="imgcap">
-	<img src="/assets/nips/nips-registrations.png" width="60%">
+	<img src="/assets/neurips17/nips-registrations.png" width="60%">
 	<div class="thecap" style="text-align:center">AI hype in one picture.</div>
 </div>
 
-Billion dollar investments. Top-tier scientists. Flo Rida. NIPS 2017 was a confusing, absurd, and inspirational roller coaster ride. Let's try to understand what happened.
+Billion dollar investments. Top-tier scientists. Flo Rida. NeurIPS 2017 was a confusing, absurd, and inspirational roller coaster ride. Let's try to understand what happened.
 
 ## Understanding the hype
 
-**Hype.** Everyone agrees that the hype for NIPS 2017 was incredible. Just look at the plot above: the entire conference sold out during early registration. The conference was packed. Big companies were desperately recruiting dewy-eyed and geeky-dispositioned PhD students. There were countless afterparties hosted at luxury venues by Intel, DeepMind, OpenAI, Uber, Facebook, Borealis, CapitalOne, Apple, etc. Intel even got Flo Rida to help them unveil a new chip. _You mean the rapper Flo Rida_?! Yes. Him. Although I can't confirm because the bouncer wouldn't let me in :/
+**Hype.** Everyone agrees that the hype for NeurIPS 2017 was incredible. Just look at the plot above: the entire conference sold out during early registration. The conference was packed. Big companies were desperately recruiting dewy-eyed and geeky-dispositioned PhD students. There were countless afterparties hosted at luxury venues by Intel, DeepMind, OpenAI, Uber, Facebook, Borealis, CapitalOne, Apple, etc. Intel even got Flo Rida to help them unveil a new chip. _You mean the rapper Flo Rida_?! Yes. Him. Although I can't confirm because the bouncer wouldn't let me in :/
 
 <div class="imgcap">
-	<img src="/assets/nips/gradient-flo.png" width="45%">
+	<img src="/assets/neurips17/gradient-flo.png" width="45%">
 	<div class="thecap" style="text-align:center">He likes Apple Bottom jeans, boots with the fur...and apparently GPUs.</div>
 </div>
 
@@ -33,37 +33,37 @@ Billion dollar investments. Top-tier scientists. Flo Rida. NIPS 2017 was a confu
  3. Top academic talent has moved into the private sector. Examples: Uber hired 40 people from Carnegie Mellon’s groundbreaking AI program in 2015 to work on its self-driving-car project. Four of the best-known academic AI researchers have left or taken leave from their professorships at Stanford.
 
 <div class="imgcap">
-	<img src="/assets/nips/m-and-a.jpg" width="40%">
+	<img src="/assets/neurips17/m-and-a.jpg" width="40%">
 	<div class="thecap" style="text-align:center">Taken from <a href="https://www.economist.com/news/business/21732125-tech-giants-are-investing-billions-transformative-technology-google-leads-race">the Economist</a>.</div>
 </div>
 
-**Impact on research.** In years past, [one of my advisors](https://scholar.google.com/citations?user=09kJn28AAAAJ) explained, NIPS was a mellow conference. It was generally aimed at professors and their graduate students. Doing a quick scan over the NIPS 2017 accepted papers, I found that the organization with the most affiliated authors was Google/DeepMind/Brain (210), followed by Carnegie Mellon (108), MIT (93), Stanford (81), Berkeley (81), and Microsoft (70)[^fn1]. So the majority of NIPS attendees are still academic, but industry participation (read: Google) is growing.
+**Impact on research.** In years past, [one of my advisors](https://scholar.google.com/citations?user=09kJn28AAAAJ) explained, NeurIPS was a mellow conference. It was generally aimed at professors and their graduate students. Doing a quick scan over the NeurIPS 2017 accepted papers, I found that the organization with the most affiliated authors was Google/DeepMind/Brain (210), followed by Carnegie Mellon (108), MIT (93), Stanford (81), Berkeley (81), and Microsoft (70)[^fn1]. So the majority of NeurIPS attendees are still academic, but industry participation (read: Google) is growing.
 
 <div class="imgcap">
-	<img src="/assets/nips/avg_attendee.jpg" width="50%">
+	<img src="/assets/neurips17/avg_attendee.jpg" width="50%">
 	<div class="thecap" style="text-align:center">Taken from <a href="https://twitter.com/MLpuppy">@MLpuppy</a>.</div>
 </div>
 
-But which researchers are setting trends in the field, and which ones are making relatively small contributions? A quick review of the conference schedule shows that five of the seven invited speakers and 10 of the 19 symposium organizers had industry affiliations. This means that industry-funded researchers "set the curve" at NIPS.
+But which researchers are setting trends in the field, and which ones are making relatively small contributions? A quick review of the conference schedule shows that five of the seven invited speakers and 10 of the 19 symposium organizers had industry affiliations. This means that industry-funded researchers "set the curve" at NeurIPS.
 
 Why can't more research be done in academia, where the interests of the community are better served, rather than the interests of a few dopey CEOs? _"But they had free fidget spinners..."_ -- all the PhD students.
 
 ## Big ideas and trends
 
-After day one, I did my best to look _beyond_ the hype and find examples of people doing good science. My initial pessimism ("Is NIPS just a recruiting event?") faded and I discovered some interesting themes.
+After day one, I did my best to look _beyond_ the hype and find examples of people doing good science. My initial pessimism ("Is NeurIPS just a recruiting event?") faded and I discovered some interesting themes.
 
 **Are we alchemists?** Researcher Ali Rahimi received a Test of Time award for [his contributions to the field](https://scholar.google.com/scholar?cluster=2545838671944402764&hl=en&as_sdt=0,38&as_vis=1) back in 2007-08. He used his [acceptance speech](https://www.youtube.com/watch?v=ORHFOnaEzPc) as an opportunity to make a strong, controversial claim about the state of machine learning: "it is the new alchemy." Ali's point is that we spend too much of our time trying to improve the performance of AI on various datasets and too little time trying to understand why things go right or wrong.
 
 > "We're building systems that govern healthcare and mediate our civil dialogue. We influence elections. I would like to live in a society whose systems are built on top of verifiable, rigorous, thorough knowledge, and not on alchemy."
 
 <div class="imgcap">
-	<img src="/assets/nips/email_ba.png" width="45%">
-	<div class="thecap" style="text-align:center">An example of "alchemy" in AI, taken from Ali's NIPS keynote.</div>
+	<img src="/assets/neurips17/email_ba.png" width="45%">
+	<div class="thecap" style="text-align:center">An example of "alchemy" in AI, taken from Ali's NeurIPS keynote.</div>
 </div>
 
 Several hours later, [Yann LeCun](https://en.wikipedia.org/wiki/Yann_LeCun) posted [a strong criticism](https://www.reddit.com/r/MachineLearning/comments/7i1uer/n_yann_lecun_response_to_ali_rahimis_nips_lecture/) of Ali's speech. This debate soon diffused into countless lunchtime and hallway conversations. Whether people sided with Yann or Ali on this, they seemed grateful for a chance to discuss the issue. The machine learning community is results-driven and there have been few forums for these debates until now.
 
-**Metalearning.** Pieter Abbeel and friends are pushing metalearning. Since he is one of the world's most respected researchers, this was a huge theme at NIPS. The idea of metalearning is to teach a computer _how to learn_. Instead of teaching a computer how to solve a maze, you would teach a computer to _teach itself_ how to solve a maze. Yes, this is more complicated. The idea is that by "learning to learn," you get AIs that generalize to new situations effectively.
+**Metalearning.** Pieter Abbeel and friends are pushing metalearning. Since he is one of the world's most respected researchers, this was a huge theme at NeurIPS. The idea of metalearning is to teach a computer _how to learn_. Instead of teaching a computer how to solve a maze, you would teach a computer to _teach itself_ how to solve a maze. Yes, this is more complicated. The idea is that by "learning to learn," you get AIs that generalize to new situations effectively.
 
 <div class="imgcap">
 	<center>
@@ -75,10 +75,10 @@ Several hours later, [Yann LeCun](https://en.wikipedia.org/wiki/Yann_LeCun) post
 
 I think everyone agrees that metalearning is desirable. The real question is how to make it work. Even Pieter was unclear on this point, although he presented a wealth of recent ideas. I especially liked his paper presenting an agent that could explore a maze until it found a target. When dropped back into the maze, the agent used its past experience to navigate quickly to the target.
 
-**Deep reinforcement learning (Deep RL).** The young and ambitious field of deep reinforcement learning continues to deliver great results. Earlier this year, Google DeepMind published a fourth Nature paper. The team described how to teach an algorithm, which they call AlphaGo Zero, to [play Go at superhuman level](https://deepmind.com/blog/alphago-zero-learning-scratch/), starting from zero human knowledge. During NIPS they released an updated version which plays Go, Shogui, and Chess at a dominant level.
+**Deep reinforcement learning (Deep RL).** The young and ambitious field of deep reinforcement learning continues to deliver great results. Earlier this year, Google DeepMind published a fourth Nature paper. The team described how to teach an algorithm, which they call AlphaGo Zero, to [play Go at superhuman level](https://deepmind.com/blog/alphago-zero-learning-scratch/), starting from zero human knowledge. During NeurIPS they released an updated version which plays Go, Shogui, and Chess at a dominant level.
 
 <div class="imgcap">
-	<img src="/assets/nips/alphago-zero.gif" width="55%">
+	<img src="/assets/neurips17/alphago-zero.gif" width="55%">
 	<div class="thecap" style="text-align:center">AlphaGo Zero rediscovering 3000 years of Go strategy.</div>
 </div>
 
@@ -86,7 +86,7 @@ The problem with deep RL is that it still learns far too slowly. For example, it
 
 **Interpretability.** There was a big symposium (3000+ people) and two workshops about this. The interpretability issue relates to the fact that we often want to get machine learning systems to explain themselves. Consider applications where human well-being is involved: self-driving cars, medical applications, and financial decisions. In these situations, we want humans to trust the algorithms. The best way to do this is to make the computer explain its decision-making process in the way that humans understand.
 
-Between Ali's keynote, several new government grants aimed at interpretability, and a push among companies to use AI to solve real-world problems, interpretability felt like a central issue this year. I am happy about this because my research -- the reason I attended NIPS -- is centered around interpretability. Here I am giving a talk about it:
+Between Ali's keynote, several new government grants aimed at interpretability, and a push among companies to use AI to solve real-world problems, interpretability felt like a central issue this year. I am happy about this because my research -- the reason I attended NeurIPS -- is centered around interpretability. Here I am giving a talk about it:
 
 <center>
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Nice talk by <a href="https://twitter.com/samgreydanus?ref_src=twsrc%5Etfw">@samgreydanus</a> on visualizing and understanding deep RL.  I like the <a href="https://twitter.com/ATLASexperiment?ref_src=twsrc%5Etfw">@ATLASexperiment</a> sticker on his laptop. <a href="https://t.co/YVTGX7M0kc">pic.twitter.com/YVTGX7M0kc</a></p>&mdash; Kyle Cranmer (@KyleCranmer) <a href="https://twitter.com/KyleCranmer/status/939667242358226945?ref_src=twsrc%5Etfw">December 10, 2017</a></blockquote>
@@ -95,19 +95,19 @@ Between Ali's keynote, several new government grants aimed at interpretability, 
 
 **Disentangled representations.** The power of deep learning is that it can transform features at the pixel level, such as color and shape, into more complex ones such as "ears", "wheels", or "leaves". Clearly, it's easier to explain what is going on in a picture using the latter. The problem is that these concepts get mixed together like a plate of spagetthi. As Yoshua Bengio said (hungrily), _"If we can take that spaghetti and disentangle it, that would be very nice."_ So we'd like algorithms that discover high-level features like "ears," "wheels," or "leaves" that are _separable_. We'd also like to do this in an _unsupervised_ manner.
 
-I attended a workshop centered around this idea. People whose work and ideas I found interesting included Yoshua Bengio (Montreal), Stefano Soatto (UCLA), Josh Tenenbaum (MIT), and DeepMind's Irina Higgins, Peter Battaglia, David Pfau, and Tejas Kulkarni. This theme was not big at NIPS, but I think it is promising.
+I attended a workshop centered around this idea. People whose work and ideas I found interesting included Yoshua Bengio (Montreal), Stefano Soatto (UCLA), Josh Tenenbaum (MIT), and DeepMind's Irina Higgins, Peter Battaglia, David Pfau, and Tejas Kulkarni. This theme was not big at NeurIPS, but I think it is promising.
 
 ## AI and society
 
 I was surprised to find that some of my conversations were not about science at all. They were about the relationship between AI and society. Many of these occurred at the fascinating but sparsely-attended [_Kinds of Intelligence_](http://kindsofintelligence.org/) symposium. This symposium brought together influential thinkers from psychology ([Alison Gopnik](https://en.wikipedia.org/wiki/Alison_Gopnik)), neuroscience ([Gary Marcus](https://en.wikipedia.org/wiki/Gary_Marcus), [Lucia Jacobs](http://psychology.berkeley.edu/people/lucia-f-jacobs)), deep learning ([Demis Hassabis](https://en.wikipedia.org/wiki/Demis_Hassabis), [Zoubin Ghahramani](https://en.wikipedia.org/wiki/Zoubin_Ghahramani)), privacy ([Cynthia Dwork](https://en.wikipedia.org/wiki/Cynthia_Dwork)), and public policy ([David Runciman](https://en.wikipedia.org/wiki/David_Runciman)).
 
 <div class="imgcap">
-	<img src="/assets/nips/ai-4-good.jpg" width="60%">
+	<img src="/assets/neurips17/ai-4-good.jpg" width="60%">
 </div>
 
 **People and perspectives.** The _Kinds of Intelligence_ symposium made me think critically about the ways AI will affect society. I ended up having some fascinating conversations on the topic. Here is a brief list of the most striking people and perspectives:
 
-1. <span style="color:red"><u>Taras (grad student at KTH)</u></span> is worried about AI making the poor poorer and the rich richer. Based on how corporate NIPS 2017 was, I think this is valid. Far too much of current AI research is aimed at finding better ways to sell things.
+1. <span style="color:red"><u>Taras (grad student at KTH)</u></span> is worried about AI making the poor poorer and the rich richer. Based on how corporate NeurIPS 2017 was, I think this is valid. Far too much of current AI research is aimed at finding better ways to sell things.
 
 2. <span style="color:green"><u>Kyle Cranmer (NYU)</u></span> is leading the effort to [bring AI to the natural sciences](https://dl4physicalsciences.github.io/). Applications include particle track reconstruction (particle physics), tracking supermassive black hole emissions (astronomy), analysis of LIGO data (gravity waves), and solving the many-body problem (quantum mechanics). These are examples of basic research which can help society as a whole rather than a single company.
 
