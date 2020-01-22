@@ -5,7 +5,6 @@ title:  "Neural Reparameterization Improves Structural Optimization"
 excerpt: "We propose using neural networks to reparameterize physics problems. This helps us design better bridges, skyscrapers, and cantilevers while enforcing hard physical constraints."
 date:   2019-12-15 11:00:00
 mathjax: true
-author: Sam Greydanus
 meta: <a href="https://deep-inverse.org/">NeurIPS 2019 Deep Inverse Workshop</a>
 thumbnail: /assets/neural-reparam/thumbnail.png
 ---
