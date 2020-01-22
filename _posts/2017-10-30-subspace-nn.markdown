@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Training Networks in Random Subspaces"
-excerpt: "Do we REALLY need over 100,000 free parameters to build a good MNIST classifier? It turns out that we can eliminate 80-90% of them."
+excerpt: "Do we really need over 100,000 free parameters to build a good MNIST classifier? It turns out that we can eliminate 80-90% of them."
 date:   2017-10-30 11:00:00
 mathjax: true
 thumbnail: /assets/subspace-nn/thumbnail.png
@@ -14,7 +14,7 @@ author: Sam Greydanus
     <div class="thecap" style="text-align:center">Some things, like the "self-operated napkin", are just too complicated!</div>
 </div>
 
-Do we REALLY need over 100,000 free parameters to build a good MNIST classifier? It turns out that we can eliminate 50-90% of them.
+Do we really need over 100,000 free parameters to build a good MNIST classifier? It turns out that we can eliminate 50-90% of them.
 
 ## How many parameters is enough?
 
