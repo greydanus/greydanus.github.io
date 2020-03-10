@@ -72,7 +72,7 @@ thumbnail: /assets/neural-reparam/thumbnail.png
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:650px">
 	<a href="https://arxiv.org/abs/1909.04240" id="linkbutton" target="_blank" style="margin-right: 10px;">Read the paper</a>
-	<a href="https://colab.research.google.com/github/google-research/neural-structural-optimization/blob/master/notebooks/optimization-examples.ipynb" id="linkbutton" target="_blank"  style="margin-left: 10px;">Reproduce in Colab</a>
+	<a href="https://colab.research.google.com/github/google-research/neural-structural-optimization/blob/master/notebooks/optimization-examples.ipynb" id="linkbutton" target="_blank"  style="margin-left: 10px;">Run in browser</a>
 	<a href="https://github.com/google-research/neural-structural-optimization" id="linkbutton" target="_blank"  style="margin-left: 10px;">Get the code</a>
 </div>
 

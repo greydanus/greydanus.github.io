@@ -61,7 +61,7 @@ author: Sam Greydanus, Misko Dzamba, and Jason Yosinski
 
 It’s remarkable that we ever have an “ordinary day.” If we were to sit down and catalogue all of our experiences – the flavors of our sandwich, the quality of the sunlight, or the texture of our cat’s fur – no day would look like any other. The stew of sensory information would be simply overwhelming.
 
-The only way to make sense of our complicated day-to-day experiences is to focus on the things that don’t change. The invariants. The conserved quantities. Over time, we pick up on these things and use them as anchors or reference points for our sense of reality. Our sandwich tastes different – maybe the bread is stale. The cat doesn’t feel as soft as usual…maybe it needs a bath. It’s beneficial to understand what does not vary in order to make sense of what does.
+The only way to make sense of our complicated day-to-day experiences is to focus on the things that don’t change. The invariants. The conserved quantities. Over time, we pick up on these things and use them as anchors or reference points for our sense of reality. Our sandwich tastes different...maybe the bread is stale. The cat doesn’t feel as soft as usual...maybe it needs a bath. It’s beneficial to understand what does not vary in order to make sense of what does.
 
 This is a common theme in physics. Physicists start with a small set of “invariant quantities” such as total energy, total momentum, and (sometimes) total mass. Then they use these invariances to predict the dynamics of a system. “If energy is conserved,” they might say, “when I throw a ball upwards, it will return to my hand with the same speed as when it left.”
 
@@ -300,7 +300,7 @@ Thanks to the Google AI Residency for providing me with all the mentorship and r
 
 [^fn1]: Rupp, M., Tkatchenko, A., Muller, K.R., and Von Lilienfeld, O. A. [Fast and accurate modeling of molecular atomization energies with machine learning](https://arxiv.org/abs/1109.2618). Physical review letters, 108(5): 058301, 2012.
 [^fn2]: Schutt, K. T., Arbabzadah, F., Chmiela, S., Muller, K. R., and Tkatchenko, A. [Quantum chemical insights from deep tensor neural networks](Quantum chemical insights from deep tensor neural networks). Nature communications, 8:13890, 2017.
-[^fn3]: Lutter, M., Ritter, C., and Peters, J. [Deep lagrangian networks: Using physics as model prior for deep learning. International Conference on Learning Representations](https://openreview.net/forum?id=BklHpjCqKm), 2019.
+[^fn3]: Lutter, M., Ritter, C., and Peters, J. [Deep lagrangian networks: Using physics as model prior for deep learning.](https://openreview.net/forum?id=BklHpjCqKm), International Conference on Learning Representations, 2019.
 [^fn4]: Battaglia P, Pascanu R, Lai M, Rezende DJ. [Interaction networks for learning about objects, relations and physics](https://arxiv.org/abs/1612.00222). Advances in neural information processing systems, 2016
 [^fn5]: They also need to obey a set of relations called the Poisson bracket relations, but we’ll ignore those for now.
 [^fn6]: More generally, this quantity can be anything that does not change over time and has nonzero derivatives w.r.t. the coordinates of the system. But in this work we’ll focus on total energy.
