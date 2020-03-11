@@ -46,6 +46,8 @@ thumbnail: /assets/lagrangian-nns/thumbnail.png
 	</style>
 </div>
 
+**Abstract.** Accurate models of the world are built on notions of its underlying symmetries. In physics, these symmetries correspond to conservation laws, such as for energy and momentum. But neural network models struggle to learn these symmetries. To address this shortcoming, last year I introduced a class of models called Hamiltonian Neural Networks (HNNs) that can learn these invariant quantities directly from (pixel) data. In this project, some friends and I are going to introduce a complimentary class of models called Lagrangian Neural Networks (LNNs). These models are able to learn Lagrangian functions straight from data. They're cool because like HNNs they can learn exact conservation laws, but unlike HNNs they don't require canonical coordinates.
+
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:90%">
 	<img src="/assets/lagrangian-nns/overall-idea.png" style="padding: 0px 0px 10px 0px;">
 	<div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:90%"><b>Figure 1:</b> A Lagrangian Neural Network learns the Lagrangian of a double pendulum. In this post, we introduce Lagrangian Neural Networks (LNNs). Like Hamiltonian Neural Networks, they can learn arbitrary conservation laws. In some cases they are better since they do not require canonical coordinates.</div>
@@ -70,7 +72,7 @@ Indeed, his path into research was notable for its passion and suddenness. Until
 	<div class="thecap">A French stamp commemorating Lagrange.</div>
 </div>
 
-Lagrange’s work was notable for its purity and beauty, especially in contrast to the chaotic and broken times that he lived through. Expressing admiration for the principle of least action, William Hamilton once called it [“a scientific poem”](https://books.google.com/books?id=j_kJCAAAQBAJ&pg=PA130&lpg=PA130&dq=joseph+lagrange+beauty+of+virtual+work&source=bl&ots=771naVFjo6&sig=ACfU3U0L4Bj9IabO1jFh7jJK0pEgoVVfWg&hl=en&sa=X&ved=2ahUKEwjAppGZtY7oAhXcGTQIHfp3CncQ6AEwAHoECAwQAQ#v=onepage&q=joseph%20lagrange%20beauty%20of%20virtual%20work&f=false). In this essay, I'll introduce you to this "scientific poem" and explain its role in a recent paper called "Lagrangian Neural Networks" that I helped write. 
+Lagrange’s work was notable for its purity and beauty, especially in contrast to the chaotic and broken times that he lived through. Expressing admiration for the principle of least action, William Hamilton once called it [“a scientific poem”](https://books.google.com/books?id=j_kJCAAAQBAJ&pg=PA130&lpg=PA130&dq=joseph+lagrange+beauty+of+virtual+work&source=bl&ots=771naVFjo6&sig=ACfU3U0L4Bj9IabO1jFh7jJK0pEgoVVfWg&hl=en&sa=X&ved=2ahUKEwjAppGZtY7oAhXcGTQIHfp3CncQ6AEwAHoECAwQAQ#v=onepage&q=joseph%20lagrange%20beauty%20of%20virtual%20work&f=false). In the following sections, I'll introduce you to this "scientific poem" and then use it to derive Lagrangian Neural Networks. 
 
 ## The Principle of Least Action
 
