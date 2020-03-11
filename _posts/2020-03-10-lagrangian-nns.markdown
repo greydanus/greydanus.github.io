@@ -87,7 +87,7 @@ $$
 
 At first glance, \\(S\\) seems like an arbitrary combination of energies. But it has one remarkable property. It turns out that for all possible paths between \\(x_0\\) and \\(x_1\\), there is only one path that gives a stationary value of \\(S\\). Moreover, that path is the one that nature always takes.
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%">
 	<img src="/assets/lagrangian-nns/paths.png" style="width:80%">
 	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto;"><b><a href="https://en.wikipedia.org/wiki/Lagrangian_mechanics#/media/File:Least_action_principle.svg" target="_blank" >Figure 3:</a></b> Possible paths from q0 to q1, plotted in <a href="https://en.wikipedia.org/wiki/Configuration_space_(physics)">configuration space</a>. The action is stationary (δS = 0) for small perturbations (δq) to the path that the system actually takes (red).</div>
 </div>
@@ -161,9 +161,11 @@ In our paper, we conduct several experiments to validate this approach. In the f
 
 It's also interesting to compare qualitative results. In the video below, we use a baseline neural network and an LNN to predict the dynamics of a double pendulum, starting from the same initial state. You'll notice that the both trajectories seem reasonable until the end of the video, when the baseline model shifts to states that have much lower total energies.
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
-	<iframe width="800" height="324" src="https://www.youtube.com/embed/ulQKNtTEuJI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	<div class="thecap" style="text-align:center"><b>Figure 5:</b> Dynamics predictions of a baseline (left) versus an LNN (right)</div>
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+	<div>
+		<iframe width="600" height="243" src="https://www.youtube.com/embed/ulQKNtTEuJI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<div class="thecap" style="text-align:center; display: block; margin-left: auto; margin-right: auto; width:60%"><b>Figure 5:</b> Dynamics predictions of a baseline (left) versus an LNN (right)</div>
 </div>
 
 **Relativistic particle.** Another system we considered was a particle of mass \\(m=1\\) moving at a relativistic velocity through a potential \\(g\\) with \\(c=1\\). The Lagrangian of the system is \\(\mathcal{L} = ((1 - \dot{q}^2)^{-1/2} - 1) + g q\\) and it is interesting because existing Hamiltonian and Lagrangian learning approaches fail. HNNs fail because the canonical momenta of the system are hard to compute. Deep Lagrangian Networks[^fn3] fail because they make restrictive assumptions about the form of the Lagrangian.
