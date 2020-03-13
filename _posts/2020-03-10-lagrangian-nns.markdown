@@ -12,7 +12,7 @@ thumbnail: /assets/lagrangian-nns/thumbnail.png
 <div>
 	<style>
 		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgb(102,153,255);
+		  background-color: rgb(180,180,180);
 		  border-radius: 4px;
 		  color: white;
 		  padding: 6px 0px;
@@ -27,7 +27,7 @@ thumbnail: /assets/lagrangian-nns/thumbnail.png
 		}
 
 		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(92,143,245);
+		  background-color: rgba(160,160,160);
 		}
 
 		.playbutton {
