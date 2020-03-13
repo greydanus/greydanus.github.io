@@ -12,20 +12,22 @@ thumbnail: /assets/neural-reparam/thumbnail.png
 <div>
 	<style>
 		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgba(180, 180, 180);
+		  background-color: rgb(102,153,255);
 		  border-radius: 4px;
 		  color: white;
 		  padding: 6px 0px;
-		  width: 200px;
+		  width: 150px;
 		  text-align: center;
 		  text-decoration: none;
 		  display: inline-block;
 		  text-transform: uppercase;
 		  font-size: 13px;
+		  margin-right: 8px;
+		  margin-left: 8px;
 		}
 
 		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(160, 160, 160);
+		  background-color: rgba(92,143,245);
 		}
 
 		.playbutton {
@@ -70,10 +72,10 @@ thumbnail: /assets/neural-reparam/thumbnail.png
 	}
 </script>
 
-<div style="display: block; margin-left: auto; margin-right: auto; width:650px">
-	<a href="https://arxiv.org/abs/1909.04240" id="linkbutton" target="_blank" style="margin-right: 10px;">Read the paper</a>
-	<a href="https://colab.research.google.com/github/google-research/neural-structural-optimization/blob/master/notebooks/optimization-examples.ipynb" id="linkbutton" target="_blank"  style="margin-left: 10px;">Run in browser</a>
-	<a href="https://github.com/google-research/neural-structural-optimization" id="linkbutton" target="_blank"  style="margin-left: 10px;">Get the code</a>
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+	<a href="https://arxiv.org/abs/1909.04240" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="https://colab.research.google.com/github/google-research/neural-structural-optimization/blob/master/notebooks/optimization-examples.ipynb" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="https://github.com/google-research/neural-structural-optimization" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
 ## A Visual Introduction

@@ -12,20 +12,22 @@ author: Sam Greydanus, Misko Dzamba, and Jason Yosinski
 <div>
 	<style>
 		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgba(180, 180, 180);
+		  background-color: rgb(102,153,255);
 		  border-radius: 4px;
 		  color: white;
 		  padding: 6px 0px;
-		  width: 200px;
+		  width: 150px;
 		  text-align: center;
 		  text-decoration: none;
 		  display: inline-block;
 		  text-transform: uppercase;
 		  font-size: 13px;
+		  margin-right: 8px;
+		  margin-left: 8px;
 		}
 
 		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(160, 160, 160);
+		  background-color: rgba(92,143,245);
 		}
 
 		.playbutton {
@@ -51,9 +53,9 @@ author: Sam Greydanus, Misko Dzamba, and Jason Yosinski
 	<div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:80%"><b>Figure 1:</b> Instead of crafting a Hamiltonian by hand, we parameterize it with a neural network and then learn it directly from data. The variables <b>q</b> and <b>p</b> correspond to position and momentum coordinates. As there is no friction, the baseline's inward spiral is due to model errors. By comparison, the Hamiltonian Neural Network learns to exactly conserve an energy-like quantity.</div>
 </div>
 
-<div style="display: block; margin-left: auto; margin-right:auto; width:450px">
-	<a href="https://arxiv.org/abs/1906.01563v1" id="linkbutton" target="_blank" style="margin-right: 10px;">Read the paper</a>
-	<a href="https://github.com/greydanus/hamiltonian-nn" id="linkbutton" target="_blank"  style="margin-left: 10px;">Get the code</a>
+<div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
+	<a href="https://arxiv.org/abs/1906.01563v1" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="https://github.com/greydanus/hamiltonian-nn" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
 
