@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Lagrangian Neural Networks"
-excerpt: "As a compliment to Hamiltonian Neural Networks, I discuss how to parameterize Lagrangians with neural networks and then learn them from data."
+excerpt: "As a complement to Hamiltonian Neural Networks, I discuss how to parameterize Lagrangians with neural networks and then learn them from data."
 date:   2020-03-10 11:00:00
 mathjax: true
 author: Sam Greydanus, Miles Cranmer, and Stephan Hoyer
@@ -12,20 +12,22 @@ thumbnail: /assets/lagrangian-nns/thumbnail.png
 <div>
 	<style>
 		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgba(180, 180, 180);
+		  background-color: rgb(102,153,255);
 		  border-radius: 4px;
 		  color: white;
 		  padding: 6px 0px;
-		  width: 200px;
+		  width: 150px;
 		  text-align: center;
 		  text-decoration: none;
 		  display: inline-block;
 		  text-transform: uppercase;
 		  font-size: 13px;
+		  margin-right: 8px;
+		  margin-left: 8px;
 		}
 
 		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(160, 160, 160);
+		  background-color: rgba(92,143,245);
 		}
 
 		.playbutton {
@@ -53,10 +55,10 @@ thumbnail: /assets/lagrangian-nns/thumbnail.png
 	<div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:90%"><b>Figure 1:</b> A Lagrangian Neural Network learns the Lagrangian of a double pendulum. In this post, we introduce Lagrangian Neural Networks (LNNs). Like Hamiltonian Neural Networks, they can learn arbitrary conservation laws. In some cases they are better since they do not require canonical coordinates.</div>
 </div>
 
-<div style="display: block; margin-left: auto; margin-right: auto; width:650px">
-	<a href="https://arxiv.org/abs/2003.04630" id="linkbutton" target="_blank" style="margin-right: 10px;">Read the paper</a>
-	<a href="https://colab.research.google.com/drive/1CSy-xfrnTX28p1difoTA8ulYw0zytJkq" id="linkbutton" target="_blank"  style="margin-left: 10px;">Run in browser</a>
-	<a href="https://github.com/MilesCranmer/lagrangian_nns" id="linkbutton" target="_blank"  style="margin-left: 10px;">Get the code</a>
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+	<a href="https://arxiv.org/abs/2003.04630" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="https://colab.research.google.com/drive/1CSy-xfrnTX28p1difoTA8ulYw0zytJkq" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="https://github.com/MilesCranmer/lagrangian_nns" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
 ## "A scientific poem"
