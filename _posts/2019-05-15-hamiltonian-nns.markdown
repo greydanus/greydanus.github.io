@@ -122,22 +122,11 @@ $$
 
 This equation tells us that moving coordinates in the direction \\(\mathbf{S_{\mathcal{H}}} = \big(\frac{\partial \mathcal{H}}{\partial \mathbf{p}}, -\frac{\partial \mathcal{H}}{\partial \mathbf{q}} \big)\\) gives us the time evolution of the coordinates. We can think of \\(\mathbf{S}\\) as a vector field over the inputs of \\(\mathcal{H}\\). In fact, it is a special kind of vector called a “symplectic gradient''. Whereas moving in the direction of the gradient of \\(\mathcal{H}\\) changes the output as quickly as possible, moving in the direction of the symplectic gradient keeps the output exactly constant. Hamilton used this mathematical framework to relate the position and momentum vectors \\((\mathbf{q},\mathbf{p})\\) of a system to its total energy \\( E_{tot}=\mathcal{H}(\mathbf{q},\mathbf{p}) \\). Then, he obtained the time evolution of the system by integrating this field according to
 
-<span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{equation}
-\scriptstyle (\mathbf{q}_1,\mathbf{p}_1) ~=~ (\mathbf{q}_0,\mathbf{p}_0) ~+~ \int_{t_0}^{t_1} \mathbf{S}(\mathbf{q},\mathbf{p}) ~~ dt \qquad \scriptstyle  (2)
+(\mathbf{q}_1,\mathbf{p}_1) ~=~ (\mathbf{q}_0,\mathbf{p}_0) ~+~ \int_{t_0}^{t_1} \mathbf{S}(\mathbf{q},\mathbf{p}) ~~ dt \qquad  (2)
 \end{equation}
 $$
-</span>
-<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
-$$
-\begin{equation}
-(\mathbf{q}_1,\mathbf{p}_1) ~=~ (\mathbf{q}_0,\mathbf{p}_0) ~+~ \int_{t_0}^{t_1} \mathbf{S}(\mathbf{q},\mathbf{p}) ~~ dt
-\label{eq:eqn2}
-\tag{2}
-\end{equation}
-$$
-</span>
 
 **Uses.** This is a powerful approach because it works for almost any system where the total energy is conserved. Like Newtonian mechanics, it can predict the motion of a mass-spring system or a single pendulum. But its true strengths become apparent when we tackle large and/or chaotic systems like quantum many-body problems, fluid simulations, and celestial orbitals. Hamiltonian mechanics gives us a common language to describe these systems as well as set of first-order differential equations for their dynamics.
 
@@ -151,41 +140,19 @@ $$
 
 Let’s use neural networks to learn Hamiltonians from data. In particular, let’s consider a dataset that consists of coordinate trajectories through time: either directly (the actual \\((\mathbf{q},\mathbf{p})\\) coordinates) or indirectly (pixel images that contain \\((\mathbf{q},\mathbf{p})\\) information). Also, let’s suppose that we’ve parameterized a Hamiltonian with neural network parameters \\(\theta\\). The first thing to notice is that we can rewrite Equation \eqref{eq:eqn1} so that both terms are on the left side:
 
-<span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{equation}
-\scriptstyle \frac{d\mathbf{q}}{dt} - \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{p}} = 0, \quad \frac{d\mathbf{p}}{dt} + \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{q}}=0 \qquad \scriptstyle (3)
+ \frac{d\mathbf{q}}{dt} - \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{p}} = 0, \quad \frac{d\mathbf{p}}{dt} + \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{q}}=0 \qquad (3)
 \end{equation}
 $$
-</span>
-<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
-$$
-\begin{equation}
-\frac{d\mathbf{q}}{dt} - \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{p}} = 0, \quad \frac{d\mathbf{p}}{dt} + \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{q}}=0
-\label{eq:eqn3}
-\tag{3}
-\end{equation}
-$$
-</span>
 
 Since we know that the function \\(\mathcal{H}\\) is a Hamiltonian when both of these terms go to zero, we can rewrite it as a solution to the following minimization objective:
 
-<span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{equation}
-\scriptstyle \operatorname*{argmin}_\theta \bigg \Vert \frac{d\mathbf{q}}{dt} - \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{p}} \bigg \Vert^2 ~+~ \bigg \Vert \frac{d\mathbf{p}}{dt} + \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{q}} \bigg \Vert^2
-\end{equation} \qquad \scriptstyle (4)
+ \operatorname*{argmin}_\theta \bigg \Vert \frac{d\mathbf{q}}{dt} - \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{p}} \bigg \Vert^2 ~+~ \bigg \Vert \frac{d\mathbf{p}}{dt} + \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{q}} \bigg \Vert^2
+\end{equation} \qquad (4)
 $$
-</span>
-<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
-$$
-\begin{equation}
-\operatorname*{argmin}_\theta \bigg \Vert \frac{d\mathbf{q}}{dt} - \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{p}} \bigg \Vert^2 ~+~ \bigg \Vert \frac{d\mathbf{p}}{dt} + \frac{\partial \mathcal{H_{\theta}}}{\partial \mathbf{q}} \bigg \Vert^2
-\label{eq:eqn4}
-\tag{4}
-\end{equation}
-$$
-</span>
 
 Now this expression is beginning to look like the \\(\mathcal{L_2}\\) loss function used in supervised learning. The \\(\mathcal{L_2}\\) loss term usually takes the form \\(\big \Vert y - f_{\theta}(x) \big \Vert^2 \\) where \\(x\\) is the input and \\(y\\) is the target. The key difference is that here we are minimizing something of the form \\( \big \Vert y - \frac{\partial f_{\theta}(x)}{\partial x} \big \Vert^2 \\). In other words, we are optimizing the gradient of a neural network.
 
