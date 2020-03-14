@@ -194,7 +194,6 @@ Structural optimization is a computational tool which, in an ironic turn of even
 
 We satisfied the first constraint by applying an element-wise sigmoid function to the logits. Then we satisfied the second by using a root finder to choose the sigmoid saturation constant \\(b\\). We can write these two steps as a single operation
 
-<span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{align}
     x_{ij} &= \frac{1}{1 + e^{- \hat x_{ij} - b}},\\
@@ -202,20 +201,9 @@ $$
     V(x) = V_0.
 \end{align}
 $$
-</span>
-<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
-$$
-\begin{align}
-    x_{ij} = \frac{1}{1 + e^{- \hat x_{ij} - b}},
-    \quad\text{with $b$ such that} \quad
-    V(x) = V_0.
-\end{align}
-$$
-</span>
 
 **Simulating the physics.** Letting  \\(K(\tilde x)\\) be the global stiffness matrix, \\(U(K, F)\\) be the displacement vector, \\(F\\) be the vector of applied forces, and \\(V (\tilde x)\\) be the total volume, we simulated the physics of displacement and wrote our objective as
 
-<span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{align}
     \min_x: c(x) &= U^T K U
@@ -227,18 +215,7 @@ $$
     0 \leq x_{ij} \leq 1
 \end{align}
 $$
-</span>
-<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
-$$
-\begin{align}
-    \min_x: c(x) = U^T K U
-    \quad\text{such that}\quad
-    K U = F, \quad
-    V(x) = V_0, \quad \text{and }
-    0 \leq x_{ij} \leq 1
-\end{align}
-$$
-</span>
+
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:70%">
 	<img src="/assets/neural-reparam/baseline-schema.png">
