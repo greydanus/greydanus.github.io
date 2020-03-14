@@ -22,8 +22,7 @@ thumbnail: /assets/neural-reparam/thumbnail.png
 		  display: inline-block;
 		  text-transform: uppercase;
 		  font-size: 13px;
-		  margin-right: 8px;
-		  margin-left: 8px;
+		  margin: 8px;
 		}
 
 		#linkbutton:hover, #linkbutton:active {
@@ -195,14 +194,42 @@ Structural optimization is a computational tool which, in an ironic turn of even
 
 We satisfied the first constraint by applying an element-wise sigmoid function to the logits. Then we satisfied the second by using a root finder to choose the sigmoid saturation constant \\(b\\). We can write these two steps as a single operation
 
+<span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+$$
+\begin{align}
+    x_{ij} &= \frac{1}{1 + e^{- \hat x_{ij} - b}},\\
+    &\quad\text{with $b$ such that} \quad
+    V(x) = V_0.
+\end{align}
+$$
+</span>
+<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+$$
 \begin{align}
     x_{ij} = \frac{1}{1 + e^{- \hat x_{ij} - b}},
     \quad\text{with $b$ such that} \quad
     V(x) = V_0.
 \end{align}
+$$
+</span>
 
 **Simulating the physics.** Letting  \\(K(\tilde x)\\) be the global stiffness matrix, \\(U(K, F)\\) be the displacement vector, \\(F\\) be the vector of applied forces, and \\(V (\tilde x)\\) be the total volume, we simulated the physics of displacement and wrote our objective as
 
+<span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+$$
+\begin{align}
+    \min_x: c(x) &= U^T K U
+    \quad\text{such that}\\
+    &\quad
+    K U = F, \quad
+    V(x) = V_0, \\
+    &\quad \text{and }
+    0 \leq x_{ij} \leq 1
+\end{align}
+$$
+</span>
+<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+$$
 \begin{align}
     \min_x: c(x) = U^T K U
     \quad\text{such that}\quad
@@ -210,6 +237,8 @@ We satisfied the first constraint by applying an element-wise sigmoid function t
     V(x) = V_0, \quad \text{and }
     0 \leq x_{ij} \leq 1
 \end{align}
+$$
+</span>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:70%">
 	<img src="/assets/neural-reparam/baseline-schema.png">
@@ -218,7 +247,7 @@ We satisfied the first constraint by applying an element-wise sigmoid function t
 
 **Automatic differentiation.** The coolest thing about our implementation is that it is fully differentiable. In fact, we implemented everything in Autograd and then used automatic differentiation to solve for updates to the parameters. This made our code much simpler than previous approaches (which had implemented reverse-mode differentiation by hand).
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:52%">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:52%; min-width:250px">
 	<img src="/assets/neural-reparam/implicit-diff.png">
 	<div class="thecap" style="text-align:left; width:100%"><b>Figure 8:</b> Instead of differentiating directly through the root finder, we can use the <a href="https://en.wikipedia.org/wiki/Implicit_function_theorem">implicit function theorem</a> to <a href="https://link.springer.com/article/10.1023/A:1016051717120">differentiate through the optimal point</a>.</div>
 </div>
@@ -237,7 +266,7 @@ The careful reader might be wondering how we differentiated through our root fin
 
 In order to compare our method to baselines, we developed a suite of 116 structural optimization tasks. In designing these tasks, our goal was to create a distribution of diverse, well-studied problems with real-world significance. We started with a selection of problems from (Valdez et al. 2017)[^fn8] and (Sokol 2011).[^fn9] Most of these problems were simple beams with only a few forces, so we hand-designed additional tasks reflecting real-world designs such as bridges, towers, and trees.
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:60%">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:60%; min-width:280px">
 	<img src="/assets/neural-reparam/quant-results.png">
 	<div class="thecap" style="text-align:left; width:100%"><b>Figure 10:</b> Neural reparameterization improves structural optimization, especially for large problems.</div>
 </div>

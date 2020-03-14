@@ -395,6 +395,18 @@ a:visited { color: #205caa; }
 
 }
 
+@media screen and (min-width: 900px) {
+    .longEqnWithSmallScript {
+        display: none !important;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .longEqnWithLargeScript {
+        display: none !important;
+    }
+}
+
 @media screen and (max-width: 600px) {
 
   .wrap { padding: 0 12px; }
