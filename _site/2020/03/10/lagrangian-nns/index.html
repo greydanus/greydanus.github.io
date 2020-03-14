@@ -169,7 +169,7 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 
 <p>When you first encounter it, the principle of least action can seem abstract and impractical. But it can be quite easy to apply in practice. Consider, for example, a single particle with mass \(m\), position \(q\), and potential energy \(V(q)\):</p>
 
-<p><span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<p><span id="longEqnWithSmallScript_A" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 <script type="math/tex">% <![CDATA[
 \begin{align}
 \scriptstyle \mathcal{L} & \scriptstyle ~=~ -V(q) + \frac{1}{2} m \dot q ^2 & \scriptstyle \text{write down the Lagrangian} \quad (2)\\
@@ -177,7 +177,7 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 \scriptstyle F & \scriptstyle ~=~ ma & \scriptstyle \text{this is Newton's second law } \quad (4)\\
 \end{align} %]]></script>
 </span>
-<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<span id="longEqnWithLargeScript_A" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 <script type="math/tex">% <![CDATA[
 \begin{align}
 \mathcal{L} & ~=~ -V(q) + \frac{1}{2} m \dot q ^2 & \text{write down the Lagrangian} \quad (2)\\
@@ -212,7 +212,7 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 
 <p>The first two steps are fairly straightforward, and we’ll see that automatic differentiation makes the fourth pretty painless. So let’s focus on step 3: applying the Euler-Lagrange constraint. Our angle of attack will be to write down the constraint equation, treat \(\mathcal{L}\) as a differentiable blackbox function, and see whether we can still obtain dynamics:</p>
 
-<p><span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<p><span id="longEqnWithSmallScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 <script type="math/tex">% <![CDATA[
 \begin{align}
 & \scriptstyle \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} \scriptstyle ~=~ \frac{\partial \mathcal{L}}{\partial q_j} & \scriptstyle \text{Euler-Lagrange } (5)\\
@@ -221,7 +221,7 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 &\scriptstyle \ddot q \scriptstyle ~=~ (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})^{-1}[\nabla_q \mathcal{L} - (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L})\dot q] & \scriptstyle \text{solve for } \ddot q \text{ }(8)\\
 \end{align} %]]></script>
 </span>
-<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<span id="longEqnWithLargeScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 <script type="math/tex">% <![CDATA[
 \begin{align}
 \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} &= \frac{\partial \mathcal{L}}{\partial q_j} & \text{write the Euler-Lagrange equation} \quad (5)\\
@@ -283,6 +283,45 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 <p>The principle of stationary action is a unifying force in physics. It represents a consistent “law of the universe” which holds true in every system humans have ever studied: from the very small<sup id="fnref:fn1:1"><a href="#fn:fn1" class="footnote">1</a></sup> to the very large, from the very slow to the very fast. Lagrangian Neural Networks represent a different sort of unification. They aim to strengthen the connection between real-world data and the underlying physical constraints that it obeys. This gives LNNs their own sort of beauty, a beauty that Lagrange himself may have admired.</p>
 
 <h2 id="footnotes">Footnotes</h2>
+
+<script>
+    function getBrowserSize(){
+       var w, h;
+
+         if(typeof window.innerWidth != 'undefined')
+         {
+          w = window.innerWidth; //other browsers
+          h = window.innerHeight;
+         } 
+         else if(typeof document.documentElement != 'undefined' && typeof      document.documentElement.clientWidth != 'undefined' && document.documentElement.clientWidth != 0) 
+         {
+          w =  document.documentElement.clientWidth; //IE
+          h = document.documentElement.clientHeight;
+         }
+         else{
+          w = document.body.clientWidth; //IE
+          h = document.body.clientHeight;
+         }
+       return {'width':w, 'height': h};
+}
+
+if(parseInt(getBrowserSize().width) < 900){
+ document.getElementById("longEqnWithLargeScript_A").style.display = "none";
+}
+console.log("hi")
+console.log(getBrowserSize().width)
+if(parseInt(getBrowserSize().width) > 900){
+ document.getElementById("longEqnWithSmallScript_A").style.display = "none";
+}
+if(parseInt(getBrowserSize().width) < 900){
+ document.getElementById("longEqnWithLargeScript_B").style.display = "none";
+}
+console.log("hi")
+console.log(getBrowserSize().width)
+if(parseInt(getBrowserSize().width) > 900){
+ document.getElementById("longEqnWithSmallScript_B").style.display = "none";
+}
+</script>
 
 <div class="footnotes">
   <ol>

@@ -99,7 +99,7 @@ At first glance, \\(S\\) seems like an arbitrary combination of energies. But it
 
 When you first encounter it, the principle of least action can seem abstract and impractical. But it can be quite easy to apply in practice. Consider, for example, a single particle with mass \\(m\\), position \\(q\\), and potential energy \\(V(q)\\):
 
-<span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<span id="longEqnWithSmallScript_A" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{align}
 \scriptstyle \mathcal{L} & \scriptstyle ~=~ -V(q) + \frac{1}{2} m \dot q ^2 & \scriptstyle \text{write down the Lagrangian} \quad (2)\\
@@ -108,7 +108,7 @@ $$
 \end{align}
 $$
 </span>
-<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<span id="longEqnWithLargeScript_A" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{align}
 \mathcal{L} & ~=~ -V(q) + \frac{1}{2} m \dot q ^2 & \text{write down the Lagrangian} \quad (2)\\
@@ -140,7 +140,7 @@ The process of learning a Lagrangian differs from the traditional approach, but 
 
 The first two steps are fairly straightforward, and we’ll see that automatic differentiation makes the fourth pretty painless. So let’s focus on step 3: applying the Euler-Lagrange constraint. Our angle of attack will be to write down the constraint equation, treat \\(\mathcal{L}\\) as a differentiable blackbox function, and see whether we can still obtain dynamics:
 
-<span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<span id="longEqnWithSmallScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{align}
 & \scriptstyle \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} \scriptstyle ~=~ \frac{\partial \mathcal{L}}{\partial q_j} & \scriptstyle \text{Euler-Lagrange } (5)\\
@@ -150,7 +150,7 @@ $$
 \end{align}
 $$
 </span>
-<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<span id="longEqnWithLargeScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{align}
 \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} &= \frac{\partial \mathcal{L}}{\partial q_j} & \text{write the Euler-Lagrange equation} \quad (5)\\
@@ -219,3 +219,43 @@ The principle of stationary action is a unifying force in physics. It represents
 [^fn1]: Here \\(e^{-S/h}\\) is actually the probability of a particular path occurring. Because \\(h\\) is small, we usually only observe the minimum value of \\(S\\) on large scales. See [Feynman lecture 19](https://www.feynmanlectures.caltech.edu/II_19.html) for more on this.
 [^fn2]: Toth, P., Rezende, D. J., Jaegle, A., Racanière, S., Botev, A., & Higgins, I. [Hamiltonian Generative Networks](https://arxiv.org/abs/1909.13789), _International Conference on Learning Representations_, 2020.
 [^fn3]: Lutter, M., Ritter, C., and Peters, J. [Deep lagrangian networks: Using physics as model prior for deep learning](https://arxiv.org/abs/1907.04490), _International Conference on Learning Representations_, 2019.
+
+
+ <script>
+    function getBrowserSize(){
+       var w, h;
+
+         if(typeof window.innerWidth != 'undefined')
+         {
+          w = window.innerWidth; //other browsers
+          h = window.innerHeight;
+         } 
+         else if(typeof document.documentElement != 'undefined' && typeof      document.documentElement.clientWidth != 'undefined' && document.documentElement.clientWidth != 0) 
+         {
+          w =  document.documentElement.clientWidth; //IE
+          h = document.documentElement.clientHeight;
+         }
+         else{
+          w = document.body.clientWidth; //IE
+          h = document.body.clientHeight;
+         }
+       return {'width':w, 'height': h};
+}
+
+if(parseInt(getBrowserSize().width) < 900){
+ document.getElementById("longEqnWithLargeScript_A").style.display = "none";
+}
+console.log("hi")
+console.log(getBrowserSize().width)
+if(parseInt(getBrowserSize().width) > 900){
+ document.getElementById("longEqnWithSmallScript_A").style.display = "none";
+}
+if(parseInt(getBrowserSize().width) < 900){
+ document.getElementById("longEqnWithLargeScript_B").style.display = "none";
+}
+console.log("hi")
+console.log(getBrowserSize().width)
+if(parseInt(getBrowserSize().width) > 900){
+ document.getElementById("longEqnWithSmallScript_B").style.display = "none";
+}
+</script>
