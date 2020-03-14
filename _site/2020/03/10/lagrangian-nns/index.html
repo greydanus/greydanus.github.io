@@ -92,8 +92,7 @@
 		  display: inline-block;
 		  text-transform: uppercase;
 		  font-size: 13px;
-		  margin-right: 8px;
-		  margin-left: 8px;
+		  margin: 8px;
 		}
 
 		#linkbutton:hover, #linkbutton:active {
@@ -170,12 +169,22 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 
 <p>When you first encounter it, the principle of least action can seem abstract and impractical. But it can be quite easy to apply in practice. Consider, for example, a single particle with mass \(m\), position \(q\), and potential energy \(V(q)\):</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
+<p><span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<script type="math/tex">% <![CDATA[
 \begin{align}
-\mathcal{L} &= -V(q) + \frac{1}{2} m \dot q ^2 & \text{write down the Lagrangian} \quad (2)\\
--\frac{\partial V(q)}{\partial q} &= m \ddot q & \text{apply the Euler-Lagrange equation to } \mathcal{L} \quad (3)\\
-F &= ma & \text{this is Newton's second law } \quad (4)\\
+\scriptstyle \mathcal{L} & \scriptstyle ~=~ -V(q) + \frac{1}{2} m \dot q ^2 & \scriptstyle \text{write down the Lagrangian} \quad (2)\\
+\scriptstyle -\frac{\partial V(q)}{\partial q} & \scriptstyle ~=~ m \ddot q & \scriptstyle \text{apply Euler-Lagrange} \quad (3)\\
+\scriptstyle F & \scriptstyle ~=~ ma & \scriptstyle \text{this is Newton's second law } \quad (4)\\
 \end{align} %]]></script>
+</span>
+<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<script type="math/tex">% <![CDATA[
+\begin{align}
+\mathcal{L} & ~=~ -V(q) + \frac{1}{2} m \dot q ^2 & \text{write down the Lagrangian} \quad (2)\\
+-\frac{\partial V(q)}{\partial q} & ~=~ m \ddot q &  \text{apply the Euler-Lagrange equation to } \mathcal{L} \quad (3)\\
+ F & ~=~ ma & \text{this is Newton's second law } \quad (4)\\
+\end{align} %]]></script>
+</span></p>
 
 <p><strong>Nature’s cost function.</strong> As a physicist who now does machine learning, I can’t help but think of \(S\) as Nature’s cost function. After all, it is a scalar quantity for which Nature finds a stationary point, usually a minimum, in order to generate the dynamics of the entire universe. The analogy gets even more interesting at small spatial scales, where quantum wavefunctions can be interpreted as Nature’s way of exploring multiple paths that are all very close to the path of stationary action.<sup id="fnref:fn1"><a href="#fn:fn1" class="footnote">1</a></sup></p>
 
@@ -203,13 +212,24 @@ F &= ma & \text{this is Newton's second law } \quad (4)\\
 
 <p>The first two steps are fairly straightforward, and we’ll see that automatic differentiation makes the fourth pretty painless. So let’s focus on step 3: applying the Euler-Lagrange constraint. Our angle of attack will be to write down the constraint equation, treat \(\mathcal{L}\) as a differentiable blackbox function, and see whether we can still obtain dynamics:</p>
 
-<script type="math/tex; mode=display">% <![CDATA[
+<p><span class="longEqnWithSmallScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<script type="math/tex">% <![CDATA[
 \begin{align}
-\frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} &= \frac{\partial \mathcal{L}}{\partial q_j} & \text{write down the Euler-Lagrange equation} \quad (5)\\
+& \scriptstyle \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} \scriptstyle ~=~ \frac{\partial \mathcal{L}}{\partial q_j} & \scriptstyle \text{Euler-Lagrange } (5)\\
+&\scriptstyle \frac{d}{dt} \nabla_{\dot q} \mathcal{L} \scriptstyle ~=~ \nabla_{q} \mathcal{L} & \scriptstyle \text{vectorize } (6)\\
+&\scriptstyle \nabla_q \mathcal{L} \scriptstyle ~=~ (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})\ddot q + (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L}) \dot q & \scriptstyle \text{expand }\frac{d}{dt} \text{ }(7)\\
+&\scriptstyle \ddot q \scriptstyle ~=~ (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})^{-1}[\nabla_q \mathcal{L} - (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L})\dot q] & \scriptstyle \text{solve for } \ddot q \text{ }(8)\\
+\end{align} %]]></script>
+</span>
+<span class="longEqnWithLargeScript" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+<script type="math/tex">% <![CDATA[
+\begin{align}
+\frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} &= \frac{\partial \mathcal{L}}{\partial q_j} & \text{write the Euler-Lagrange equation} \quad (5)\\
 \frac{d}{dt} \nabla_{\dot q} \mathcal{L} &= \nabla_{q} \mathcal{L} & \text{switch to vector notation} \quad (6)\\
-(\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})\ddot q + (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L}) \dot q &= \nabla_q \mathcal{L} & \text{expand the time derivative }\frac{d}{dt} \quad (7)\\
+(\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})\ddot q + (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L}) \dot q &= \nabla_q \mathcal{L} & \text{expand time derivative }\frac{d}{dt} \quad (7)\\
 \ddot q &= (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})^{-1}[\nabla_q \mathcal{L} - (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L})\dot q] & \text{use a matrix inverse to solve for } \ddot q \quad (8)\\
 \end{align} %]]></script>
+</span></p>
 
 <p>For a given set of coordinates \(x_t=(q_t,\dot q_t)\), we now have a method for calculating \(\dot x_t=(\dot q_t,\ddot q_t)\) from a blackbox Lagrangian. We can integrate this quantity to obtain the dynamics of the system. And in the same manner as Hamiltonian Neural Networks, we can learn \(\mathcal{L_{\theta}}\) by differentiating the MSE loss between \(\dot x_t^{\mathcal{L_{\theta}}}\) and \(\dot x_t^{\textrm{true}}\).</p>
 
@@ -236,9 +256,9 @@ F &= ma & \text{this is Newton's second law } \quad (4)\\
 
 <p>It’s also interesting to compare qualitative results. In the video below, we use a baseline neural network and an LNN to predict the dynamics of a double pendulum, starting from the same initial state. You’ll notice that the both trajectories seem reasonable until the end of the video, when the baseline model shifts to states that have much lower total energies.</p>
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-	<div>
-		<iframe width="600" height="243" src="https://www.youtube.com/embed/ulQKNtTEuJI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+	<div style="overflow:hidden; padding-top: 40%; position: relative;">
+		<iframe style="border: 0;height: 100%;left: 0;position: absolute;top: 0;width: 100%;" src="https://www.youtube.com/embed/ulQKNtTEuJI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
 	</div>
 	<div class="thecap" style="text-align:center; display: block; margin-left: auto; margin-right: auto; width:60%"><b>Figure 5:</b> Dynamics predictions of a baseline (left) versus an LNN (right)</div>
 </div>
