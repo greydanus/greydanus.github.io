@@ -89,7 +89,7 @@ a:visited { color: #205caa; }
 .site-nav .page-link {
   margin-left: 20px;
   color: #727272;
-  letter-spacing: -.5px;
+  letter-spacing: 0px;
 }
 
 /* Site footer */
@@ -102,7 +102,7 @@ a:visited { color: #205caa; }
 .footer-heading {
   font-size: 18px;
   font-weight: 300;
-  letter-spacing: -.5px;
+  letter-spacing: 0px;
   margin-bottom: 15px;
 }
 
@@ -137,7 +137,7 @@ a:visited { color: #205caa; }
 .site-footer li,
 .site-footer p {
   font-size: 15px;
-  letter-spacing: -.3px;
+  letter-spacing: 0px;
   color: #828282;
 }
 
@@ -190,7 +190,7 @@ a:visited { color: #205caa; }
 
 .post-header h1 {
   font-size: 36px;
-  letter-spacing: -1.75px;
+  letter-spacing: -1px;
   font-weight: 300;
 }
 
@@ -218,7 +218,7 @@ a:visited { color: #205caa; }
 
 .post-content h2 {
   font-size: 30px;
-  letter-spacing: -1.25px;
+  letter-spacing: -1px;
 }
 
 .post-content h3 {
