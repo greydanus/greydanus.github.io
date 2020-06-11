@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Learning the Enigma with Recurrent Neural Networks"
-excerpt: "Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to learn the Nazi Enigma."
+excerpt: "Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to learn the Enigma cipher."
 date:   2017-01-07 11:00:00
 mathjax: true
 thumbnail: /assets/enigma-rnn/thumbnail.png
@@ -14,7 +14,7 @@ author: Sam Greydanus
     <div class="thecap" style="text-align:center">An ~Enigma~ machine, famed for its inner complexity.</div>
 </div>
 
-Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to learn the Nazi Enigma.
+Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to learn the Enigma cipher.
 
 ## A Brief History of Cryptanalysis
 
