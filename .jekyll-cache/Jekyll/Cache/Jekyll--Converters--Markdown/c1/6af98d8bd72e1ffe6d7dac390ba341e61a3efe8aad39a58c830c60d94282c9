@@ -1,0 +1,110 @@
+I"�=<div>
+	<style>
+		#linkbutton:link, #linkbutton:visited {
+		  background-color: rgb(180,180,180);
+		  border-radius: 4px;
+		  color: white;
+		  padding: 6px 0px;
+		  width: 150px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  text-transform: uppercase;
+		  font-size: 13px;
+		  margin: 8px;
+		}
+
+		#linkbutton:hover, #linkbutton:active {
+		  background-color: rgba(160,160,160);
+		}
+
+		.playbutton {
+		  background-color: rgba(0, 153, 51);
+		  /*background-color: rgba(255, 130, 0);*/
+		  border-radius: 4px;
+		  color: white;
+		  padding: 3px 8px;
+		  /*width: 60px;*/
+		  text-align: center;
+		  text-decoration: none;
+		  text-transform: uppercase;
+		  font-size: 12px;
+		  /*display: block;*/
+		  /*margin-left: auto;*/
+		  margin: 8px 0px;
+		  margin-right: auto;
+		  min-width:80px;
+		}
+	</style>
+</div>
+
+<p>Among the more foolish and absurd human urges is the desire to fly. Biologically, we are not well-equipped for it. Our bones are heavy, our limbs lanky, and our bodies fragile. To make matters worse, we are deathly afraid of heights. And yet we want to fly. From the Greek story of Icarus to the drawings of Leonardo da Vinci, humans have always gazed into the depthless blue sky and wondered at its possibilities.</p>
+
+<p>Why would evolution give our minds a desire that our bodies cannot fulfill? It’s tempting to conclude that any such desire is a strange but useful aberration of nature, an accident. Evolution is certainly prone to these accidents. The poor giraffe, for example, has a nerve that travels the length of its neck only to loop all of the way back up to its head. This is a bug, not a feature.</p>
+
+<p>But it’s also possible that this desire is a useful adaptation. Consider the hermit crab, who lives according to a similar paradox. His form is incomplete without his shell, yet he does not grow it. He is born with an urge to acquire one. And when he finds one, he cleans it and fits himself to it and his body grows or shrinks to make the fit perfect. The hermit crab and his home become one creature, even though the shell was once part of his environment. It is the same with humans and wings. What the human body lacks in aerodynamics, the human mind makes up for with will and ingenuity. After all, if we can think ourselves into flight, then in a sense we are as much a flying species as the birds, insects, and bats.</p>
+
+<p>The purpose of this essay is to examine this paradox in detail. We’ll begin by exploring the open-ended structure of the physical world, which permits complex structures to form from simpler ones. As an example, we’ll solve for a wing shape starting from nothing but the physics of airflow and the objective of “generating efficient lift.” Next, we’ll discuss objective functions themselves. We’ll see that sometimes there are many diverse solutions to a particular objective. Throughout the past century, for example, the objective of “generating efficient lift” has produced a stunning variety of wings. Finally, we will take a step back and note that behind every objective function lies a fundamental human desire. Where do these desires come from? We’ll look at the early aviators, a group of humans for whom the “desire to fly” was strongest, in order to find some answers.</p>
+
+<p>That’s how I will make a case that we are a winged species. For indeed we are, so long as we possess the desire to fly.</p>
+
+<h2 id="the-physics-of-flight">The Physics of Flight</h2>
+
+<p>Legos are this wonderful meta-toy in that they represent the potential for a near-infinite number of toys depending on how you assemble them. Each brick has structure. But each brick is only interesting to the extent that it can combine with other bricks to form new and more complex structures. So in order to enjoy Legos, you have to figure out how they fit together and come up with a clever way of making the particular toy you have in mind. The open-ended design of Lego bricks lets you build nearly anything you want, and this ends up being incredibly satisfying.</p>
+
+<p>As an adult, I find myself appreciating the same things in the physical world that I appreciated in Legos when I was younger. The beauty of the physical world is its simplicity. It’s a special kind of simplicity that, like Lego bricks, allows intricate structures to form at many levels. You see this everywhere you look in nature, across all scales of space and time. In the fractal design of a seashell or the intricate polities of a coral. In the convection of a teacup or the circulation of the atmosphere. And it’s this simple structure that determines the shape and behavior of even the most complicated flying machines.</p>
+
+<p>To see this more clearly, we are going to start from the basic physical laws of airflow and then use them to derive the shape of a wing. Since we’re using so few assumptions, the wing shape we come up with will be as fundamental as the physics of the air that swirls around it. This is pretty fundamental. In fact, if an alien species started building flying machines on another planet, this means that they would converge on the same general wing design.</p>
+
+<p>We will begin this journey with the “Navier-Stokes equation” which sums up pretty much everything we know about fluid dynamics. It describes how tiny fluid parcels interact with their neighbors.</p>
+
+\[\underbrace{\frac{\partial \mathbf{u}}{\partial t}}_{\text{velocity update}} = \underbrace{- (\mathbf{u} \cdot \nabla)\mathbf{u}}_{\text{self-advection*}} + \underbrace{\nu \nabla^2 \mathbf{u}}_{\text{viscous diffusion}} + \underbrace{f}_{\text{velocity $\uparrow$ due to forces}} \\
+_\textit{*Self-advection refers to the fact that velocity gets moved in the direction of itself.}\]
+
+<p>The process of solving problems in fluid dynamics generally comes down to writing out this equation and then deciding which terms we can safely ignore. In our case, we’d like to simulate the flow of air through a wind tunnel (we’ll then use this wind tunnel to evaluate various airfoil designs). Since the pressure differences across a wind tunnel are small, one of the first assumptions we can make is that the air is incompressible.</p>
+
+<p>Another term we can ignore is viscous diffusion. Oil and molasses are examples of fluids with high viscosity. Air, on the other hand, has relatively low viscosity. Viscous interactions do form a boundary layer along the edge of an airfoil, but for the purposes of this toy model, the boundary layer is something we can ignore. The final term we can ignore is the forces term, as there will be no forces on the air once it enters the tunnel. And so we are left with but a hair of the original Navier-Stokes hairball:</p>
+
+\[\underbrace{\frac{\partial \mathbf{u}}{\partial t}}_{\text{velocity update}} = \underbrace{- (\mathbf{u} \cdot \nabla)\mathbf{u}}_{\text{velocity follows itself (self-advection)}}\]
+
+<p>This hair is responsible for the effects that really dominate wind tunnel physics. The term on the right is called “self-advection” and intuitively it means that “velocity follows itself” in a fluid flow.</p>
+
+<p>Now that we’ve simplified the physics of a wind tunnel as much as possible, let’s talk about how to add an object to occlude the flow. Talk about masking, then briefly about making it continuous. Finally, mention technical interlude about simulating all of this over discrete intervals of time and space.</p>
+
+<p>We have succeeded in simulating a wind tunnel in just about 100 lines of code. Now it’s time to act upon it in order to create a wing. There are actually many qualities that one could look for in a good wing, but let’s begin with the most straightforward: we want a wing that gives high lift and low drag. In other words, we want it to convert horizontal air velocity into upward force. We can measure the upward force by the change in downward airflow, which is equal and opposite to the amount of lift.</p>
+
+\[L/D = \frac{\text{lift}}{\text{drag}} = \frac{-\text{change in downward airflow}}{\text{change in rightward airflow}} = \frac{-\big ( v_y(t)+v_y(0) \big )}{v_x(t)-v_x(0)}\]
+
+<p>At this point, we have both physical constraints and an objective that we hope to pursue in the context of those constraints. In the big picture, our goal is to change the mask parameters of the occlusion so as to increase the lift/drag ratio as much as possible. In other words, we’d like to follow the gradient of the occlusion mask with respect to the lift/drag ratio. Luckily for us, there is a sophisticated tool called Autograd which allows us to find that gradient analytically. From there, all we have to do is follow that gradient in increments until we don’t see additional improvements. When this process of gradient ascent is over, we can hope to see a wing.</p>
+
+<p>So let’s review. Our goal is to simulate a wind tunnel and use it to derive a wing shape. We began by writing down the general Navier-Stokes equation and eliminating irrelevant terms - all of them but self advection. Next, we figured out how to add a continuously-deformable occlusion in the center of the tunnel. Finally, we wrote down a definition for what a good wing should do and discussed how to optimize it. Now it is time to put everything together in about 200 lines of code and run the optimization to see what we’ll get…</p>
+
+<p>Sure enough, we get a wing shape. It’s worth noting that modern aircraft wings are designed in exactly this manner. Of course, the simulation itself is a bit more advanced. It’s 3D instead of 2D, uses a mesh parameterization instead of a grid, and adds laminar flow. But in spite of these improvements, the overall principle is much the same. In both cases, we write down some words and symbols, turn them into code, and use the code to shape our wing. The fact that we can do all of this without ever building a physical wing makes it feel a bit like magic. But the proof is in the pudding, for when we do put these wings on airplanes and trust them with our lives, they carry us safely to our destinations.</p>
+
+<p>But just as with the old wind tunnels of the 1900’s, these simulations have to go through lots of debugging before we can trust them. In fact, over the course of building this demo I discovered all sorts of ways in which it could malfunction. Some of the most amusing bloopers happened while I was trying to get the optimization code dialed in.</p>
+
+<p>Several of these bloopers are just plain dreadful. But others look like reasonable, if unexpected, solutions. I think the “two wing” solution is particularly fun. It was entirely unexpected and yet there’s a good precedent for it in biplanes. One of the strengths of this particular demo is its simplicity. This extreme simplicity is what made the wing objective open-ended, thus permitting all sorts of interesting accidents to occur. If we had limited the wing shape to a closed-loop topology, we never would have recovered the two-wing design.</p>
+
+<h2 id="quality-diversity">Quality-diversity</h2>
+
+<p>In fact, the problem of designing a good wing is so open-ended that many good solutions exist. Perhaps it makes more sense to look for an entire manifold or subspace of good solutions. Sometimes we’ll care more about a wing that is optimal at high speeds and other times we’ll want one that’s optimal at low speeds. Maybe we’ll want one that is stable across many speeds. What’s more, we may want a particularly thick wing so as to accommodate, for example, a large fuselage. Or, we may want to keep the mass of the wing low so as to reduce weight. Taking these sorts of design constraints into account, we can solve for a whole manifold of valid solutions.</p>
+
+<p>Most scientists probably won’t be shocked by the revelation that design problems are open-ended. However, there are many ways in which people ignore the open-ended nature of the real world. This begins when we are still young and take our first standardized test. These tests instill a “one solution is best” mode of thought in students and once they’ve outgrown them it’s easy to latch on to other metrics to optimize. Some tempting ones include salary, social media followers, admission rates, and citation metrics. But nature is different.</p>
+
+<p>Nature takes a consummate joy in variation. Consider flight in birds. Some species prioritize high body mass and quick, agile flight patterns. Others, like the albatross, are soaring birds built for extreme efficiency. Still others, like the _ are good “all-around” fliers who adapt well to a variety of environments.</p>
+
+<p>Although we lack some of Nature’s refinement and nuance, human flying machines follow some of the same patterns. We have ultra-efficient planes built for soaring, short-winged bush planes for maneuverability, and massive commercial airliners for stability and volume.</p>
+
+<p>Perhaps less intuitively, a single bird is often capable of a wide range of wing shapes. The falcon, for example, uses different wing shapes for soaring, diving, turning, and landing. The wing is not, in fact, a static thing, but rather a deformable, dynamic object which is constantly adapting to its surroundings. Modern airplanes are starting to explore this possibility too, with airfoils composed of adjustable overlapping flaps that can be rearranged for takeoff, cruising, and landing.</p>
+
+<p>The general process by which evolution divides one successful pattern into an array of related but specialized versions is called speciation. It’s a complicated process because the success of one species tends to drive the formation or extinction of several related species. You see a similar pattern in the history of plane designs, especially fighter crafts. The German _ airplanes of World War II, for example, inspired the United States to make fighters that could “”, and thus avoid “”.</p>
+
+<p>In optimization and machine learning, the idea that many problems are open-ended and we should look for a set of equally valid solutions is called “quality-diversity.” It’s still a fledgling area of research, but notable papers on the topic include “” and “”. Jeff Clune gives a strong overview in his ICML 2019 tutorial. On a related thread, a series of papers on reinforcement learning illustrate the value of self play or league play. These papers tend to use the perspective of game theory to argue in favor of a diverse set of policies so as to construct a stable Nash equilibrium of policies. The core observation here is that the better and more diverse the league of agents gets, the better and more robust any one policy tends to become.</p>
+
+<p>It’s interesting that quality-diversity is such an important concept across disparate fields such as bird flight, fighter aircraft, and AI algorithms. The common thread here is that this diversity becomes increasingly important as the objective gets more open-ended.</p>
+
+<p>With this in mind, we should ask ourselves just how open-ended our optimization function was for the wing example. We already know that a variety of wing shapes can attain high performance on the task. We should also note that the final wing shape is rather sensitive to the initial shape and density of the occlusion. More generally, though, the optimization function itself is never the full story. When we write down the objective function, behind it there is a desire to form a wing shape, and behind that, a desire for flight, and behind that - perhaps - a desire for freedom, and behind that, what? The paradox of an objective function is that it always seems to have some grander intent behind it. One of our crises and challenges as human beings is that we can discover this paradox, and must somehow resolve it.</p>
+
+<h2 id="footnotes">Footnotes</h2>
+
+:ET
