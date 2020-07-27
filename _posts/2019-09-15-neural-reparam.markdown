@@ -35,15 +35,16 @@ thumbnail: /assets/neural-reparam/thumbnail.png
 		  border-radius: 4px;
 		  color: white;
 		  padding: 3px 8px;
-		  margin-bottom: 10px;
 		  /*width: 60px;*/
 		  text-align: center;
 		  text-decoration: none;
 		  text-transform: uppercase;
 		  font-size: 12px;
-		  display: block;
+		  /*display: block;*/
 		  /*margin-left: auto;*/
+		  margin: 8px 0px;
 		  margin-right: auto;
+		  min-width:80px;
 		}
 	</style>
 </div>
