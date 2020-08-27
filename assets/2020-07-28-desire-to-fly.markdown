@@ -84,24 +84,6 @@ That's how I will make my case that we are a winged species. For indeed we are, 
   </div>
 </div>
 
-
-<script language="javascript">
-  function toggleWingShape() {
-
-    path = document.getElementById("wingShapeImage").src
-      if (path.split('/').pop() == "wing-shape.png") 
-      {
-          document.getElementById("wingShapeImage").src = "/assets/desire-to-fly/wing-summary.gif";
-          document.getElementById("wingShapeButton").textContent = "Reset";
-      }
-      else 
-      {
-          document.getElementById("wingShapeImage").src = "/assets/desire-to-fly/wing-shape.png";
-          document.getElementById("wingShapeButton").textContent = "Optimize";
-      }
-  }
-</script>
-
 ### The Early Aviators
 
 From the Greek story of Icarus to the drawings of Leonardo da Vinci, humans have always gazed into the depthless blue sky and wondered at its possibilities. One of the great gifts of the scientific revolution was the ability to finally manifest those dreams. The past century has taken us from the Wright brothers’ ramshackle Flyer to the razor-edged precision of the [SR-71 Blackbird](https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Lockheed_SR-71_Blackbird.jpg/1200px-Lockheed_SR-71_Blackbird.jpg). And our commercial aviation system makes it possible for anyone to realize the possibilities of flight. Indeed, flight has become so common and so reasonable that it’s easy to forget the towering lusts and follies that brought us here. To remember those sensations, we need to look back at the humans for whom the desire to fly was strongest: the early aviators. And of all the early aviators, perhaps nobody risked more in the pursuit of flight than the tower jumpers.
@@ -156,8 +138,6 @@ It’s easy to think of Earhart, da Vinci, and the others as exceptions to a rul
 </div>
 
 
-
-
 ## Footnotes
 
 [^fn1]: White, Lynn Townsend Jr. [Eilmer of Malmesbury, an Eleventh Century Aviator: A Case Study of Technological Innovation, Its Context and Tradition](https://www.jstor.org/stable/pdf/3101411.pdf?seq=1), _Technology and Culture 2_, p. 97-111, 1961. For a quick but less scholarly overview, try [this online article](https://www.thefamouspeople.com/profiles/abbas-ibn-firnas-33319.php).
@@ -168,3 +148,18 @@ It’s easy to think of Earhart, da Vinci, and the others as exceptions to a rul
 [^fn6]: Schiff, Stacy. [Saint-Exupéry: A Biography](https://web.archive.org/web/20161020193505/https://books.google.com/books?id=2G4Q_GNpCUMC&hl=en), _Da Capo Press_, 1997. See also the [Wikipedia article](https://en.wikipedia.org/wiki/Antoine_de_Saint-Exup%C3%A9ry) about Saint-Exupéry.
 [^fn7]: Saint-Exupéry has some truly fantastic quotes. There wasn't a great place for them in this article, but I encourage you to read some of them [here](https://www.brainyquote.com/authors/antoine-de-saint-exupery-quotes).
 [^fn8]: [Amelia Earhart's Prenup Is Remarkably Modern](https://www.huffpost.com/entry/amelia-earhart-prenup_n_2280057), _Huffington Post_, 2017. An image of the prenuptual letter itself is [here](https://images.huffingtonpost.com/2012-12-11-earhart.jpg).
+
+<script language="javascript">
+  function toggleWingShape() {
+
+    path = document.getElementById("wingShapeImage").src
+      if (path.split('/').pop() == "wing-shape.png") 
+      {
+          document.getElementById("wingShapeImage").src = "/assets/desire-to-fly/wing-summary.gif";
+      }
+      else 
+      {
+          document.getElementById("wingShapeImage").src = "/assets/desire-to-fly/wing-shape.png";
+      }
+  }
+</script>

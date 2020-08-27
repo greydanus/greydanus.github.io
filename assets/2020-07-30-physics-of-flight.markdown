@@ -56,40 +56,6 @@ thumbnail: /assets/physics-of-flight/thumbnail.png
 	<div class="thecap" style="text-align:left"><b>Figure 1:</b> We simulate fluid dynamics, build a tunnel, and then differentiate through it to find a wing shape. <p style="color:grey; display:inline;">[The images above are videos. Click them to pause or play.]</p></div>
 </div>
 
-<script language="javascript">
-	function toggleWingShape() {
-
-		path = document.getElementById("wingShapeImage").src
-	    if (path.split('/').pop() == "wing-shape.png") 
-	    {
-	        document.getElementById("wingShapeImage").src = "/assets/physics-of-flight/wing-shape.gif";
-	        document.getElementById("wingShapeButton").textContent = "Reset";
-	    }
-	    else 
-	    {
-	        document.getElementById("wingShapeImage").src = "/assets/physics-of-flight/wing-shape.png";
-	        document.getElementById("wingShapeButton").textContent = "Optimize";
-	    }
-	}
-</script>
-
-<script language="javascript">
-	function toggleWingFlow() {
-
-		path = document.getElementById("wingFlowImage").src
-	    if (path.split('/').pop() == "wing-flow.png") 
-	    {
-	        document.getElementById("wingFlowImage").src = "/assets/physics-of-flight/wing-flow.gif";
-	        document.getElementById("wingFlowButton").textContent = "Reset";
-	    }
-	    else 
-	    {
-	        document.getElementById("wingFlowImage").src = "/assets/physics-of-flight/wing-flow.png";
-	        document.getElementById("wingFlowButton").textContent = "Simulate";
-	    }
-	}
-</script>
-
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
 	<a href="" id="linkbutton" target="_blank">Read the paper</a>
 	<a href="https://colab.research.google.com/drive/1RTsSyr7B3THKVGp_44Oyh7rxBriOHzJ7" id="linkbutton" target="_blank">Run in browser</a>
@@ -100,7 +66,7 @@ Legos are this wonderful meta-toy in that they represent the potential for a nea
 
 As an adult, I find myself appreciating the same things in the physical world that I appreciated in Legos when I was younger. The beauty of the physical world is its simplicity. It’s a special kind of simplicity that, like Lego bricks, allows intricate structures to form at many levels. You see this everywhere you look in nature, across all scales of space and time. In the fractal design of a seashell or the intricate polities of a coral. In the convection of a teacup or the circulation of the atmosphere. And it’s this simple structure that determines the shape and behavior of even the most complicated flying machines.
 
-To see this more clearly, we are going to start from the basic physical laws of airflow and use them to derive the shape of a wing. Since we’re using so few assumptions, the wing shape we come up with will be as fundamental as the physics of the air that swirls around it. This is pretty fundamental. In fact, if an alien species started building flying machines on another planet, my guess is that they would converge on a similar basic shape.
+To see this more clearly, we are going to start from the basic physical laws of airflow and use them to derive the shape of a wing.[^fn1] Since we’re using so few assumptions, the wing shape we come up with will be as fundamental as the physics of the air that swirls around it. This is pretty fundamental. In fact, if an alien species started building flying machines on another planet, my guess is that they would converge on a similar basic shape.
 
 We will begin this journey with the “Navier-Stokes equation” which sums up pretty much everything we know about fluid dynamics. It describes how tiny fluid parcels interact with their neighbors.
 
@@ -122,20 +88,20 @@ $$
 This simple expression is responsible for the effects that really dominate wind tunnel physics. It says that the change in velocity over time is due to the fact that “velocity follows itself.” So the entire simulation comes down to two simple rules:
 <ul>
 	<li>
-		• Rule 1: Velocity follows itself <div onclick="hideShowAdvection()" style="cursor: pointer;display:inline">(+)</div>
+		• Rule 1: Velocity follows itself <div id="advection_info_toggle" onclick="hideShowAdvection()" style="cursor: pointer;display:inline">(+)</div>
 		<ul>
 		<div id="advection_info" style="display: none;"><i><b>A note on advection.</b> The technical term for this effect is "self-advection". Advection is when something (eg. smoke) is moved around by the velocity of a fluid. Self-advection is when velocity moves itself. In principle, a self-advection step is as simple as moving the velocity field forward according to “x1 = x0 + v0*delta_t” at every point on the grid. We can simulate advection over time by repeating this over and over again; this is called Euler integration. The problem with Euler integration is that when you do it on a grid, small numerical errors can accumulate into big ones. There's a related approach called Backward Euler integration which mitigates these errors. In Backward Euler, we use the final velocity rather than the initial velocity to perform advection; the update becomes "x1 = x0 + v1*delta_t" instead. Page 8 of <a href="https://drive.google.com/file/d/1upKFdtnM0xcTVxNsPHI1KCvmcanAJheL/view?usp=sharing">this paper</a> gives an intuition for why this is a good idea.</i></div>
 		</ul>
 	</li>
 	<li>
 		<!-- <b>Rule 1: Velocity follows itself</b> -->
-		• Rule 2: Volume is conserved (because of our “incompressibility” assumption) <div onclick="hideShowProjection()" style="cursor: pointer;display:inline">(+)</div>
+		• Rule 2: Volume is conserved (because of our “incompressibility” assumption) <div id="projection_info_toggle" onclick="hideShowProjection()" style="cursor: pointer;display:inline">(+)</div>
 		<ul>
 		<div id="projection_info" style="display: none;"><i><b>A note on projection.</b> The process of enforcing this constraint is called projection. Since volume is conserved, fluid particles can only move into positions that their neighbors have recently vacated. This puts a strong constraint on our simulation's velocity field: it needs to be "volume-conserving" or "incompressible". Fortunately, Helmholtz’s theorem tells us that any vector field can be decomposed into an incompressible field and a gradient field, as shown here (taken from <a href="https://drive.google.com/file/d/1upKFdtnM0xcTVxNsPHI1KCvmcanAJheL/view?usp=sharing">this paper</a>):
 			<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:70%">
 				<img src="/assets/physics-of-flight/decomposition.png" style="width:100%">
 			</div>
-		One way to make our velocity field incompressible is to find the gradient field and subtract it from the original field, effectively projecting our velocity field onto a volume-conserving manifold. Then we can solve for the gradient field by using a few iterations of the Gauss-Seidel method to solve the Poisson equation.</i>
+		One way to make our velocity field incompressible is to find the gradient field and subtract it from the original field, effectively projecting our velocity field onto a volume-conserving manifold. Then we can solve for the gradient field by using a few iterations of the <a href="https://en.wikipedia.org/wiki/Gauss%E2%80%93Seidel_method">Gauss-Seidel method</a> to solve <a href="https://en.wikipedia.org/wiki/Poisson%27s_equation">Poisson's equation</a>.</i>
 		</div>
 		</ul>
 	</li>
@@ -144,11 +110,11 @@ This simple expression is responsible for the effects that really dominate wind 
 ### Representing the Wing
 
 <div>
-<div style="display:inline">Now that we’ve simplified wind tunnel physics as much as possible, let’s talk about how to add a wing shape. The wing is an internal boundary, or “occlusion” of the flow. A good way to represent an occlusion is with a mask of zeros and ones. But since the goal of our wind tunnel is to try out different wing shapes, we need our wing to be continuously deformable. So let's allow our mask to take on continuous values between zero and one. Now our wing is semi-permeable in proportion to its mask values.</div> <div onclick="hideShowFilter()" style="cursor: pointer;display:inline">(+)</div>
+<div style="display:inline">Now that we’ve simplified wind tunnel physics as much as possible, let’s talk about how to add a wing shape. The wing is an internal boundary, or “occlusion” of the flow. A good way to represent an occlusion is with a mask of zeros and ones. But since the goal of our wind tunnel is to try out different wing shapes, we need our wing to be continuously deformable. So let's allow our mask to take on continuous values between zero and one. Now our wing is semi-permeable in proportion to its mask values.</div> <div id="filter_info_toggle" onclick="hideShowFilter()" style="cursor: pointer;display:inline">(+)</div>
 </div>
 
 
-<div id="filter_info" style="display: none;"><i><b>A note on filtering.</b> In practice, the wing is still not quite continuously deformable. Big differences in the mask at neighboring grid points can lead to sharp boundary conditions and non-physical airflows around the mask. One way to reduce this effect is to apply a Gaussian filter to the flow around the edge of the mask so as to prevent grid-level pathologies. This same technique is used to avoid grid-scale pathologies in many other grid-based physics simulations.</i></div>
+<div id="filter_info" style="display: none;"><i><b>A note on filtering.</b> In practice, the wing is still not quite continuously deformable. Big differences in the mask at neighboring grid points can lead to sharp boundary conditions and non-physical airflows around the mask. One way to reduce this effect is to apply a Gaussian filter to the flow around the edge of the mask so as to prevent grid-level pathologies. This same technique is used to avoid grid-scale artifacts in <a href="https://doi.org/10.1007/s00158-010-0594-7">topology optimization</a>, <a href="https://web.stanford.edu/group/ctr/ResBriefs03/gullbrand.pdf">large</a> <a href="https://doi.org/10.1063/1.3485774">eddy</a> simulators, and <a href="https://graphics.stanford.edu/courses/cs468-03-fall/Papers/Levin_MovingLeastSquares.pdf">3D graphics</a>.</i></div>
 
 <!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
 	<img src="/assets/physics-of-flight/sim_rect.png" style="width:30%">
@@ -179,14 +145,14 @@ This simple expression is responsible for the effects that really dominate wind 
   </div>
 </div>
 
-We have succeeded in simulating a wind tunnel in just about 100 lines of code. Now it’s time to act upon it in order to create a wing. There are actually many qualities that one could look for in a good wing, but let’s begin with the most straightforward: we want a wing that gives high lift and low drag. In other words, we want it to convert horizontal air velocity into upward force. We can measure the upward force by the change in downward airflow, which is equal and opposite to the amount of lift.
+We have succeeded in simulating a wind tunnel in just about 100 lines of code.[^fn2] Now it’s time to act upon it in order to create a wing. There are actually many qualities that one could look for in a good wing, but let’s begin with the most straightforward: we want a wing that gives high lift and low drag. In other words, we want it to convert horizontal air velocity into upward force. We can measure the upward force by the change in downward airflow, which is equal and opposite to the amount of lift.
 
 $$
  L/D = \frac{\text{lift}}{\text{drag}} = \frac{-\text{change in downward airflow}}{\text{change in rightward airflow}} = \frac{-\big ( v_y(t)-v_y(0) \big )}{v_x(t)-v_x(0)}
 $$
 
 <div>
-<div style="display:inline">At this point, we have both physical constraints and an objective. In the big picture, our goal is to change the wing mask so as to increase its overall lift/drag ratio as much as possible. The way to do this is to follow the gradient of the objective with respect to the wing shape. Luckily for us, there is a clever tool called Autograd which can compute that gradient analytically. Once we have the gradient, all we have to do is take incremental steps in that direction until we don’t see additional improvements. When this process of gradient ascent is over, we can hope to see a wing.</div> <div onclick="hideShowAutograd()" style="cursor: pointer;display:inline">(+)</div>
+<div style="display:inline">At this point, we have both physical constraints and an objective. In the big picture, our goal is to change the wing mask so as to increase its overall lift/drag ratio as much as possible. The way to do this is to follow the gradient of the objective with respect to the wing shape. Luckily for us, there is a clever tool called Autograd which can compute that gradient analytically. Once we have the gradient, all we have to do is take incremental steps in that direction until we don’t see additional improvements. When this process of gradient ascent is over, we can hope to see a wing.</div> <div id="autograd_info_toggle" onclick="hideShowAutograd()" style="cursor: pointer;display:inline">(+)</div>
 </div>
 
 <div id="autograd_info" style="display: none;"><i><b>A note on Autograd.</b> Amazingly, every mathematical operation we've described so far, from the wing mask to the advection/projection steps to the calculation of the lift/drag ratio, is differentiable. This is why we can use Autograd to compute the analytic gradient. Autograd performs automatic differentiation, closely related to the adjoint method, to propagate gradient information backwards through the simulation until it reaches the parameters of the wing mask. We can do all of this in a one-line function transformation: <code>grad_fn = autograd.value_and_grad(get_lift_drag_ratio).</code></i></div>
@@ -196,7 +162,8 @@ $$
 So let’s review. Our goal is to simulate a wind tunnel and use it to derive a wing shape. We began by writing down the general Navier-Stokes equation and eliminating irrelevant terms: all of them but self-advection. Next, we figured out how to add a continuously-deformable occlusion in the center of the tunnel. Finally, we wrote down a definition for what a good wing should do and discussed how to optimize it. Now it is time to put everything together in about 200 lines of code and run the optimization to see what we get…
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:40%">
-	<img src="/assets/physics-of-flight/sim_wing.png" style="width:100%; min-width: 200px">
+	<img alt="" src="/assets/physics-of-flight/sim_wing.png" onclick="toggleBasicWing()" id="basicWing" />
+	<p style="color:grey; display:inline;">[Click to pause or play.]</p>
 </div>
 
 Sure enough, we get a beautiful little wing 😊. Of all possible shapes, this is the very best one for creating efficient lift in our wind tunnel. This wing is definitely a toy solution since our simulation is coarse and not especially accurate. However, with a few simple improvements, we’d be able to design a real airplane wing this way.
@@ -224,15 +191,38 @@ In fact, the problem of designing a good wing is so open-ended that there are ac
 	<img src="/assets/physics-of-flight/sim_manifold.png" style="width:100%">
 </div>
 
-Most people won’t be shocked by the idea that design problems are open-ended. However, there are many ways in which we ignore the open-ended nature of the real world. In our culture, for example, there is a tendency to place a lot of weight on numbers like standardized test scores, salary, or social media followers. But nature is different. Nature takes a consummate joy in variation. It’s easy to see this by looking at the remarkable variety of wing shapes in birds. Some species prioritize high body mass and quick, agile flight patterns. Others, like the albatross, are soaring birds built for extreme efficiency. Still others, like the common raven are good all-around fliers who can function well in a variety of environments.
+Most people won’t be shocked by the idea that design problems are open-ended. However, there are many ways in which we ignore the open-ended nature of the real world. In our culture, for example, there is a tendency to place a lot of weight on numbers like standardized test scores, salary, or social media followers. But nature is different. Nature takes a consummate joy in variation. It’s easy to see this by looking at the remarkable variety of wing shapes in birds.[^fn3] Some species prioritize high body mass and quick, agile flight patterns. Others, like the albatross, are soaring birds built for extreme efficiency. Still others, like the common raven are good all-around fliers who can function well in a variety of environments.
 
-Perhaps less intuitively, a single bird is often capable of a wide range of wing shapes. The falcon, for example, uses different wing shapes for soaring, diving, turning, and landing. The wing is not a static thing, but rather a deformable, dynamic object which is constantly adapting to its surroundings.
+<!-- <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+    <img src="/assets/physics-of-flight/norberg2002.png" style="width:100%">
+    <div style="text-align: left;">Aspect ratio vs. a wing loading index (made independent of size) in some birds, airplanes, a hang-glider, a butterfly, and a maple seed. Bats have about a similar range as birds for aspect ratio but slightly lower wing loadings because their tail membrane area is integrated in the wing area. The numbers after various flying objects refer to aspect ratio. Figure from Norberg, 2002.</div>
+</div> -->
 
-You can see some of this speciation occurring in modern aircraft as well. We have ultra-efficient planes built for soaring, short-winged bush planes for maneuverability, and massive commercial airliners for stability and volume. And like the birds, many airplanes can deform their wing shapes during takeoff, cruising, and landing.
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:36.85%; min-width:200px; display: inline-block; vertical-align: top;">
+    <img src="/assets/physics-of-flight/bird_shapes.png" style="width:100%">
+    <div style="text-align: left;">Bird species plotted by wing pointedness (horizontal axis) and wingtip convexity (vertical axis). Each point represents a species: a, tern; b, duck; c, pigeon; d, gull; e, magpie; f, buzzard; g, sparrowhawk.</div>
+  </div>
+  <div style="width:62.7%; min-width:200px; display: inline-block; vertical-align: top;">
+    <img src="/assets/physics-of-flight/norberg2002.png" style="width:100%">
+    <div style="text-align:left;">Aspect ratio vs. wing loading index, made independent of size, in some birds, airplanes, a hang-glider, a butterfly, and a maple seed. Bats have about a similar range as birds for aspect ratio but slightly lower wing loadings because their tail membrane area is integrated in the wing area.</div>
+  </div>
+</div>
+
+Perhaps less intuitively, a single bird is often capable of a wide range of wing shapes. The falcon, for example, uses different wing shapes for soaring, diving, turning, and landing. The wing is not a static thing, but rather a deformable, dynamic object which is constantly adapting to its surroundings. You can see some of this speciation occurring in modern aircraft as well. We have ultra-efficient planes built for soaring, short-winged bush planes for maneuverability, and massive commercial airliners for stability and volume.[^fn4] And like the birds, many airplanes can deform their wing shapes during takeoff, cruising, and landing.
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:55%; min-width:200px; display: inline-block; vertical-align: top;">
+    <img src="/assets/physics-of-flight/bird_morph.png" style="width:100%">
+  </div>
+  <div style="width:44.3%; min-width:200px; display: inline-block; vertical-align: top;">
+    <img src="/assets/physics-of-flight/plane_morph.png" style="width:100%">
+  </div>
+</div>
 
 ### Quality-Diversity
 
-In optimization and machine learning, the idea that many problems are open-ended and we should look for a set of equally valid solutions is called “quality-diversity.” It’s still a fledgling area of research, but notable papers on the topic include "" and "". Jeff Clune gives a strong overview in his ICML 2019 tutorial. There’s a separate thread of research in reinforcement learning which advocates similar principles. These papers are motivated by the dynamics of self play and league play. It turns out that, in order to find a stable Nash equilibrium, one must have a diverse set of policies that continually exploit each others’ weaknesses. The core observation here is that the better and more diverse the league of agents, the better and more robust any one policy tends to become.
+In optimization and machine learning, the idea that many problems are open-ended and we should look for a set of equally valid solutions is called “quality-diversity.” It’s still a fledgling area of research, but notable papers on the topic include MAP-elites[^fn5] [^fn6] and POET.[^fn7] Jeff Clune gives a strong overview in his [ICML 2019 tutorial](https://icml.cc/media/Slides/icml/2019/halla(10-09-15)-10-09-15-4336-recent_advances.pdf). There’s a separate thread of research in reinforcement learning which advocates similar principles. These papers are motivated by the dynamics of self play and league play.[^fn8] It turns out that, in order to find a stable Nash equilibrium, one must have a diverse set of policies that continually exploit each others’ weaknesses. The core observation here is that the better and more diverse the league of agents, the better and more robust any one policy tends to become.
 
 Some of the most interesting open-ended objectives are the ones that can change their own environments. This, in turn, changes the objective itself and leads to a continual cycle of problems and solutions. We saw this when we looked at the stepping stones of flight. The engineers who figured out how to fly at subsonic speeds earned themselves an entirely new problem of flight in the supersonic regime. This bootstrapping effect, where problems and solutions feed off one another, implies that there will always be a frontier worth exploring. That much novelty is a good thing, but it’s also dangerous. If the target is always changing, how can we keep ourselves from chasing our tail? Sometimes a changing target brings us right back to where we started. It’s like Star Wars, where the cycle of evil repeats itself. It blows your mind at first, and then as you leave the theatre you feel a little hopeless. This is a dreary way to see things. But there’s hope. The optimization function is never the full story.
 
@@ -242,47 +232,91 @@ When we write down an objective function like we did for the wing demo, we have 
 
 Indeed, the early aviators were shaped by their desire to fly as much as their desire to fly shaped the world. In pursuit of flight, they had to discipline themselves and spend years perfecting their craft. They had to become pragmatists to ensure that their lofty dreams would survive. There is a sense in which we are all shaped by the desires we aim at. A huge portion of our prefrontal cortex is used for conscious inhibition or excitation of lower brain regions. Each of these regions has a different set of desires: food, sex, sleep, exercise, safety, curiosity, power, affection,...the list goes on. We can choose which of these to aim at. It’s a core part of free will, for in choosing which desires to act on, we choose the person we will become.
 
+<div class="imgcap_noborder">
+  <img src="/assets/desire-to-fly/hummingbird.png" width="20%">
+</div>
+
 Like the hermit crab, we are born with desires that our body cannot satisfy, and thus we must venture out into the world, build things, and make them part of who we are. But we differ from the hermit crab in one important way. While he seeks out a shell because he wants safety, we seek flight because we want freedom, adventure, and change. We are not trying to stay the same, but rather we are aiming for a future that is different and better. Change, adventure, etc. is what made us a flying species in the first place and it will propel us higher tomorrow. So long as we have the desire to fly.
-
-
-
 
 
 ## Footnotes
 
-[^fn1]: Here \\(e^{-S/h}\\) is actually the probability of a particular path occurring. Because \\(h\\) is small, we usually only observe the minimum value of \\(S\\) on large scales. See [Feynman lecture 19](https://www.feynmanlectures.caltech.edu/II_19.html) for more on this.
+[^fn1]: The overall approach was inspired by [this Autograd example](https://github.com/HIPS/autograd/blob/master/examples/fluidsim/wing.png). Sam began with that codebase and made substantial modifications in order to improve results. Sam also changed many of the variable names and functional structures to make things easier to read and understand.
+[^fn2]: _This simulation is based on this paper:_ Stam, Jos. [Real-Time Fluid Dynamics for Games](https://drive.google.com/file/d/1upKFdtnM0xcTVxNsPHI1KCvmcanAJheL/view). _Proceedings of the Game Developer Conference_, 2003.
+[^fn3]: Lockwood, Rowan and Swaddle, John P. and Rayner, Jeremy M. V. [Avian Wingtip Shape Reconsidered: Wingtip Shape Indices and Morphological Adaptations to Migration](https://doi.org/10.2307/3677110), _Journal of Avian Biology_ Vol. 29, No. 3, pp. 273-292, 1998.
+[^fn4]: Norberg, Ulla M. Lindhe. [Structure, Form, and Function of Flight in Engineering and the Living World](https://doi.org/10.1002/jmor.10013). _Journal of Morphology_, 2002.
+[^fn5]: Mouret, Jean-Baptiste and Clune, Jeff. [Illuminating search spaces by mapping elites](https://arxiv.org/abs/1504.04909). _ArXiv preprint_, 2015.
+[^fn6]: Cully, Antoine and Clune, Jeff and Taraporeand, Danesh and Mouret, Jean-Baptiste. [Robots that can adapt like animals](https://www.nature.com/articles/nature14422). _Nature_, 2015.
+[^fn7]: Wang, Rui and Lehman, Joel and Rawal, Aditya and Zhi, Jiale and Li, Yulun and Clune, Jeff, Stanley, Kenneth O. [Enhanced POET: Open-ended Reinforcement Learning through Unbounded Invention of Learning Challenges and their Solutions](https://arxiv.org/abs/2003.08536). _International Conference on Machine Learning (ICML)_, 2020.
+[^fn8]: Czarnecki, Wojciech Marian, et al. [Real World Games Look Like Spinning Tops](https://arxiv.org/abs/2004.09468). _arXiv preprint arXiv:2004.09468_, 2020.
 
-<script>
+<script language="javascript">
+	function toggleWingShape() {
+
+		path = document.getElementById("wingShapeImage").src
+	    if (path.split('/').pop() == "wing-shape.png") {
+	        document.getElementById("wingShapeImage").src = "/assets/physics-of-flight/wing-shape.gif";
+	    } else {
+	        document.getElementById("wingShapeImage").src = "/assets/physics-of-flight/wing-shape.png";
+	    }
+	}
+</script>
+
+<script language="javascript">
+	function toggleWingFlow() {
+
+		path = document.getElementById("wingFlowImage").src
+	    if (path.split('/').pop() == "wing-flow.png") {
+	        document.getElementById("wingFlowImage").src = "/assets/physics-of-flight/wing-flow.gif";
+	    } else {
+	        document.getElementById("wingFlowImage").src = "/assets/physics-of-flight/wing-flow.png";
+	    }
+	}
+
+function toggleBasicWing() {
+
+    path = document.getElementById("basicWing").src
+      if (path.split('/').pop() == "sim_wing.png") {
+          document.getElementById("basicWing").src = "/assets/physics-of-flight/wing-flow.gif";
+      } else {
+          document.getElementById("basicWing").src = "/assets/physics-of-flight/sim_wing.png";
+      }
+  }
+
 function hideShowAdvection() {
   var x = document.getElementById("advection_info");
+  var y = document.getElementById("advection_info_toggle");
   if (x.style.display === "none") {
-    x.style.display = "inline";
+    x.style.display = "inline"; y.textContent = "(–)"
   } else {
-    x.style.display = "none";
+    x.style.display = "none"; y.textContent = "(+)"
   }
 }
 function hideShowProjection() {
   var x = document.getElementById("projection_info");
+  var y = document.getElementById("projection_info_toggle");
   if (x.style.display === "none") {
-    x.style.display = "inline";
+    x.style.display = "inline"; y.textContent = "(–)"
   } else {
-    x.style.display = "none";
+    x.style.display = "none"; y.textContent = "(+)"
   }
 }
 function hideShowFilter() {
   var x = document.getElementById("filter_info");
+  var y = document.getElementById("filter_info_toggle");
   if (x.style.display === "none") {
-    x.style.display = "inline";
+    x.style.display = "inline"; y.textContent = "(–)"
   } else {
-    x.style.display = "none";
+    x.style.display = "none"; y.textContent = "(+)"
   }
 }
 function hideShowAutograd() {
   var x = document.getElementById("autograd_info");
+  var y = document.getElementById("autograd_info_toggle");
   if (x.style.display === "none") {
-    x.style.display = "inline";
+    x.style.display = "inline"; y.textContent = "(–)"
   } else {
-    x.style.display = "none";
+    x.style.display = "none"; y.textContent = "(+)"
   }
 }
 </script>
