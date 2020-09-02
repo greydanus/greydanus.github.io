@@ -57,15 +57,15 @@ The most amazing thing about flight research during World War I was the speed th
 That’s the story of the 1920’s and 1930’s, which is when the mathematical theory of flight finally got started. Physicists had the time to come up with theories that explained experimental results, and then they used these theories to make airfoils better in small and important ways. These ideas culminated in the 1933 NACA Report 460 which set the industry standard for the next several decades. Some of the airfoils in that report, like the NACA 2412, are still in use today. Many World War II planes used those designs too. Good examples include the DC-3 transport plane and the B-17 Flying Fortress.[^fn9]
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:32.6%; min-width:100px; display: inline-block; vertical-align: top;">
+  <div style="width:32.6%; min-width:150px; display: inline-block; vertical-align: top;">
     <img src="/assets/stepping-stones/wright_tunnel.png" style="width:100%">
     <div style="text-align: left;">The 1901 wind tunnel that the Wright brothers used to study airfoil shapes.</div>
   </div>
-  <div style="width:28.2%; min-width:100px; display: inline-block; vertical-align: top;">
+  <div style="width:28.2%; min-width:150px; display: inline-block; vertical-align: top;">
     <img src="/assets/stepping-stones/langley.png" style="width:100%">
     <div style="text-align:left;">A man standing in the enormous Langley wind tunnel in 1925.</div>
   </div>
-  <div style="width:38.1%; min-width:100px; display: inline-block; vertical-align: top;">
+  <div style="width:38.1%; min-width:150px; display: inline-block; vertical-align: top;">
     <img src="/assets/stepping-stones/ww1_vs_laminar.png" style="width:100%">
     <div style="text-align:left;">The progression of notable airfoils developed by national labs between 1915 and 1945.</div>
   </div>
@@ -82,7 +82,7 @@ Whitcomb made the discovery in 1965, a time when the aerospace industry was very
 Whereas his colleagues looked for solutions in aerodynamic theory, Whitcomb grabbed a can of putty and headed for the wind tunnel.[^fn10] He knew that the problem with existing airfoils was that air flowed at a higher rate around the top of the wing than the bottom. As the plane approached supersonic speeds, the air on top was the first to hit the sound barrier. Energy that was normally dissipated as sound would travel at the same speed as the plane and slowly accumulate. A shock wave would form. Then that shock wave would create all sorts of pathological drag and instabilities.[^fn11]
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:99%; min-width:100px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; min-width:400px; display: inline-block; vertical-align: top;">
     <img src="/assets/stepping-stones/supercritical_wide.png" style="width:100%">
   </div>
 </div>
@@ -92,11 +92,11 @@ With this in mind, Whitcomb used putty to decrease the curvature of the wing so 
 It appears that the boundary between the imagination of the human mind and the constraints of the real world is where invention happens. If ideas are fully constrained to our minds, we have a tendency to indulge in impractical fantasies. Unaware of the hidden challenges of flight, such as airfoils, it’s easy to get distracted by extraneous details. And yet we need imagination too. For without imagination, we are reduced to the plodding trial-and-error pace of evolution. Imagination is our one clear advantage over evolution, for it requires no intermediary. For evolution to invent a wing, there needed to be a half-winged precursor. But imagination has a strangely liberating effect in that it allows us to move from the ground to the sky in a single intuitive leap.[^fn12]
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:54.8%; min-width:100px; display: inline-block; vertical-align: top;">
+  <div style="width:54.8%; min-width:200px; display: inline-block; vertical-align: top;">
     <img src="/assets/stepping-stones/kurochkin2010.png" style="width:100%">
     <div style="text-align: left;">An evolutionary pathway from small sauropods to flying birds, proposed by <a href="10.1134/S0031030110120129">Kurochkin and Bogdanovich (2010)</a>. Each intermediary took hundreds of thousands of years of natural selection.</div>
   </div>
-  <div style="width:44.4%; min-width:100px; display: inline-block; vertical-align: top;">
+  <div style="width:44.4%; min-width:200px; display: inline-block; vertical-align: top;">
     <img src="/assets/stepping-stones/sound_barrier.png" style="width:100%">
     <div style="text-align:left;">The Supermarine Spitfire (top) was one of the fastest planes of World War II. The Bell X-1 (bottom) unseated the Spitfire and broke the sound barrier a few years later. Notice how different the two planes look; human design lacks intermediaries.</div>
   </div>
@@ -114,7 +114,8 @@ The thing to remember is that intuition is never free. You need to build it over
           border: 2px solid #777;
           padding: 10px;
           font-size: 20px;
-          width: 600px;
+          min-width: 200px;
+          width: 50%;
           text-align: center;
           color: #999;
           margin: 0px auto;

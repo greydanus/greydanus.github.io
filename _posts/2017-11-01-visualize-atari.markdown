@@ -19,7 +19,8 @@ author: Sam Greydanus
           border: 2px solid #777;
           padding: 10px;
           font-size: 20px;
-          width: 600px;
+          min-width: 200px;
+          width: 70%;
           text-align: center;
           color: #999;
           margin: 0px auto;
