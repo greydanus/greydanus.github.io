@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Three Perspectives on Deep Learning"
-excerpt: "After being obsessed with this field for more than a year, I should have a concise and satisfying answer. Strangely, I have three."
+excerpt: "After being excited about this field for more than a year, I should have a concise and satisfying answer. But I have three."
 date:   2016-08-05 11:00:00
 mathjax: true
 thumbnail: /assets/what-is/thumbnail.png

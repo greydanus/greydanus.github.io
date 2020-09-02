@@ -130,7 +130,7 @@ Ever since Lagrange introduced the notion of stationary action, physicists have 
 
 But these analytic solutions are rather crude approximations of the real world. An alternative approach is to assume that the Lagrangian is an arbitrarily complicated function -- a black box that does not permit analytical solutions. When this is the case, we must give up all hope of writing the Lagrangian out by hand. However, there is still a chance that we can parameterize it with a neural network and learn it straight from data. That is the main contribution of our recent paper.
 
-## How to Learn Lagrangians
+## How to learn Lagrangians
 
 The process of learning a Lagrangian differs from the traditional approach, but it also involves four basic steps:
 1. Obtain data from a physical system
@@ -174,7 +174,7 @@ q_tt = (
 )
 ```
 
-## Learning Real Lagrangians
+## Learning real Lagrangians
 
 In our paper, we conduct several experiments to validate this approach. In the first, we show that Lagrangian Neural Networks can learn the dynamics of a double pendulum.
 
@@ -185,7 +185,7 @@ In our paper, we conduct several experiments to validate this approach. In the f
 	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto;"><b>Figure 4:</b> Learning the dynamics of a double pendulum. Unlike the baseline neural network, our model learns to approximately conserve the total energy of the system. This is a consequence of the strong physical inductive bias of the Euler-Lagrange constraint.</div>
 </div>
 
-It's also interesting to compare qualitative results. In the video below, we use a baseline neural network and an LNN to predict the dynamics of a double pendulum, starting from the same initial state. You'll notice that the both trajectories seem reasonable until the end of the video, when the baseline model shifts to states that have much lower total energies.
+It's also interesting to compare qualitative results. In the video below, we use a baseline neural network and an LNN to predict the dynamics of a double pendulum, starting from the same initial state. You'll notice that both trajectories seem reasonable until the end of the video, when the baseline model shifts to states that have much lower total energies.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
 	<div style="overflow:hidden; padding-top: 40%; position: relative;" >
@@ -207,7 +207,7 @@ It's also interesting to compare qualitative results. In the video below, we use
 
 **Deep Lagrangian Networks (DeLaN, ICLR’19).** Another closely related work is Deep Lagrangian Networks[^fn3] in which the authors show how to learn specific types of Lagrangian systems. They assume that the kinetic energy is an inner product of the velocity, which works well for rigid body dynamics such as those in robotics. However, there are many physical systems that do not have this specific form. Some simple examples include a charged particle in a magnetic field or a fast-moving object with relativistic corrections. We see LNNs as a complement to DeLaNs in that they cover the cases where DeLaNs struggle but are less amenable to robotics applications.
 
-## Closing thoughts
+## Closing Thoughts
 
 <!-- Looking forward, we continue to be excited about the connection between machine learning and the principle of stationary action. One thing we'd like to try is to write a loss function that _is_ the action \\(S\\) and then minimize it with gradient descent to obtain dynamics. On a similar note, we'd like to think more about the connection between existing neural network training dynamics and the principle of least action. One of Yann LeCun's most beautiful papers, for example, is a derivation of backpropagation via the Euler-Lagrange constraint. This may be the proper way to speak about optimization dynamics such as catastrophic forgetting and deep double descent. -->
 

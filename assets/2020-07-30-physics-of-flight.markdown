@@ -51,15 +51,15 @@ thumbnail: /assets/physics-of-flight/thumbnail.png
 
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; text-align:left; width:70%" >
-    <img alt="" src="/assets/physics-of-flight/wing-shape.png" onclick="toggleWingShape()" width="300px" id="wingShapeImage" />
-    <img alt="" src="/assets/physics-of-flight/wing-flow.png" onclick="toggleWingFlow()" width="300px" id="wingFlowImage" />
+    <img alt="" src="/assets/physics-of-flight/wing_shape.png" onclick="toggleWingShape()" width="300px" id="wingShapeImage" />
+    <img alt="" src="/assets/physics-of-flight/wing_flow.png" onclick="toggleWingFlow()" width="300px" id="wingFlowImage" />
 	<div class="thecap" style="text-align:left"><b>Figure 1:</b> We simulate fluid dynamics, build a tunnel, and then differentiate through it to find a wing shape. <p style="color:grey; display:inline;">[The images above are videos. Click them to pause or play.]</p></div>
 </div>
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
 	<a href="" id="linkbutton" target="_blank">Read the paper</a>
 	<a href="https://colab.research.google.com/drive/1RTsSyr7B3THKVGp_44Oyh7rxBriOHzJ7" id="linkbutton" target="_blank">Run in browser</a>
-	<a href="" id="linkbutton" target="_blank">Get the code</a>
+	<a href="https://github.com/greydanus/optimize_wing" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
 Legos are this wonderful meta-toy in that they represent the potential for a near-infinite number of toys depending on how you assemble them. Each brick has structure. But each brick is only interesting to the extent that it can combine with other bricks to form new and more complex structures. So in order to enjoy Legos, you have to figure out how they fit together and come up with a clever way of making the particular toy you have in mind. The open-ended design of Lego bricks lets you build nearly anything you want, and this ends up being incredibly satisfying.
@@ -162,7 +162,7 @@ $$
 So let’s review. Our goal is to simulate a wind tunnel and use it to derive a wing shape. We began by writing down the general Navier-Stokes equation and eliminating irrelevant terms: all of them but self-advection. Next, we figured out how to add a continuously-deformable occlusion in the center of the tunnel. Finally, we wrote down a definition for what a good wing should do and discussed how to optimize it. Now it is time to put everything together in about 200 lines of code and run the optimization to see what we get…
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:40%">
-	<img alt="" src="/assets/physics-of-flight/sim_wing.png" onclick="toggleBasicWing()" id="basicWing" />
+	<img alt="" src="/assets/physics-of-flight/wing.png" onclick="toggleBasicWing()" id="basicWing" />
 	<p style="color:grey; display:inline;">[Click to pause or play.]</p>
 </div>
 
@@ -254,10 +254,10 @@ Like the hermit crab, we are born with desires that our body cannot satisfy, and
 	function toggleWingShape() {
 
 		path = document.getElementById("wingShapeImage").src
-	    if (path.split('/').pop() == "wing-shape.png") {
-	        document.getElementById("wingShapeImage").src = "/assets/physics-of-flight/wing-shape.gif";
+	    if (path.split('/').pop() == "wing_shape.png") {
+	        document.getElementById("wingShapeImage").src = "/assets/physics-of-flight/wing_shape.gif";
 	    } else {
-	        document.getElementById("wingShapeImage").src = "/assets/physics-of-flight/wing-shape.png";
+	        document.getElementById("wingShapeImage").src = "/assets/physics-of-flight/wing_shape.png";
 	    }
 	}
 </script>
@@ -266,20 +266,20 @@ Like the hermit crab, we are born with desires that our body cannot satisfy, and
 	function toggleWingFlow() {
 
 		path = document.getElementById("wingFlowImage").src
-	    if (path.split('/').pop() == "wing-flow.png") {
-	        document.getElementById("wingFlowImage").src = "/assets/physics-of-flight/wing-flow.gif";
+	    if (path.split('/').pop() == "wing_flow.png") {
+	        document.getElementById("wingFlowImage").src = "/assets/physics-of-flight/wing_flow.gif";
 	    } else {
-	        document.getElementById("wingFlowImage").src = "/assets/physics-of-flight/wing-flow.png";
+	        document.getElementById("wingFlowImage").src = "/assets/physics-of-flight/wing_flow.png";
 	    }
 	}
 
 function toggleBasicWing() {
 
     path = document.getElementById("basicWing").src
-      if (path.split('/').pop() == "sim_wing.png") {
-          document.getElementById("basicWing").src = "/assets/physics-of-flight/wing-flow.gif";
+      if (path.split('/').pop() == "wing.png") {
+          document.getElementById("basicWing").src = "/assets/physics-of-flight/wing_flow.gif";
       } else {
-          document.getElementById("basicWing").src = "/assets/physics-of-flight/sim_wing.png";
+          document.getElementById("basicWing").src = "/assets/physics-of-flight/wing.png";
       }
   }
 

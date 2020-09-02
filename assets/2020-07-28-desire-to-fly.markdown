@@ -19,7 +19,8 @@ thumbnail: /assets/desire-to-fly/thumbnail.png
         border: 2px solid #777;
         padding: 10px;
         font-size: 20px;
-        width: 600px;
+        min-width: 200px;
+        width: 50%;
         text-align: center;
         color: #999;
         margin: 0px auto;
@@ -56,7 +57,7 @@ In our old house, hummingbirds used to fly into our garage and get stuck. I reme
 Long after it had departed, my mind’s eye gazed upon the little bird. With an idle curiosity, I wondered at the delicate balance of natural forces that had wrought such a thing. We know of lift and drag, thrust and gravity as rough textbook concepts. But it’s another thing entirely to gaze upon a creature of beauty and sophistication and realize that it was shaped largely by those simple forces.
 
 <div class="imgcap_noborder">
-  <img src="/assets/desire-to-fly/hummingbird.png" width="20%">
+  <img src="/assets/desire-to-fly/hummingbird.png" width="20%" style="min-width:150px;">
 </div>
 
 I admire wings; I have always admired them. Looking at a wing, you get the sense that there is more than meets the eye. Beneath its surface simplicity lies a bedrock of sophisticated natural engineering. Every thermal, gust of turbulence, or acrobatic maneuver has been prepared for in advance by eons of evolutionary forces. Such command of the air will forever be beyond me with my apish physique. And yet what the human body lacks in aerodynamics, the human mind makes up for with its desire to fly.
@@ -107,15 +108,15 @@ This man was quite a character. He liked to breathe fire, seduce older women, an
 In spite of all his posturing, de Rozier really did give aeronauts a reputation for bravery and adventure. And in preventing the king from using criminals in the balloon, he built on da Vinci’s vision of the skies as a place of freedom rather than exile. By most accounts, de Rozier was a mediocre scientist, but what he lacked in intelligence he made up for in energy and persistence. Indeed, these two qualities are at least as important as intelligence when it comes to flight. For even the brilliant mind of Einstein was once badly mistaken about such things.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:35.5%; min-width:100px; display: inline-block; vertical-align: top;">
+  <div style="width:35.5%; min-width:180px; display: inline-block; vertical-align: top;">
     <img src="/assets/desire-to-fly/davinci_glider.jpg" style="width:100%">
     <div style="text-align: left;">A page from one of da Vinci's journals describes an "air screw" that resembles a modern helicopter. </div>
   </div>
-  <div style="width:26.9%; min-width:100px; display: inline-block; vertical-align: top;">
+  <div style="width:26.9%; min-width:130px; display: inline-block; vertical-align: top;">
     <img src="/assets/desire-to-fly/balloon.png" style="width:100%">
     <div style="text-align:left;">Pilatre de Rozier and his companion take off in a hot air balloon.</div>
   </div>
-  <div style="width:36.4%; min-width:100px; display: inline-block; vertical-align: top;">
+  <div style="width:36.4%; min-width:180px; display: inline-block; vertical-align: top;">
     <img src="/assets/desire-to-fly/einstein_wing.png" style="width:100%">
     <div style="text-align:left;">Profile 95 is the "cat's back" wing designed by Albert Einstein. From Air Ministry 1925, #1120.</div>
   </div>
