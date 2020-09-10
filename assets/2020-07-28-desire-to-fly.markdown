@@ -57,7 +57,7 @@ In our old house, hummingbirds used to fly into our garage and get stuck. I reme
 Long after it had departed, my mind’s eye gazed upon the little bird. With an idle curiosity, I wondered at the delicate balance of natural forces that had wrought such a thing. We know of lift and drag, thrust and gravity as rough textbook concepts. But it’s another thing entirely to gaze upon a creature of beauty and sophistication and realize that it was shaped largely by those simple forces.
 
 <div class="imgcap_noborder">
-  <img src="/assets/desire-to-fly/hummingbird.png" width="20%" style="min-width:150px;">
+  <img src="/assets/desire-to-fly/hummingbird.png" style="width:20%;min-width:150px;">
 </div>
 
 I admire wings; I have always admired them. Looking at a wing, you get the sense that there is more than meets the eye. Beneath its surface simplicity lies a bedrock of sophisticated natural engineering. Every thermal, gust of turbulence, or acrobatic maneuver has been prepared for in advance by eons of evolutionary forces. Such command of the air will forever be beyond me with my apish physique. And yet what the human body lacks in aerodynamics, the human mind makes up for with its desire to fly.
@@ -80,7 +80,7 @@ That's how I will make my case that we are a winged species. For indeed we are, 
     <div style="text-align:left;">Later we will discuss Otto Lilienthal, an engineer who added to the stepping stones of flight by building the first manned glider.</div>
   </div>
   <div style="width:33%; min-width:200px; display: inline-block; vertical-align: top;">
-    <img src="/assets/desire-to-fly/wing-shape.png" id="wingShapeImage" onclick="toggleWingShape()" style="width:100%">
+    <img src="/assets/desire-to-fly/wing_shape.png" id="wingShapeImage" onclick="toggleWingShape()" style="width:100%">
     <div style="text-align:left;">Finally, we will build a wing shape starting from nothing but the physics of airflow. <p style="color:grey;">[This is a video. Click it to pause or play.]</p></div>
   </div>
 </div>
@@ -154,13 +154,13 @@ It’s easy to think of Earhart, da Vinci, and the others as exceptions to a rul
   function toggleWingShape() {
 
     path = document.getElementById("wingShapeImage").src
-      if (path.split('/').pop() == "wing-shape.png") 
+      if (path.split('/').pop() == "wing_shape.png") 
       {
-          document.getElementById("wingShapeImage").src = "/assets/desire-to-fly/wing-summary.gif";
+          document.getElementById("wingShapeImage").src = "/assets/desire-to-fly/wing_shape.gif";
       }
       else 
       {
-          document.getElementById("wingShapeImage").src = "/assets/desire-to-fly/wing-shape.png";
+          document.getElementById("wingShapeImage").src = "/assets/desire-to-fly/wing_shape.png";
       }
   }
 </script>

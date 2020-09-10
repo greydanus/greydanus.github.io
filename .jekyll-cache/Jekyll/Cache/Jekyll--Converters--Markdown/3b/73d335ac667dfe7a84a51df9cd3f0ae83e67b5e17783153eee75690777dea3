@@ -1,0 +1,251 @@
+I"c<div>
+	<style>
+		#linkbutton:link, #linkbutton:visited {
+		  background-color: rgb(180,180,180);
+		  border-radius: 4px;
+		  color: white;
+		  padding: 6px 0px;
+		  width: 150px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  text-transform: uppercase;
+		  font-size: 13px;
+		  margin: 8px;
+		}
+
+		#linkbutton:hover, #linkbutton:active {
+		  background-color: rgba(160,160,160);
+		}
+
+		.playbutton {
+		  background-color: rgba(0, 153, 51);
+		  /*background-color: rgba(255, 130, 0);*/
+		  border-radius: 4px;
+		  color: white;
+		  padding: 3px 8px;
+		  /*width: 60px;*/
+		  text-align: center;
+		  text-decoration: none;
+		  text-transform: uppercase;
+		  font-size: 12px;
+		  display: block;
+		  /*margin-left: auto;*/
+		  margin-right: auto;
+		}
+	</style>
+</div>
+
+<p><strong>Abstract.</strong> Accurate models of the world are built on notions of its underlying symmetries. In physics, these symmetries correspond to conservation laws, such as for energy and momentum. But neural network models struggle to learn these symmetries. To address this shortcoming, last year I introduced a class of models called Hamiltonian Neural Networks (HNNs) that can learn these invariant quantities directly from (pixel) data. In this project, some friends and I are going to introduce a complimentary class of models called Lagrangian Neural Networks (LNNs). These models are able to learn Lagrangian functions straight from data. They’re cool because like HNNs they can learn exact conservation laws, but unlike HNNs they don’t require canonical coordinates.</p>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:90%">
+	<img src="/assets/lagrangian-nns/overall-idea.png" style="padding: 0px 0px 10px 0px;" />
+	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:90%"><b>Figure 1:</b> A Lagrangian Neural Network learns the Lagrangian of a double pendulum. In this post, we introduce Lagrangian Neural Networks (LNNs). Like Hamiltonian Neural Networks, they can learn arbitrary conservation laws. In some cases they are better since they do not require canonical coordinates.</div>
+</div>
+
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+	<a href="https://arxiv.org/abs/2003.04630" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="https://colab.research.google.com/drive/1CSy-xfrnTX28p1difoTA8ulYw0zytJkq" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="https://github.com/MilesCranmer/lagrangian_nns" id="linkbutton" target="_blank">Get the code</a>
+</div>
+
+<h2 id="a-scientific-poem">“A scientific poem”</h2>
+
+<p><a href="https://en.wikipedia.org/wiki/Joseph-Louis_Lagrange">Joseph-Louis</a> <a href="https://www.famousscientists.org/joseph-louis-lagrange/">Lagrange</a> must have known that life is short. He was born to a family of 11 children and only two of them survived to adulthood. Then he spent his adult years in Paris, living through the Reign of Terror and <a href="https://books.google.com/books?id=_q7zCAAAQBAJ&amp;pg=PR28&amp;lpg=PR28&amp;dq=It+took+only+a+moment+to+cause+this+head+to+fall+and+a+hundred+years+will+not+suffice+to+produce+its+like.&amp;source=bl&amp;ots=pP-iyGhBRq&amp;sig=ACfU3U1CqtjR-wSD1Zlt3uZX6SEbUwNRqg&amp;hl=en&amp;sa=X&amp;ved=2ahUKEwji8pma_pDoAhXXqZ4KHUl0DZcQ6AEwAHoECAgQAQ#v=onepage&amp;q=It%20took%20only%20a%20moment%20to%20cause%20this%20head%20to%20fall%20and%20a%20hundred%20years%20will%20not%20suffice%20to%20produce%20its%20like.&amp;f=false">losing some of his closest friends to the guillotine</a>. Sometimes I wonder if these hardships made him more sensitive to the world’s ephemeral beauty, and more determined to make the most of his short time here.</p>
+
+<p>Indeed, his path into research was notable for its passion and suddenness. Until the age of 17, Lagrange was a normal youth who planned to become a lawyer and showed no particular interest in mathematics. But all of that changed when he read an inspiring memoir by Edmund Halley and decided to embark on an obsessive course of self-study in mathematics. A mere two years later he published the principle of least action.</p>
+
+<blockquote>
+  <p>“I will deduce the complete mechanics of solid and fluid bodies using the principle of least action.” – Joseph-Louis Lagrange, age 20</p>
+</blockquote>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:40%">
+	<img src="/assets/lagrangian-nns/lagrange.png" />
+	<div class="thecap">A French stamp commemorating Lagrange.</div>
+</div>
+
+<p>Lagrange’s work was notable for its purity and beauty, especially in contrast to the chaotic and broken times that he lived through. Expressing admiration for the principle of least action, William Hamilton once called it <a href="https://books.google.com/books?id=j_kJCAAAQBAJ&amp;pg=PA130&amp;lpg=PA130&amp;dq=joseph+lagrange+beauty+of+virtual+work&amp;source=bl&amp;ots=771naVFjo6&amp;sig=ACfU3U0L4Bj9IabO1jFh7jJK0pEgoVVfWg&amp;hl=en&amp;sa=X&amp;ved=2ahUKEwjAppGZtY7oAhXcGTQIHfp3CncQ6AEwAHoECAwQAQ#v=onepage&amp;q=joseph%20lagrange%20beauty%20of%20virtual%20work&amp;f=false">“a scientific poem”</a>. In the following sections, I’ll introduce you to this “scientific poem” and then use it to derive Lagrangian Neural Networks.</p>
+
+<h2 id="the-principle-of-least-action">The Principle of Least Action</h2>
+
+<p><strong>The Action.</strong> Start with any physical system that has coordinates \(x_t = (q, \dot q)\). For example, we might describe a double pendulum using the angles of its arms and their respective angular velocities. Now, one simple observation is that these coordinates must start in one state \(x_0\) and end up in another, \(x_1\). There are many paths that these coordinates might take as they pass from \(x_0\) to \(x_1\), and we can associate each of these paths with a scalar value \(S\) called “the action.” Lagrangian mechanics tells us that the action is related to kinetic and potential energy, \(T\) and \(V\), by a functional</p>
+
+<p>\(\begin{equation}
+S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
+\label{eq:eqn1}
+\tag{1}
+\end{equation}\)
+<!-- <div class="thecap" style="text-align:center; width:50%"><b>Figure 3:</b> Possible paths from x0 to x1, plotted in configuration space. The action is stationary (δS = 0) for small perturbations (δq) to the path that the system actually takes (red). .</div> --></p>
+
+<p>At first glance, \(S\) seems like an arbitrary combination of energies. But it has one remarkable property. It turns out that for all possible paths between \(x_0\) and \(x_1\), there is only one path that gives a stationary value of \(S\). Moreover, that path is the one that nature always takes.</p>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%">
+	<img src="/assets/lagrangian-nns/paths.png" style="width:80%" />
+	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto;"><b><a href="https://en.wikipedia.org/wiki/Lagrangian_mechanics#/media/File:Least_action_principle.svg" target="_blank">Figure 3:</a></b> Possible paths from q0 to q1, plotted in <a href="https://en.wikipedia.org/wiki/Configuration_space_(physics)">configuration space</a>. The action is stationary (δS = 0) for small perturbations (δq) to the path that the system actually takes (red).</div>
+</div>
+
+<p><strong>The Euler-Lagrange equation.</strong> In order to “deduce the complete mechanics of solid and fluid bodies,” all Lagrange had to do was constrain every path to be a stationary point in \(S\). The modern principle of least action looks very similar: we let \(\mathcal{L} \equiv T - V\) (this is called the Lagrangian), and then write the constraint as \( \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} = \frac{\partial \mathcal{L}}{\partial q_j}\). Physicists call this constraint equation the <em>Euler-Lagrange equation</em>.</p>
+
+<p>When you first encounter it, the principle of least action can seem abstract and impractical. But it can be quite easy to apply in practice. Consider, for example, a single particle with mass \(m\), position \(q\), and potential energy \(V(q)\):</p>
+
+<p><span id="longEqnWithSmallScript_A" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+\(\begin{align}
+\scriptstyle \mathcal{L} &amp; \scriptstyle ~=~ -V(q) + \frac{1}{2} m \dot q ^2 &amp; \scriptstyle \text{write down the Lagrangian} \quad (2)\\
+\scriptstyle -\frac{\partial V(q)}{\partial q} &amp; \scriptstyle ~=~ m \ddot q &amp; \scriptstyle \text{apply Euler-Lagrange} \quad (3)\\
+\scriptstyle F &amp; \scriptstyle ~=~ ma &amp; \scriptstyle \text{this is Newton's second law } \quad (4)\\
+\end{align}\)
+</span>
+<span id="longEqnWithLargeScript_A" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+\(\begin{align}
+\mathcal{L} &amp; ~=~ -V(q) + \frac{1}{2} m \dot q ^2 &amp; \text{write down the Lagrangian} \quad (2)\\
+-\frac{\partial V(q)}{\partial q} &amp; ~=~ m \ddot q &amp;  \text{apply the Euler-Lagrange equation to } \mathcal{L} \quad (3)\\
+ F &amp; ~=~ ma &amp; \text{this is Newton's second law } \quad (4)\\
+\end{align}\)
+</span></p>
+
+<p><strong>Nature’s cost function.</strong> As a physicist who now does machine learning, I can’t help but think of \(S\) as Nature’s cost function. After all, it is a scalar quantity for which Nature finds a stationary point, usually a minimum, in order to generate the dynamics of the entire universe. The analogy gets even more interesting at small spatial scales, where quantum wavefunctions can be interpreted as Nature’s way of exploring multiple paths that are all very close to the path of stationary action.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup></p>
+
+<h2 id="how-we-usually-solve-lagrangians">How we usually solve Lagrangians</h2>
+
+<p>Ever since Lagrange introduced the notion of stationary action, physicists have followed a simple formula:</p>
+<ol>
+  <li>Find analytic expressions for kinetic and potential energy</li>
+  <li>Write down the Lagrangian</li>
+  <li>Apply the Euler-Lagrange constraint</li>
+  <li>Solve the resulting system of differential equations</li>
+</ol>
+
+<p>But these analytic solutions are rather crude approximations of the real world. An alternative approach is to assume that the Lagrangian is an arbitrarily complicated function – a black box that does not permit analytical solutions. When this is the case, we must give up all hope of writing the Lagrangian out by hand. However, there is still a chance that we can parameterize it with a neural network and learn it straight from data. That is the main contribution of our recent paper.</p>
+
+<h2 id="how-to-learn-lagrangians">How to learn Lagrangians</h2>
+
+<p>The process of learning a Lagrangian differs from the traditional approach, but it also involves four basic steps:</p>
+<ol>
+  <li>Obtain data from a physical system</li>
+  <li>Parameterize the Lagrangian with a neural network (\(\mathcal{L}\equiv \mathcal{L}_{\theta}\)).</li>
+  <li>Apply the Euler-Lagrange constraint</li>
+  <li>Backpropagate through the constraint to train a parametric model that approximates the true Lagrangian</li>
+</ol>
+
+<p>The first two steps are fairly straightforward, and we’ll see that automatic differentiation makes the fourth pretty painless. So let’s focus on step 3: applying the Euler-Lagrange constraint. Our angle of attack will be to write down the constraint equation, treat \(\mathcal{L}\) as a differentiable blackbox function, and see whether we can still obtain dynamics:</p>
+
+<p><span id="longEqnWithSmallScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+\(\begin{align}
+&amp; \scriptstyle \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} \scriptstyle ~=~ \frac{\partial \mathcal{L}}{\partial q_j} &amp; \scriptstyle \text{Euler-Lagrange } (5)\\
+&amp;\scriptstyle \frac{d}{dt} \nabla_{\dot q} \mathcal{L} \scriptstyle ~=~ \nabla_{q} \mathcal{L} &amp; \scriptstyle \text{vectorize } (6)\\
+&amp;\scriptstyle \nabla_q \mathcal{L} \scriptstyle ~=~ (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})\ddot q + (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L}) \dot q &amp; \scriptstyle \text{expand }\frac{d}{dt} \text{ }(7)\\
+&amp;\scriptstyle \ddot q \scriptstyle ~=~ (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})^{-1}[\nabla_q \mathcal{L} - (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L})\dot q] &amp; \scriptstyle \text{solve for } \ddot q \text{ }(8)\\
+\end{align}\)
+</span>
+<span id="longEqnWithLargeScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+\(\begin{align}
+\frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} &amp;= \frac{\partial \mathcal{L}}{\partial q_j} &amp; \text{write the Euler-Lagrange equation} \quad (5)\\
+\frac{d}{dt} \nabla_{\dot q} \mathcal{L} &amp;= \nabla_{q} \mathcal{L} &amp; \text{switch to vector notation} \quad (6)\\
+(\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})\ddot q + (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L}) \dot q &amp;= \nabla_q \mathcal{L} &amp; \text{expand time derivative }\frac{d}{dt} \quad (7)\\
+\ddot q &amp;= (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})^{-1}[\nabla_q \mathcal{L} - (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L})\dot q] &amp; \text{use a matrix inverse to solve for } \ddot q \quad (8)\\
+\end{align}\)
+</span></p>
+
+<p>For a given set of coordinates \(x_t=(q_t,\dot q_t)\), we now have a method for calculating \(\dot x_t=(\dot q_t,\ddot q_t)\) from a blackbox Lagrangian. We can integrate this quantity to obtain the dynamics of the system. And in the same manner as Hamiltonian Neural Networks, we can learn \(\mathcal{L_{\theta}}\) by differentiating the MSE loss between \(\dot x_t^{\mathcal{L_{\theta}}}\) and \(\dot x_t^{\textrm{true}}\).</p>
+
+<p><strong>Implementation.</strong> If you look closely at Equation 8, you may notice that it involves both the Hessian and the gradient of a neural network during the forward pass of the LNN. This is not a trivial operation, but modern automatic differentiation makes things surprisingly smooth. Written in <a href="https://github.com/google/jax">JAX</a>, Equation 8 is just a few lines of code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">q_tt</span> <span class="o">=</span> <span class="p">(</span>
+	<span class="n">jax</span><span class="p">.</span><span class="n">numpy</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="n">hessian</span><span class="p">(</span><span class="n">lagrangian</span><span class="p">,</span> <span class="mi">1</span><span class="p">)(</span><span class="n">q</span><span class="p">,</span> <span class="n">q_t</span><span class="p">))</span> <span class="o">@</span> <span class="p">(</span>
+		<span class="n">jax</span><span class="p">.</span><span class="n">grad</span><span class="p">(</span><span class="n">lagrangian</span><span class="p">,</span> <span class="mi">0</span><span class="p">)(</span><span class="n">q</span><span class="p">,</span> <span class="n">q_t</span><span class="p">)</span>
+		<span class="o">-</span> <span class="n">jax</span><span class="p">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="n">grad</span><span class="p">(</span><span class="n">lagrangian</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">)(</span><span class="n">q</span><span class="p">,</span> <span class="n">q_t</span><span class="p">)</span> <span class="o">@</span> <span class="n">q_t</span>
+	<span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="learning-real-lagrangians">Learning real Lagrangians</h2>
+
+<p>In our paper, we conduct several experiments to validate this approach. In the first, we show that Lagrangian Neural Networks can learn the dynamics of a double pendulum.</p>
+
+<p><strong>Double pendulum.</strong> The double pendulum is a dynamics problem that regular neural networks struggle to fit because they have no prior for conserving the total energy of the system. It is also a problem where HNNs struggle, since the canonical coordinates of the system are not trivial to compute (see equations 1 and 2 of <a href="https://diego.assencio.com/?index=e5ac36fcb129ce95a61f8e8ce0572dbf">this derivation</a> for example). But in contrast to these baseline methods, Figure 4 shows that LNNs are able to learn the Lagrangian of a double pendulum.</p>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+	<img src="/assets/lagrangian-nns/dblpend_error.png" />
+	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto;"><b>Figure 4:</b> Learning the dynamics of a double pendulum. Unlike the baseline neural network, our model learns to approximately conserve the total energy of the system. This is a consequence of the strong physical inductive bias of the Euler-Lagrange constraint.</div>
+</div>
+
+<p>It’s also interesting to compare qualitative results. In the video below, we use a baseline neural network and an LNN to predict the dynamics of a double pendulum, starting from the same initial state. You’ll notice that both trajectories seem reasonable until the end of the video, when the baseline model shifts to states that have much lower total energies.</p>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+	<div style="overflow:hidden; padding-top: 40%; position: relative;">
+		<iframe style="border: 0;height: 100%;left: 0;position: absolute;top: 0;width: 100%;" src="https://www.youtube.com/embed/ulQKNtTEuJI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+	</div>
+	<div class="thecap" style="text-align:center; display: block; margin-left: auto; margin-right: auto; width:60%"><b>Figure 5:</b> Dynamics predictions of a baseline (left) versus an LNN (right)</div>
+</div>
+
+<p><strong>Relativistic particle.</strong> Another system we considered was a particle of mass \(m=1\) moving at a relativistic velocity through a potential \(g\) with \(c=1\). The Lagrangian of the system is \(\mathcal{L} = ((1 - \dot{q}^2)^{-1/2} - 1) + g q\) and it is interesting because existing Hamiltonian and Lagrangian learning approaches fail. HNNs fail because the canonical momenta of the system are hard to compute. Deep Lagrangian Networks<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">2</a></sup> fail because they make restrictive assumptions about the form of the Lagrangian.</p>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+	<img src="/assets/lagrangian-nns/relativistic.png" />
+	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto;"><b>Figure 6:</b> Learning the dynamics of a relativistic particle. In the first plot (a), an HNN model fails to model the system because the default coordinates are non-canonical. In the second plot (b), we provide the HNN with proper canonical coordinates and it succeeds. In the third plot (c), we show that an LNN can fit the data even in the absence of canonical coordinates.</div>
+</div>
+
+<h2 id="related-work">Related Work</h2>
+
+<p><strong>Learning invariant quantities.</strong> This approach is similar in spirit to <a href="https://greydanus.github.io/2019/05/15/hamiltonian-nns/">Hamiltonian Neural Networks</a> (HNNs) and Hamiltonian Generative Networks<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">3</a></sup> (HGNs). In fact, this blog post was written as a compliment to the original HNN post and it has the same fundamental motivations. Unlike these previous works, our aim here is to learn a Lagrangian rather than a Hamiltonian so as not to restrict the inputs to being canonical coordinates. It’s worth noting that once we learn a Lagrangian, we can always use it to obtain the value of a Hamiltonian using the <a href="https://en.wikipedia.org/wiki/Legendre_transformation">Legendre transformation</a>.</p>
+
+<p><strong>Deep Lagrangian Networks (DeLaN, ICLR’19).</strong> Another closely related work is Deep Lagrangian Networks<sup id="fnref:fn3:1" role="doc-noteref"><a href="#fn:fn3" class="footnote">2</a></sup> in which the authors show how to learn specific types of Lagrangian systems. They assume that the kinetic energy is an inner product of the velocity, which works well for rigid body dynamics such as those in robotics. However, there are many physical systems that do not have this specific form. Some simple examples include a charged particle in a magnetic field or a fast-moving object with relativistic corrections. We see LNNs as a complement to DeLaNs in that they cover the cases where DeLaNs struggle but are less amenable to robotics applications.</p>
+
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+
+<!-- Looking forward, we continue to be excited about the connection between machine learning and the principle of stationary action. One thing we'd like to try is to write a loss function that _is_ the action \\(S\\) and then minimize it with gradient descent to obtain dynamics. On a similar note, we'd like to think more about the connection between existing neural network training dynamics and the principle of least action. One of Yann LeCun's most beautiful papers, for example, is a derivation of backpropagation via the Euler-Lagrange constraint. This may be the proper way to speak about optimization dynamics such as catastrophic forgetting and deep double descent. -->
+
+<p>The principle of stationary action is a unifying force in physics. It represents a consistent “law of the universe” which holds true in every system humans have ever studied: from the very small<sup id="fnref:fn1:1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup> to the very large, from the very slow to the very fast. Lagrangian Neural Networks represent a different sort of unification. They aim to strengthen the connection between real-world data and the underlying physical constraints that it obeys. This gives LNNs their own sort of beauty, a beauty that Lagrange himself may have admired.</p>
+
+<h2 id="footnotes">Footnotes</h2>
+
+<script>
+    function getBrowserSize(){
+       var w, h;
+
+         if(typeof window.innerWidth != 'undefined')
+         {
+          w = window.innerWidth; //other browsers
+          h = window.innerHeight;
+         } 
+         else if(typeof document.documentElement != 'undefined' && typeof      document.documentElement.clientWidth != 'undefined' && document.documentElement.clientWidth != 0) 
+         {
+          w =  document.documentElement.clientWidth; //IE
+          h = document.documentElement.clientHeight;
+         }
+         else{
+          w = document.body.clientWidth; //IE
+          h = document.body.clientHeight;
+         }
+       return {'width':w, 'height': h};
+}
+
+if(parseInt(getBrowserSize().width) < 900){
+ document.getElementById("longEqnWithLargeScript_A").style.display = "none";
+}
+if(parseInt(getBrowserSize().width) > 900){
+ document.getElementById("longEqnWithSmallScript_A").style.display = "none";
+}
+
+if(parseInt(getBrowserSize().width) < 900){
+ document.getElementById("longEqnWithLargeScript_B").style.display = "none";
+}
+if(parseInt(getBrowserSize().width) > 900){
+ document.getElementById("longEqnWithSmallScript_B").style.display = "none";
+}
+</script>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:fn1" role="doc-endnote">
+      <p>Here \(e^{-S/h}\) is actually the probability of a particular path occurring. Because \(h\) is small, we usually only observe the minimum value of \(S\) on large scales. See <a href="https://www.feynmanlectures.caltech.edu/II_19.html">Feynman lecture 19</a> for more on this. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:fn1:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:fn3" role="doc-endnote">
+      <p>Lutter, M., Ritter, C., and Peters, J. <a href="https://arxiv.org/abs/1907.04490">Deep lagrangian networks: Using physics as model prior for deep learning</a>, <em>International Conference on Learning Representations</em>, 2019. <a href="#fnref:fn3" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:fn3:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:fn2" role="doc-endnote">
+      <p>Toth, P., Rezende, D. J., Jaegle, A., Racanière, S., Botev, A., &amp; Higgins, I. <a href="https://arxiv.org/abs/1909.13789">Hamiltonian Generative Networks</a>, <em>International Conference on Learning Representations</em>, 2020. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

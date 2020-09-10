@@ -64,6 +64,12 @@
       <div class="trigger" style="margin-bottom:0px; padding-top:10px; font-size:13px">
 <!--         <a class="page-link" href="/ ">Home</a> -->
 <!--         
+          <a class="page-link" href="/assets/2020-07-28-desire-to-fly/">The Desire to Fly</a>
+        
+          <a class="page-link" href="/assets/2020-07-29-stepping-stones/">The Stepping Stones of Flight</a>
+        
+          <a class="page-link" href="/assets/2020-07-30-optimizing-a-wing/">Optimizing a Wing</a>
+        
           
         
           <a class="page-link" href="/papers/">Interesting papers</a>
@@ -108,73 +114,73 @@
   <thead>
     <tr>
       <th style="text-align: left">Author</th>
-      <th style="text-align: center">Framework</th>
+      <th style="text-align: center">Package</th>
       <th style="text-align: center">Type</th>
-      <th style="text-align: center">Free parameters</th>
-      <th style="text-align: center">Test accuracy</th>
+      <th style="text-align: center">Free params</th>
+      <th style="text-align: center">Test acc.</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: left"><a href="https://www.tensorflow.org/get_started/mnist/beginners">TensorFlow</a></td>
-      <td style="text-align: center">TensorFlow</td>
-      <td style="text-align: center">Fully connected</td>
+      <td style="text-align: center">TF</td>
+      <td style="text-align: center">FC</td>
       <td style="text-align: center">7,850</td>
       <td style="text-align: center">92%</td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="https://github.com/pytorch/examples/tree/master/mnist">PyTorch</a></td>
       <td style="text-align: center">PyTorch</td>
-      <td style="text-align: center">Convolutional</td>
+      <td style="text-align: center">CNN</td>
       <td style="text-align: center">21,840</td>
       <td style="text-align: center">99.0%</td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="https://elitedatascience.com/keras-tutorial-deep-learning-in-python#step-10">Elite Data Science</a></td>
       <td style="text-align: center">Keras</td>
-      <td style="text-align: center">Convolutional</td>
+      <td style="text-align: center">CNN</td>
       <td style="text-align: center">113,386</td>
       <td style="text-align: center">99\(^+\)%</td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="https://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/">Machine Learning Mastery</a></td>
       <td style="text-align: center">Keras</td>
-      <td style="text-align: center">Convolutional</td>
+      <td style="text-align: center">CNN</td>
       <td style="text-align: center">149,674</td>
       <td style="text-align: center">98.9%</td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="https://github.com/Lasagne/Lasagne/blob/master/examples/mnist.py">Lasagne</a></td>
       <td style="text-align: center">Lasagne</td>
-      <td style="text-align: center">Convolutional</td>
+      <td style="text-align: center">CNN</td>
       <td style="text-align: center">160,362</td>
       <td style="text-align: center">99\(^+\)%</td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="http://caffe.berkeleyvision.org/gathered/examples/mnist.html">Caffe</a></td>
       <td style="text-align: center">Caffe</td>
-      <td style="text-align: center">Convolutional</td>
+      <td style="text-align: center">CNN</td>
       <td style="text-align: center">366,030</td>
       <td style="text-align: center">98.9%</td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="https://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/">Machine Learning Mastery</a></td>
       <td style="text-align: center">Keras</td>
-      <td style="text-align: center">Fully connected</td>
+      <td style="text-align: center">FC</td>
       <td style="text-align: center">623,290</td>
       <td style="text-align: center">98%</td>
     </tr>
     <tr>
       <td style="text-align: left"><a href="https://github.com/Lasagne/Lasagne/blob/master/examples/mnist.py">Lasagne</a></td>
       <td style="text-align: center">Lasagne</td>
-      <td style="text-align: center">Fully connected</td>
+      <td style="text-align: center">FC</td>
       <td style="text-align: center">1,276,810</td>
       <td style="text-align: center">98-99%</td>
     </tr>
     <tr>
-      <td style="text-align: left"><a href="https://www.tensorflow.org/get_started/mnist/pros">TensorFlow</a></td>
-      <td style="text-align: center">Tensorflow</td>
-      <td style="text-align: center">Convolutional</td>
+      <td style="text-align: left"><a href="https://www.tensorflow.org/get_started/mnist/pros">Tensorflow</a></td>
+      <td style="text-align: center">TF</td>
+      <td style="text-align: center">CNN</td>
       <td style="text-align: center">3,274,625</td>
       <td style="text-align: center">99.2%</td>
     </tr>
@@ -188,10 +194,10 @@
 <table>
   <thead>
     <tr>
-      <th style="text-align: left">Framework</th>
+      <th style="text-align: left">Package</th>
       <th style="text-align: center">Structure</th>
       <th style="text-align: center">Type</th>
-      <th style="text-align: center">Free parameters</th>
+      <th style="text-align: center">Free params</th>
       <th style="text-align: center">Test accuracy</th>
     </tr>
   </thead>
@@ -199,28 +205,28 @@
     <tr>
       <td style="text-align: left">PyTorch</td>
       <td style="text-align: center">784 \(\mapsto\) 16 \(\mapsto\) 10</td>
-      <td style="text-align: center">Fully connected</td>
+      <td style="text-align: center">FC</td>
       <td style="text-align: center">12,730</td>
       <td style="text-align: center">94.5%</td>
     </tr>
     <tr>
       <td style="text-align: left">PyTorch</td>
       <td style="text-align: center">784 \(\mapsto\) 32 \(\mapsto\) 10</td>
-      <td style="text-align: center">Fully connected</td>
+      <td style="text-align: center">FC</td>
       <td style="text-align: center">25,450</td>
       <td style="text-align: center">96.5%</td>
     </tr>
     <tr>
       <td style="text-align: left">PyTorch</td>
       <td style="text-align: center">784 \(\mapsto\) (6,4x4) \(\mapsto\) (6,4x4) \(\mapsto\) 25 \(\mapsto\) 10</td>
-      <td style="text-align: center">Convolutional</td>
+      <td style="text-align: center">CNN</td>
       <td style="text-align: center">3,369</td>
       <td style="text-align: center">95.6%</td>
     </tr>
     <tr>
       <td style="text-align: left">PyTorch</td>
       <td style="text-align: center">784 \(\mapsto\) (8,4x4) \(\mapsto\) (16,4x4) \(\mapsto\) 32 \(\mapsto\) 10</td>
-      <td style="text-align: center">Convolutional</td>
+      <td style="text-align: center">CNN</td>
       <td style="text-align: center">10,754</td>
       <td style="text-align: center">97.6%</td>
     </tr>
@@ -237,7 +243,10 @@
 
 <p><strong>The trick.</strong> When I interviewed with <em>anonymous</em> at <em>anonymous</em> earlier this year, we discussed the idea of optimizing <em>subspaces</em>. In other words, if the vector \(\theta\) contains all the parameters of a deep network, you might define \(\theta = P \omega\) where the vector \(\omega\) lives in some smaller-dimensional space and \(P\) is a projector matrix. Then, instead of optimizing \(\theta\), you could optimize \(\omega\). With this trick, we can choose an arbitrary number of free parameters to optimize without changing the model’s architecture. In math, the training objective becomes:</p>
 
-\[\omega = \arg\min_{\mathbf{\omega}}  -\frac{1}{n} \sum_X (y\ln \hat y +(1-y)\ln (1-\hat y)) \quad \mathrm{where} \quad \hat y = f_{NN}(\theta, X) \quad \mathrm{and} \quad \theta = P \omega\]
+\[\begin{align}
+    \omega &amp;= \arg\min_{\mathbf{\omega}}  -\frac{1}{n} \sum_X (y\ln \hat y +(1-y)\ln (1-\hat y))\\
+    &amp;\mathrm{where} \quad \hat y = f_{NN}(\theta, X) \quad \mathrm{and} \quad \theta = P \omega
+\end{align}\]
 
 <p>If you want to see this idea in code, check out my <a href="https://github.com/greydanus/subspace-nn">subspace-nn</a> repo on GitHub.</p>
 

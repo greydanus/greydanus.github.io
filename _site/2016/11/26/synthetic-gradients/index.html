@@ -64,6 +64,12 @@
       <div class="trigger" style="margin-bottom:0px; padding-top:10px; font-size:13px">
 <!--         <a class="page-link" href="/ ">Home</a> -->
 <!--         
+          <a class="page-link" href="/assets/2020-07-28-desire-to-fly/">The Desire to Fly</a>
+        
+          <a class="page-link" href="/assets/2020-07-29-stepping-stones/">The Stepping Stones of Flight</a>
+        
+          <a class="page-link" href="/assets/2020-07-30-optimizing-a-wing/">Optimizing a Wing</a>
+        
           
         
           <a class="page-link" href="/papers/">Interesting papers</a>
@@ -170,7 +176,11 @@
 
 <p><strong>Unlocking.</strong> The paper that inspired this blog post is <a href="https://arxiv.org/abs/1608.05343">Decoupled Neural Interfaces using Synthetic Gradients</a>. DeepMind researchers propose an ambitious method for ‘unlocking’ neural networks: <i>train a second model to predict the gradients of the first</i>. In other words, approximate</p>
 
-\[\frac{\partial{L}}{\partial{\theta_i}} = f_{Bprob}((h_i,x_i,y_i,\theta_i),(h_{i+1},x_{i+1},y_{i+1},\theta_{i+1}),...) \frac{\partial{h_i}}{\partial{\theta_i}} \approx \hat f_{Bprop}(h_i)\frac{\partial{h_i}}{\partial{\theta_i}}\]
+\[\begin{align}
+    \frac{\partial{L}}{\partial{\theta_i}} = f_{backprop}(&amp;(h_i,x_i,y_i,\theta_i),(h_{i+1}, \\
+    &amp; x_{i+1},y_{i+1},\theta_{i+1}),...) \frac{\partial{h_i}}{\partial{\theta_i}}\\
+    &amp; \approx \hat f_{backprop}(h_i)\frac{\partial{h_i}}{\partial{\theta_i}}\\
+\end{align}\]
 
 <p>When I realized what they were trying to do, I rolled my eyes. You <i>must</i> need to know more about the model to approximate its gradients…a model to predict the gradients <i>wouldn’t</i> train quickly enough…even if it did, backprop would <i>still</i> converge more quickly…</p>
 

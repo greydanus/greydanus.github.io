@@ -19,9 +19,11 @@ DeepMind's Differentiable Neural Computer (DNC) represents the state of the art 
 
 **Motivation.** Neural networks represent the state of the art in computer vision, translation, and artificial intelligence. They are also of interest to neuroscientists because they perform computations in much the same way as the human brain. In recent years, researchers have introduced several neural-network based models that can read and write to external memory in a fully differentiable manner.
 
-<div class="imgcap">
-    <iframe width="604" height="340" src="https://www.youtube.com/embed/B9U8sI7TcMY" frameborder="0" allowfullscreen></iframe>
-    <div class="thecap" style="text-align:center">The DNC completes a family tree inference task</div>
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+    <div style="overflow:hidden; padding-top: 56%; position: relative;" >
+        <iframe style="border: 0;height: 100%;left: 0;position: absolute;top: 0;width: 100%;" src="https://www.youtube.com/embed/B9U8sI7TcMY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="thecap" style="text-align:center; display: block; margin-left: auto; margin-right: auto; width:60%">The DNC completes a family tree inference task.</div>
 </div>
 
 **Roadmap.** Here I explore one of these models, the [Differentiable Neural Computer (DNC)](https://goo.gl/6eiJFc), through the lens of human memory research. Using the free recall task, I test an analogy between the DNC and the Temporal Context Model of human memory. My results indicate similar primacy and recency effects but suggest a breakdown of the analogy around mechanisms of forgetting and context storage.
@@ -66,7 +68,12 @@ $$ M_t = M_{t-1} \circ (E-\mathbf{w}_t^w \mathbf{e}_t^\intercal) + \mathbf{w}_t^
 
 The DNC also uses cosine similarity to retrieve memories. If \\(\beta \in \mathbb{R} \\) is a strength parameter, \\(\mathbf{k} \in \mathbb{R}^W\\), and \\(\mathcal{D}(\mathbf{u},\mathbf{v})\\) is the cosine similarity measure, then the probability that the DNC will access memory location \\(i\\) is given by:
 
-$$ \mathcal{C}(M, \mathbf{k}, \beta)[i] = \frac{exp\{\mathcal{D}(\mathbf{b},M[i,\cdot])\beta\}}{\sum_j exp\{\mathcal{D}(\mathbf{b},M[j,\cdot])\beta\}} \quad \quad \mathrm{where} \quad \quad \mathcal{D}(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\lvert \mathbf{u} \rvert \lvert \mathbf{v} \rvert}$$
+$$
+\begin{align}
+    \mathcal{C}(M, \mathbf{k}, \beta)[i] &= \frac{exp\{\mathcal{D}(\mathbf{b},M[i,\cdot])\beta\}}{\sum_j exp\{\mathcal{D}(\mathbf{b},M[j,\cdot])\beta\}}\\
+    & \mathrm{where} \quad \quad \mathcal{D}(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\lvert \mathbf{u} \rvert \lvert \mathbf{v} \rvert}
+\end{align}
+$$
 
 <div class="imgcap_noborder">
     <img src="/assets/dnc/dnc-similarity.png" width="90%">
@@ -86,7 +93,12 @@ $$ \mathbf{y}_t = \mathcal{u}_t + W_r [\mathbf{r}_t^1; \ldots ;\mathbf{r}_t^R] $
 
 How does the DNC use context to store and retrieve memories? First, the memory vectors themselves can contain context or point to related memories. Second, a _temporal linkage matrix_ stores the order in which attribute vectors are written to memory. If \\(\mathbf{p} \in \mathbb{R}^N\\) is the precedence vector which represents "the degree to which location \\(i\\) was the last one written to"[10], \\(\mathbf{w}^w \in \mathbb{R}^W\\) is the normalized write weighting, and \\(L \in \mathbb{R}^{N \times N}\\) is the temporal linkage matrix, then \\(L\\) gets updated according to
 
-$$L_t[i,j]=(1-\mathbf{w}_t^w[i]-\mathbf{w}_t^w[j]) L_{t-1}[i,j] + \mathbf{w}_t^w[i] \mathbf{p}_{t-1}[j]$$
+$$
+\begin{align}
+    L_t[i,j] ~=~ &(1-\mathbf{w}_t^w[i]-\mathbf{w}_t^w[j]) L_{t-1}[i,j]\\
+    &+ \mathbf{w}_t^w[i] \mathbf{p}_{t-1}[j]\\
+\end{align}
+$$
 
 According to the authors, _"\\(L_t[i, j]\\) represents the degree to which location \\(i\\) was the location written to after location \\(j\\)"_[^fn4].
 
@@ -103,7 +115,13 @@ According to the authors, _"\\(L_t[i, j]\\) represents the degree to which locat
 
 When explaining experimental data, chaining generally succeeds when positional coding fails and vice versa. The DNC can act analogously to both models depending on the situation. Show below are the DNC's three read modes. They are _content-based addressing_ ( $$\mathbf{c}_t^{r,i}$$), _backwards traversal_ ($$\mathbf{b}_t^{r,i}$$), and _forwards traversal_ ($$\mathbf{f}_t^{r,i}$$), respectively. 
 
-$$ \mathbf{c}_t^{r,i}=\mathcal{C}(M_t,\mathbf{k}_t^{r,i},\beta_t^{r,i}) \quad \mathrm{and} \quad \mathbf{b}_t^i = L_t^\intercal \mathbf{w}_{t-1}^{r,i} \quad \mathrm{and} \quad \mathbf{f}_t^i = L_t \mathbf{w}_{t-1}^{r,i}$$
+$$
+\begin{align}
+    \mathbf{c}_t^{r,i} &= \mathcal{C}(M_t,\mathbf{k}_t^{r,i},\beta_t^{r,i})\\
+    & \mathrm{and} \quad \mathbf{b}_t^i = L_t^\intercal \mathbf{w}_{t-1}^{r,i}\\
+    & \mathrm{and} \quad \mathbf{f}_t^i = L_t \mathbf{w}_{t-1}^{r,i}
+\end{align}
+$$
 
 <div class="imgcap_noborder">
     <img src="/assets/dnc/dnc-serial.png" width="90%">

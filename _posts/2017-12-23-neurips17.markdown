@@ -65,12 +65,11 @@ Several hours later, [Yann LeCun](https://en.wikipedia.org/wiki/Yann_LeCun) post
 
 **Metalearning.** Pieter Abbeel and friends are pushing metalearning. Since he is one of the world's most respected researchers, this was a huge theme at NeurIPS. The idea of metalearning is to teach a computer _how to learn_. Instead of teaching a computer how to solve a maze, you would teach a computer to _teach itself_ how to solve a maze. Yes, this is more complicated. The idea is that by "learning to learn," you get AIs that generalize to new situations effectively.
 
-<div class="imgcap">
-	<center>
-		<iframe width="560" height="315" src="https://www.youtube.com/embed/cLpSBtlbdyY?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen>
-		</iframe>
-		<div class="thecap" style="text-align:center">Metalearning for efficient maze navigation.</div>
-	</center>
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+	<div style="overflow:hidden; padding-top: 52%; position: relative;" >
+		<iframe style="border: 0;height: 100%;left: 0;position: absolute;top: 0;width: 100%;" src="https://www.youtube.com/embed/cLpSBtlbdyY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	<div class="thecap" style="text-align:center; display: block; margin-left: auto; margin-right: auto; width:60%">Metalearning for efficient maze navigation.</div>
 </div>
 
 I think everyone agrees that metalearning is desirable. The real question is how to make it work. Even Pieter was unclear on this point, although he presented a wealth of recent ideas. I especially liked his paper presenting an agent that could explore a maze until it found a target. When dropped back into the maze, the agent used its past experience to navigate quickly to the target.

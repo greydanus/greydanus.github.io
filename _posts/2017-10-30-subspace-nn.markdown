@@ -27,28 +27,28 @@ The fruit fly was to genetics what the MNIST dataset is to deep learning: the ul
 
 **Ughh, not MNIST tutorials again.** There is an endless supply of tutorials that describe how to train an MNIST classifier. Looking over them recently, I noticed something: they all use a LOT of parameters. Here are a few examples:
 
-Author | Framework | Type | Free parameters | Test accuracy 
+Author | Package | Type | Free params | Test acc.
 :--- | :---: | :---: | :---: | :---:
-[TensorFlow](https://www.tensorflow.org/get_started/mnist/beginners) | TensorFlow | Fully connected | 7,850 | 92%
-[PyTorch](https://github.com/pytorch/examples/tree/master/mnist) | PyTorch | Convolutional | 21,840 | 99.0%
-[Elite Data Science](https://elitedatascience.com/keras-tutorial-deep-learning-in-python#step-10) | Keras | Convolutional | 113,386 | 99\\(^+\\)%
-[Machine Learning Mastery](https://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/) | Keras | Convolutional | 149,674 | 98.9%
-[Lasagne](https://github.com/Lasagne/Lasagne/blob/master/examples/mnist.py) | Lasagne | Convolutional | 160,362 | 99\\(^+\\)%
-[Caffe](http://caffe.berkeleyvision.org/gathered/examples/mnist.html) | Caffe | Convolutional | 366,030 | 98.9%
-[Machine Learning Mastery](https://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/) | Keras | Fully connected | 623,290 | 98%
-[Lasagne](https://github.com/Lasagne/Lasagne/blob/master/examples/mnist.py) | Lasagne | Fully connected | 1,276,810 | 98-99%
-[TensorFlow](https://www.tensorflow.org/get_started/mnist/pros) | Tensorflow | Convolutional | 3,274,625 | 99.2%
+[TensorFlow](https://www.tensorflow.org/get_started/mnist/beginners) | TF | FC | 7,850 | 92%
+[PyTorch](https://github.com/pytorch/examples/tree/master/mnist) | PyTorch | CNN | 21,840 | 99.0%
+[Elite Data Science](https://elitedatascience.com/keras-tutorial-deep-learning-in-python#step-10) | Keras | CNN | 113,386 | 99\\(^+\\)%
+[Machine Learning Mastery](https://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/) | Keras | CNN | 149,674 | 98.9%
+[Lasagne](https://github.com/Lasagne/Lasagne/blob/master/examples/mnist.py) | Lasagne | CNN | 160,362 | 99\\(^+\\)%
+[Caffe](http://caffe.berkeleyvision.org/gathered/examples/mnist.html) | Caffe | CNN | 366,030 | 98.9%
+[Machine Learning Mastery](https://machinelearningmastery.com/handwritten-digit-recognition-using-convolutional-neural-networks-python-keras/) | Keras | FC | 623,290 | 98%
+[Lasagne](https://github.com/Lasagne/Lasagne/blob/master/examples/mnist.py) | Lasagne | FC | 1,276,810 | 98-99%
+[Tensorflow](https://www.tensorflow.org/get_started/mnist/pros) | TF | CNN | 3,274,625 | 99.2%
 
 It would seem that you have two options: use a small number of weights and get low accuracy (TensorFlow's logistic regression example) or use 100,000\\(^+\\) weights and get 99\\(^+\\)% accuracy (the PyTorch example is a notable exception). I think this leads to a common misconception that the best way to gain a few percentage points in accuracy is to double the size of your model.
 
 **MNIST lite**. I was interested in how slightly smaller models would perform on the MNIST task, so I built and trained a few:
 
-Framework | Structure | Type | Free parameters | Test accuracy 
+Package | Structure | Type | Free params | Test accuracy 
 :--- | :---: | :---: | :---: | :---:
-PyTorch | 784 $$\mapsto$$ 16 $$\mapsto$$ 10 | Fully connected | 12,730 | 94.5%
-PyTorch | 784 $$\mapsto$$ 32 $$\mapsto$$ 10 | Fully connected | 25,450 | 96.5%
-PyTorch | 784 $$\mapsto$$ (6,4x4) $$\mapsto$$ (6,4x4) $$\mapsto$$ 25 $$\mapsto$$ 10 | Convolutional | 3,369 | 95.6%
-PyTorch | 784 $$\mapsto$$ (8,4x4) $$\mapsto$$ (16,4x4) $$\mapsto$$ 32 $$\mapsto$$ 10 | Convolutional | 10,754 | 97.6%
+PyTorch | 784 $$\mapsto$$ 16 $$\mapsto$$ 10 | FC | 12,730 | 94.5%
+PyTorch | 784 $$\mapsto$$ 32 $$\mapsto$$ 10 | FC | 25,450 | 96.5%
+PyTorch | 784 $$\mapsto$$ (6,4x4) $$\mapsto$$ (6,4x4) $$\mapsto$$ 25 $$\mapsto$$ 10 | CNN | 3,369 | 95.6%
+PyTorch | 784 $$\mapsto$$ (8,4x4) $$\mapsto$$ (16,4x4) $$\mapsto$$ 32 $$\mapsto$$ 10 | CNN | 10,754 | 97.6%
 
 You can find the code on my [GitHub](https://github.com/greydanus/subspace-nn). As you can see, it's still possible to obtain models that get 95\\(^+\\)% accuracy with fewer than 10$$^4$$ parameters. That said, we can do even better...
 
@@ -58,7 +58,12 @@ You can find the code on my [GitHub](https://github.com/greydanus/subspace-nn). 
 
 **The trick.** When I interviewed with _anonymous_ at _anonymous_ earlier this year, we discussed the idea of optimizing _subspaces_. In other words, if the vector $$\theta$$ contains all the parameters of a deep network, you might define $$\theta = P \omega$$ where the vector $$\omega$$ lives in some smaller-dimensional space and $$P$$ is a projector matrix. Then, instead of optimizing $$\theta$$, you could optimize $$\omega$$. With this trick, we can choose an arbitrary number of free parameters to optimize without changing the model's architecture. In math, the training objective becomes:
 
-$$\omega = \arg\min_{\mathbf{\omega}}  -\frac{1}{n} \sum_X (y\ln \hat y +(1-y)\ln (1-\hat y)) \quad \mathrm{where} \quad \hat y = f_{NN}(\theta, X) \quad \mathrm{and} \quad \theta = P \omega$$
+$$
+\begin{align}
+    \omega &= \arg\min_{\mathbf{\omega}}  -\frac{1}{n} \sum_X (y\ln \hat y +(1-y)\ln (1-\hat y))\\
+    &\mathrm{where} \quad \hat y = f_{NN}(\theta, X) \quad \mathrm{and} \quad \theta = P \omega
+\end{align}
+$$
 
 If you want to see this idea in code, check out my [subspace-nn](https://github.com/greydanus/subspace-nn) repo on GitHub.
 

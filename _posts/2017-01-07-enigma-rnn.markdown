@@ -23,7 +23,7 @@ Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can a
 **By hand.** Long ago, cryptanalysis was done by hand. People would count the frequencies of symbols, compare encrypted text to decrypted text, and try to find patterns. It was a meticulous process which required days and weeks of concentration. Starting with World War II, the heavy lifting was transferred to machines and humans experts started spending their time on problems in pure mathematics which enabled them to crack all but the toughest ciphers. But even today, cryptanalysts spend much of their time meticulously dissecting the structure of the cipher they're trying to crack. Does this need to be the case?
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/frequency.png" width="50%">
+    <img src="/assets/enigma-rnn/frequency.png" style="width:50%;min-width: 300px">
     <div class="thecap" style="text-align:center">The frequency table is a classic codebreaking tool</div>
 </div>
 
@@ -33,7 +33,12 @@ $$\mathbf{ciphertext} = f_{Enigma}(\mathbf{key}, \mathbf{plaintext})$$
 
 **Can neural nets help?** In this post, I'll do this with an RNN parameterized by weights $$\theta$$ which we'll train using gradient descent. In other words, we'll try
 
-$$\mathbf{ciphertext} = f_{Enigma}(\mathbf{key}, \mathbf{plaintext}) \approx f_{RNN}(\theta, \mathbf{key}, \mathbf{plaintext})$$
+$$
+\begin{align}
+    L_t[i,j] &= f_{Enigma}(\mathbf{key}, \mathbf{plaintext})\\
+    &\approx f_{RNN}(\theta, \mathbf{key}, \mathbf{plaintext})\\
+\end{align}
+$$
 
 
 ## Deep Learning for Cryptanalysis
@@ -41,7 +46,7 @@ $$\mathbf{ciphertext} = f_{Enigma}(\mathbf{key}, \mathbf{plaintext}) \approx f_{
 **Framing the problem.** Let's consider the general problem of decryption where there is a 1:1 mapping between the plaintext and ciphertext. If you think of the plaintext as English and the ciphertext as a strange foriegn language, the training objective resembles that of machine translation. Given a string of letters in English - let's use "You know nothing Jon Snow" as an example - we should learn to scramble them according to the rules of the cipher.
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/objective.png" width="50%">
+    <img src="/assets/enigma-rnn/objective.png" style="width:50%;min-width: 300px">
     <div class="thecap" style="text-align:center">Basic training objective where "BCHLN" is the key</div>
 </div>
 
@@ -77,7 +82,7 @@ You can find the code on my [GitHub](https://github.com/greydanus/crypto-rnn).
 We'll train the model on only one permutation of switchboards, cables, and wheels. The keyword, then, is three letters which tell the model the initial positions of the wheels.
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/enigma-objective.png" width="50%">
+    <img src="/assets/enigma-rnn/enigma-objective.png" style="width:50%;min-width: 300px">
     <div class="thecap" style="text-align:center">Basic training objective where "EKW" is the keyword. The keyword defines the initial positions of the three alphabet wheels</div>
 </div>
 
@@ -86,7 +91,7 @@ We'll train the model on only one permutation of switchboards, cables, and wheel
 The model needed to be very large to capture all the Enigma's transformations. I had success with a single-celled LSTM model with 3000 hidden units. Training involved about a million steps of batched gradient descent: after a few days on a k40 GPU, I was getting 96-97% accuracy!
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/enigma-rnn.png" width="80%">
+    <img src="/assets/enigma-rnn/enigma-rnn.png" style="width:80%;min-width: 300px">
     <div class="thecap" style="text-align:center">A sample output from the model I trained on the Enigma cipher.</div>
 </div>
 
@@ -97,7 +102,7 @@ You can find the code on my [GitHub](https://github.com/greydanus/crypto-rnn).
 Learning the Enigma is interesting, but these days it has no practical use. Modern encryption uses public-key factoring algorithms such as [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)). RSA is a different beast from the Enigma, but in theory we could also learn it with deep learning. In practice, this is difficult because RSA uses modulus and multiplication of large integers. These operations are difficult to approximate with RNNs. We need further algorithmic advances in deep learning like the [Neural GPU](https://arxiv.org/abs/1511.08228) or the [Differential Neural Computer](https://deepmind.com/blog/differentiable-neural-computers/) to make this problem feasible.
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/rsa.gif" width="40%">
+    <img src="/assets/enigma-rnn/rsa.gif" style="width:40%;min-width: 300px">
     <div class="thecap" style="text-align:center">Public-key encryption. In theory, we could learn the RSA with deep learning but it presents many practical difficulties</div>
 </div>
 
@@ -108,7 +113,7 @@ Learning the Enigma is interesting, but these days it has no practical use. Mode
 **AI.** In the past several years, Deep Reinforcement Learning has enabled an impressive series of breakthroughs in the field of Artificial Intelligence (AI). Many believe that these breakthroughs will enable machines to perform complex tasks such as [driving cars](https://waymo.com/), [understanding text](http://www.maluuba.com/), and even [reasoning over memory](https://deepmind.com/blog/differentiable-neural-computers/). This project suggests that AIs built from neural networks could also become effective code breakers.
 
 <div class="imgcap">
-    <img src="/assets/enigma-rnn/bombe.jpg" width="60%">
+    <img src="/assets/enigma-rnn/bombe.jpg" style="width:60%;min-width: 300px">
     <div class="thecap" style="text-align:center">The original Enigma cracker (a Bombe machine). <a href="http://www.cryptomuseum.com/crypto/bombe/">Crypto Museum</a></div>
 </div>
 
