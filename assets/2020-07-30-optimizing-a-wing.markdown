@@ -153,8 +153,9 @@ We have succeeded in simulating a wind tunnel in just about 100 lines of code.[^
 
 $$
 \begin{align}
-    \frac{\text{lift}}{\text{drag}} &= \frac{-\text{change in downward airflow}}{\text{change in rightward airflow}}\\
-    &= \frac{-\big ( v_y(t)-v_y(0) \big )}{v_x(t)-v_x(0)}
+    \frac{\text{lift}}{\text{drag}} &= \frac{\text{change in downward airflow}}{-\text{change in rightward airflow}}\\
+    &= \frac{ -\big ( v_y(t)-v_y(0) \big )}{-\big ( v_x(t)-v_x(0) \big )}\\
+    &= \frac{ v_y(t)-v_y(0) }{ v_x(t)-v_x(0)}
 \end{align}
 $$
 
@@ -213,7 +214,7 @@ But nature is different. Nature takes a consummate joy in variation. It’s easy
   </div>
 </div>
 
-Perhaps less intuitively, a single bird is capable of a huge range of wing shapes. The falcon, for example, uses different wing shapes for soaring, diving, turning, and landing. Its wings are not a static things, but rather deformable, dynamic objects which are constantly adapting to their surroundings. And once again, we are beginning to see the same thing happen in modern aircrafts. The Boeing 747, for example, has a triple-slotted wing design that lets pilots reconfigure the overall wing shape for takeoff, cruising, and landing.
+Perhaps less intuitively, even a single bird is capable of a huge range of wing shapes. The falcon, for example, uses different wing shapes for soaring, diving, turning, and landing. Its wings are not a static things, but rather deformable, dynamic objects which are constantly adapting to their surroundings. And once again, we are beginning to see the same thing happen in modern aircrafts. The Boeing 747, for example, has a triple-slotted wing design that lets pilots reconfigure the overall wing shape for takeoff, cruising, and landing.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:55%; min-width:250px; display: inline-block; vertical-align: top;">
@@ -233,18 +234,14 @@ The same ideas have begun to percolate through the reinforcement learning litera
 Another way to look at open-endedness is that it allows you to change your environment as you pursue your objective. And in changing your environment, you may alter your original objective, producing a continual cycle of new environments and objectives. You can see this in 20th century aeronautics: the engineers who figured out how to fly at subsonic speeds earned themselves an entirely new challenge – that of designing airplanes in the supersonic regime. This bootstrapping effect, where problems and solutions feed off one another, produces an endless frontier of new problems worth exploring.[^fn11]
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:62.279%; min-width:300px; display: inline-block; vertical-align: top;">
+  <div style="width:63.4%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/optimizing-a-wing/map-elites.png" style="width:100%">
-    <div style="text-align: left;">Visualizing a large population of soft robots trained on a locomotion task. Each pixel corresponds to a different robot and its color corresponds to relative performance (brighter is better). Each voxel of the robot can be either bone, muscle, or empty. Some example robot shapes are plotted around the edges of the figure. Figure from the <a href="https://arxiv.org/abs/1504.04909">MAP-Elites paper</a>.</div>
+    <div style="text-align: left;">Visualizing a large population of soft robots trained on a locomotion task. Each pixel corresponds to a different robot and its color corresponds to relative performance (brighter is better). Each voxel of the robot can be either bone, muscle, or empty. Some example robot shapes are plotted around the edges. (Taken from the <a href="https://arxiv.org/abs/1504.04909">MAP-Elites paper</a>).</div>
   </div>
-  <div style="width:35.28%; min-width:200px; display: inline-block; vertical-align: top;">
+  <div style="width:36%; min-width:200px; display: inline-block; vertical-align: top;">
     <img src="/assets/optimizing-a-wing/starcraft.png" style="width:100%">
-    <div style="text-align:left;">A population of RL agents trained to play StarCraft. The MaNa agent competed against <a href="https://liquipedia.net/starcraft2/MaNa">MaNa</a>. Dot sizes represent probability of being selected to play against MaNa agent. Fig. is from <a href="https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii">AlphaStar article</a>.</div>
+    <div style="text-align:left;">A population of RL agents trained to play StarCraft. The MaNa agent later competed against <a href="https://liquipedia.net/starcraft2/MaNa">MaNa</a>. Dot sizes represent probability of being selected to play against MaNa agent. (Taken from <a href="https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii">this DM article</a>).</div>
   </div>
-<!--   <div style="width:15.1%; min-width:150px; display: inline-block; vertical-align: top;">
-    <img src="/assets/optimizing-a-wing/rock-paper-scissors.png" style="width:100%">
-    <div style="text-align:left;">The progression of notable airfoils developed by national labs between 1915 and 1945.</div>
-  </div> -->
 </div>
 
 That much novelty is a good thing, but it’s also dangerous. If your aim changes too often, it's easy to forget what you've learned and begin chasing your own tail. In machine learning, this sort of thing happens when a neural network "[catastrophically forgets](https://en.wikipedia.org/wiki/Catastrophic_interference)" one skill while trying to learn another. In engineering, people call it "reinventing the wheel." Regardless, it's preferable to aim at something new and better. So how can we avoid wandering back into the past?
@@ -255,13 +252,15 @@ That much novelty is a good thing, but it’s also dangerous. If your aim change
 
 The answer is that the optimization function is never the full story. When we write down an optimization function like we did for the wing demo, our minds have a vague desire to form a wing shape. Behind that, there is a desire to fly, and behind that – perhaps – a desire for freedom, and behind that, what? The paradox of an objective function is that it always seems to have a grander desire behind it. And the deeper desires don’t change as quickly. Even as the early aviators progressed from wingsuits to gliders to planes, they retained the same fundamental desire for flight. As they shaped technology, they shaped their particular desires. And as they shaped their particular desires, they shaped themselves. But it was the desire to fly that put all of this into motion.
 
-Indeed, the desire to fly shaped the early aviators as much as they, in turn, shaped the world. In pursuit of flight, they had to discipline themselves and spend years perfecting their craft. They had to become pragmatists to ensure that their lofty dreams would survive. There is a sense in which you and I must do the same. All of us are shaped by the desires we aim at. Our prefrontal cortex is constantly inhibiting or exciting lower brain regions. Each of these regions involves a different set of desires: food, sleep, sex, exercise, safety, curiosity, power, affection, and more. We can choose which of these to aim at. It’s a core part of free will, for in choosing which desires to act on, we choose the person we will become.
+Indeed, the desire to fly shaped the early aviators as much as they, in turn, shaped the world. In pursuit of flight, they had to discipline themselves and spend years perfecting their craft. They had to become pragmatists to ensure that their lofty dreams would survive. There is a sense in which you and I must do the same thing. All of us are shaped by the desires we aim at. Our prefrontal cortex is constantly inhibiting or exciting lower brain regions. Each of these regions involves a different set of desires: food, sleep, sex, exercise, safety, curiosity, power, affection, and more. We can choose which of these to aim at. It’s a core part of free will, for in choosing which desires to act on, we choose the person we will become.
 
 <div class="imgcap_noborder">
   <img src="/assets/desire-to-fly/hummingbird.png" style="width:20%;min-width:150px;">
 </div>
 
-Like a hermit crab, we are born with desires that our body cannot satisfy, and thus we must venture out into the world, build things, and make them part of who we are. But we differ from the hermit crab in one important way. While he seeks out a shell because he wants safety, we seek flight because we want freedom, adventure, and change. We are not trying to stay the same, but rather we are aiming for a future that is different and better. Freedom, adventure, and change is what made us a flying species in the first place and it will propel us even higher tomorrow. So long as we have the desire to fly.
+Like a hermit crab, we are born with desires that our body cannot satisfy, and thus we must venture out into the world, build things, and make them part of who we are. But we differ from the hermit crab in one important way. While he seeks out a shell because he wants safety, we seek flight because we want freedom, adventure, and change. We are not trying to stay the same, but rather we are aiming for a future that is different and better. Freedom, adventure, and change is what made us a flying species in the first place and it will propel us even higher tomorrow.
+
+So long as we have the desire to fly.
 
 <!-- So we beat on, wings angled into the wind, borne ceaselessly into the future. -->
 

@@ -134,7 +134,7 @@ Amelia Earhart was deeply aware of this tension. She once wrote, “...I cannot 
 
 It’s easy to think of Earhart, da Vinci, and the others as exceptions to a rule. Perhaps the majority of humans would prefer to keep both feet planted firmly on the ground. Yet how many of us have felt a twinge of envy for a hawk soaring effortlessly on the thermals? Flight is more than a practicality for us. Is it because we associate flight with freedom? Or glory? Or are these desires a manifestation of some deeper desire? Whatever the case, the thing that inspired the early aviators continues to live within us. Our grand challenge is to act on this desire. It’s not easy to do this, but we can learn a lot by turning our attention to the inventors of early airplanes. These are the people who, through a combination of luck and discipline, built the stepping stones of flight.
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; margin-top: 50px">
     <a href="../../../../2020/07/29/stepping-stones/" id="linkbutton" target="_blank" style="margin-right: 10px;">Post #2: The Stepping Stones of Flight</a>
 </div>
 

@@ -129,8 +129,18 @@ The thing to remember is that intuition is never free. You need to build it over
     </style>
 </div>
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-    <a href="../../../../2020/07/30/optimizing-a-wing/" id="linkbutton" target="_blank" style="margin-right: 10px;">Post #3: The Physics of Flight</a>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%;margin-bottom: 200px; margin-top: 50px">
+    <a href="../../../../2020/07/30/optimizing-a-wing/" id="linkbutton" target="_blank" style="margin-right: 10px;">Post #3: Optimizing a Wing</a>
+</div>
+
+### Appendix: Airfoil Timeline
+
+Here is a single figure that summarizes the three main eras we discussed, along with their respective airfoils. I obtained these silhouettes from primary sources and they are technically accurate to the best of my knowledge.
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%;">
+  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+    <img src="/assets/stepping-stones/airfoil-timeline.png" style="width:100%">
+  </div>
 </div>
 
 
