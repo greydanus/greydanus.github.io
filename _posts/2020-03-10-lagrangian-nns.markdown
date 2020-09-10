@@ -245,16 +245,13 @@ The principle of stationary action is a unifying force in physics. It represents
 if(parseInt(getBrowserSize().width) < 900){
  document.getElementById("longEqnWithLargeScript_A").style.display = "none";
 }
-console.log("hi")
-console.log(getBrowserSize().width)
 if(parseInt(getBrowserSize().width) > 900){
  document.getElementById("longEqnWithSmallScript_A").style.display = "none";
 }
+
 if(parseInt(getBrowserSize().width) < 900){
  document.getElementById("longEqnWithLargeScript_B").style.display = "none";
 }
-console.log("hi")
-console.log(getBrowserSize().width)
 if(parseInt(getBrowserSize().width) > 900){
  document.getElementById("longEqnWithSmallScript_B").style.display = "none";
 }

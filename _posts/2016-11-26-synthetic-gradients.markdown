@@ -81,7 +81,11 @@ In practice, this causes trouble for
 **Unlocking.** The paper that inspired this blog post is [Decoupled Neural Interfaces using Synthetic Gradients](https://arxiv.org/abs/1608.05343). DeepMind researchers propose an ambitious method for 'unlocking' neural networks: <i>train a second model to predict the gradients of the first</i>. In other words, approximate
 
 $$
-\frac{\partial{L}}{\partial{\theta_i}} = f_{Bprob}((h_i,x_i,y_i,\theta_i),(h_{i+1},x_{i+1},y_{i+1},\theta_{i+1}),...) \frac{\partial{h_i}}{\partial{\theta_i}} \approx \hat f_{Bprop}(h_i)\frac{\partial{h_i}}{\partial{\theta_i}}
+\begin{align}
+    \frac{\partial{L}}{\partial{\theta_i}} = f_{backprop}(&(h_i,x_i,y_i,\theta_i),(h_{i+1}, \\
+    & x_{i+1},y_{i+1},\theta_{i+1}),...) \frac{\partial{h_i}}{\partial{\theta_i}}\\
+    & \approx \hat f_{backprop}(h_i)\frac{\partial{h_i}}{\partial{\theta_i}}\\
+\end{align}
 $$
 
 When I realized what they were trying to do, I rolled my eyes. You <i>must</i> need to know more about the model to approximate its gradients...a model to predict the gradients <i>wouldn't</i> train quickly enough...even if it did, backprop would <i>still</i> converge more quickly...
