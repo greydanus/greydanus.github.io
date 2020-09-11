@@ -57,7 +57,7 @@ thumbnail: /assets/optimizing-a-wing/thumbnail.png
 </div>
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
-	<a href="" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="https://bit.ly/2Fy3s3d" id="linkbutton" target="_blank">Read the paper</a>
 	<a href="https://colab.research.google.com/drive/1RTsSyr7B3THKVGp_44Oyh7rxBriOHzJ7" id="linkbutton" target="_blank">Run in browser</a>
 	<a href="https://github.com/greydanus/optimize_wing" id="linkbutton" target="_blank">Get the code</a>
 </div>
@@ -162,7 +162,7 @@ $$
 ### Optimization
 
 <div>
-<div style="display:inline">At this point, we have identified physical constraints and an objective. In the big picture, our goal is to change the wing mask so as to increase its overall lift-drag ratio as much as possible. The way to do this is to follow the gradient of the objective with respect to the wing shape. Luckily for us, there is a clever tool called Autograd which can compute that gradient analytically. Once we have the gradient, all we have to do is take incremental steps in that direction until we don’t see additional improvements. When this process of gradient ascent is over, we can hope to see a wing.</div> <div id="autograd_info_toggle" onclick="hideShowAutograd()" style="cursor: pointer;display:inline">(+)</div>
+<div style="display:inline">At this point, we have identified physical constraints and an objective. In the big picture, our goal is to change the wing mask so as to increase its overall lift-drag ratio as much as possible. The way to do this is to follow the gradient of the objective with respect to the wing shape. Luckily for us, there is a clever tool called <a href="https://github.com/HIPS/autograd">Autograd</a> which can compute that gradient analytically. Once we have the gradient, all we have to do is take incremental steps in that direction until we don’t see additional improvements. When this process of gradient ascent is over, we can hope to see a wing.</div> <div id="autograd_info_toggle" onclick="hideShowAutograd()" style="cursor: pointer;display:inline">(+)</div>
 </div>
 
 <div id="autograd_info" style="display: none;"><i><b>A note on Autograd.</b> Amazingly, every mathematical operation we've described so far – from the wing masking operation to the advection and projection functions, to the lift-drag ratio – is differentiable. This is why we can use Autograd to compute the analytic gradient. Autograd uses <a href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation</a>, closely related to the <a href="http://www.dolfin-adjoint.org/en/latest/documentation/maths/2-problem.html">adjoint method</a>, to propagate gradient information backwards through the simulation until it reaches the parameters of the wing mask. We can do all of this in a one-line function transformation: <code>grad_fn = autograd.value_and_grad(get_lift_drag_ratio)</code>.</i></div>
@@ -189,7 +189,7 @@ Just like the real wind tunnels of the 1900's, these simulated wind tunnels need
 	<img src="/assets/optimizing-a-wing/sim_bloopers.png" style="width:100%">
 </div>
 
-Several of these bloopers are just plain dreadful. But others are reasonable - if unexpected - solutions. I think the “two wing” solution is particularly fun. It was entirely unexpected and yet there’s a good precedent for it, in that biplanes have the same two-wing structure. This surprising result is a consequence of our demo’s extreme simplicity. This simplicity makes the design space more open-ended and permits all sorts of interesting accidents to occur.
+Several of these bloopers are just plain dreadful. But others are reasonable – if unexpected – solutions. I think the “two wing” solution is particularly fun. It was entirely unexpected and yet there’s a good precedent for it, in that biplanes have the same two-wing structure. This surprising result is a consequence of our demo’s extreme simplicity. This simplicity makes the design space more open-ended and permits all sorts of interesting accidents to occur.
 
 ### The Manifold of Solutions
 
@@ -199,22 +199,22 @@ In fact, the problem of designing a good wing is so open-ended that there are ac
 	<img src="/assets/optimizing-a-wing/sim_manifold.png" style="width:100%">
 </div>
 
-Most people won’t be shocked by the idea that design problems are open-ended. However, there are many ways in which we ignore the open-ended nature of the real world. We do this in order to turn complicated problems into simpler ones. Some examples incude measuring academic ability by test scores or social influence by followers.
+Most people won’t be shocked by the idea that design problems are open-ended. However, there are many ways in which we ignore the open-ended nature of the real world. We do this in order to turn complicated problems into simpler ones. Some examples include measuring academic ability by test scores or social influence by followers.
 
 But nature is different. Nature takes a consummate joy in variation. It’s easy to see this by looking at the remarkable variety of wing shapes in birds.[^fn4] Some birds have wings with low aspect ratios that enable and quick, agile flight patterns. Others, like the albatross, have high aspect ratios for extreme efficiency. Still others, like the common raven, are good all-around fliers. This speciation is beginning to occur in modern aircraft as well. We have surveillance planes built for speed and stealth, short-winged bush planes built for maneuverability, and massive commercial airliners built for efficiency.[^fn5]
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:36.4815%; min-width:200px; display: inline-block; vertical-align: top;">
     <img src="/assets/optimizing-a-wing/bird_shapes.png" style="width:100%">
-    <div style="text-align: left;">Bird species plotted by wing pointedness (horizontal axis) and wingtip convexity (vertical axis). Each point represents a species; seven species are highlighted and named as examples.</div>
+    <div style="text-align: left;">Bird species plotted by wing pointedness (horizontal axis) and wingtip convexity (vertical axis). Each point represents a species; seven species are highlighted and named as examples. (<a href="https://doi.org/10.2307/3677110">Source</a>).</div>
   </div>
   <div style="width:62.073%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/optimizing-a-wing/norberg2002.png" style="width:100%">
-    <div style="text-align:left;">Aspect ratio vs. wing loading index, made independent of size, in some birds, airplanes, a hang-glider, a butterfly, and a maple seed. Bats have a similar aspect ratio range compared to birds but slightly lower wing loadings because their tail membrane area is integrated in the wing area.</div>
+    <div style="text-align:left;">Aspect ratio vs. wing loading index, made independent of size, in some birds, airplanes, a hang-glider, a butterfly, and a maple seed. Bats have a similar aspect ratio range compared to birds but slightly lower wing loadings because their tail membrane area is integrated in the wing area.  (<a href="https://doi.org/10.1002/jmor.10013">Source</a>).</div>
   </div>
 </div>
 
-Perhaps less intuitively, even a single bird is capable of a huge range of wing shapes. The falcon, for example, uses different wing shapes for soaring, diving, turning, and landing. Its wings are not a static things, but rather deformable, dynamic objects which are constantly adapting to their surroundings. And once again, we are beginning to see the same thing happen in modern aircrafts. The Boeing 747, for example, has a triple-slotted wing design that lets pilots reconfigure the overall wing shape for takeoff, cruising, and landing.
+Perhaps less intuitively, even a single bird is capable of a huge range of wing shapes. The falcon, for example, uses different wing shapes for soaring, diving, turning, and landing. Its wings are not static things, but rather deformable, dynamic objects which are constantly adapting to their surroundings. And once again, we are beginning to see the same thing happen in modern aircrafts. The Boeing 747, for example, has a triple-slotted wing design that lets pilots reconfigure the overall wing shape for takeoff, cruising, and landing.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:55%; min-width:250px; display: inline-block; vertical-align: top;">
@@ -227,20 +227,20 @@ Perhaps less intuitively, even a single bird is capable of a huge range of wing 
 
 ### Quality-Diversity
 
-In machine learning, the idea that some problems have more than one solution is called <i>open-endedness</i>. In response to this idea, researchers have developed a variety of [quality-diversity](https://quality-diversity.github.io/) algorithms which solve for a [pareto frontier](https://en.wikipedia.org/wiki/Pareto_efficiency) of diverse but equally-valid solutions. This is still a fledgling area of research (ha), but notable works include MAP-elites[^fn6] [^fn7] and POET.[^fn8] Jeff Clune has a good discussion of these things in his <a href="https://icml.cc/media/Slides/icml/2019/halla(10-09-15)-10-09-15-4336-recent_advances.pdf">ICML 2019 tutorial</a>.
+In machine learning, the idea that some problems have more than one solution is called <i>open-endedness</i>. In response to this idea, researchers have developed a variety of [quality-diversity](https://quality-diversity.github.io/) algorithms which solve for a [pareto frontier](https://en.wikipedia.org/wiki/Pareto_efficiency) of diverse but equally-valid solutions. This is still a fledgling area of research (ha), but notable works include Novelty Search with Local Competition,[^fn16] MAP-elites[^fn6] [^fn7] and POET.[^fn8] Jeff Clune has a good discussion of these things in his <a href="https://icml.cc/media/Slides/icml/2019/halla(10-09-15)-10-09-15-4336-recent_advances.pdf">ICML 2019 tutorial</a>.
 
-The same ideas have begun to percolate through the reinforcement learning literature as well. A number of recent papers have examined the effects of self-play and league play on how RL agents learn.[^fn15] [^fn9] [^fn10] It turns out that, in order to find a stable [Nash equilibrium](https://en.wikipedia.org/wiki/Nash_equilibrium), one must have a diverse set of agents that continually exploit each others' weaknesses. The core idea is that when you make a population of agents (and their objectives) more diverse, the best-performing agents in that population tend to become more robust.
+The same ideas have begun to percolate through the reinforcement learning literature as well. A number of recent papers have examined the effects of self-play and league play on how RL agents learn.[^fn15] [^fn9] [^fn10] It turns out that, in order to find a stable [Nash equilibrium](https://en.wikipedia.org/wiki/Nash_equilibrium), one must have a diverse set of agents that continually exploit each others' weaknesses. The core idea is that when you make a population of agents (and their objectives) more diverse, the best-performing agents in that population tend to become more robust and effective.
 
-Another way to look at open-endedness is that it allows you to change your environment as you pursue your objective. And in changing your environment, you may alter your original objective, producing a continual cycle of new environments and objectives. You can see this in 20th century aeronautics: the engineers who figured out how to fly at subsonic speeds earned themselves an entirely new challenge – that of designing airplanes in the supersonic regime. This bootstrapping effect, where problems and solutions feed off one another, produces an endless frontier of new problems worth exploring.[^fn11]
+In many open-ended tasks, you can actually change your environment as you pursue your objective. And in changing your environment, you may alter your original objective, producing a continual cycle of new environments and objectives. You can see this in 20th century aeronautics: the engineers who figured out how to fly at subsonic speeds earned themselves an entirely new challenge – that of designing airplanes in the supersonic regime. This bootstrapping effect, where problems and solutions feed off one another, produces an endless frontier of new problems worth exploring.[^fn11]
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:63.4%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/optimizing-a-wing/map-elites.png" style="width:100%">
-    <div style="text-align: left;">Visualizing a large population of soft robots trained on a locomotion task. Each pixel corresponds to a different robot and its color corresponds to relative performance (brighter is better). Each voxel of the robot can be either bone, muscle, or empty. Some example robot shapes are plotted around the edges. (Taken from the <a href="https://arxiv.org/abs/1504.04909">MAP-Elites paper</a>).</div>
+    <div style="text-align: left;">Visualizing a large population of soft robots trained on a locomotion task. Each pixel corresponds to a different robot and its color corresponds to relative performance (brighter is better). Each voxel of the robot can be either bone, muscle, or empty. Some example robot shapes are plotted around the edges. (From the <a href="https://arxiv.org/abs/1504.04909">MAP-Elites paper</a>).</div>
   </div>
   <div style="width:36%; min-width:200px; display: inline-block; vertical-align: top;">
     <img src="/assets/optimizing-a-wing/starcraft.png" style="width:100%">
-    <div style="text-align:left;">A population of RL agents trained to play StarCraft. The MaNa agent later competed against <a href="https://liquipedia.net/starcraft2/MaNa">MaNa</a>. Dot sizes represent probability of being selected to play against MaNa agent. (Taken from <a href="https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii">this DM article</a>).</div>
+    <div style="text-align:left;">A population of RL agents trained to play StarCraft. The MaNa agent later competed against <a href="https://liquipedia.net/starcraft2/MaNa">MaNa</a>. Dot sizes represent probability of being matched against the MaNa agent. (From <a href="https://deepmind.com/blog/article/alphastar-mastering-real-time-strategy-game-starcraft-ii">this DM article</a>).</div>
   </div>
 </div>
 
@@ -250,17 +250,17 @@ That much novelty is a good thing, but it’s also dangerous. If your aim change
 
 ### The Desire to Fly
 
-The answer is that the optimization function is never the full story. When we write down an optimization function like we did for the wing demo, our minds have a vague desire to form a wing shape. Behind that, there is a desire to fly, and behind that – perhaps – a desire for freedom, and behind that, what? The paradox of an objective function is that it always seems to have a grander desire behind it. And the deeper desires don’t change as quickly. Even as the early aviators progressed from wingsuits to gliders to planes, they retained the same fundamental desire for flight. As they shaped technology, they shaped their particular desires. And as they shaped their particular desires, they shaped themselves. But it was the desire to fly that put all of this into motion.
+The answer is that the optimization function is never the full story. When we write down an optimization function like we did for the wing demo, our minds have a vague desire to form a wing shape. Behind that, there is a desire to fly, behind that, perhaps, a desire for freedom, and behind that – what? The paradox of an objective function is that it always seems to have a grander desire behind it. And the deeper desires don’t change as quickly. Even as the early aviators progressed from wingsuits to gliders to planes, they retained the same fundamental desire for flight. As they shaped technology, they shaped their particular desires. And as they shaped their particular desires, they shaped themselves. But it was the desire to fly that put all of this into motion.
 
-Indeed, the desire to fly shaped the early aviators as much as they, in turn, shaped the world. In pursuit of flight, they had to discipline themselves and spend years perfecting their craft. They had to become pragmatists to ensure that their lofty dreams would survive. There is a sense in which you and I must do the same thing. All of us are shaped by the desires we aim at. Our prefrontal cortex is constantly inhibiting or exciting lower brain regions. Each of these regions involves a different set of desires: food, sleep, sex, exercise, safety, curiosity, power, affection, and more. We can choose which of these to aim at. It’s a core part of free will, for in choosing which desires to act on, we choose the person we will become.
-
-<div class="imgcap_noborder">
-  <img src="/assets/desire-to-fly/hummingbird.png" style="width:20%;min-width:150px;">
-</div>
+Indeed, the desire to fly shaped the early aviators as much as they, in turn, shaped the world. In pursuit of flight, they had to discipline themselves and spend years perfecting their craft. And they had to become pragmatists to ensure that their lofty dreams would survive. There is a sense in which you and I must do the same thing. All of us are shaped by the desires we aim at. Our prefrontal cortex is constantly inhibiting or exciting lower brain regions. Each of these regions involves a different set of desires: food, sleep, affection, exercise, safety, curiosity, and more. We can choose which of these to aim at. It’s a core part of free will, for in choosing which desires to act on, we choose the person we will become.
 
 Like a hermit crab, we are born with desires that our body cannot satisfy, and thus we must venture out into the world, build things, and make them part of who we are. But we differ from the hermit crab in one important way. While he seeks out a shell because he wants safety, we seek flight because we want freedom, adventure, and change. We are not trying to stay the same, but rather we are aiming for a future that is different and better. Freedom, adventure, and change is what made us a flying species in the first place and it will propel us even higher tomorrow.
 
 So long as we have the desire to fly.
+
+<div class="imgcap_noborder">
+  <img src="/assets/desire-to-fly/hummingbird.png" style="width:20%;min-width:150px;">
+</div>
 
 <!-- So we beat on, wings angled into the wind, borne ceaselessly into the future. -->
 
@@ -280,6 +280,7 @@ So long as we have the desire to fly.
 [^fn13]: See also the myth of [Sisyphus](https://en.wikipedia.org/wiki/Sisyphus).
 [^fn14]: See [this online textbook page](https://optimization.mccormick.northwestern.edu/index.php/Wing_Shape_Optimization) for an overview of full-scale wing optimization techniques.
 [^fn15]: Balduzzi, David, et al. [Open-ended Learning in Symmetric Zero-sum Games](https://arxiv.org/abs/1901.08106). arXiv preprint arXiv:1901.08106 (2019).
+[^fn16]: Lehman, Joel, and Kenneth O. Stanley. [Evolving a diversity of virtual creatures through novelty search and local competition.](https://doi.org/10.1145/2001576.2001606) _Proceedings of the 13th annual conference on Genetic and evolutionary computation._ 2011.
 
 <script language="javascript">
 	function toggleWingShape() {
