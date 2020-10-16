@@ -192,7 +192,7 @@ So let’s review. Our goal is to simulate a wind tunnel and use it to derive a 
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:37%; min-width: 300px">
 	<p style="display:inline;"><div style="color:black;font-size: 18px">Final result</div> <div style="color:grey;">[Click image to pause or play.]</div></p>
-	<img alt="" src="/assets/optimizing-a-wing/wing.png" onclick="toggleBasicWing()" id="basicWing" />
+	<img style="width:100%" alt="" src="/assets/optimizing-a-wing/wing.png" onclick="toggleBasicWing()" id="basicWing" />
 </div>
 
 Sure enough, we get a beautiful little wing. Of all possible shapes, this is the very best one for creating efficient lift in our wind tunnel. This wing is definitely a toy solution since our simulation is coarse and not especially accurate. However, after making a few simple improvements we would be able to design real airplane wings this way. We would just need to:
