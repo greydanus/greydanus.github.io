@@ -60,7 +60,7 @@ thumbnail: /assets/optimizing-a-wing/thumbnail.png
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
 	<a href="https://bit.ly/3j3Wcu4" id="linkbutton" target="_blank">Read the paper</a>
-	<a href="https://colab.research.google.com/drive/1RTsSyr7B3THKVGp_44Oyh7rxBriOHzJ7?usp=sharing" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="https://bit.ly/2H5r401" id="linkbutton" target="_blank">Run in browser</a>
 	<a href="https://github.com/greydanus/optimize_wing" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
