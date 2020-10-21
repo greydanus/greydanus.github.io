@@ -1,4 +1,4 @@
-I"¿z<p style="font-size: 20px;text-align: center;color: #999;"><i>(My last post in a series about human flight; <a target="_blank" style="color: #777;" href="../../../../2020/10/12/story-of-flight/">post 1</a>, <a target="_blank" style="color: #777;" href="../../../../2020/10/13/stepping-stones/">post 2</a>).</i></p>
+I"Óz<p style="font-size: 20px;text-align: center;color: #999;"><i>(My last post in a series about human flight; <a target="_blank" style="color: #777;" href="../../../../2020/10/12/story-of-flight/">post 1</a>, <a target="_blank" style="color: #777;" href="../../../../2020/10/13/stepping-stones/">post 2</a>).</i></p>
 
 <div>
 	<style>
@@ -165,9 +165,9 @@
 	<img alt="" src="/assets/optimizing-a-wing/optimize_wing.png" />
 </div>
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%; min-width: 300px">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:37%; min-width: 300px">
 	<p style="display:inline;"><div style="color:black;font-size: 18px">Final result</div> <div style="color:grey;">[Click image to pause or play.]</div></p>
-	<img alt="" src="/assets/optimizing-a-wing/wing.png" onclick="toggleBasicWing()" id="basicWing" />
+	<img style="width:100%" alt="" src="/assets/optimizing-a-wing/wing.png" onclick="toggleBasicWing()" id="basicWing" />
 </div>
 
 <p>Sure enough, we get a beautiful little wing. Of all possible shapes, this is the very best one for creating efficient lift in our wind tunnel. This wing is definitely a toy solution since our simulation is coarse and not especially accurate. However, after making a few simple improvements we would be able to design real airplane wings this way. We would just need to:</p>
@@ -339,7 +339,7 @@ if(parseInt(getBrowserSize().width) > 600){
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:fn18" role="doc-endnote">
-      <p>Specifically, we build on ideas laid out in <a href="https://github.com/HIPS/autograd/blob/master/examples/fluidsim/wing.png">Maclurin et al. (2018)</a>.Â <a href="#fnref:fn18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Specifically, we build on ideas laid out in <a href="https://github.com/HIPS/autograd/blob/master/examples/fluidsim/wing.png">Maclaurin et al. (2018)</a>.Â <a href="#fnref:fn18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:fn14" role="doc-endnote">
       <p>See <a href="https://optimization.mccormick.northwestern.edu/index.php/Wing_Shape_Optimization">this online textbook page</a> for an overview of full-scale wing optimization techniques.Â <a href="#fnref:fn14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
