@@ -41,7 +41,7 @@ author: Sam Greydanus
 Deep RL agents are effective at maximizing rewards but it's often unclear what strategies they use to do so. I'll talk about a paper[^fn1] I just finished, aimed at solving this problem.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-    <a href="https://www.sciencemag.org/news/2018/08/why-does-ai-stink-certain-video-games-researchers-made-one-play-ms-pac-man-find-out" id="linkbutton" target="_blank" style="margin-right: 10px;">Update: this project was covered by Science Magazine!</a>
+    <a href="https://www.sciencemag.org/news/2018/08/why-does-ai-stink-certain-video-games-researchers-made-one-play-ms-pac-man-find-out" id="linkbutton" target="_blank" style="margin-right: 10px;">Article about this project in Science</a>
 </div>
 
 ## Solving Atari in 180 lines
