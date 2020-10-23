@@ -1,0 +1,153 @@
+I"�%<div>
+	<style>
+		#linkbutton:link, #linkbutton:visited {
+		  background-color: rgb(180,180,180);
+		  border-radius: 4px;
+		  color: white;
+		  padding: 6px 0px;
+		  width: 150px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  text-transform: uppercase;
+		  font-size: 13px;
+		  margin: 8px;
+		}
+
+		#linkbutton:hover, #linkbutton:active {
+		  background-color: rgba(160,160,160);
+		}
+
+		.playbutton {
+		  background-color: rgba(0, 153, 51);
+		  /*background-color: rgba(255, 130, 0);*/
+		  border-radius: 4px;
+		  color: white;
+		  padding: 3px 8px;
+		  /*width: 60px;*/
+		  text-align: center;
+		  text-decoration: none;
+		  text-transform: uppercase;
+		  font-size: 12px;
+		  /*display: block;*/
+		  /*margin-left: auto;*/
+		  margin: 8px 0px;
+		  margin-right: auto;
+		  min-width:80px;
+		}
+	</style>
+</div>
+
+<!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+  <div style="width:29.876%; min-width:180px; display: inline-block; vertical-align: top; padding-right: 20px">
+    <img src="/assets/jumpy-rnns/jrnn_setup.png" style="width:100%">
+  </div>
+  <div style="width:30.749%; min-width:130px; display: inline-block; vertical-align: top; padding-right: 20px">
+    <img src="/assets/jumpy-rnns/jrnn_baseline.png" style="width:100%">
+  </div>
+  <div style="width:30.749%; min-width:180px; display: inline-block; vertical-align: top;">
+    <img src="/assets/jumpy-rnns/jrnn_model.png" style="width:100%">
+  </div>
+  <div style="text-align:left;">Predicting the dynamics of two billiards balls <b>(left)</b> using a baseline RNN cell <b>(center)</b> and a Jumpy RNN cell <b>(right)</b>. Whereas the baseline model produces a hidden state h_t at each time step, our jumpy model predicts a continuous-time hidden state, over a predicted interval ∆_i. This allows it to skip over long spans of predictable motion and focus on key events such as collisions.</div>
+</div> -->
+
+<!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+	<span style="width:33%">
+		<video style="width:33%;min-width:250px;" controls>
+			<source src="/assets/jumpy-rnns/video_simulator.mp4" type="video/mp4">
+  			Your browser does not support HTML video.
+		</video>
+	</span>
+	<span style="width:33%">
+		<video style="width:33%;min-width:250px;" controls>
+			<source src="/assets/jumpy-rnns/video_simulator.mp4" type="video/mp4">
+  			Your browser does not support HTML video.
+		</video>
+	</span>
+	<span style="width:33%">
+		<video style="width:33%;min-width:250px;" controls>
+			<source src="/assets/jumpy-rnns/video_simulator.mp4" type="video/mp4">
+  			Your browser does not support HTML video.
+		</video>
+	</span>
+	<div style="text-align:left;"><b>Figure 1.</b> Using model-based planning to play pool/billiards. The goal is to impart the tan cue ball with an initial velocity so as to move the blue ball to the black target. First, we use the ground-truth pool simulator to find a solution <b>(left)</b>. Next, we use a baseline RNN <b>(center)</b> to obtain a similar plan. This approach works, but it's inefficient because the model can only "tick" at a constant rate. Finally, we use a Jumpy RNN <b>(right)</b> to perform the same planning task in many fewer steps by jumping over the spans of time where motion is predictable.</div>
+</div> -->
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:33%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="video_sim" style="width:100%;min-width:250px;">
+    	<source src="/assets/jumpy-rnns/video_simulator.mp4" type="video/mp4" />
+    </video>
+    <button id="video_sim_button" onclick="playPauseSim()">Play</button> 
+    <div style="text-align: left;">Using model-based planning to play pool/billiards. The goal is to impart the tan cue ball with an initial velocity so as to move the blue ball to the black target. First, we use the ground-truth pool simulator to find a solution.</div>
+  </div>
+  <div style="width:33%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="video_base" style="width:100%;min-width:250px;">
+    	<source src="/assets/jumpy-rnns/video_base.mp4" type="video/mp4" />
+    </video>
+    <button id="video_base_button" onclick="playPauseBase()">Play</button> 
+    <div style="text-align:left;">Next, we use a baseline RNN to obtain a similar plan. This approach works, but it's inefficient because the model can only "tick" at a constant rate..</div>
+  </div>
+   <div style="width:33%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="video_jumpy" style="width:100%;min-width:250px;">
+    	<source src="/assets/jumpy-rnns/video_jumpy.mp4" type="video/mp4" />
+    </video>
+    <button id="video_jumpy_button" onclick="playPauseJumpy()">Play</button> 
+    <div style="text-align:left;padding:10px">Finally, we use a Jumpy RNN to perform the same planning task in many fewer steps by jumping over the spans of time where motion is predictable.</div>
+  </div>
+</div>
+
+<script> 
+function playPauseSim() { 
+  var video = document.getElementById("video_sim"); 
+  var button = document.getElementById("video_sim_button");
+  if (video.paused) {
+    video.play();
+	button.textContent = "Pause";}
+  else {
+    video.pause(); 
+	button.textContent = "Play";}
+} 
+
+function playPauseBase() { 
+  var video = document.getElementById("video_base"); 
+  var button = document.getElementById("video_base_button");
+  if (video.paused) {
+    video.play();
+	button.textContent = "Pause";}
+  else {
+    video.pause(); 
+	button.textContent = "Play";}
+} 
+
+function playPauseJumpy() { 
+  var video = document.getElementById("video_jumpy"); 
+  var button = document.getElementById("video_jumpy_button");
+  if (video.paused) {
+    video.play();
+	button.textContent = "Pause";}
+  else {
+    video.pause(); 
+	button.textContent = "Play";}
+} 
+</script>
+
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+	<a href="https://openreview.net/pdf?id=4c3WeBTErrE" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="https://github.com/greydanus" id="linkbutton" target="_blank">Get the code</a>
+</div>
+
+<p>It is said that change happens slowly and then all at once. Billiards balls move across a table before colliding and changing trajectories; water molecules cool slowly and then undergo a rapid phase transition into ice; and economic systems enjoy periods of stability interspersed with abrupt market downturns. That is to say, many time series exhibit periods of relatively homogeneous change divided by important events. Despite this, recurrent neural networks (RNNs), popular for time series modeling, treat time in uniform intervals – potentially wasting prediction resources on long intervals of relatively constant change.</p>
+
+<p>One reason for this is that standard RNNs are \emph{sequence} models without an explicit notion of time. Instead, the amount of time represented by a single RNN update is implicitly set by the training data. For example, a model trained on sequences of daily average temperatures has an implicit time step of a day. For a fixed computational budget, this introduces a trade-off between fidelity and temporal range. A model trained at a resolution of one time step per minute would require over 10K iterations to make a prediction for one week in the future. At the other end of the spectrum, a one-week resolution model could achieve this in a single step but could not provide information about the intervening days. As such, selecting a point on this spectrum is a troublesome design decision.</p>
+
+<p>In this work, we present Jumpy RNNs, a simple recurrent architecture that takes update steps at variable, data-dependent time-scales while being able to provide dense predictions at intervening points. The core innovation is to define the hidden state as a continuous, piece-wise linear function of time. Specifically, each Jumpy RNN step predicts not only a hidden state $h_i$, but also a hidden \emph{velocity} $\dot h_i$ and a span of time $\dt$ over which the linear latent dynamics $h(t) = h_i + \dot h_i (t-i)$ should be applied. Our model then jumps forward in time by $\dt$ before updating again. Any intermediate time step can be produced by decoding the corresponding hidden state $h(t)$.</p>
+
+<p>During training, our model learns to use these functions to span the non-uniform time durations between key events, where key events emerge as time points where linear latent extrapolation is ineffective. In Figure \ref{fig1}, for example, we see that our model updates at the collision points between the two balls and the walls. During time spans when the balls are undergoing constant motion, our model does not perform cell updates. In contrast, a standard RNN must tick uniformly through time.</p>
+
+<p>We demonstrate our proposed model in several physical dynamics prediction tasks. We show Jumpy RNNs achieve comparable performance to the baseline while being between three and twenty times more efficient to sample. This includes settings with non-linear pixel-based observations. Further, we show that our model outperforms RNNs with any fixed step length, showing the importance of data-dependent step sizes. Finally, we demonstrate that a learned Jumpy RNN dynamics model can be leveraged as an efficient forward predictor in a planning domain. Our key contributions are to:</p>
+
+<h2 id="footnotes">Footnotes</h2>
+
+:ET
