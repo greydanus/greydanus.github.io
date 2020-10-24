@@ -218,7 +218,6 @@ Several of these wings are just plain dreadful. But others seem reasonable, if u
 
 There are variations on the base wing shape which excel in particular niches. Sometimes we will want a wing that is optimal at high speeds and other times we will want one that is optimal at low speeds. In order to accommodate a large fuselage, we might want an extra-thick wing. Alternatively, in order to reduce its overall weight, we might want to keep it thin. It turns out that we can change simulation parameters and add auxiliary losses to find optimal wing shapes for each of these scenarios.
 
-
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%; min-width: 300px">
 	<img src="/assets/optimizing-a-wing/sim_manifold.png" style="width:100%">
 </div>
