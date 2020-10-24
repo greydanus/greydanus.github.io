@@ -1,0 +1,196 @@
+I"a(<div>
+	<style>
+		#linkbutton:link, #linkbutton:visited {
+		  background-color: rgb(180,180,180);
+		  border-radius: 4px;
+		  color: white;
+		  padding: 6px 0px;
+		  width: 150px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  text-transform: uppercase;
+		  font-size: 13px;
+		  margin: 8px;
+		}
+
+		#linkbutton:hover, #linkbutton:active {
+		  background-color: rgba(160,160,160);
+		}
+
+		.playbutton {
+		  background-color: rgb(148, 196, 146);
+		  border-width: 0;
+		  /*background-color: rgba(255, 130, 0);*/
+		  border-radius: 4px;
+		  color: white;
+		  padding: 5px 8px;
+		  /*width: 60px;*/
+		  text-align: center;
+		  text-decoration: none;
+		  text-transform: uppercase;
+		  font-size: 12px;
+		  /*display: block;*/
+		  /*margin-left: auto;*/
+		  margin: 8px 0px;
+		  margin-right: auto;
+		  min-width:60px;
+		}
+
+		.playbutton:hover, .playbutton:active {
+		  background-color: rgb(128, 176, 126);
+		}
+	</style>
+</div>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <video id="video_sim" style="width:100%;min-width:250px;">
+    	<source src="/assets/jumpy-rnn/video_simulator.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="video_sim_button" onclick="playPauseSim()">Play</button> 
+    <div style="text-align: left;margin-left:10px;margin-right:10px;">Using model-based planning to play pool/billiards. The goal is to impart the tan cue ball with an initial velocity so as to move the blue ball to the black target.</div>
+  </div>
+  <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <video id="video_base" style="width:100%;min-width:250px;">
+    	<source src="/assets/jumpy-rnn/video_base.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="video_base_button" onclick="playPauseBase()">Play</button> 
+    <div style="text-align:left;margin-left:10px;margin-right:10px;">A baseline RNN trained on billiards dynamics can also be used for model-based planning. It's inefficient because it has to "tick" at a constant rate.</div>
+  </div>
+   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="video_jumpy" style="width:100%;min-width:250px;">
+    	<source src="/assets/jumpy-rnn/video_jumpy.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="video_jumpy_button" onclick="playPauseJumpy()">Play</button> 
+    <div style="text-align:left;margin-left:10px;margin-right:10px;">By contrast, a Jumpy RNN trained on the same task can perform planning in many fewer steps by jumping over spans of time where motion is predictable.</div>
+  </div>
+</div>
+
+<script> 
+function playPauseSim() { 
+  var video = document.getElementById("video_sim"); 
+  var button = document.getElementById("video_sim_button");
+  if (video.paused) {
+    video.play();
+	button.textContent = "Pause";}
+  else {
+    video.pause(); 
+	button.textContent = "Play";}
+} 
+
+function playPauseBase() { 
+  var video = document.getElementById("video_base"); 
+  var button = document.getElementById("video_base_button");
+  if (video.paused) {
+    video.play();
+	button.textContent = "Pause";}
+  else {
+    video.pause(); 
+	button.textContent = "Play";}
+} 
+
+function playPauseJumpy() { 
+  var video = document.getElementById("video_jumpy"); 
+  var button = document.getElementById("video_jumpy_button");
+  if (video.paused) {
+    video.play();
+	button.textContent = "Pause";}
+  else {
+    video.pause(); 
+	button.textContent = "Play";}
+} 
+</script>
+
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+	<a href="https://openreview.net/pdf?id=4c3WeBTErrE" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="https://github.com/greydanus" id="linkbutton" target="_blank">Get the code</a>
+</div>
+
+<h2 id="change-it-is-said-happens-slowly-and-then-all-at-once">Change, it is said, happens slowly and then all at once…</h2>
+
+<!-- Change, it is said, happens slowly and then all at once. -->
+<p>Billiards balls move across a table before colliding and changing trajectories; water molecules cool slowly and then undergo a rapid phase transition into ice; and economic systems enjoy periods of stability interspersed with abrupt market downturns. That is to say, many time series exhibit periods of relatively homogeneous change divided by important events. Despite this, recurrent neural networks (RNNs) – a popular type of time series model – treat time in uniform intervals. In doing so, they are forced to spend much of their time stepping through periods of relatively predictable change.</p>
+
+<p>In this post, we will propose a simple modification to RNNs that allows them to jump over long time intervals while retaining the ability to produce fine-grained updates when necessary. This “Jumpy RNN” model can make predictions that are either one second in the future or one minute in the future depending on the context.</p>
+
+<p>Whereas most RNNs maintain a hidden state which summarizes their belief about where they are in the world, our model maintains both a hidden state \(h\) <em>and</em> a hidden velocity \(\dot h\). Then, by assuming that the hidden state changes linearly over a certain duration of time, we can predict any state within that duration by multiplying the hidden velocity by change in time and adding it to the hidden state: \(h(t)=h_i+ \dot h_i \Delta_i t\). In effect, this new model now <em>predicts a sequence of linear dynamics functions and durations over which they are valid</em>. By doing so, it can summarize a long span of homogeneous change in one go. Alternatively, it can break that span into smaller bits in order to improve accuracy.</p>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
+  <img src="/assets/jumpy-rnn/hero.png" style="width:100%" />
+</div>
+
+<p>In order to compare our model to regular RNNs, we used both of them to model a series of simple physics problems including the collisions of two pool/billiards balls. We found that our jumpy model was able to learn these patterns at least as well as the baseline while using a fraction of the forward simulation steps. This makes it a great candidate for model-based planning because it can predict the outcome of taking an action much more quickly than a baseline model. And since the hidden-state dynamics are continuous in time, we can solve for the hidden state at any arbitrary point in time. This allows us to simulate the dynamics of, say, billiards, at a higher temporal resolution than the original simulator:</p>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:49%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <video id="video_jumpy2" style="width:100%;min-width:250px;">
+    	<source src="/assets/jumpy-rnn/video_jumpy.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="video_jumpy2_button" onclick="playPauseJumpy2()">Play</button> 
+    <div style="text-align:left;margin-left:10px;margin-right:10px;">Using a Jumpy RNN to predict the same trajectory.</div>
+  </div>
+  <div style="width:49%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="video_interp" style="width:100%;min-width:250px;">
+    	<source src="/assets/jumpy-rnn/video_interp.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="video_interp_button" onclick="playPauseInterp()">Play</button> 
+    <div style="text-align:left;margin-left:10px;">By interpolating between hidden states predicted by the Jumpy RNN, we can obtain dynamics at a higher temporal resolution than that of the original simulator.</div>
+  </div>
+</div>
+
+<script> 
+function playPauseSim2() { 
+  var video = document.getElementById("video_sim2"); 
+  var button = document.getElementById("video_sim2_button");
+  if (video.paused) {
+    video.play();
+	button.textContent = "Pause";}
+  else {
+    video.pause(); 
+	button.textContent = "Play";}
+} 
+
+function playPauseJumpy2() { 
+  var video = document.getElementById("video_jumpy2"); 
+  var button = document.getElementById("video_jumpy2_button");
+  if (video.paused) {
+    video.play();
+	button.textContent = "Pause";}
+  else {
+    video.pause(); 
+	button.textContent = "Play";}
+} 
+
+function playPauseInterp() { 
+  var video = document.getElementById("video_interp"); 
+  var button = document.getElementById("video_interp_button");
+  if (video.paused) {
+    video.play();
+	button.textContent = "Pause";}
+  else {
+    video.pause(); 
+	button.textContent = "Play";}
+} 
+</script>
+
+<p>This model is closely related to a recent line of work on Neural Ordinary Differential Equations, or Neural ODEs. However, it does not use an ODE solver apart from implicit Euler integration of the hidden state. Based on our experience, we believe that this makes it easier to implement, train, and scale to large datasets.</p>
+
+<h2 id="the-value-of-rnns">The Value of RNNs</h2>
+
+<h2 id="the-limitations-of-rnns">The Limitations of RNNs</h2>
+
+<h2 id="our-results">Our Results</h2>
+
+<h2 id="planning">Planning</h2>
+
+<h2 id="related-work">Related Work</h2>
+
+<h2 id="conclusions">Conclusions</h2>
+
+<p>Having achieved widespread use in commercial and academic settings, RNNs are already a useful tool. But even though they are useful tools, they still have fundamental limitations. In this paper, we reckoned with the fact that they can only forecast the future in discrete, uniform time steps. In order to make RNNs more useful in more contexts, it is essential to find solutions to such restrictions. With this in mind, we proposed a Jumpy RNN model which can skip over long durations of comparatively homogeneous change and focus on pivotal events as the need arises. We hope that this line of work will expand the possible uses of RNNs and make them capable of representing time in a more efficient and flexible manner.</p>
+
+<h2 id="footnotes">Footnotes</h2>
+
+:ET
