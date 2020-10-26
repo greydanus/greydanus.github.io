@@ -124,30 +124,32 @@ function playPauseJumpy() {
 <!-- Change, it is said, happens slowly and then all at once. -->
 Billiards balls move across a table before colliding and changing trajectories; water molecules cool slowly and then undergo a rapid phase transition into ice; and economic systems enjoy periods of stability interspersed with abrupt market downturns. That is to say, many time series exhibit periods of relatively homogeneous change divided by important events. Despite this, recurrent neural networks (RNNs) -- a popular type of time series model -- treat time in uniform intervals. In doing so, they are forced to spend much of their time stepping through periods of relatively predictable change.
 
-In this post, I will introduce a simple RNN variant that can jump over long time intervals while retaining the ability to produce fine-grained updates when necessary. This “Jumpy RNN” model can make predictions that are either one second in the future or twenty seconds in the future depending on the context.
+In this blog post, I propose an extension of RNNs that avoids this waste of time. I call this extension a “Jumpy RNN” because it can jump over long time intervals or linger on short ones. It can predict twenty seconds into the future, or one second into the future, depending on the context.
 
-Whereas most RNNs maintain a hidden state which summarizes their belief about where they are in the world, our model maintains both a hidden state \\(h\\) _and_ a hidden velocity \\(\dot h\\). Then, by assuming that the hidden state changes linearly over a certain duration of time, we can predict any state within that duration by multiplying the hidden velocity by change in time and adding it to the hidden state: \\(h(t) = h + \dot h \Delta t\\). In effect, this new model now _predicts a sequence of linear dynamics functions and durations over which they are valid_. By doing so, it can summarize a long span of homogeneous change in one go. Alternatively, it can break that span into smaller bits in order to improve accuracy.
+Jumpy RNNs are similar to regular RNNs in most ways. Like RNNs, they maintain a hidden state \\(h\\) which summarizes their knowledge about the world at a given point in time. And like RNNs, they can perform the same set of cell updates on this hidden state (eg. vanilla, LSTM, or GRU updates). But one way in which they differ from regular RNNs is that they maintain a hidden velocity vector \\(\dot h\\) in addition to a hidden state vector \\(h\\). They assume that \\(h\\) changes in a locally-linear fashion and thus they are able to predict dynamics by multiplying \\(\dot h\\) by change in time and adding it to the state: \\(h(t) = h + \dot h \Delta t\\). In other words, in addition to predicting hidden states, Jumpy RNNs also predict _the locally-linear dynamics of those states_. In fact, I like to think of them as sequence models over functions instead of states. And so by predicting one function that can summarize several adjacent states, Jumpy RNNs gain the ability to jump over long spans of homogeneous change.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
   <img src="/assets/jumpy-rnn/hero.png" style="width:100%">
 </div>
 
-In order to compare our model to regular RNNs, we used both of them to model a series of simple physics problems including the collisions of two pool/billiards balls. We found that our jumpy model was able to learn these patterns at least as well as the baseline while using a fraction of the forward simulation steps. This makes it a great candidate for model-based planning because it can predict the outcome of taking an action much more quickly than a baseline model. And since the hidden-state dynamics are continuous in time, we can solve for the hidden state at any arbitrary point in time. This allows us to simulate the dynamics of, say, billiards, at a higher temporal resolution than the original simulator:
+In order to compare our model to regular RNNs, we used both of them to model a series of simple physics problems including the collisions of two billiards balls. We found that our jumpy model was able to learn these patterns at least as well as the baseline while using a fraction of the forward simulation steps. This makes it a great candidate for model-based planning because it can predict the outcome of taking an action much more quickly than a baseline model. And since the hidden-state dynamics are piecewise-linear over time, we can solve for the hidden state at arbitrary points along a trajectory. This allows us to simulate the dynamics of billiards, for example, at a higher temporal resolution than the original training data:
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
-    <video id="video_jumpy2" style="width:100%;min-width:250px;">
-    	<source src="/assets/jumpy-rnn/video_jumpy.mp4" type="video/mp4">
+    <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <video id="video_sim2" style="width:100%;min-width:250px;">
+      <source src="/assets/jumpy-rnn/video_simulator.mp4" type="video/mp4">
     </video>
-    <button class="playbutton" id="video_jumpy2_button" onclick="playPauseJumpy2()">Play</button> 
-    <div style="text-align:left;margin-left:10px;margin-right:10px;">Using a Jumpy RNN to predict the same trajectory.</div>
+    <button class="playbutton" id="video_sim2_button" onclick="playPauseSim2()">Play</button> 
+    <div style="text-align: left;margin-left:10px;margin-right:10px;">This video will give you a sense for the underlying temporal resolution of the billiards dataset on which we trained the Jumpy RNN.</div>
   </div>
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
     <video id="video_interp" style="width:100%;min-width:250px;">
     	<source src="/assets/jumpy-rnn/video_interp.mp4" type="video/mp4">
     </video>
     <button class="playbutton" id="video_interp_button" onclick="playPauseInterp()">Play</button> 
-    <div style="text-align:left;margin-left:10px;">By interpolating between hidden states predicted by the Jumpy RNN, we can obtain dynamics at a higher temporal resolution than that of the original simulator.</div>
+    <div style="text-align:left;margin-left:10px;">This video shows how we can use a Jumpy RNN to obtain dynamics estimates at a higher temporal resolution than that of the original simulator. 
+<!--     We can do this because the latent dynamics of the model are continuous and piecewise-linear in time. -->
+  </div>
   </div>
 </div>
 
@@ -186,54 +188,68 @@ function playPauseInterp() {
 } 
 </script>
 
-In summary, Jumpy RNNs represent an important improvement over regular RNNs for several important reasons. But before we discuss those reasons, we need to begin by talking about what regular RNNs are good at, and why they are worth improving upon.
+I am going to give more specific examples of how Jumpy RNNs improve over regular RNNs later. But first, we need to talk about what regular RNNs are good at and why they are worth improving upon in the first place.
 
 ## The Value of RNNs
 
-Recurrent neural networks are interesting because they can learn complex, long-range structure in time series data simply by predicting one point at a time. For example, if you train them on sequences of words, you can use them to translate from one language to another, or to generate possible completions to a prompt. And if you train them on observations of a robot arm, you can use them to generate realistic paths that the arm might take in the future. One of the things that makes these models so flexible is that they use a hidden vector _h_ to store memories of past observations. And they can _learn_ to read, write, and erase information from h in order to make accurate predictions about the future. This means that RNNs are quite good (although simplistic) models for how brains learn to use memory for such things. Here is an incomplete list of things people have trained RNNs to do:
-* •\\(~~\\)Translate text from one language to another (think Google Translate)
-* •\\(~~\\)Control a robot hand in order to solve a Rubik’s Cube
-* •\\(~~\\)Defeat professional human gamers in StarCraft
-* •\\(~~\\)Caption images
-* •\\(~~\\)Generate realistic handwriting
-* •\\(~~\\)Convert text to speech
-* •\\(~~\\)Convert speech to text
-* •\\(~~\\)Compose simple songs
-* •\\(~~\\)...and much more
+Recurrent neural networks are interesting because they can learn complex, long-range structure in time series data simply by predicting one point at a time. For example, if you train them on sequences of words, you can use them to translate from one language to another, or to generate possible completions to a prompt. And if you train them on observations of a robot arm, you can use them to generate realistic paths that the arm might take.
+
+One of the things that makes these models so flexible is that they use a hidden vector \\(h\\) to store memories of past observations. And they can _learn_ to read, write, and erase information from \\(h\\) in order to make accurate predictions about the future. RNNs are Turing-complete and, unlike other models that are Turing-complete (eg. HMMs or FSMs) they can learn and operate on noisy, high-dimensional data. Here is an incomplete list of things people have trained RNNs to do:
+* •&nbsp; Translate text from one language to another[^fn8] (think Google Translate)
+* •&nbsp; Control a robot hand in order to solve a Rubik’s Cube[^fn9]
+* •&nbsp; Defeat professional human gamers in StarCraft[^fn10]
+* •&nbsp; Caption images[^fn11]
+* •&nbsp; Generate realistic handwriting[^fn12]
+* •&nbsp; Convert text to speech[^fn15]
+* •&nbsp; Convert speech to text[^fn13],[^fn14]
+* •&nbsp; Sketch simple images[^fn16]
+* •&nbsp; Learn the Enigma cipher[^fn17]
+* •&nbsp; ...and much more
 
 
 ## The Limitations of RNNs
 
-**Uniform ticks.** I’ve been interested in RNNs for a long time, but one aspect of their design has always bothered me: they can only tick at one uniform rate, sort of like a clock. At each tick they make one observation of the world, perform one read-erase-write on their memory, and send one output message. This seems too rigid. We wouldn’t open our eyes, close them, think, then act, and repeat. This would be silly because sometimes we need to think fast and other times we need to think slow. For us, time is a very dynamic thing.
+I’ve been interested in RNNs for a long time, but one aspect of their design has always bothered me: they can only tick at one uniform rate, sort of like a clock.
 
-One of the great things about being able to think in this manner is that it helps us plan. For example, we can jump to three months in the future when we will be traveling to another country, realize that we’ll need our passport updated, and then make a short-term plan for how to do that. Our short-term plan might be: stop at the Post Office to get passport photos after work. And in order to pay for those photos, grab some extra cash from the piggy bank. And so the simple act of putting a $20 bill in our wallets can have many layers of planning behind it. What's more is that planning is happening across many time scales. Our brain does this by jumping from one event to another without thinking much about the intervening duration, and this is something that models like RNNs aren’t great at doing.
+**Uniform ticks.** At each tick they make one observation of the world, perform one read-erase-write operation on their memory, and output one state vector. This seems too rigid. We wouldn’t divide our perception of the world into uniform segments of, say, ten minutes. This would be silly because the important events of our daily routines are not spaced equally apart.
 
-**Discrete time steps.** Another issue with RNNs is that they perceive time as a series of discrete “time steps” that connect neighboring states. Since time is actually a continuous variable -- it has a definite value even in between RNN ticks -- we really should use models that treat it as such. In other words, when we ask our model what the world looked like at time \\( t=1.42\\) seconds, it should not have to locate the two ticks that are nearest in time and then interpolate between them, as is the case with RNNs. Rather, it should be able to give a well-defined answer. Models like Neural ODEs (which are closely related to this work) take a step in this direction, but it’s still an underexplored area of research.
+Consider the game of billiards. When you prepare to strike the cue ball, you imagine how it will collide with other balls and eventually send one of them into a pocket. And when you do this, you do not think about the constant motion of the cue ball as it rolls across the table. Instead, you think about the near-instantaneous collisions between the cue ball, walls, and pockets. Since these collisions are separated by variable amounts of time, making this plan requires that you jump from one collision event to another without much regard for the intervening duration. This is something that RNNs cannot do.
+
+**Discrete time steps.** Another issue with RNNs is that they perceive time as a series of discrete “time steps” that connect neighboring states. Since time is actually a continuous variable -- it has a definite value even in between RNN ticks -- we really should use models that treat it as such. In other words, when we ask our model what the world looked like at time \\( t=1.42\\) seconds, it should not have to locate the two ticks that are nearest in time and then interpolate between them, as is the case with RNNs. Rather, it should be able to give a well-defined answer. Models like Neural ODEs, which we will see are closely related to Jumpy RNNs, take a step in this direction. Even so, it’s a relatively young and underexplored area of research.
+
+<!-- This would be silly because sometimes we need to think on short timescales and other times we need to think on long timescales. -->
+
+<!-- This is particularly important in the context of planning. Imagine a scenario where you are making plans to travel internationally. In your head, you might jump to the moment when you pass through customs and remember that you need to update your passport. Next, you make a plan for updating it. After work, you will stop at the post office to get passport photos. In order to pay for those photos, you will need to add more money to your wallet. So the simple act of fetching a $20 bill can have several layers of planning behind it. And these layers of planning require jumping from one event to the next without simulating the intervening time, which is something RNNs cannot do. -->
+
+<!-- Consider the game of billiards. When a billiards player plans out how to strike the cue ball, she imagines how it will collide with other balls, eventually sending one of them into a pocket. As she makes a plan, she doesn't think about the constant motion of the cue ball as it rolls across the table. Instead, she thinks about collisions between the cue ball, walls, and pockets. Since these collisions are separated by variable amounts of time, making this plan requires that she jump from one collision event to another without much regard for the intervening durations. -->
+
 
 
 ## Our Results
 
-Our work on Jumpy RNNs was an attempt to fix these issues. Our model can jump over different durations of time and this allows it to tick more often when a lot is happening and less often otherwise. As we explained in the introduction, Jumpy RNNs are different from regular RNNs in that they predict a hidden state velocity in addition to a hidden state. Taken together, these two quantities represent a linear dynamics function in the RNN’s latent space. A second modification we make is to have the model predict the duration of time \\(\Delta t\\) over which that dynamics function is valid. In some cases, when change is happening at a constant rate, this value can be quite large. For example, when we create a toy dataset of perfectly linear motion, our model learns to summarize the trajectory in a single step.
+Our work on Jumpy RNNs was an attempt to fix these issues. Our model can jump over different durations of time and can tick more often when a lot is happening and less often otherwise. As I explained earlier, Jumpy RNNs are different from regular RNNs in that they predict a hidden state velocity in addition to a hidden state. Taken together, these two quantities represent a linear dynamics function in the RNN’s latent space. A second modification we make is to have the Jumpy RNN predict the duration of time \\(\Delta t\\) over which its dynamics functions are valid. In some cases, when change is happening at a constant rate, this value can be quite large.
+
+**Learning linear motion.** To show this more clearly, we conducted a simple toy experiment. We created a toy dataset of perfectly linear motion and checked to see whether our model would learn to summarize the whole thing in one step. As the figure below shows, it learned to do exactly that. Meanwhile, the regular RNN had to summarize the same motion in a series of tiny steps.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
   <img src="/assets/jumpy-rnn/lines.png" style="width:100%">
 </div>
 
-It’s worth noting that the way a system changes in time is only linear with respect to a particular coordinate system. For example, an object undergoing constant circular motion has nonlinear dynamics when we use Cartesian coordinates, but linear dynamics when we use Polar coordinates. That’s why physicists use different coordinates to describe different physical systems: the best coordinates are those that are maximally linear with respect to the dynamics.
+**Learning a change of basis.** It’s worth noting that the way a system changes in time is only linear with respect to a particular coordinate system. For example, an object undergoing constant circular motion has nonlinear dynamics when we use Cartesian coordinates, but linear dynamics when we use Polar coordinates. That’s why physicists use different coordinates to describe different physical systems: _all else being equal, the best coordinates are those that are maximally linear with respect to the dynamics._
 
-Since a Jumpy RNN forces dynamics to be linear in latent space, the encoder and decoder layers naturally learn to transform input data into a basis where the dynamics are linear. For example, when we train our model on a dataset of circular trajectories represented in Cartesian coordinates, it learns to summarize such trajectories in a single step as well. This implies that circular motion is linear in the model’s latent space, and that it has effectively learned a Cartesian-to-Polar conversion.
+Since a Jumpy RNN forces dynamics to be linear in latent space, the encoder and decoder layers naturally learn to transform input data into a basis where the dynamics are linear. For example, when we train our model on a dataset of circular trajectories represented in Cartesian coordinates, it learns to summarize such trajectories in a single step. This implies that our model has effectively learned a Cartesian-to-Polar change of basis.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
   <img src="/assets/jumpy-rnn/circles.png" style="width:100%">
 </div>
 
-Our model can learn more complicated change-of-basis functions as well. Later in the paper, we trained our model on pixel observations of two billiards balls. The pixel “coordinate system” is extremely nonlinear with respect to the linear motion of the two balls. And yet our model was able to predict the dynamics of the system _more effectively_ than the baseline model using three times fewer “ticks.” This jumpiness implies that our model found a basis in which the billiards dynamics were linear for significant durations of time -- something that would never happen in a pixel basis.
+**Learning from pixel videos.** Our model can learn more complicated change-of-basis functions as well. Later in the paper, we trained our model on pixel observations of two billiards balls. The pixel “coordinate system” is extremely nonlinear with respect to the linear motion of the two balls. And yet our model was able to predict the dynamics of the system far more effectively than the baseline model, while using three times fewer "ticks". The fact that our model could make jumpy predictions on this dataset implies that it found a basis where the billiards dynamics were linear for significant durations of time -- something that is strictly impossible in a pixel basis.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
   <img src="/assets/jumpy-rnn/pixel_billiards.png" style="width:100%">
 </div>
 
-In fact, we suspect that forcing dynamics to be linear in latent space actually _biased_ our model to find linear dynamics. We hypothesize that the baseline model performed worse on this task because it had no such inductive bias.
+In fact, we suspect that forcing dynamics to be linear in latent space actually biased our model to find linear dynamics. We hypothesize that the baseline model performed worse on this task because it had no such inductive bias.
 
 
 
@@ -245,20 +261,48 @@ In order to test this hypothesis, we tested our model against a baseline RNN on 
 
 We found that our model used half the wall time of the baseline and produced plans with a higher probability of success. These results are preliminary -- and part of ongoing work -- but they do confirm our hypothesis that the jumpy model would be useful for model-based planning.
 
+<!-- Quite a few researchers have wrestled with the fact that RNNs tick through time at a uniform rate. So there are a number of recent projects that aim to make RNNs more temporally abstract. Our work is related, and hopefully complementary, to these approaches. -->
 
-## Related Work
+## Neural ODEs and other related work
 
-**Other continuous-time models.** One challenge in training neural ODEs is that they must be continuously solved even when no observations occur, making forward passes take 60\% - 120\% longer than standard RNNs \citep{rubanova2019latent}. Since the integration speed of a Neural ODE is proportional to the curvature of the hidden state dynamics (higher curvature requires more steps), one can improve speed and efficiency by regularizing that curvature. \cite{finlay2020train} take a step in this direction. Even so, the number of time steps per function evaluation tends to be less than one. Our model resembles Neural ODEs in that it parameterizes the derivative of a hidden state. However, we make the simplifying assumption that the hidden state dynamics are linear for long stretches of time. This makes our model extremely efficient to integrate over long spans of time -- more efficient, in fact, than a baseline RNN. This jumpy behavior is what our model is designed for, and where it excels compared to Neural ODEs.
+Quite a few researchers have wrestled with the same limitations of RNNs that we have. So there are a number of related works aimed at solving the same issues. Among the most relevant of these works is a family of models called Neural ODEs.
+<!-- As I mentioned earlier, Jumpy RNNs are closely related to a family of models called Neural ODEs. In this section, we will review Neural ODEs and briefly discuss their connection to this work. -->
 
-**Other approaches to temporal abstraction.** There are other RNN-based models designed with temporal abstraction in mind. \cite{koutnik2014clockwork} proposed dividing an RNN internal state into groups and only performing cell updates on the $i^{th}$ group after $2^{i-1}$ time steps. More recent works have aimed to make this hierarchical structure more adaptive, either by data-specific rules \citep{ling2015character} or by a learning  mechanism \citep{chung2019hierarchical}. All of these hierarchical recurrent models can model data at different timescales, but they all \textit{must} perform cell updates at every time step in a sequence, and hence cannot jump over regions of homogeneous change.
+**Neural ODEs.** The past few years have seen a surge of interest in these models. The basic idea of a Neural ODE is to parameterize the derivative of some variable with a neural network and then integrate it. For example, if you wanted to obtain the continuous-time dynamics of a hidden state \\(h_t\\), you would start by setting \\(\frac{\partial h_t}{\partial t}=f_{NN}(h_t)\\) where \\(f_{NN}\\) is a neural network. Then you could integrate that function over time to get dynamics:
 
-Recent work by \cite{gregor2018temporal} in the context of reinforcement learning develops a jumpy planning model which does not use an RNN cell or perform continuous interpolation of latent states. Another relevant work in the field of RL is Embed to Control by \cite{watter2015embed}. Their work is similar to ours in that they assume that dynamics are linear in latent space and they train their model on several dynamics problems, some of them with pixel observations. But unlike our work, their model performs inference over discrete, uniform time steps and does not learn a jumpy behavior.
+$$ h_{t_1} ~=~ h_{t_0} + \int_{t_0}^{t_1} f_{NN}(h_t) ~~ dt $$
+
+One of the remarkable things about this approach is that you can literally integrate your model with an ODE integrator, eg. ``scipy.integrate.solve_ivp``. Likewise, you can backpropagate error signals to your model with a second call to the integrator. 
+<!-- In the time since this idea was popularized by a NeurIPS paper by Chen et al., a healthy family of Neural ODE-like models has sprung up. -->
+
+**Connection to our work.** Neural ODEs can be integrated _adaptively_; in other words, the size of the integration step can be made proportional to the local curvature. So in theory, if one were to regularize a Neural ODE to have very low curvature, one might be able to see the same jumpy behavior that we document in Jumpy RNNs. In practice, figuring out how to properly regularize the curvature of these models remains an open question.[^fn6] And current versions of Neural ODEs tend to be _more_ computationally demanding to evaluate than regular RNN models. In a recent paper about modeling RNN hidden state dynamics with ODEs[^fn7], for example, the authors mention that the ODE forward passes took 60% -- 120% longer than standard RNNs since they had to be continuously solved even when no observations were occurring.
+
+Jumpy RNNs resemble Neural ODEs in that they parameterize the derivative of a hidden state. But unlike Neural ODEs, Jumpy RNNs assume that the function being integrated is piecewise-linear and they do not require an ODE solver. The local linearity assumption makes our model extremely efficient to integrate over long spans of time -- much more efficient, for example, than a baseline RNN, and by extension, a Neural ODE.[^fn0]
+
+**Other related works.** There are other RNN-based models designed with temporal abstraction in mind. Koutnik et al. (2014)[^fn1] proposed dividing an RNN internal state into groups and only performing cell updates on the \\(i^{th}\\) group after \\(2^{i-1}\\) time steps. More recent works have aimed to make this hierarchical structure more adaptive, either by data-specific rules[^fn2] or by a learning  mechanism[^fn3]. But although these hierarchical recurrent models can model data at different timescales, but they still must perform cell updates at every time step in a sequence and cannot jump over regions of homogeneous change. Recent work in the context of reinforcement learning develops a jumpy planning model which does not use an RNN cell or perform continuous interpolation of latent states[^fn4]. Another relevant work from reinforcement learning is "Embed to Control"[^fn5]. This work is similar to ours in that it assumes that dynamics are linear in latent space. But unlike our work, the E2C model performs inference over discrete, uniform time steps and does not learn a jumpy behavior.
 
 
-## Conclusions
+## Closing thoughts
 
-Having achieved widespread use in commercial and academic settings, RNNs are already a useful tool. But even though they are useful tools, they still have fundamental limitations. In this paper, we reckoned with the fact that they can only forecast the future in discrete, uniform time steps. In order to make RNNs more useful in more contexts, it is essential to find solutions to such restrictions. With this in mind, we proposed a Jumpy RNN model which can skip over long durations of comparatively homogeneous change and focus on pivotal events as the need arises. We hope that this line of work will expand the possible uses of RNNs and make them capable of representing time in a more efficient and flexible manner.
+Having achieved widespread use in commercial and academic settings, RNNs are already a useful tool. But even though they are useful tools, they still have fundamental limitations. In this post, we reckoned with the fact that they can only forecast the future in discrete, uniform time steps. We proposed a Jumpy RNN model which can skip over long durations of comparatively homogeneous change and focus on pivotal events as the need arises. We hope that this line of work will expand the possible uses of RNNs and make them capable of representing time in a more efficient and flexible manner.
 
 ## Footnotes
 
-[^fn1]: Note: the code and overall approach to optimizing a wing in a fluid simulation is built on [this Autograd example](https://github.com/HIPS/autograd/blob/master/examples/fluidsim/wing.png).
+[^fn0]: A largely subjective observation was that Jumpy RNNs seemed easier to train and scale than Neural ODEs. With that said, one should note that Neural ODEs are improving at a rapid pace, and so this may change as time passes.
+[^fn1]: Jan Koutnik, Klaus Greff, Faustino Gomez, and Juergen Schmidhuber. [A Clockwork RNN](https://arxiv.org/abs/1402.3511). _International Conference on Machine Learning_, pp. 1863–1871, 2014.
+[^fn2]: Wang Ling, Isabel Trancoso, Chris Dyer, and Alan W Black. [Character-based neural machine translation](https://arxiv.org/abs/1511.04586). _Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics_, 2015.
+[^fn3]: Junyoung Chung, Sungjin Ahn, and Yoshua Bengio. [Hierarchical multiscale recurrent neural networks](https://arxiv.org/abs/1609.01704). _5th International Conference on Learning Representations_, ICLR 2017.
+[^fn4]: Karol Gregor, George Papamakarios, Frederic Besse, Lars Buesing, and Theophane Weber. [Temporal difference variational auto-encoder](https://arxiv.org/abs/1806.03107). _International Conference on Learning Representations_, 2018.
+[^fn5]: Manuel Watter, Jost Springenberg, Joschka Boedecker, and Martin Riedmiller. [Embed to control: A locally linear latent dynamics model for control from raw images](https://arxiv.org/abs/1506.07365). _Advances in Neural Information Processing Systems_, pp. 2746–2754, 2015.
+[^fn6]: Chris Finlay, Jörn-Henrik Jacobsen, Levon Nurbekyan, and Adam M Oberman. [How to train your neural ode: the world of jacobian and kinetic regularization](https://arxiv.org/abs/2002.02798). _International Conference on Machine Learning_, 2020.
+[^fn7]: Yulia Rubanova, Ricky TQ Chen, and David Duvenaud. [Latent odes for irregularly-sampled time series](https://papers.nips.cc/paper/8773-latent-ordinary-differential-equations-for-irregularly-sampled-time-series). _Advances in Neural Information Processing Systems_, 2019.
+[^fn8]: Sutskever, Ilya, Oriol Vinyals, and Quoc V. Le. [Sequence to sequence learning with neural networks](http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-). _Advances in neural information processing systems_. 2014.
+[^fn9]: OpenAI, Ilge Akkaya, Marcin Andrychowicz, Maciek Chociej, Mateusz Litwin, Bob McGrew, Arthur Petron, Alex Paino, Matthias Plappert, Glenn Powell, Raphael Ribas, Jonas Schneider, Nikolas Tezak, Jerry Tworek, Peter Welinder, Lilian Weng, Qiming Yuan, Wojciech Zaremba, Lei Zhang. [Solving a Rubik's cube with a robot hand](https://arxiv.org/abs/1910.07113). arXiv preprint arXiv:1910.07113 (2019).
+[^fn10]: Vinyals, Oriol, et al. [Grandmaster level in StarCraft II using multi-agent reinforcement learning](https://rdcu.be/bVI7G). Nature 575.7782 (2019): 350-354.
+[^fn11]: Johnson, Justin, Andrej Karpathy, and Li Fei-Fei. [Densecap: Fully convolutional localization networks for dense captioning](https://openaccess.thecvf.com/content_cvpr_2016/html/Johnson_DenseCap_Fully_Convolutional_CVPR_2016_paper.html). Proceedings of the IEEE conference on computer vision and pattern recognition. 2016.
+[^fn12]: Graves, Alex. [Generating sequences with recurrent neural networks](https://arxiv.org/abs/1308.0850). arXiv preprint arXiv:1308.0850 (2013). Also, see [my own blog post](https://greydanus.github.io/2016/08/21/handwriting/) on this topic :)
+[^fn13]: Graves, Alex, Abdel-rahman Mohamed, and Geoffrey Hinton. [Speech recognition with deep recurrent neural networks](https://ieeexplore.ieee.org/abstract/document/6638947/). 2013 IEEE international conference on acoustics, speech and signal processing. IEEE, 2013.
+[^fn14]: Amodei, Dario, et al. [Deep speech 2: End-to-end speech recognition in english and mandarin.](http://www.jmlr.org/proceedings/papers/v48/amodei16.html) International conference on machine learning. 2016.
+[^fn15]: Fan, Y., Qian, Y., Xie, F. L., & Soong, F. K. [TTS synthesis with bidirectional LSTM based recurrent neural networks](https://www.isca-speech.org/archive/interspeech_2014/i14_1964.html). Fifteenth Annual Conference of the International Speech Communication Association. 2014.
+[^fn16]: Ha, David, and Douglas Eck. [A neural representation of sketch drawings](https://arxiv.org/abs/1704.03477). _International Conference on Machine Learning_, 2018.
+[^fn17]: This was my contribution! I wrote a blog post about it [here](https://greydanus.github.io/2017/01/07/enigma-rnn/).

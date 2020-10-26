@@ -9,8 +9,34 @@ thumbnail: /assets/scribe/thumbnail.png
 author: Sam Greydanus
 ---
 
+<div>
+    <style>
+        #linkbutton:link, #linkbutton:visited {
+          background-color: rgb(180,180,180);
+          border-radius: 4px;
+          color: white;
+          padding: 6px 0px;
+          width: 150px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          text-transform: uppercase;
+          font-size: 13px;
+          margin: 8px;
+        }
+
+        #linkbutton:hover, #linkbutton:active {
+          background-color: rgba(160,160,160);
+        }
+    </style>
+</div>
+
 <div class="imgcap_noborder">
 	<img src="/assets/scribe/author.png" width="60%">
+</div>
+
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+    <a href="https://github.com/greydanus/scribe" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
 ## A story
