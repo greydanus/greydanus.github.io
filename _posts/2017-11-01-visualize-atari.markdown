@@ -12,24 +12,21 @@ author: Sam Greydanus
 <div>
     <style>
         #linkbutton:link, #linkbutton:visited {
+          background-color: rgb(180,180,180);
+          border-radius: 4px;
+          color: white;
           padding: 6px 0px;
+          width: 190px;
+          text-align: center;
           text-decoration: none;
           display: inline-block;
-
-          border: 2px solid #777;
-          padding: 10px;
-          font-size: 20px;
-          min-width: 200px;
-          width: 70%;
-          text-align: center;
-          color: #999;
-          margin: 0px auto;
-          cursor: pointer;
-          margin-bottom: 10px;
+          text-transform: uppercase;
+          font-size: 13px;
+          margin: 8px;
         }
 
         #linkbutton:hover, #linkbutton:active {
-          background-color: rgba(245, 245, 245);
+          background-color: rgba(160,160,160);
         }
     </style>
 </div>
@@ -38,11 +35,14 @@ author: Sam Greydanus
     <img src="/assets/visualize-atari/robots.png" width="50%">
 </div>
 
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+    <a href="https://arxiv.org/abs/1711.00138" id="linkbutton" target="_blank">Read the paper</a>
+    <a href="https://github.com/greydanus/visualize_atari" id="linkbutton" target="_blank">Get the code</a>
+    <a href="https://www.sciencemag.org/news/2018/08/why-does-ai-stink-certain-video-games-researchers-made-one-play-ms-pac-man-find-out" id="linkbutton" target="_blank">Coverage by Science</a>
+</div>
+
 Deep RL agents are effective at maximizing rewards but it's often unclear what strategies they use to do so. I'll talk about a paper[^fn1] I just finished, aimed at solving this problem.
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-    <a href="https://www.sciencemag.org/news/2018/08/why-does-ai-stink-certain-video-games-researchers-made-one-play-ms-pac-man-find-out" id="linkbutton" target="_blank" style="margin-right: 10px;">Article about this project in Science</a>
-</div>
 
 ## Solving Atari in 180 lines
 
