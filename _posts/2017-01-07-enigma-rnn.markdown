@@ -9,9 +9,36 @@ thumbnail: /assets/enigma-rnn/thumbnail.png
 author: Sam Greydanus
 ---
 
+<div>
+    <style>
+        #linkbutton:link, #linkbutton:visited {
+          background-color: rgb(180,180,180);
+          border-radius: 4px;
+          color: white;
+          padding: 6px 0px;
+          width: 150px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          text-transform: uppercase;
+          font-size: 13px;
+          margin: 8px;
+        }
+
+        #linkbutton:hover, #linkbutton:active {
+          background-color: rgba(160,160,160);
+        }
+    </style>
+</div>
+
 <div class="imgcap_noborder">
     <img src="/assets/enigma-rnn/enigma-machine.jpg" width="30%">
     <div class="thecap" style="text-align:center">An ~Enigma~ machine, famed for its inner complexity.</div>
+</div>
+
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+    <a href="https://arxiv.org/abs/1708.07576" id="linkbutton" target="_blank">Read the paper</a>
+    <a href="https://github.com/greydanus/crypto-rnn" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
 Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to learn the Enigma cipher.
