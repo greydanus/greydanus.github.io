@@ -195,16 +195,26 @@ I am going to give more specific examples of how Jumpy RNNs improve over regular
 Recurrent neural networks are interesting because they can learn complex, long-range structure in time series data simply by predicting one point at a time. For example, if you train them on sequences of words, you can use them to translate from one language to another, or to generate possible completions to a prompt. And if you train them on observations of a robot arm, you can use them to generate realistic paths that the arm might take.
 
 One of the things that makes these models so flexible is that they use a hidden vector \\(h\\) to store memories of past observations. And they can _learn_ to read, write, and erase information from \\(h\\) in order to make accurate predictions about the future. RNNs are Turing-complete and, unlike other models that are Turing-complete (eg. HMMs or FSMs) they can learn and operate on noisy, high-dimensional data. Here is an incomplete list of things people have trained RNNs to do:
-* •&nbsp; Translate text from one language to another[^fn8] (think Google Translate)
-* •&nbsp; Control a robot hand in order to solve a Rubik’s Cube[^fn9]
-* •&nbsp; Defeat professional human gamers in StarCraft[^fn10]
-* •&nbsp; Caption images[^fn11]
-* •&nbsp; Generate realistic handwriting[^fn12]
-* •&nbsp; Convert text to speech[^fn15]
-* •&nbsp; Convert speech to text[^fn13],[^fn14]
-* •&nbsp; Sketch simple images[^fn16]
-* •&nbsp; Learn the Enigma cipher[^fn17]
-* •&nbsp; ...and much more
+* •&nbsp; [Translate text from one language to another](http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-)
+* •&nbsp; [Control a robot hand in order to solve a Rubik’s Cube](https://openai.com/blog/solving-rubiks-cube/)
+* •&nbsp; [Defeat professional human gamers in StarCraft](https://rdcu.be/bVI7G)
+* •&nbsp; [Caption images](https://openaccess.thecvf.com/content_cvpr_2016/html/Johnson_DenseCap_Fully_Convolutional_CVPR_2016_paper.html)
+* •&nbsp; [Generate realistic handwriting](https://arxiv.org/abs/1308.0850)
+* •&nbsp; [Convert text to speech](https://www.isca-speech.org/archive/interspeech_2014/i14_1964.html)
+* •&nbsp; [Convert speech to text](http://www.jmlr.org/proceedings/papers/v48/amodei16.html)
+* •&nbsp; [Sketch simple images](https://arxiv.org/abs/1704.03477)
+* •&nbsp; [Learn the Enigma cipher](https://greydanus.github.io/2017/01/07/enigma-rnn/)
+
+<!-- * •&nbsp; Translate text from one language to another [^fn8] (think Google Translate)
+* •&nbsp; Control a robot hand in order to solve a Rubik’s Cube [^fn9]
+* •&nbsp; Defeat professional human gamers in StarCraft [^fn10]
+* •&nbsp; Caption images [^fn11]
+* •&nbsp; Generate realistic handwriting [^fn12]
+* •&nbsp; Convert text to speech [^fn15]
+* •&nbsp; Convert speech to text [^fn13] [^fn14]
+* •&nbsp; Sketch simple images [^fn16]
+* •&nbsp; Learn the Enigma cipher [^fn17]
+* •&nbsp; ...and much more -->
 
 
 ## The Limitations of RNNs
@@ -214,6 +224,29 @@ I’ve been interested in RNNs for a long time, but one aspect of their design h
 **Uniform ticks.** At each tick they make one observation of the world, perform one read-erase-write operation on their memory, and output one state vector. This seems too rigid. We wouldn’t divide our perception of the world into uniform segments of, say, ten minutes. This would be silly because the important events of our daily routines are not spaced equally apart.
 
 Consider the game of billiards. When you prepare to strike the cue ball, you imagine how it will collide with other balls and eventually send one of them into a pocket. And when you do this, you do not think about the constant motion of the cue ball as it rolls across the table. Instead, you think about the near-instantaneous collisions between the cue ball, walls, and pockets. Since these collisions are separated by variable amounts of time, making this plan requires that you jump from one collision event to another without much regard for the intervening duration. This is something that RNNs cannot do.
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+    <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <video id="video_pool" style="width:100%;min-width:250px;">
+      <source src="/assets/jumpy-rnn/pool_shot.mp4" type="video/mp4">
+    </video>
+    <button class="playbutton" id="video_pool_button" onclick="playPausePool()">Play</button> 
+    <div style="text-align: left;">An professional pool player making a remarkable shot. We'll never know exactly what was going through his head when he did this, but we can say at the very least he was planning over a sequence of collisions. An RNN, by contrast, would focus most of its compute on simulating the linear motion of the ball in between collisions.</div>
+  </div>
+</div>
+
+<script> 
+function playPausePool() { 
+  var video = document.getElementById("video_pool"); 
+  var button = document.getElementById("video_pool_button");
+  if (video.paused) {
+    video.play();
+  button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
 
 **Discrete time steps.** Another issue with RNNs is that they perceive time as a series of discrete “time steps” that connect neighboring states. Since time is actually a continuous variable -- it has a definite value even in between RNN ticks -- we really should use models that treat it as such. In other words, when we ask our model what the world looked like at time \\( t=1.42\\) seconds, it should not have to locate the two ticks that are nearest in time and then interpolate between them, as is the case with RNNs. Rather, it should be able to give a well-defined answer. Models like Neural ODEs, which we will see are closely related to Jumpy RNNs, take a step in this direction. Even so, it’s a relatively young and underexplored area of research.
 
