@@ -1,0 +1,120 @@
+I"�'<div>
+	<style>
+        #linkbutton:link, #linkbutton:visited {
+          padding: 6px 0px;
+          text-decoration: none;
+          display: inline-block;
+
+          border: 2px solid #777;
+          padding: 10px;
+          font-size: 20px;
+          min-width: 200px;
+          width: 50%;
+          text-align: center;
+          color: #999;
+          margin: 0px auto;
+          cursor: pointer;
+          margin-bottom: 10px;
+        }
+
+        #linkbutton:hover, #linkbutton:active {
+          background-color: rgba(245, 245, 245);
+        }
+
+		.playbutton {
+		  background-color: rgb(148, 196, 146);
+		  border-width: 0;
+		  /*background-color: rgba(255, 130, 0);*/
+		  border-radius: 4px;
+		  color: white;
+		  padding: 5px 8px;
+		  /*width: 60px;*/
+		  text-align: center;
+		  text-decoration: none;
+		  text-transform: uppercase;
+		  font-size: 12px;
+		  /*display: block;*/
+		  /*margin-left: auto;*/
+		  margin: 8px 0px;
+		  margin-right: auto;
+		  min-width:60px;
+		}
+
+		.playbutton:hover, .playbutton:active {
+		  background-color: rgb(128, 176, 126);
+		}
+	</style>
+</div>
+
+<p>In this project, we treat every pixel in an image as a biological cell. Then we train these cells to send signals to their neighbors so that, over time, the entire population will agree on what MNIST digit they are shaping. Every cell “votes” on the global shape by turning one of ten different colors, corresponding to the ten digits 0-9. Sometimes the truth prevails and sometimes they are collectively misguided. Sometimes conflicting signals cause different regions to be classified differently. I like <a href="https://twitter.com/hardmaru/status/1299152583328559105">@hardmaru’s example</a> of a 4 (🔴) vs a 2 (🔵). It’s similar to an election process. Even has “swing states:”</p>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video style="width:100%;min-width:250px;" controls="">
+    	<source src="/assets/selforg-digits/screencapture.mp4" type="video/mp4" />
+    </video>
+<!--     <div style="text-align: left;margin-left:10px;margin-right:10px;padding-top: 20px;">
+
+    	</div> -->
+  </div>
+</div>
+
+<h2 id="distill-article">Distill Article</h2>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+	<a href="https://distill.pub/2020/selforg/mnist/" id="linkbutton" target="_blank" style="margin-right: 10px;">Read this article on Distill</a>
+</div>
+
+<p>Having given that quick summary, I encourage you to try the interactive demo and read the full article on Distill (link above). The SelfOrg group at Google Brain did a fantastic job and I enjoyed working with them on it.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup> This was the second article I helped write for Distill and I learned just as much as I did the first time. As an additional exciting update, I am now an Associate Editor for Distill, which means I get to spend some of my time working to improve the paper’s review and editorial process.</p>
+
+<h2 id="useful-properties-of-cellular-automata">Useful properties of Cellular Automata</h2>
+
+<p>One of the great parts of this article was rediscovering the magic of cellular automata (CAs). They are a niche topic in science, but they unite the <em>best parts</em> of biology, physics, and computer science. They are:</p>
+
+<ul>
+  <li>
+    <p>• <strong>Local.</strong> This is interesting because all interactions in physics are local aside from quantum entanglement, and even that is up for debate.<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">2</a></sup> All interactions in chemistry and biology are also local, including the interactions between neurons that allow us to learn. The value of locality is that it is one of the <em>strongest</em> upper bounds on the complexity of a system. Without locality, any unit (atom, molecule, cell, human) can interact with any other, leading to an exponential growth in causal influences on each unit as the size of the system increases. This is bad news if you want to establish any interesting chains of causality between various sub-units. Because atoms have this property, matter is relatively stable. Because matter has this property, we can write one bit of information to a memory tape and trust that it will maintain its state.<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">3</a></sup></p>
+  </li>
+  <li>• <strong>Parallelizable.</strong> One particularly important advantage of locality is that it makes CAs immensely parallelizable. It’s not hard to train or evaluate a large population of CAs asynchronously: disparate parts of the system never have to communicate or synchronize with one another. This is why, if we do live in a simulation, it is probably implemented with a CA.<sup id="fnref:fn4" role="doc-noteref"><a href="#fn:fn4" class="footnote">4</a></sup></li>
+  <li>• <strong>Scalable in number of cells.</strong> This is closely connected to “parallelizable.” Imagine training a 20x20 population of cells to do something and then running a 200x200 population of them on some downstream task. The numbers are different, but we actually do this in the Distill Article’s demo. This is not something you can do with neural networks – at least not with any architectures I am aware of.</li>
+  <li>• <strong>Expressive.</strong> Given how simple some CA can be – for example, Conway’s Game of Life – they have impressive theoretical properties. They are Turing complete and can simulate any other system. You could even use Conway’s Game of Life to simulate Conway’s Game of Life…and yes, <a href="https://twitter.com/AlanZucconi/status/1315967202797981696">someone actually did this</a>.</li>
+  <li>• <strong>Resilient.</strong> Systems where local interactions eventually lead to global behavior are extraordinarily resilient. You can cut a 2-headed planarian in half and both halves will regenerate. You can cut a limb from a tree and the tree will survive. You can leave your company and your company will continue on without you, barely noticing your absence (ok, that was a joke! People will miss you, but in theory they should be able to cover for you when you take a few vacation days).</li>
+  <li>• <strong>Likely to fail gracefully.</strong> It’s hard to define what it means to “fail gracefully” so this last point is just subjective. But I really like the failure case of the 4/2 digit in the video above. That shape was way outside of the CA’s training distribution, but it responded in a fairly intuitive manner. Here’s another fun failure case from a CA that was trained to grow (from a single cell) into a yellow fish emoji. The population of cells kept growing even after it became a mature fish, but did so in a way that preserved the fish’s shape and body texture.</li>
+</ul>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:47.3%; min-width:200px; display: inline-block; vertical-align: top;">
+    <img src="/assets/selforg-digits/42_color.png" style="width:100%" />
+  </div>
+  <div style="width:52%; min-width:300px; display: inline-block; vertical-align: top;">
+    <img src="/assets/selforg-digits/fish.png" style="width:100%" />
+<!--     <div style="text-align:left;">A plot by <a href="https://doi.org/10.1002/jmor.10013">Lindhe (2002)</a> showing aspect ratio versus wing loading index in some birds, airplanes, a hang-glider, a butterfly, and a maple seed. Just like the families of birds, different human flying machines display substantial variation along these axes.</div> -->
+  </div>
+</div>
+
+<p>Those are the reasons I am interested in cellular automata. More generally, I like them as a design motif – they capture a set of elegant design principles that, even if we don’t follow strictly at all times in, say deep learning research, are worth thinking carefully about.</p>
+
+<h2 id="prospectus">Prospectus</h2>
+
+<p>We have unleashed self-classifying digits upon the world. Now, on thousands of different browsers, wherever they may be, our little cells are coming to life. They are looking at their particular MNIST pixels, talking to their neighbors, and trying to figure out what their overall digit shape is. Little do they know, they are part of a human scientific endeavor that is much the same. For we humans, too, are looking at our local surroundings, talking with our neighbors, and trying to agree on the overall shape of our reality.</p>
+
+<p>Best of luck to the little cells and to us humans as well.</p>
+
+<h2 id="footnotes">Footnotes</h2>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:fn1" role="doc-endnote">
+      <p>My main contribution, by the way, was to help write the article. Alex, Eyvind, and Ettore obtained the core results. I’ve also been running my own experiments on Neural Cellular Automata lately. Stay tuned for more on this in a future post! <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:fn2" role="doc-endnote">
+      <p>I want to write a post on this, but I have more reading to do first. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:fn3" role="doc-endnote">
+      <p>One of the problems with fully-connected neural networks is that they use very dense connectivity patterns – denser, perhaps, than locality constraints permit in the brain. In recent years, we’ve seen that particular connectivity patterns (e.g. the local connectivity of ConvNets) have major advantages. <a href="#fnref:fn3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:fn4" role="doc-endnote">
+      <p>Which makes the fact that this article is about CA pretty meta. <a href="#fnref:fn4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

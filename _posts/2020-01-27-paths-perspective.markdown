@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Distill Article: The Paths Perspective on Value Learning"
+title:  "The Paths Perspective on Value Learning"
 excerpt: "I recently published a Distill article about value learning. This post includes a link to the article and some meta-commentary about the Distill format."
 date:   2020-01-27 11:00:00
 mathjax: true

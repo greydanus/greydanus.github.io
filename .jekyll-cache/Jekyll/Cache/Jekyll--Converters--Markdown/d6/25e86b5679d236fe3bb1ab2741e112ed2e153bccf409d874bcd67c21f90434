@@ -1,0 +1,83 @@
+I"<div>
+	<style>
+        #linkbutton:link, #linkbutton:visited {
+          padding: 6px 0px;
+          text-decoration: none;
+          display: inline-block;
+
+          border: 2px solid #777;
+          padding: 10px;
+          font-size: 20px;
+          min-width: 200px;
+          width: 50%;
+          text-align: center;
+          color: #999;
+          margin: 0px auto;
+          cursor: pointer;
+          margin-bottom: 10px;
+        }
+
+        #linkbutton:hover, #linkbutton:active {
+          background-color: rgba(245, 245, 245);
+        }
+
+		.playbutton {
+		  background-color: rgb(148, 196, 146);
+		  border-width: 0;
+		  /*background-color: rgba(255, 130, 0);*/
+		  border-radius: 4px;
+		  color: white;
+		  padding: 5px 8px;
+		  /*width: 60px;*/
+		  text-align: center;
+		  text-decoration: none;
+		  text-transform: uppercase;
+		  font-size: 12px;
+		  /*display: block;*/
+		  /*margin-left: auto;*/
+		  margin: 8px 0px;
+		  margin-right: auto;
+		  min-width:60px;
+		}
+
+		.playbutton:hover, .playbutton:active {
+		  background-color: rgb(128, 176, 126);
+		}
+	</style>
+</div>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+	<a href="https://distill.pub/2020/selforg/mnist/" id="linkbutton" target="_blank" style="margin-right: 10px;">Read this article on Distill</a>
+</div>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video style="width:100%;min-width:250px;" controls="">
+    	<source src="/assets/selforg-digits/screencapture.mp4" type="video/mp4" />
+    </video>
+    <div style="text-align: left;margin-left:10px;margin-right:10px;padding-top: 20px;"><b>Summary.</b> Each pixel is analogous to a biological cell. It decides its own color and communicates with its immediate neighbors. The goal of the cell population as a whole is to come to an agreement about what their global shape represents. Every cell "votes" on the global shape by turning one of ten different colors, corresponding to the ten digits 0-9. 
+    	<br /> <br />
+    Sometimes the truth prevails, but they are collectively misguided. Sometimes conflicting signals cause different regions to be classified differently. I like <a href="https://twitter.com/hardmaru/status/1299152583328559105">@hardmaru's example</a> of a 4 (🔴) vs a 2 (🔵). It's similar to an election process. Even has “swing states.”
+
+    	</div>
+  </div>
+</div>
+
+<h2 id="useful-properties-of-cellular-automata">Useful properties of Cellular Automata</h2>
+
+<p><strong>Local.</strong> Strong biological (and physics) analogy. No combinatorial wiring problems (like with neural nets)
+<strong>Parallelizable.</strong> Train on 50x50, run on 500x500
+<strong>Scalable.</strong> Good for GPUs. Also good for networks of GPUs
+<strong>Expressive.</strong> Turing complete, universal, etc.
+<strong>Emergence.</strong> Interesting and unexpected behaviors</p>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:40%">
+	<img src="/assets/selforg-digits/fish.png" />
+</div>
+
+<h2 id="closing-thoughts">Closing Thoughts</h2>
+
+<p>We have unleashed self-classifying digits upon the world. Now, on thousands of different browsers, wherever they may be, our little cells are coming to life. They are looking at their particular MNIST pixels, talking to their neighbors, and trying to figure out what their overall digit shape is. Little do they know, they are part of a human scientific endeavor that is much the same. For we humans, too, are looking at our local surroundings, talking with our neighbors, and trying to agree on the overall shape of our reality.</p>
+
+<p>Best of luck to the little cells and to us humans as well.</p>
+:ET

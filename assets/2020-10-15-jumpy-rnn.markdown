@@ -60,7 +60,7 @@ thumbnail: /assets/jumpy-rnn/thumbnail.png
     	<source src="/assets/jumpy-rnn/video_simulator.mp4" type="video/mp4">
     </video>
     <button class="playbutton" id="video_sim_button" onclick="playPauseSim()">Play</button> 
-    <div style="text-align: left;margin-left:10px;margin-right:10px;">Using model-based planning to play pool/billiards. The goal is to impart the tan cue ball with an initial velocity so as to move the blue ball to the black target.</div>
+    <div style="text-align: left;margin-left:10px;margin-right:10px;">Using model-based planning to play billiards. The goal is to impart the tan cue ball with an initial velocity so as to move the blue ball to the black target.</div>
   </div>
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <video id="video_base" style="width:100%;min-width:250px;">
@@ -124,7 +124,7 @@ function playPauseJumpy() {
 <!-- Change, it is said, happens slowly and then all at once. -->
 Billiards balls move across a table before colliding and changing trajectories; water molecules cool slowly and then undergo a rapid phase transition into ice; and economic systems enjoy periods of stability interspersed with abrupt market downturns. That is to say, many time series exhibit periods of relatively homogeneous change divided by important events. Despite this, recurrent neural networks (RNNs) -- a popular type of time series model -- treat time in uniform intervals. In doing so, they are forced to spend much of their time stepping through periods of relatively predictable change.
 
-In this blog post, I propose an extension of RNNs that avoids this waste of time. I call this extension a “Jumpy RNN” because it can jump over long time intervals or linger on short ones. It can predict twenty seconds into the future, or one second into the future, depending on the context.
+In this blog post, we propose an extension of RNNs that avoids this waste of time. We call this extension “Jumpy RNNs” because they can jump over long time intervals or linger on short ones. They can predict twenty seconds into the future or one second into the future depending on the context.
 
 Jumpy RNNs are similar to regular RNNs in most ways. Like RNNs, they maintain a hidden state \\(h\\) which summarizes their knowledge about the world at a given point in time. And like RNNs, they can perform the same set of cell updates on this hidden state (eg. vanilla, LSTM, or GRU updates). But one way in which they differ from regular RNNs is that they maintain a hidden velocity vector \\(\dot h\\) in addition to a hidden state vector \\(h\\). They assume that \\(h\\) changes in a locally-linear fashion and thus they are able to predict dynamics by multiplying \\(\dot h\\) by change in time and adding it to the state: \\(h(t) = h + \dot h \Delta t\\). In other words, in addition to predicting hidden states, Jumpy RNNs also predict _the locally-linear dynamics of those states_. In fact, I like to think of them as sequence models over functions instead of states. And so by predicting one function that can summarize several adjacent states, Jumpy RNNs gain the ability to jump over long spans of homogeneous change.
 
@@ -231,7 +231,7 @@ Consider the game of billiards. When you prepare to strike the cue ball, you ima
       <source src="/assets/jumpy-rnn/pool_shot.mp4" type="video/mp4">
     </video>
     <button class="playbutton" id="video_pool_button" onclick="playPausePool()">Play</button> 
-    <div style="text-align: left;">An professional pool player making a remarkable shot. We'll never know exactly what was going through his head when he did this, but we can say at the very least he was planning over a sequence of collisions. An RNN, by contrast, would focus most of its compute on simulating the linear motion of the ball in between collisions.</div>
+    <div style="text-align: left;">A professional pool player making a remarkable shot. We'll never know exactly what was going through his head when he did this, but we can say at the very least he was planning over a sequence of collisions. An RNN, by contrast, would focus most of its compute on simulating the linear motion of the ball in between collisions.</div>
   </div>
 </div>
 
@@ -312,12 +312,14 @@ One of the remarkable things about this approach is that you can literally integ
 
 Jumpy RNNs resemble Neural ODEs in that they parameterize the derivative of a hidden state. But unlike Neural ODEs, Jumpy RNNs assume that the function being integrated is piecewise-linear and they do not require an ODE solver. The local linearity assumption makes our model extremely efficient to integrate over long spans of time -- much more efficient, for example, than a baseline RNN, and by extension, a Neural ODE.[^fn0]
 
-**Other related works.** There are other RNN-based models designed with temporal abstraction in mind. Koutnik et al. (2014)[^fn1] proposed dividing an RNN internal state into groups and only performing cell updates on the \\(i^{th}\\) group after \\(2^{i-1}\\) time steps. More recent works have aimed to make this hierarchical structure more adaptive, either by data-specific rules[^fn2] or by a learning  mechanism[^fn3]. But although these hierarchical recurrent models can model data at different timescales, but they still must perform cell updates at every time step in a sequence and cannot jump over regions of homogeneous change. Recent work in the context of reinforcement learning develops a jumpy planning model which does not use an RNN cell or perform continuous interpolation of latent states[^fn4]. Another relevant work from reinforcement learning is "Embed to Control"[^fn5]. This work is similar to ours in that it assumes that dynamics are linear in latent space. But unlike our work, the E2C model performs inference over discrete, uniform time steps and does not learn a jumpy behavior.
+**Other related works.** There are other RNN-based models designed with temporal abstraction in mind. Koutnik et al. (2014)[^fn1] proposed dividing an RNN internal state into groups and only performing cell updates on the \\(i^{th}\\) group after \\(2^{i-1}\\) time steps. More recent works have aimed to make this hierarchical structure more adaptive, either by data-specific rules[^fn2] or by a learning  mechanism[^fn3]. But although these hierarchical recurrent models can model data at different timescales, they still must perform cell updates at every time step in a sequence and cannot jump over regions of homogeneous change. Recent work in the context of reinforcement learning develops a jumpy planning model which does not use an RNN cell or perform continuous interpolation of latent states[^fn4]. 
+
+<!-- Another relevant work from reinforcement learning is "Embed to Control"[^fn5]. This work is similar to ours in that it assumes that dynamics are linear in latent space. But unlike our work, the E2C model performs inference over discrete, uniform time steps and does not learn a jumpy behavior. -->
 
 
 ## Closing thoughts
 
-Having achieved widespread use in commercial and academic settings, RNNs are already a useful tool. But even though they are useful tools, they still have fundamental limitations. In this post, we reckoned with the fact that they can only forecast the future in discrete, uniform time steps. We proposed a Jumpy RNN model which can skip over long durations of comparatively homogeneous change and focus on pivotal events as the need arises. We hope that this line of work will expand the possible uses of RNNs and make them capable of representing time in a more efficient and flexible manner.
+Having achieved widespread use in commercial and academic settings, RNNs are already a useful tool. But even though they are useful tools, they still have fundamental limitations. In this post, we reckoned with the fact that they can only forecast the future in discrete, uniform time steps. We proposed a Jumpy RNN model which can skip over long durations of comparatively homogeneous change while focusing on pivotal events as the need arises. We hope that this line of work will expand the possible uses of RNNs and make them capable of representing time in a more efficient and flexible manner.
 
 ## Footnotes
 
