@@ -2,8 +2,8 @@
 layout: post
 comments: true
 title:  "Self-classifying MNIST Digits"
-excerpt: "We treat every pixel in an image as a biological cell. Then we train these cells to send signals to their neighbors so that, over time, the entire population will agree on what 0-9 digit they are shaping."
-date:   2020-11-06 11:00:00
+excerpt: "We treat every pixel in an image as a biological cell. Then we train these cells to send signals to their neighbors so that, over time, the entire population will agree on what digit they are shaping."
+date:   2020-08-27 11:00:00
 mathjax: true
 author: Sam Greydanus
 thumbnail: /assets/selforg-digits/thumbnail.png
@@ -80,13 +80,13 @@ I encourage you to read the article and try the interactive demo for yourself on
 
 One of the takeaways from helping write this Distill article is that cellular automata are fascinating and underrated. In particular, I like them because they are:
 
-**Local.** All interactions in physics are local -- aside from quantum entanglement, and even that is up for debate.[^fn2] All interactions in chemistry and biology are also local, including the interactions between neurons that allow us to learn. The value of locality is that it is one of the _strongest_ upper bounds on the complexity of a system. Without locality, any unit (atom, molecule, cell, human) can interact with any other, leading to an exponential growth in causal influences on each unit as the size of the system increases. This is bad news if you want to establish any interesting chains of causality between various sub-units.[^fn3] For example, when you store information using a small chunk of matter, you do so under the assumption that that information will remain where it is and not change in response to external factors.
+**Local.** All interactions in physics are local -- aside from quantum entanglement, and even that is up for debate.[^fn2] All interactions in chemistry and biology are also local, including the interactions between neurons that allow us to learn. The value of locality is that it is one of the _strongest_ bounds on the complexity of a system. Without locality, any unit (atom, molecule, cell, human) can interact with any other, leading to an exponential growth in causal influences on each unit as the size of the system increases. This is bad news if you want to establish any interesting chains of causality between various sub-units.[^fn3] For example, when you store information using a small chunk of matter, you do so under the assumption that that information will remain where it is and not change in response to external factors.
 
 **Parallelizable.** One particularly important advantage of locality is that it makes CAs immensely parallelizable. It's not hard to train or evaluate a large population of CAs asynchronously: disparate parts of the system never have to communicate or synchronize with one another. This is why, if we do live in a simulation, it is probably implemented with a CA.[^fn4]
 
-**Scalable in number of cells.** This is closely connected to "parallelizable." Imagine training a 20x20 population of cells to do something and then running a 200x200 population of them on some downstream task. The numbers are different, but we actually do this in the Distill Article's demo. This is not something you can do with neural networks.
+**Scalable in number of cells.** This is closely connected to "parallelizable." Imagine training a 20x20 population of cells to do something and then running a 200x200 population of them on some downstream task. The numbers are different, but we actually do this in the demo. This is not something you can do with neural networks.
 
-**Expressive.** Given how simple some CA can be -- for example, Conway's Game of Life -- they have impressive theoretical properties. They are Turing complete and can simulate any other system. You could even use Conway's Game of Life to simulate Conway's Game of Life...and yes, [someone actually did this](https://twitter.com/AlanZucconi/status/1315967202797981696).
+**Expressive.** Given how simple some CAs can be -- for example, Conway's Game of Life -- they have impressive theoretical properties. They are Turing complete and can simulate any other system. You could even use Conway's Game of Life to simulate Conway's Game of Life...and yes, [someone actually did this](https://twitter.com/AlanZucconi/status/1315967202797981696).
 
 **Resilient.** Systems where local interactions eventually lead to global behavior are extraordinarily resilient. You can cut a 2-headed planarian in half and both halves will regenerate. You can cut a limb from a tree and the tree will survive. You can leave your company and your company will continue on without you, barely noticing your absence. Ok, that was a joke, people will miss you, but in theory they should be able to cover for you when you take a few vacation days.
 
@@ -103,7 +103,7 @@ One of the takeaways from helping write this Distill article is that cellular au
   </div>
 </div>
 
-I like CA as a design motif. They capture a set of elegant design principles that, even if we don't follow them strictly at all times in other areas of science, are worth thinking carefully about.
+I like CA as a design motif. They capture a set of elegant design principles that, even if we don't follow them strictly at all times in other areas of science, are worth thinking about.
 
 ## Parting words
 
