@@ -1,0 +1,50 @@
+I";<div>
+	<style>
+		#linkbutton:link, #linkbutton:visited {
+		  background-color: rgb(180,180,180);
+		  border-radius: 4px;
+		  color: white;
+		  padding: 6px 0px;
+		  width: 150px;
+		  text-align: center;
+		  text-decoration: none;
+		  display: inline-block;
+		  text-transform: uppercase;
+		  font-size: 13px;
+		  margin: 8px;
+		}
+
+		#linkbutton:hover, #linkbutton:active {
+		  background-color: rgba(160,160,160);
+		}
+	</style>
+</div>
+
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+	<a href="" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="" id="linkbutton" target="_blank">Get the code</a>
+</div>
+
+<p>By any scientific standard, the Human Genome Project was enormous: it involved billions of dollars of funding, dozens of institutions, and over a decade of accelerated research \cite{lander2001initial}. But that was only the tip of the iceberg. Long before the project began, scientists were hard at work assembling the intricate science of human genetics. And most of the time, they were not studying humans. The foundational discoveries in genetics centered on far simpler organisms such as peas, molds, fruit flies, and mice. To this day, biologists use these simpler organisms as genetic ``minimal working examples’’ in order to save time, energy, and money. A well-designed experiment with Drosophilia, such as \citet{feany2000drosophila}, can teach us an astonishing amount about humans.</p>
+
+<p>The deep learning analogue of Drosophilia is the MNIST dataset. A large number of deep learning innovations including dropout, Adam, convolutional networks, generative adversarial networks, and variational autoencoders began life as MNIST experiments \cite{srivastava2014dropout, kingma2014adam, lecun1989backpropagation, goodfellow2014generative, kingma2013auto}. Once these innovations proved themselves on small-scale experiments, scientists found ways to scale them to larger and more impactful applications.</p>
+
+<p>They key advantage of Drosophilia and MNIST is that they dramatically accelerate the iteration cycle of exploratory research. In the case of Drosophilia, the fly’s life cycle is just a few days long and its nutritional needs are negligible. This makes it much easier to work with than mammals, especially humans. In the case of MNIST, training a strong classifier takes a few dozen lines of code, less than a minute of walltime, and negligible amounts of electricity. This is a stark contrast to state-of-the-art vision, text, and game-playing models which can take months and hundreds of thousands of dollars of electricity to train.</p>
+
+<p>Yet in spite of its historical significance, MNIST has three notable shortcomings. First, it does a poor job of differentiating between linear, nonlinear, and translation-invariant models. For example, logistic, MLP, and CNN benchmarks obtain 94, 99+, and 99+\% accuracy on it. This makes it hard to measure the contribution of a CNN’s spatial priors or to judge the relative effectiveness of different regularization schemes. Second, it is somewhat large for a toy dataset. Each input example is a 784-dimensional vector and thus it takes a non-trivial amount of computation to perform hyperparameter searches or debug a metalearning loop. Third, MNIST is hard to hack. The ideal toy dataset should be procedurally generated so that researchers can smoothly vary parameters such as background noise, translation, and resolution.</p>
+
+<p>In order to address these shortcomings, we propose the MNIST-1D dataset. It is a minimalist, low-memory, and low-compute alternative to MNIST, designed for exploratory deep learning research where rapid iteration is a priority. Training examples are 20 times smaller but they are still better at measuring the difference between 1) linear and nonlinear classifiers and 2) models with and without spatial inductive biases (eg. translation invariance). The dataset is procedurally generated but still permits analogies to real-world digit classification.</p>
+
+<p>\begin{center}
+    \includegraphics[width=0.47\textwidth]{./static/benchmarks_v2.pdf}
+    \captionof{figure}{Visualizing the performance of common models on the MNIST-1D dataset. Whereas most ML models perform within a few percent accuracy on MNIST, this dataset separates them cleanly according to their characteristics. Logistic regression models fare worse than MLPs because they cannot use nonlinearities. MLPs, meanwhile, fare worse than CNNs because they cannot use transformation invariance and local connectivity to bias optimization towards solutions that generalize well. These results suggest MNIST-1D is a good dataset for studying the inductive biases of ML models.}
+    \label{fig:benchmarks}
+\end{center}</p>
+
+<h2 id="closing-thoughts">Closing thoughts</h2>
+
+<p>There is a counterintuitive possibility that in order to explore the limits of how large we can scale neural networks, we may need to explore the limits of how small we can scale them first. Scaling models and datasets downward in a way that preserves the nuances of their behaviors at scale will allow researchers to iterate quickly on fundamental and creative ideas. This fast iteration cycle is the best way of obtaining insights about how to incorporate progressively more complex inductive biases into our models. We can then transfer these inductive biases across spatial scales in order to dramatically improve the sample efficiency and generalization properties of large-scale models. We see the humble MNIST-1D dataset as a tiny first step in that direction.</p>
+
+<h2 id="footnotes">Footnotes</h2>
+:ET
