@@ -205,17 +205,6 @@ One of the things that makes these models so flexible is that they use a hidden 
 * •&nbsp; [Sketch simple images](https://arxiv.org/abs/1704.03477)
 * •&nbsp; [Learn the Enigma cipher](https://greydanus.github.io/2017/01/07/enigma-rnn/)
 
-<!-- * •&nbsp; Translate text from one language to another [^fn8] (think Google Translate)
-* •&nbsp; Control a robot hand in order to solve a Rubik’s Cube [^fn9]
-* •&nbsp; Defeat professional human gamers in StarCraft [^fn10]
-* •&nbsp; Caption images [^fn11]
-* •&nbsp; Generate realistic handwriting [^fn12]
-* •&nbsp; Convert text to speech [^fn15]
-* •&nbsp; Convert speech to text [^fn13] [^fn14]
-* •&nbsp; Sketch simple images [^fn16]
-* •&nbsp; Learn the Enigma cipher [^fn17]
-* •&nbsp; ...and much more -->
-
 
 ## The Limitations of RNNs
 
