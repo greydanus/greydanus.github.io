@@ -60,7 +60,7 @@ thumbnail: /assets/scaling-down/thumbnail.png
     	<source src="/assets/scaling-down/construction.mp4" type="video/mp4">
     </video>
     <button class="playbutton" id="demo_button" onclick="playPauseDemo()">Play</button> 
-    <div style="text-align:left;margin-left:10px;margin-right:10px;">Constructing the MNIST-1D dataset. As witb the MNIST dataset, the goal here is to learn to determine which digit is present in the input. Unlike the MNIST dataset, which consists of 28x28 images, each of these examples is a one-dimensional sequence of points. To generate an example, we begin with 10 digit templates and then randomly pad, translate, add noise, and transform them as shown above.</div>
+    <div style="text-align:left;">Constructing the MNIST-1D dataset. As with the original MNIST dataset, the task is to learn to classify the digits 0-9. Unlike the MNIST dataset, which consists of 28x28 images, each of these examples is a one-dimensional sequence of points. To generate an example, we begin with 10 digit templates and then randomly pad, translate, add noise, and transform them as shown above.</div>
   	</div>
 </div>
 
@@ -93,18 +93,18 @@ They key advantage of Drosophilia and MNIST is that they dramatically accelerate
 
 Yet in spite of its historical significance, MNIST has three notable shortcomings. First, it does a poor job of differentiating between linear, nonlinear, and translation-invariant models. For example, logistic, MLP, and CNN benchmarks obtain 94, 99+, and 99+% accuracy on it. This makes it hard to measure the contribution of a CNN's spatial priors or to judge the relative effectiveness of different regularization schemes. Second, it is somewhat large for a toy dataset. Each input example is a 784-dimensional vector and thus it takes a non-trivial amount of computation to perform hyperparameter searches or debug a metalearning loop. Third, MNIST is hard to hack. The ideal toy dataset should be procedurally generated so that researchers can smoothly vary parameters such as background noise, translation, and resolution.
 
+In order to address these shortcomings, we propose the MNIST-1D dataset. It is a minimalist, low-memory, and low-compute alternative to MNIST, designed for exploratory deep learning research where rapid iteration is a priority. Training examples are 20 times smaller but they are still better at measuring the difference between 1) linear and nonlinear classifiers and 2) models with and without spatial inductive biases (eg. translation invariance). The dataset is procedurally generated but still permits analogies to real-world digit classification.
+
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:50%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/overview_a.png" style="width:100%">
-    <div style="text-align: left; padding:6px;padding-bottom: 20px;">Visualizing the construction of the MNIST-1D dataset. Like MNIST, the classifier's objective is to determine which digit is present in the input. Unlike MNIST, each example is a one-dimensional sequence of points. To generate an example, we begin with a digit template and then randomly pad, translate, and transform it.</div>
+    <div style="text-align: left;padding-bottom: 20px;">Visualizing the construction of the MNIST-1D dataset. Like MNIST, the classifier's objective is to determine which digit is present in the input. Unlike MNIST, each example is a one-dimensional sequence of points. To generate an example, we begin with a digit template and then randomly pad, translate, and transform it.</div>
   </div>
   <div style="width:49.4%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/overview_b.png" style="width:100%">
-    <div style="text-align:left; padding:6px;">Visualizing the performance of common models on the MNIST-1D dataset. Whereas most ML models perform within a few percent accuracy on MNIST, this dataset separates them cleanly according to whether they use nonlinear features or not (logistic regression vs. MLP) or whether htey have spatial inductive biases (MLP vs. CNN).</div>
+    <div style="text-align:left;">Visualizing the performance of common models on the MNIST-1D dataset. Whereas most ML models perform within a few percent accuracy on MNIST, this dataset separates them cleanly according to whether they use nonlinear features or not (logistic regression vs. MLP) or whether they have spatial inductive biases (MLP vs. CNN).</div>
   </div>
 </div>
-
-In order to address these shortcomings, we propose the MNIST-1D dataset. It is a minimalist, low-memory, and low-compute alternative to MNIST, designed for exploratory deep learning research where rapid iteration is a priority. Training examples are 20 times smaller but they are still better at measuring the difference between 1) linear and nonlinear classifiers and 2) models with and without spatial inductive biases (eg. translation invariance). The dataset is procedurally generated but still permits analogies to real-world digit classification.
 
 
 ## Context
@@ -115,7 +115,7 @@ The machine learning community has grown rapidly in recent years. This growth ha
 
 Once again, the genetics analogy is useful. In genetics, scale has been most effective when small-scale experiments have helped to guide the direction and vision of large-scale experiments. For example, the organizers of the Human Genome Project regularly used yeast and fly genomes to [guide analysis of the human genome](https://deepblue.lib.umich.edu/handle/2027.42/62798). Thus one should be suspicious of research agendas that place disproportionate emphasis on large-scale experiments, since a healthy research ecosystem needs both. The fast, small scale projects permit creativity and deep understanding, whereas the large-scale projects expose fertile new research territory.
 
-**Understanding vs. performance.** Researchers are also divided over the value of understanding versus performance. Some contend that a high-performing algorithm need not be interpretable so long as it saves lives or produces economic value. Others argue that hard-to-interpret deep learning models should not be deployed in sensitive real-world contexts. Both arguments have merit, but the best path forward seems to be to focus on understanding high-performing algorithms better so that this tradeoff becomes less severe. One way to do this is by identifying things we don't understand about neural networks, reproducing these things on a toy problem like MNIST-1D, and then performing ablation studies to isolate the causal mechanisms.
+**Understanding vs. performance.** Researchers are also divided over the value of understanding versus performance. Some contend that a high-performing algorithm [need not be interpretable](https://youtu.be/93Xv8vJ2acI?t=788) so long as it saves lives or produces economic value. Others argue that hard-to-interpret deep learning models should not be deployed in sensitive real-world contexts. Both arguments have merit, but the best path forward seems to be to focus on understanding high-performing algorithms better so that this tradeoff becomes less severe. One way to do this is by identifying things we don't understand about neural networks, reproducing these things on a toy problem like MNIST-1D, and then performing ablation studies to isolate the causal mechanisms.
 
 **Ecological impacts.** A growing number of researchers and organizations claim that deep learning will have positive [environmental](https://www.sciencedirect.com/science/article/abs/pii/0304380087900974) [applications](https://arxiv.org/abs/1906.05433). This may be true in the long run, but so far artificial intelligence has done little to solve environmental problems. In the meantime, deep learning models are [consuming massive amounts of electricity](https://arxiv.org/abs/1906.02243) to train and deploy. Our hope is that benchmarks like MNIST-1D will encourage researchers to spend more time iterating on small datasets and toy models before scaling, making more efficient use of electricity in the process.
 
@@ -135,7 +135,7 @@ Since the original paper was published, a multitude of works have sought to expl
   <div style="width:52.4%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/lottery_a2.png" style="width:100%">
   </div>
-  <div class="thecap" style="text-align:left;margin-left:10px;margin-right:10px;">Finding and analyzing lottery tickets. In <b>a-b)</b>, we isolate a "minimum viable example" of the effect. Recent work by <a href="https://arxiv.org/abs/1906.02773">Morcos et al (2019)</a> shows that lottery tickets can transfer between datasets. We wanted to determine whether spatial inductive biases played a role. So we performed a series of experiments: in <b>c)</b> we plot the asymptotic performance of a 92% sparse ticket. In <b>d)</b> we flip all the 1D signals in the dataset, effectively preserving spatial structure but changing the location of specific datapoints. This is analogous to flipping an image upside down. Under this ablation, the lottery ticket continues to "win."</div>
+  <div class="thecap" style="text-align:left;">Finding and analyzing lottery tickets. In <b>a-b)</b>, we isolate a "minimum viable example" of the effect. Recent work by <a href="https://arxiv.org/abs/1906.02773">Morcos et al (2019)</a> shows that lottery tickets can transfer between datasets. We wanted to determine whether spatial inductive biases played a role. So we performed a series of experiments: in <b>c)</b> we plot the asymptotic performance of a 92% sparse ticket. In <b>d)</b> we flip all the 1D signals in the dataset, effectively preserving spatial structure but changing the location of specific datapoints. This is analogous to flipping an image upside down. Under this ablation, the lottery ticket continues to "win."</div>
 </div>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
@@ -145,19 +145,22 @@ Since the original paper was published, a multitude of works have sought to expl
   <div style="width:51.4%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/lottery_b2.png" style="width:100%">
   </div>
-    <div class="thecap" style="text-align:left;margin-left:10px;margin-right:10px;">Next, in <b>e)</b> we permute the indices of the 1D signal, effectively removing spatial structure from the dataset. This ablation hurts lottery ticket performance significantly more, suggesting that part of the lottery ticket's performance can be attributed to a spatial inductive bias. Finally, in <b>f)</b> we keep the lottery ticket sparsity structure but initialize its weights with a different random seed. Contrary to results reported in <a href="https://arxiv.org/abs/1803.03635">Frankle & Carbin (2019)</a>, we see that our lottery ticket continues to outperform a dense baseline, aligning well with our hypothesis that the sparsity pattern represents a spatial inductive bias. In <b>g)</b>, we verify our hypothesis by measuring how often unmasked weights are adjacent to one another in the first layer of our model. The lottery ticket has many more adjacent weights than chance would predict, implying a local connectivity structure which helps gives rise to spatial biases.</div>
+    <div class="thecap" style="text-align:left;">Next, in <b>e)</b> we permute the indices of the 1D signal, effectively removing spatial structure from the dataset. This ablation hurts lottery ticket performance significantly more, suggesting that part of the lottery ticket's performance can be attributed to a spatial inductive bias. Finally, in <b>f)</b> we keep the lottery ticket sparsity structure but initialize its weights with a different random seed. Contrary to results reported in <a href="https://arxiv.org/abs/1803.03635">Frankle & Carbin (2019)</a>, we see that our lottery ticket continues to outperform a dense baseline, aligning well with our hypothesis that the sparsity pattern represents a spatial inductive bias. In <b>g)</b>, we verify our hypothesis by measuring how often unmasked weights are adjacent to one another in the first layer of our model. The lottery ticket has many more adjacent weights than chance would predict, implying a local connectivity structure which helps gives rise to spatial biases.</div>
 </div>
 
 **Observing deep double descent.** Another intriguing property of neural networks is the "double descent" phenomenon. This phrase refers to a training regime where more data, model parameters, or gradient steps can actually _reduce_ a model's test accuracy[^fn1] [^fn2] [^fn3] [^fn4]. The intuition is that during supervised learning there is an interpolation threshold where the learning procedure, consisting of a model and an optimization algorithm, is just barely able to fit the entire training set. At this threshold there is effectively just one model that can fit the data and this model is very sensitive to label noise and model mis-specification.
 
-<!-- \begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.45\textwidth]{static/deep_double_descent.pdf}
-    \caption{Observing deep double descent. MNIST-1D is a good environment for determining how to locate the interpolation threshold of deep models. This threshold is fairly easy to predict in fully-connected models, less easy to predict for other models like CNNs, RNNs, and Transformers. Here we see that a CNN has a double descent peak at the same interpolation threshold, although the effect is much less pronounced.}
-    \label{fig:deep_double_descent}
-\end{figure} -->
-
 Several properties of this effect, such as what factors affect its width and location, are not well understood in the context of deep models. We see the MNIST-1D dataset as a good tool for exploring these properties. In fact, we were able to reproduce the double descent pattern after a few hours of researcher effort. The figure below shows our results for a fully-connected network and a convolutional model. We also observed a nuance that we had not seen mentioned in previous works: when using a mean square error loss, the interpolation threshold lies at \\(n * K\\) model parameters where \\(n\\) is the number of training examples and \\(K\\) is the number of model outputs. But when using a negative log likelihood loss, the interpolation threshold lies at \\(n\\) model parameters -- it does not depend on the number of outputs. This is an interesting empirical observation that may explain some of the advantage in using a log likelihood loss over a MSE loss on this type of task.
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:46.8%; min-width:250px; display: inline-block; vertical-align: top;">
+    <img src="/assets/scaling-down/ddd_a.png" style="width:100%">
+  </div>
+  <div style="width:52.5%; min-width:250px; display: inline-block; vertical-align: top;">
+    <img src="/assets/scaling-down/ddd_b.png" style="width:100%">
+  </div>
+  <div class="thecap" style="text-align:left;">Observing deep double descent. MNIST-1D is a good environment for determining how to locate the interpolation threshold of deep models. This threshold is fairly easy to predict in fully-connected models, less easy to predict for other models like CNNs, RNNs, and Transformers. Here we see that a CNN has a double descent peak at the same interpolation threshold, although the effect is much less pronounced.</div>
+</div>
 
 **Gradient-based metalearning.** The goal of metalearning is to "learn how to learn." A model does this by having two levels of optimization: the first is a fast inner loop which corresponds to a traditional learning objective and second is a slow outer loop which updates the "meta" properties of the learning process. One of the simplest examples of metalearning is gradient-based hyperparameter optimization. The concept was was proposed by [Bengio (2000)](https://ieeexplore.ieee.org/document/6789800) and then scaled to deep learning models by [Maclaurin et al. (2015)](https://arxiv.org/abs/1502.03492). The basic idea is to implement a fully-differentiable neural network training loop and then backpropagate through the entire process in order to optimize hyperparameters like learning rate and weight decay.
 
@@ -173,7 +176,7 @@ Metalearning is a promising topic but it is very difficult to scale. First of al
     <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/metalearn_lr_c.png" style="width:100%">
   </div>
-  <div class="thecap" style="text-align:left;margin-left:10px;margin-right:10px;">Metalearning a learning rate. Unlike many gradient-based metalearning implementations, ours takes seconds to run and occupies a few dozen lines of code. This allows researchers to iterate on novel ideas before scaling.</div>
+  <div class="thecap" style="text-align:left;">Metalearning a learning rate. Unlike many gradient-based metalearning implementations, ours takes seconds to run and occupies a few dozen lines of code. This allows researchers to iterate on novel ideas before scaling.</div>
 </div>
 
 **Metalearning an activation function.** Having implemented a "minimal working example" of gradient-based metalearning, we realized that it permitted a simple and novel extension: metalearning an activation function. With a few more hours of researcher time, we were able to parameterize our classifier's activation function with a second neural network and then learn the weights using meta-gradients. Shown below, our learned activation function substantially outperforms baseline nonlinearities such as ReLU, Elu, and Swish ([reproduce in a Colab](bit.ly/38V4GlQ))\cite{clevert2015fast, ramachandran2017searching}.
@@ -197,7 +200,7 @@ We transferred this activation function to convolutional models trained on MNIST
     <div style="width:33%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/metalearn_afunc_c.png" style="width:100%">
   </div>
-  <div class="thecap" style="text-align:left;margin-left:10px;margin-right:10px;">Metalearning an activation function. Starting from an ELU shape, we use gradient-based metalearning to find the optimal activation function of a neural network trained on the MNIST-1D dataset. The activation function itself is parameterized by a second (meta) neural network.</div>
+  <div class="thecap" style="text-align:left;">Metalearning an activation function. Starting from an ELU shape, we use gradient-based metalearning to find the optimal activation function of a neural network trained on the MNIST-1D dataset. The activation function itself is parameterized by a second (meta) neural network.</div>
 </div>
 
 **Deep priors.** A large part of deep learning's success is rooted in "deep priors" which include hard-coded translation invariances (e.g., convolutional filters), clever architectural choices (e.g., self-attention layers), and well-conditioned optimization landscapes (e.g., batch normalization). Principle among these priors is the translation invariance of convolution. A primary motivation for this dataset was to construct a toy problem that could effectively quantify a model's spatial priors. The second figure in this post illustrates that this is indeed possible with MNIST-1D. One could imagine that other models with more moderate spatial priors would sit somewhere along the continuum between the MLP and CNN benchmarks.
@@ -215,7 +218,7 @@ We transferred this activation function to convolutional models trained on MNIST
     <div style="width:31.9%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/pooling_c.png" style="width:100%">
   </div>
-  <div class="thecap" style="text-align:left;margin-left:10px;margin-right:10px;">Benchmarking common pooling methods. We observe that pooling helps performance in low-data regimes and hinders it in high-data regimes. While we do not entirely understand this effect, we hypothesize that pooling is a mediocre architectural prior that is better than nothing in low-data regimes but becomes overly restrictive in high-data regimes.</div>
+  <div class="thecap" style="text-align:left;">Benchmarking common pooling methods. We observe that pooling helps performance in low-data regimes and hinders it in high-data regimes. While we do not entirely understand this effect, we hypothesize that pooling is a mediocre architectural prior that is better than nothing in low-data regimes but becomes overly restrictive in high-data regimes.</div>
 </div>
 
 ## When to scale
