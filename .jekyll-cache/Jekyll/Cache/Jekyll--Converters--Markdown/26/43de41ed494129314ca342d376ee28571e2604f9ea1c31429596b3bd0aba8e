@@ -1,97 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Scaling Down Deep Learning</title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="A science blog by Sam Greydanus">
-    <link rel="canonical" href="http://localhost:4000/assets/2020-11-06-scaling-down/">
-    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/style.css">
-
-    <!-- Google Analytics -->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-72311215-6', 'auto');
-      ga('send', 'pageview');
-
-    </script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-</head>
-
-
-    <body>
-
-    <header class="site-header">
-
-  <div class="wrap">
-
-    <div style="float:left; margin-top:11px; margin-right:10px;">
-    <img src="/assets/oak.png" width="50px">
-    </div>
-
-    <div style="float:left; margin-top:4px; margin-right:10px;">
-      <a class="site-title" style="padding-top:0px; padding-bottom:0px;" href="/ ">Natural Intelligence</a>
-      <p style="padding-bottom:6px; font-size:14px">A science blog by Sam Greydanus</p>
-    </div>
-
-    <!-- <a class="site-title" style="padding-top:8px; font-size:28px" href="/ ">Natural Intelligence</a> -->
-    
-    <nav class="site-nav">
-      <a href="#" class="menu-icon">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
-          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
-            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
-          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
-            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
-          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
-            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
-        </svg>
-      </a>
-
-      <div class="trigger" style="margin-bottom:0px; padding-top:10px; font-size:13px">
-<!--         <a class="page-link" href="/ ">Home</a> -->
-<!--         
-          <a class="page-link" href="/assets/2020-10-15-jumpy-rnn/">Jumpy Recurrent Neural Networks</a>
-        
-          <a class="page-link" href="/assets/2020-11-06-scaling-down/">Scaling Down Deep Learning</a>
-        
-          
-        
-          <a class="page-link" href="/papers/">Interesting papers</a>
-         -->
-        <a class="page-link" style="margin-bottom: 0px; padding-bottom:0px;" href="../../../../index.html">Home</a>
-        <a class="page-link" style="margin-bottom: 0px; padding-bottom:0px;" href="../../../../about.html">About me</a>
-      </div>
-    </nav>
-  </div>
-
-</header>
-
-
-    <div class="page-content">
-      <div class="wrap">
-      <div class="post">
-
-  <header class="post-header">
-    <h1>Scaling Down Deep Learning</h1>
-    <p class="meta">Nov 6, 2020 • Sam Greydanus</p>
-  </header>
-
-  <article class="post-content">
-  <div>
+I"Hy<div>
 	<style>
 		#linkbutton:link, #linkbutton:visited {
 		  background-color: rgb(180,180,180);
@@ -202,9 +109,9 @@
 
 <p>In this section we will explore several examples of how MNIST-1D can be used to study core “science of deep learning” phenomena.</p>
 
-<p><strong>Finding lottery tickets.</strong> It is not unusual for deep learning models to have ten or even a hundred times more parameters than necessary. This overparameterization helps training but increases computational overhead. One solution is to progressively prune weights from a model during training so that the final network is just a fraction of its original size. Although this approach works, conventional wisdom holds that sparse networks do not train well from scratch. Recent work by <a href="https://arxiv.org/abs/1803.03635">Frankle &amp; Carbin (2019)</a> challenges this conventional wisdom. The authors report finding sparse subnetworks inside of larger networks that train to equivalent or even higher accuracies. These “lottery ticket” subnetworks can be found through a simple iterative procedure: train a network, prune the smallest weights, and then rewind the remaining weights to their original initializations and retrain.</p>
+<p><strong>Finding lottery tickets.</strong> It is not unusual for deep learning models to have ten or even a hundred times more parameters than necessary. This overparameterization helps training but increases computational overhead. One solution is to progressively prune weights from a model during training so that the final network is just a fraction of its original size. Although this approach works, conventional wisdom holds that sparse networks do not train well from scratch. Recent work by \citet{frankle-2019-ICLR-the-lottery-ticket-hypothesis} challenges this conventional wisdom. The authors report finding sparse subnetworks inside of larger networks that train to equivalent or even higher accuracies. These “lottery ticket” subnetworks can be found through a simple iterative procedure: train a network, prune the smallest weights, and then rewind the remaining weights to their original initializations and retrain.</p>
 
-<p>Since the original paper was published, a multitude of works have sought to explain this phenomenon and then harness it on larger datasets and models. However, very few works have attempted to isolate a “minimal working example” of this effect so as to investigate it more carefully. The figure below shows that the MNIST-1D dataset not only makes this possible, but also enables us to elucidate, via carefully-controlled experiments, some of the reasons for a lottery ticket’s success. Unlike many follow-up experiments on the lottery ticket, this one took just two days of researcher time to produce. The curious reader can also reproduce these results in their browser in a few minutes.</p>
+<p>Since the original paper was published, a multitude of works have sought to explain this phenomenon and then harness it on larger datasets and models. However, very few works have attempted to isolate a “minimal working example” of this effect so as to investigate it more carefully. The figure below shows that the MNIST-1D dataset not only makes this possible, but also enables us to elucidate, via carefully-controlled experiments, some of the reasons for a lottery ticket’s success. Unlike many follow-up experiments on the lottery ticket, this one took just two days of researcher time to produce. The curious reader can also reproduce these results in their browser in a few minutes\footnote{\texttt{bit.ly/3nCEIaL}}.</p>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:47%; min-width:250px; display: inline-block; vertical-align: top;">
@@ -235,9 +142,9 @@
     \label{fig:deep_double_descent}
 \end{figure} -->
 
-<p>Several properties of this effect, such as what factors affect its width and location, are not well understood in the context of deep models. We see the MNIST-1D dataset as a good tool for exploring these properties. In fact, we were able to reproduce the double descent pattern after a few hours of researcher effort. The figure below shows our results for a fully-connected network and a convolutional model. We also observed a nuance that we had not seen mentioned in previous works: when using a mean square error loss, the interpolation threshold lies at \(n * K\) model parameters where \(n\) is the number of training examples and \(K\) is the number of model outputs. But when using a negative log likelihood loss, the interpolation threshold lies at \(n\) model parameters – it does not depend on the number of outputs. This is an interesting empirical observation that may explain some of the advantage in using a log likelihood loss over a MSE loss on this type of task.</p>
+<p>Several properties of this effect, such as what factors affect its width and location, are not well understood in the context of deep models. We see the MNIST-1D dataset as a good tool for exploring these properties. In fact, we were able to reproduce the double descent pattern after a few hours of researcher effort. The figure below shows our results for a fully-connected network and a convolutional model\footnote{Run in browser: \texttt{bit.ly/2UBWWNu}}. We also observed a nuance that we had not seen mentioned in previous works: when using a mean square error loss, the interpolation threshold lies at \(n * K\) model parameters where \(n\) is the number of training examples and \(K\) is the number of model outputs. But when using a negative log likelihood loss, the interpolation threshold lies at \(n\) model parameters – it does not depend on the number of outputs. This is an interesting empirical observation that may explain some of the advantage in using a log likelihood loss over a MSE loss on this type of task.</p>
 
-<p><strong>Gradient-based metalearning.</strong> The goal of metalearning is to “learn how to learn.” A model does this by having two levels of optimization: the first is a fast inner loop which corresponds to a traditional learning objective and second is a slow outer loop which updates the “meta” properties of the learning process. One of the simplest examples of metalearning is gradient-based hyperparameter optimization. The concept was was proposed by <a href="https://ieeexplore.ieee.org/document/6789800">Bengio (2000)</a> and then scaled to deep learning models by <a href="https://arxiv.org/abs/1502.03492">Maclaurin et al. (2015)</a>. The basic idea is to implement a fully-differentiable neural network training loop and then backpropagate through the entire process in order to optimize hyperparameters like learning rate and weight decay.</p>
+<p><strong>Gradient-based metalearning.</strong> The goal of metalearning is to “learn how to learn.” A model does this by having two levels of optimization: the first is a fast inner loop which corresponds to a traditional learning objective and second is a slow outer loop which updates the “meta” properties of the learning process. One of the simplest examples of metalearning is gradient-based hyperparameter optimization. The concept was was proposed by \citet{bengio2000gradient} and then scaled to deep learning models by \citet{maclaurin2015gradient}. The basic idea is to implement a fully-differentiable neural network training loop and then backpropagate through the entire process in order to optimize hyperparameters like learning rate and weight decay.</p>
 
 <p>Metalearning is a promising topic but it is very difficult to scale. First of all, metalearning algorithms consume enormous amounts of time and compute. Second of all, implementations tend to grow complex since there are twice as many hyperparameters (one set for each level of optimization) and most deep learning frameworks are not set up well for metalearning. This places an especially high incentive on debugging and iterating metalearning algorithms on small-scale datasets such as MNIST-1D. For example, it took just a few hours to implement and debug the gradient-based hyperparameter optimization shown below.</p>
 
@@ -254,7 +161,7 @@
   <div class="thecap" style="text-align:left;margin-left:10px;margin-right:10px;">Metalearning a learning rate. Unlike many gradient-based metalearning implementations, ours takes seconds to run and occupies a few dozen lines of code. This allows researchers to iterate on novel ideas before scaling.</div>
 </div>
 
-<p><strong>Metalearning an activation function.</strong> Having implemented a “minimal working example” of gradient-based metalearning, we realized that it permitted a simple and novel extension: metalearning an activation function. With a few more hours of researcher time, we were able to parameterize our classifier’s activation function with a second neural network and then learn the weights using meta-gradients. Shown below, our learned activation function substantially outperforms baseline nonlinearities such as ReLU, Elu, and Swish (<a href="bit.ly/38V4GlQ">reproduce in a Colab</a>)\cite{clevert2015fast, ramachandran2017searching}.</p>
+<p><strong>Metalearning an activation function.</strong> Having implemented a “minimal working example” of gradient-based metalearning, we realized that it permitted a simple and novel extension: metalearning an activation function. With a few more hours of researcher time, we were able to parameterize our classifier’s activation function with a second neural network and then learn the weights using meta-gradients. As Figure \ref{fig:metalearn_afunc} shows, our learned activation function substantially outperforms baseline nonlinearities such as ReLU, Elu, and Swish (<a href="bit.ly/38V4GlQ">reproduce in a Colab</a>)\cite{clevert2015fast, ramachandran2017searching}.</p>
 
 <!-- \begin{figure}[h!]
     \centering
@@ -280,7 +187,7 @@
 
 <p><strong>Deep priors.</strong> A large part of deep learning’s success is rooted in “deep priors” which include hard-coded translation invariances (e.g., convolutional filters), clever architectural choices (e.g., self-attention layers), and well-conditioned optimization landscapes (e.g., batch normalization). Principle among these priors is the translation invariance of convolution. A primary motivation for this dataset was to construct a toy problem that could effectively quantify a model’s spatial priors. The second figure in this post illustrates that this is indeed possible with MNIST-1D. One could imagine that other models with more moderate spatial priors would sit somewhere along the continuum between the MLP and CNN benchmarks.</p>
 
-<p><strong>Benchmarking pooling methods.</strong> Our final case study begins with a specific question: \textit{What is the relationship between pooling and sample efficiency?} We had not seen evidence that pooling makes models more or less sample efficient, but this seemed an important relationship to understand. With this in mind, we trained models with different pooling methods and training set sizes and found that, while pooling tended to be effective in low-data regimes, it did not make much of a difference in high-data regimes. We do not fully understand this effect, but hypothesize that pooling is a mediocre architectural prior which is better than nothing in low-data regimes and then ends up restricting model expression in high-data regimes. By the same token, max-pooling may also be a good architectural prior in the low-data regime, but start to delete information – and thus perform worse compared to L2 pooling – in the high-data regime.</p>
+<p><strong>Benchmarking pooling methods.</strong> Our final case study begins with a specific question: \textit{What is the relationship between pooling and sample efficiency?} We had not seen evidence that pooling makes models more or less sample efficient, but this seemed an important relationship to understand. With this in mind, we trained models with different pooling methods and training set sizes and found that, while pooling tended to be effective in low-data regimes, it did not make much of a difference in high-data regimes (see Figure \ref{fig:pooling}). We do not fully understand this effect, but hypothesize that pooling is a mediocre architectural prior which is better than nothing in low-data regimes and then ends up restricting model expression in high-data regimes. By the same token, max-pooling may also be a good architectural prior in the low-data regime, but start to delete information – and thus perform worse compared to L2 pooling – in the high-data regime. As with the other examples, you can reproduce these results in your browser in a few minutes\footnote{\texttt{bit.ly/3lGmTqY}}.</p>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:33%; min-width:250px; display: inline-block; vertical-align: top;">
@@ -289,15 +196,15 @@
   <div style="width:32.3%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/pooling_b.png" style="width:100%" />
   </div>
-    <div style="width:31.9%; min-width:250px; display: inline-block; vertical-align: top;">
+    <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/pooling_c.png" style="width:100%" />
   </div>
-  <div class="thecap" style="text-align:left;margin-left:10px;margin-right:10px;">Benchmarking common pooling methods. We observe that pooling helps performance in low-data regimes and hinders it in high-data regimes. While we do not entirely understand this effect, we hypothesize that pooling is a mediocre architectural prior that is better than nothing in low-data regimes but becomes overly restrictive in high-data regimes.</div>
+  <div class="thecap" style="text-align:left;margin-left:10px;margin-right:10px;">Benchmarking common pooling methods. We observe that pooling helped performance in low-data regimes and hindered it in high-data regimes. While we do not entirely understand this effect, we hypothesize that pooling is a mediocre architectural prior that is better than nothing in low-data regimes but becomes overly restrictive in high-data regimes.</div>
 </div>
 
 <h2 id="when-to-scale">When to scale</h2>
 
-<p>We should emphasize that this paper is not an argument against large-scale machine learning research. That sort of research has proven its worth time and again and has come to represent one of the most exciting aspects of the ML research ecosystem. Rather, we are arguing <em>in favor</em> of small-scale machine learning research. Neural networks do not have problems with scaling or performance – but they do have problems with interpretability, reproducibility, and iteration speed. We see carefully-controlled, small-scale experiments as a great way to address these problems.</p>
+<p>We should emphasize that this paper is not an argument against large-scale machine learning research. That sort of research has proven its worth time and again and has come to represent one of the most exciting aspects of the ML research ecosystem. Rather, we are arguing \textit{in favor} of small-scale machine learning research. Neural networks do not have problems with scaling or performance – but they do have problems with interpretability, reproducibility, and iteration speed. We see carefully-controlled, small-scale experiments as a great way to address these problems.</p>
 
 <p>In fact, small-scale research is complimentary to large-scale research. As in biology, where fruit fly genetics helped guide the Human Genome Project, we believe that small-scale research should always have an eye on how to successfully scale. For example, several of the findings reported in this paper are at the point where they should be investigated at scale. We would like to show that large scale lottery tickets also learn spatial inductive biases, and show evidence that they develop local connectivity. We would also like to try metalearning an activation function on a larger model in the hopes of finding an activation that will outperform ReLU and Swish in generality.</p>
 
@@ -326,108 +233,4 @@
     </li>
   </ol>
 </div>
-
-  </article>
-
-  <!-- mathjax -->
-  
-  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
-  <!-- disqus comments -->
- 
-  <div id="disqus_thread"></div>
-  <script>
-      /**
-       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-       *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-       */
-      /*
-      var disqus_config = function () {
-          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-      };
-      */
-      (function() {  // DON'T EDIT BELOW THIS LINE
-          var d = document, s = d.createElement('script');
-          
-          s.src = '//greydanus-blog.disqus.com/embed.js';
-          
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-      })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  
-
-
-  
-</div>
-      </div>
-    </div>
-
-    <footer class="site-footer">
-
-  <div class="wrap">
-
-    <!-- <h2 class="footer-heading">Natural Intelligence</h2> -->
-
-    <div class="footer-col-1 column">
-      <ul>
-        <li>Natural Intelligence</li>
-        <!-- <li><a href="mailto:greydanus.17(at)gmail.com">greydanus.17(at)gmail.com</a></li> -->
-      </ul>
-    </div>
-
-    <div class="footer-col-2 column">
-      <ul>
-        <li>
-          <a href="https://github.com/greydanus">
-            <span class="icon github">
-              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
-                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
-                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
-                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
-                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
-                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
-                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
-                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
-                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
-              </svg>
-            </span>
-            <span class="username">greydanus</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://twitter.com/samgreydanus">
-            <span class="icon twitter">
-              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
-                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
-                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
-                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
-                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
-                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
-                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
-              </svg>
-            </span>
-            <span class="username">samgreydanus</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="footer-col-3 column">
-      <p class="text">A science blog by Sam Greydanus</p>
-    </div>
-
-  </div>
-
-</footer>
-
-
-    </body>
-</html>
+:ET
