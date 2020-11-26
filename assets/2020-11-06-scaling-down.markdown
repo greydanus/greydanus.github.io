@@ -135,6 +135,29 @@ Since the original paper was published, a multitude of works have sought to expl
     <div class="thecap" style="text-align:left;">Next, in <b>e)</b> we permute the indices of the 1D signal, effectively removing spatial structure from the dataset. This ablation hurts lottery ticket performance significantly more, suggesting that part of the lottery ticket's performance can be attributed to a spatial inductive bias. Finally, in <b>f)</b> we keep the lottery ticket sparsity structure but initialize its weights with a different random seed. Contrary to results reported in <a href="https://arxiv.org/abs/1803.03635">Frankle & Carbin (2019)</a>, we see that our lottery ticket continues to outperform a dense baseline, aligning well with our hypothesis that the lottery ticket mask has a spatial inductive bias. In <b>g)</b>, we verify our hypothesis by measuring how often unmasked weights are adjacent to one another in the first layer of our model. The lottery ticket has many more adjacent weights than chance would predict, implying a local connectivity structure which helps gives rise to spatial biases.</div>
 </div>
 
+You can also visualize the actual masks selected via random and lottery pruning:  <button class="playbutton" id="mask_button" style="width:150px;" onclick="hideShowMasks()">Visualize masks</button> 
+
+<div class="imgcap" id="lottery_masks" style="display: none; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:100%; min-width:300px; display: inline-block; vertical-align: top;">
+    <img src="/assets/scaling-down/lottery_mask_vis.png" style="width:100%">
+  </div>
+    <div class="thecap" style="text-align:left;">Visualizing first layer weight masks of random tickets and lottery tickets. For interpretabilty, we have sorted the mask along the hidden layer axis according to the number of adjacent unmasked parameters. This helps reveal a bias towards local connectivity in the lottery ticket masks. Notice how there are many more vertically-adjacent unmasked parameters in the lottery ticket masks. These vertically-adjacent parameters correspond to local connectivity along the input dimension, which in turn biases the sparse model towards data with spatial structure.</div>
+</div>
+
+<script language="javascript">
+ function hideShowMasks() {
+  var x = document.getElementById("lottery_masks");
+  var button = document.getElementById("mask_button");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    button.textContent = "Hide masks";
+  } else {
+    x.style.display = "none";
+    button.textContent = "Visualize masks";
+  }
+}
+</script>
+
 **Observing deep double descent.** Another intriguing property of neural networks is the "double descent" phenomenon. This phrase refers to a training regime where more data, model parameters, or gradient steps can actually _reduce_ a model's test accuracy[^fn1] [^fn2] [^fn3] [^fn4]. The intuition is that during supervised learning there is an interpolation threshold where the learning procedure, consisting of a model and an optimization algorithm, is just barely able to fit the entire training set. At this threshold there is effectively just one model that can fit the data and this model is very sensitive to label noise and model mis-specification.
 
 Several properties of this effect, such as what factors affect its width and location, are not well understood in the context of deep models. We see the MNIST-1D dataset as a good tool for exploring these properties. In fact, we were able to reproduce the double descent pattern after a few hours of researcher effort. The figure below shows our results for a fully-connected network and a convolutional model. We also observed a nuance that we had not seen mentioned in previous works: when using a mean square error loss, the interpolation threshold lies at \\(n * K\\) model parameters where \\(n\\) is the number of training examples and \\(K\\) is the number of model outputs. But when using a negative log likelihood loss, the interpolation threshold lies at \\(n\\) model parameters -- it does not depend on the number of model outputs. This is an interesting empirical observation that may explain some of the advantage in using a log likelihood loss over a MSE loss on this type of task.
