@@ -3,7 +3,7 @@ layout: post
 comments: true
 title:  "Scaling *down* Deep Learning"
 excerpt: "In order to explore the limits of how large we can scale neural networks, we may need to explore the limits of how small we can scale them first."
-date:   2020-11-06 11:00:00
+date:   2020-11-29 11:00:00
 mathjax: true
 author: Sam Greydanus
 thumbnail: /assets/scaling-down/thumbnail.png
@@ -120,7 +120,7 @@ In order to address these shortcomings, we propose the MNIST-1D dataset. It is a
   </div>
   <div style="width:49.4%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/overview_b.png" style="width:100%">
-    <div style="text-align:left;">Visualizing the performance of common models on the MNIST-1D dataset. This dataset separates them cleanly according to whether they use nonlinear features (logistic regression vs. MLP) or whether they have spatial inductive biases (MLP vs. CNN).</div>
+    <div style="text-align:left;">Visualizing the performance of common models on the MNIST-1D dataset. This dataset separates them cleanly according to whether they use nonlinear features (logistic regression vs. MLP) or whether they have spatial inductive biases (MLP vs. CNN). Humans do best of all. Best viewed with zoom.</div>
   </div>
 </div>
 
@@ -140,7 +140,7 @@ Since the original paper was published, a multitude of works have sought to expl
   <div style="width:100%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/lottery_a2.png" style="width:100%">
   </div>
-  <div class="thecap" style="text-align:left;">Finding and analyzing lottery tickets. In <b>a-b)</b>, we isolate a "minimum viable example" of the effect. Recent work by <a href="https://arxiv.org/abs/1906.02773">Morcos et al (2019)</a> shows that lottery tickets can transfer between datasets. We wanted to determine whether spatial inductive biases played a role. So we performed a series of experiments: in <b>c)</b> we plot the asymptotic performance of a 92% sparse ticket. In <b>d)</b> we reverse all the 1D signals in the dataset, effectively preserving spatial structure but changing the location of individual datapoints. This is analogous to flipping an image upside down. Under this ablation, the lottery ticket continues to win. Best viewed with zoom.</div>
+  <div class="thecap" style="text-align:left;">Finding and analyzing lottery tickets. In <b>a-b)</b>, we isolate a "minimum viable example" of the effect. Recent work by <a href="https://arxiv.org/abs/1906.02773">Morcos et al (2019)</a> shows that lottery tickets can transfer between datasets. We wanted to determine whether spatial inductive biases played a role. So we performed a series of experiments: in <b>c)</b> we plot the asymptotic performance of a 92% sparse ticket. In <b>d)</b> we reverse all the 1D signals in the dataset, effectively preserving spatial structure but changing the location of individual datapoints. This is analogous to flipping an image upside down. Under this ablation, the lottery ticket continues to win.</div>
 </div>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
@@ -219,7 +219,7 @@ Metalearning is a promising topic but it is very difficult to scale. First of al
     <div style="width:33%; min-width:270px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/metalearn_afunc_c.png" style="width:100%">
   </div>
-  <div class="thecap" style="text-align:left;">Metalearning an activation function. Starting from an ELU shape, we use gradient-based metalearning to find the optimal activation function of a neural network trained on the MNIST-1D dataset. The activation function itself is parameterized by a second (meta) neural network.</div>
+  <div class="thecap" style="text-align:left;">Metalearning an activation function. Starting from an ELU shape, we use gradient-based metalearning to find the optimal activation function of a neural network trained on the MNIST-1D dataset. The activation function itself is parameterized by a second (meta) neural network. Note that the ELU baseline (red) is obscured by the <i>tanh</i> baseline (blue) in the figure above.</div>
 </div>
 
 We transferred this activation function to convolutional models trained on MNIST and CIFAR10 images and found that it achieves middle-of-the-pack performance. It is especially good at producing low training loss early in optimization, which is the objective that it was trained on in MNIST-1D. When we rank nonlinearities by final test loss, though, it achieves middle-of-the-pack performance. We suspect that running the same metalearning algorithm on larger models and datasets would further refine our activation function, allowing it to at least match the best hand-designed activation function. We leave this to future work, though.
@@ -248,6 +248,8 @@ This post is not an argument against large-scale machine learning research. That
 
 In fact, small-scale research is complimentary to large-scale research. As in biology, where fruit fly genetics helped guide the Human Genome Project, we believe that small-scale research should always have an eye on how to successfully scale. For example, several of the findings reported in this post are at the point where they should be investigated at scale. We would like to show that large scale lottery tickets also learn spatial inductive biases, and show evidence that they develop local connectivity. We would also like to try metalearning an activation function on a larger model in the hopes of finding an activation that will outperform ReLU and Swish in generality.
 
+We should emphasize that we are only ready to scale these results now that we have isolated and understood them in a controlled setting. We believe that scaling a system is only a good idea once the relevant causal mechanisms have been isolated and understood.
+
 
 <!-- ## Context
 
@@ -263,14 +265,12 @@ Once again, the genetics analogy is useful. In genetics, scale has been most eff
 
  -->
 
-## Related work
-The core inspiration for this work stems from an admiration for all that the [MNIST dataset](http://yann.lecun.com/exdb/mnist/) has done for deep learning. While it has some notable flaws -- some of which we have addressed -- it also has underappreciated strengths: it is simple, intuitive, and provides the perfect sandbox for exploring creative new ideas.
+## Other small datasets
+The core inspiration for this work stems from an admiration of and, we daresay, infatuation with the [MNIST dataset](http://yann.lecun.com/exdb/mnist/). While it has some notable flaws -- some of which we have addressed -- it also has many lovable qualities and underappreciated strengths: it is simple, intuitive, and provides the perfect sandbox for exploring creative new ideas.
 
-Our work also bears philosophical similarities to the [Synthetic Petri Dish](https://arxiv.org/abs/2005.13092) by Rawal et al. (2020). It was published concurrently to this work and the authors make similar references to biology in order to motivate the use of small synthetic datasets for exploratory research. Their work differs from ours in that they use metalearning to obtain their datasets whereas we construct ours by hand. The purpose of the Synthetic Petri Dish is to accelerate neural architecture search whereas the purpose of our dataset is to accelerate "science of deep learning" questions.
+Our work also bears philosophical similarities to the [Synthetic Petri Dish](https://arxiv.org/abs/2005.13092) by Rawal et al. (2020). It was published concurrently and the authors make similar references to biology in order to motivate the use of small synthetic datasets for exploratory research. Their work differs from ours in that they use metalearning to obtain their datasets whereas we construct ours by hand. The purpose of the Synthetic Petri Dish is to accelerate neural architecture search whereas the purpose of our dataset is to accelerate "science of deep learning" questions.
 
-There are a number of other small-scale datasets that are commonly used to investigate "science of deep learning" questions. The [CIFAR-10 dataset](https://www.cs.toronto.edu/~kriz/cifar.html) is larger than the MNIST dataset in that individual examples are four times larger, but the number of images is the same. It generally does a better job of discriminating between MLP and CNN architectures, and between various CNN architectures such as vanilla CNNs versus ResNets. The [FashionMNIST dataset](https://github.com/zalandoresearch/fashion-mnist) is the same size as MNIST but somewhat more difficult; it aims to rectify some of the most serious problems with MNIST, in particular, that it is too easy and does not discriminate properly between different machine learning models.
-
-[Scikit-learn](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.datasets) provides dozens of toy datasets -- some synthetic and others real -- that are meant for evaluating machine learning models on a small scale. These datasets are appropriate for some "science of machine learning" questions but not for others. For example, the <code>two_moons</code> dataset is useful for exploring the role of nonlinearity in classification. However, none of these synthetic tasks is good for exploring the role of spatial inductive biases in deep learning architectures. Making real world analogies to, say, digit classification, is not possible with these datasets, and one can often do very well on them using simple linear or kernel-based methods.
+There are many other small-scale datasets that are commonly used to investigate "science of deep learning" questions. The examples in the [CIFAR-10 dataset](https://www.cs.toronto.edu/~kriz/cifar.html) are four times larger than MNIST examples but the total number of training examples is the same. CIFAR-10 does a better job of discriminating between MLP and CNN architectures, and between various CNN architectures such as vanilla CNNs versus ResNets. The [FashionMNIST dataset](https://github.com/zalandoresearch/fashion-mnist) is the same size as MNIST but a bit more difficult. One last option is [Scikit-learn](https://scikit-learn.org/stable/modules/classes.html#module-sklearn.datasets)'s datasets: there are dozens of options, some synthetic and others real. But making real world analogies to, say, digit classification, is not possible and one can often do very well on them using simple linear or kernel-based methods.
 
 ## Closing thoughts
 
