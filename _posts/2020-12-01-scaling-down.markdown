@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Scaling *down* Deep Learning"
+title:  "Scaling down Deep Learning"
 excerpt: "In order to explore the limits of how large we can scale neural networks, we may need to explore the limits of how small we can scale them first."
 date:   2020-12-01 11:00:00
 mathjax: true
