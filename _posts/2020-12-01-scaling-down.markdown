@@ -3,7 +3,7 @@ layout: post
 comments: true
 title:  "Scaling *down* Deep Learning"
 excerpt: "In order to explore the limits of how large we can scale neural networks, we may need to explore the limits of how small we can scale them first."
-date:   2020-11-29 11:00:00
+date:   2020-12-01 11:00:00
 mathjax: true
 author: Sam Greydanus
 thumbnail: /assets/scaling-down/thumbnail.png
@@ -97,7 +97,7 @@ thumbnail: /assets/scaling-down/thumbnail.png
 </script>
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
-	<a href="" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="https://arxiv.org/abs/2011.14439" id="linkbutton" target="_blank">Read the paper</a>
 	<a href="https://bit.ly/3fghqVu" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
 	<a href="https://github.com/greydanus/mnist1d" id="linkbutton" target="_blank">Get the code</a>
 </div>
