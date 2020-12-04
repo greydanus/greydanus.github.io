@@ -3,7 +3,7 @@ layout: post
 comments: true
 title:  "Jumpy Recurrent Neural Networks"
 excerpt: "We propose a Jumpy RNN model which can jump over long durations of uniform change in order to focus on pivotal events."
-date:   2020-10-15 11:00:00
+date:   2020-12-02 11:00:00
 mathjax: true
 author: Sam Greydanus, Stefan Lee, and Alan Fern
 thumbnail: /assets/jumpy-rnn/thumbnail.png
