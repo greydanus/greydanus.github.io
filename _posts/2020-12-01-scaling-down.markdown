@@ -124,6 +124,13 @@ In order to address these shortcomings, we propose the MNIST-1D dataset. It is a
   </div>
 </div>
 
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:100%; min-width:300px; display: inline-block; vertical-align: top;">
+    <img src="/assets/scaling-down/tsne.png" style="width:100%">
+  </div>
+  <div class="thecap" style="text-align:left;">Visualizing the MNIST and MNIST-1D datasets with tSNE. The well-defined clusters in the MNIST plot indicate that the majority of the examples are linearly separable according to class. The MNIST-1D plot, meanwhile, reveals a lack of well-defined clusters which suggests that learning a nonlinear representation of the data is much more important to achieve successful classification. Thanks to <a href="https://twitter.com/hippopedoid">Dmitry Kobak</a> for making this plot.</div>
+</div>
+
 ## Example Use Cases
 
 In this section we will explore several examples of how MNIST-1D can be used to study core "science of deep learning" phenomena.
