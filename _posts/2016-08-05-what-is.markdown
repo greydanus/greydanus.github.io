@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Three Perspectives on Deep Learning"
-excerpt: "After being excited about this field for more than a year, I should have a concise and satisfying answer. But I have three."
+excerpt: "After being excited about this field for more than a year, I should have a concise and satisfying answer to the question, 'What is deep learning?'. But I have three."
 date:   2016-08-05 11:00:00
 mathjax: true
 thumbnail: /assets/what-is/thumbnail.png
@@ -18,7 +18,7 @@ When [Demis Hassabis](https://en.wikipedia.org/wiki/Demis_Hassabis) opened his l
 	<div class="thecap" style="text-align:center">Deep learning magic: a ConvNet-based architecture can capture artistic style and apply it to a new image (from <a href="https://github.com/jcjohnson/neural-style">jcjohnson</a>)</div>
 </div>
 
-In fact, deep learning can solve more than vision. It can [defeat the world champion in Go](http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html), [translate text](https://arxiv.org/abs/1406.1078), and paint [like Van Gogh](https://github.com/jcjohnson/neural-style). It’s also been known to [fly helicopters](https://www.youtube.com/user/stanfordhelicopter) extremely well, [fold protiens](http://www.nature.com/articles/srep17573), and [classify subatomic particles](http://www.jmlr.org/proceedings/papers/v42/sado14.html). Obviously, deep learning is awesome… but what exactly is it? After being obsessed with this field for more than a year, I should have a concise and satisfying answer. Strangely, I have three.
+In fact, deep learning can solve more than vision. It can [defeat the world champion in Go](http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html), [translate text](https://arxiv.org/abs/1406.1078), and paint [like Van Gogh](https://github.com/jcjohnson/neural-style). It’s also been known to [fly helicopters](https://www.youtube.com/user/stanfordhelicopter) extremely well, [fold protiens](http://www.nature.com/articles/srep17573), and [classify subatomic particles](http://www.jmlr.org/proceedings/papers/v42/sado14.html). Deep learning is awesome...but what exactly is it? After being obsessed with this field for more than a year, I should have a concise and satisfying answer. Strangely, I have three.
 
 ## Biological picture
 > "A lot of the motivation for deep nets did come from looking at the brain..." - Geoffrey Hinton
@@ -51,7 +51,9 @@ Deep learning is the same thing except \\(f(x)\\) can be arbitrarily complex and
 ## Computer science picture
 > “The cost of a world-class deep learning expert was about the same as a top NFL quarterback prospect” - Peter Lee (Microsoft Research)
 
-**The tech industry.** Tech companies love to build hype around vague keyphrases such as 'cloud', 'big data', and 'machine learning.' Inevitably, 'deep learning' will join the list. There are really two approaches to deep learning in tech. The first says: this gets great results and makes us a profit – let’s pour a ton of money into it. The second says: this is the cure-all, next-big-thing, singularity-inducing pinnacle of computer science - let’s pour a ton of money into it. There are a few [notable exceptions](https://openai.com/about/).
+**The tech industry.** Tech companies love to build hype around vague keyphrases such as 'cloud', 'big data', and 'machine learning.' Inevitably, 'deep learning' will join the list. There are really two approaches to deep learning in tech. The first says: this gets great results and makes us a profit – let’s pour a ton of money into it. The second says: this is the cure-all, next-big-thing, singularity-inducing pinnacle of computer science - let’s pour a ton of money into it. There are a few notable exceptions.
+
+**Edit, December 2020.** I had previously linked to OpenAI as a 'notable exception', but in recent years OpenAI has been acting more like [ClosedAI](https://twitter.com/elonmusk/status/1309052632850468864) 😞.
 
 <div class="imgcap_noborder">
 	<img src="/assets/what-is/trends.png" width="150%">
