@@ -5,47 +5,9 @@ title:  "Lagrangian Neural Networks"
 excerpt: "As a complement to Hamiltonian Neural Networks, I discuss how to parameterize Lagrangians with neural networks and then learn them from data."
 date:   2020-03-10 11:00:00
 mathjax: true
-author: Sam Greydanus, Miles Cranmer, and Stephan Hoyer
+author: With Miles Cranmer and Stephan Hoyer
 thumbnail: /assets/lagrangian-nns/thumbnail.png
 ---
-
-<div>
-	<style>
-		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgb(180,180,180);
-		  border-radius: 4px;
-		  color: white;
-		  padding: 6px 0px;
-		  width: 150px;
-		  text-align: center;
-		  text-decoration: none;
-		  display: inline-block;
-		  text-transform: uppercase;
-		  font-size: 13px;
-		  margin: 8px;
-		}
-
-		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(160,160,160);
-		}
-
-		.playbutton {
-		  background-color: rgba(0, 153, 51);
-		  /*background-color: rgba(255, 130, 0);*/
-		  border-radius: 4px;
-		  color: white;
-		  padding: 3px 8px;
-		  /*width: 60px;*/
-		  text-align: center;
-		  text-decoration: none;
-		  text-transform: uppercase;
-		  font-size: 12px;
-		  display: block;
-		  /*margin-left: auto;*/
-		  margin-right: auto;
-		}
-	</style>
-</div>
 
 Accurate models of the world are built on notions of its underlying symmetries. In physics, these symmetries correspond to conservation laws, such as for energy and momentum. But neural network models struggle to learn these symmetries. To address this shortcoming, last year I introduced a class of models called Hamiltonian Neural Networks (HNNs) that can learn these invariant quantities directly from (pixel) data. In this project, some friends and I are going to introduce a complimentary class of models called Lagrangian Neural Networks (LNNs). These models are able to learn Lagrangian functions straight from data. They're interesting because, like HNNs, they can learn exact conservation laws, but unlike HNNs they don't require canonical coordinates.
 
@@ -56,7 +18,7 @@ Accurate models of the world are built on notions of its underlying symmetries. 
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
 	<a href="https://arxiv.org/abs/2003.04630" id="linkbutton" target="_blank">Read the paper</a>
-	<a href="https://colab.research.google.com/drive/1CSy-xfrnTX28p1difoTA8ulYw0zytJkq" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="https://colab.research.google.com/drive/1CSy-xfrnTX28p1difoTA8ulYw0zytJkq" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
 	<a href="https://github.com/MilesCranmer/lagrangian_nns" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
@@ -68,7 +30,7 @@ Indeed, his path into research was notable for its passion and suddenness. Until
 
 >“I will deduce the complete mechanics of solid and fluid bodies using the principle of least action.” -- Joseph-Louis Lagrange, age 20
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:40%">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%">
 	<img src="/assets/lagrangian-nns/lagrange.png">
 	<div class="thecap">A French stamp commemorating Lagrange.</div>
 </div>
@@ -91,7 +53,7 @@ $$
 At first glance, \\(S\\) seems like an arbitrary combination of energies. But it has one remarkable property. It turns out that for all possible paths between \\(x_0\\) and \\(x_1\\), there is only one path that gives a stationary value of \\(S\\). Moreover, that path is the one that nature always takes.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%">
-	<img src="/assets/lagrangian-nns/paths.png" style="width:80%">
+	<img src="/assets/lagrangian-nns/paths.png" style="width:100%">
 	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto;"><b><a href="https://en.wikipedia.org/wiki/Lagrangian_mechanics#/media/File:Least_action_principle.svg" target="_blank" >Figure 3:</a></b> Possible paths from q0 to q1, plotted in <a href="https://en.wikipedia.org/wiki/Configuration_space_(physics)">configuration space</a>. The action is stationary (δS = 0) for small perturbations (δq) to the path that the system actually takes (red).</div>
 </div>
 
@@ -153,10 +115,10 @@ $$
 <span id="longEqnWithLargeScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{align}
-\frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} &= \frac{\partial \mathcal{L}}{\partial q_j} & \text{write the Euler-Lagrange equation} \quad (5)\\
+\frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} &= \frac{\partial \mathcal{L}}{\partial q_j} & \text{the Euler-Lagrange equation} \quad (5)\\
 \frac{d}{dt} \nabla_{\dot q} \mathcal{L} &= \nabla_{q} \mathcal{L} & \text{switch to vector notation} \quad (6)\\
 (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})\ddot q + (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L}) \dot q &= \nabla_q \mathcal{L} & \text{expand time derivative }\frac{d}{dt} \quad (7)\\
-\ddot q &= (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})^{-1}[\nabla_q \mathcal{L} - (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L})\dot q] & \text{use a matrix inverse to solve for } \ddot q \quad (8)\\
+\ddot q &= (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})^{-1}[\nabla_q \mathcal{L} - (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L})\dot q] & \text{matrix inverse to solve for } \ddot q \quad (8)\\
 \end{align}
 $$
 </span>
@@ -180,7 +142,7 @@ In our paper, we conduct several experiments to validate this approach. In the f
 
 **Double pendulum.** The double pendulum is a dynamics problem that regular neural networks struggle to fit because they have no prior for conserving the total energy of the system. It is also a problem where HNNs struggle, since the canonical coordinates of the system are not trivial to compute (see equations 1 and 2 of [this derivation](https://diego.assencio.com/?index=e5ac36fcb129ce95a61f8e8ce0572dbf) for example). But in contrast to these baseline methods, Figure 4 shows that LNNs are able to learn the Lagrangian of a double pendulum.
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
 	<img src="/assets/lagrangian-nns/dblpend_error.png">
 	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto;"><b>Figure 4:</b> Learning the dynamics of a double pendulum. Unlike the baseline neural network, our model learns to approximately conserve the total energy of the system. This is a consequence of the strong physical inductive bias of the Euler-Lagrange constraint.</div>
 </div>
@@ -242,17 +204,17 @@ The principle of stationary action is a unifying force in physics. It represents
        return {'width':w, 'height': h};
 }
 
-if(parseInt(getBrowserSize().width) < 900){
+if(parseInt(getBrowserSize().width) < 800){
  document.getElementById("longEqnWithLargeScript_A").style.display = "none";
 }
-if(parseInt(getBrowserSize().width) > 900){
+if(parseInt(getBrowserSize().width) > 800){
  document.getElementById("longEqnWithSmallScript_A").style.display = "none";
 }
 
-if(parseInt(getBrowserSize().width) < 900){
+if(parseInt(getBrowserSize().width) < 800){
  document.getElementById("longEqnWithLargeScript_B").style.display = "none";
 }
-if(parseInt(getBrowserSize().width) > 900){
+if(parseInt(getBrowserSize().width) > 800){
  document.getElementById("longEqnWithSmallScript_B").style.display = "none";
 }
 </script>

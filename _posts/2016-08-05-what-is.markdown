@@ -2,11 +2,10 @@
 layout: post
 comments: true
 title:  "Three Perspectives on Deep Learning"
-excerpt: "After being excited about this field for more than a year, I should have a concise and satisfying answer to the question, 'What is deep learning?'. But I have three."
+excerpt: "After being excited about this field for more than a year, I should have a concise and satisfying answer to the question, 'What is deep learning?' But I have three."
 date:   2016-08-05 11:00:00
 mathjax: true
 thumbnail: /assets/what-is/thumbnail.png
-author: Sam Greydanus
 ---
 
 > “Deep learning has solved vision...” - Demis Hassabis (Google DeepMind)
@@ -14,7 +13,7 @@ author: Sam Greydanus
 When [Demis Hassabis](https://en.wikipedia.org/wiki/Demis_Hassabis) opened his lecture at the 2015 CERN Data Science conference with this claim, I blinked in disbelief. Hundreds of brilliant scientists have spent their lives pondering the mysteries of the human eye. How could he make that claim so casually? Determined to prove him wrong, I looked at the latest computer vision research and... indeed, certain areas are [at human performance](https://arxiv.org/abs/1502.01852v1).
 
 <div class="imgcap">
-	<img src="/assets/what-is/neural_style.png" width="55%">
+	<img src="/assets/what-is/neural_style.png" width="65%">
 	<div class="thecap" style="text-align:center">Deep learning magic: a ConvNet-based architecture can capture artistic style and apply it to a new image (from <a href="https://github.com/jcjohnson/neural-style">jcjohnson</a>)</div>
 </div>
 
@@ -26,7 +25,7 @@ In fact, deep learning can solve more than vision. It can [defeat the world cham
 The field of deep learning got started when scientists tried to approximate certain circuits in the brain. For example, the Convolutional Neural Network (ConvNet) – a cornerstone of modern computer vision – was inspired by [a paper](https://www.ncbi.nlm.nih.gov/pubmed/4966457) about neurons in the monkey striate cortex. Another example is the field of Reinforcement Learning – the hottest area of AI right now - which was built on our understanding of how the brain processes rewards.
 
 <div class="imgcap">
-	<img src="/assets/what-is/bio_vs_dl.png" width="80%">
+	<img src="/assets/what-is/bio_vs_dl.png" width="90%">
 	<div class="thecap" style="text-align:center">The architecture of neural networks is inspired by connections between neurons</div>
 </div>
 
@@ -42,7 +41,7 @@ Skeptics claim that deep learning stretches the brain metaphor too far. Some of 
 Mathematicians will tell you that deep learning is just complicated regression. Regression is the art of finding a function that explains the relationship between an input and an output. The simplest example is from middle school math when we used two points on a Cartesian plane to find the variables \\(m\\) and \\(b\\) in \\(f(x)=mx+b\\).
 
 <div class="imgcap">
-	<img src="/assets/what-is/regression.png" width="70%">
+	<img src="/assets/what-is/regression.png" width="80%">
 	<div class="thecap" style="text-align:center">Deep learning as a type of regression (images from 2015 <a href="https://arxiv.org/abs/1409.0575">ImageNet paper</a>)</div>
 </div>
 
@@ -56,7 +55,7 @@ Deep learning is the same thing except \\(f(x)\\) can be arbitrarily complex and
 **Edit, December 2020.** I had previously linked to OpenAI as a 'notable exception', but in recent years OpenAI has been acting more like [ClosedAI](https://twitter.com/elonmusk/status/1309052632850468864) 😞. My new favorite 'notable exception' is the [ML Collective](http://mlcollective.org/), a renegade band of ML researchers who also happen to be friends. This group (of which I am a member) is a nonprofit aimed at advancing deep learning research while making it easier for people from non-traditional paths to get involved.
 
 <div class="imgcap_noborder">
-	<img src="/assets/what-is/trends.png" width="150%">
+	<img src="/assets/what-is/trends.png" width="100%">
 	<div class="thecap" style="text-align:center"></div>
 </div>
 

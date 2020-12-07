@@ -2,10 +2,9 @@
 layout: post
 comments: true
 title:  "The Story of Flight"
-excerpt: "Why do humans want to fly? Let's start by looking at the humans for whom the desire to fly was strongest: the early aviators. This my first post in a series about human flight."
+excerpt: "Why do humans want to fly? Let's start by looking at the humans for whom the desire to fly was strongest: the early aviators."
 date:   2020-10-12 11:00:00
 mathjax: true
-author: Sam Greydanus
 thumbnail: /assets/story-of-flight/thumbnail.png
 ---
 
@@ -71,7 +70,7 @@ Since my encounter with the hummingbird, I have always been naturally drawn to f
   </div>
   <div style="width:33%; min-width:200px; display: inline-block; vertical-align: top;">
     <img src="/assets/story-of-flight/wing_shape.png" id="wingShapeImage" onclick="toggleWingShape()" style="width:100%">
-    <div style="text-align:left;">Optimizing our own wing in a fluid simulation. <p style="color:grey;display:inline;">[Click above to pause or play.]</p></div>
+    <div style="text-align:left;">Optimizing our own wing in a fluid simulation. <p style="color:grey;display:inline;">[Click to pause or play.]</p></div>
   </div>
 </div>
 
@@ -122,7 +121,7 @@ Earhart was one of the best early airplane pilots and famously went missing duri
 That was the nature of life on the new frontier.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%;margin-bottom: 100px; margin-top: 50px">
-    <a href="../../../../2020/10/13/stepping-stones/" id="linkbutton" target="_blank" style="margin-right: 10px;">Post #2: The Stepping Stones of Flight</a>
+    <a href="../../../../2020/10/13/stepping-stones/" id="featuredlink" target="_blank" style="margin-right: 10px;">Post #2: The Stepping Stones of Flight</a>
 </div>
 
 

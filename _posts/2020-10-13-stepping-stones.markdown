@@ -2,10 +2,9 @@
 layout: post
 comments: true
 title:  "The Technological Stepping Stones of Flight"
-excerpt: "How did flight become a reality? Let's look at the inventors who took flight from the world of ideas to the world of things – focusing in particular on airfoil design. This my second post in a series about human flight."
+excerpt: "How did flight become a reality? Let's look at the inventors who took flight from the world of ideas to the world of things – focusing in particular on airfoil design."
 date:   2020-10-13 11:00:00
 mathjax: true
-author: Sam Greydanus
 thumbnail: /assets/stepping-stones/thumbnail.png
 ---
 
@@ -108,33 +107,8 @@ Looking over the history of wing design, it is easy to see that the boundary bet
 
 Since the first half of the twentieth century when the core breakthroughs of aeronautics occurred, scientists have been hard at work on physical theories that can explain those breakthroughs. These theories have expanded into fields of study like "computational fluid dynamics," "aeronautical science," and "turbulent flow." Such principles are quite complex, but the question they aim to answer is simple: _how do wings work?_ We are going to answer that question in the next section by obtaining our own wing starting from nothing but the physics of airflow.
 
-<div>
-    <style>
-        #linkbutton:link, #linkbutton:visited {
-          padding: 6px 0px;
-          text-decoration: none;
-          display: inline-block;
-
-          border: 2px solid #777;
-          padding: 10px;
-          font-size: 20px;
-          min-width: 200px;
-          width: 50%;
-          text-align: center;
-          color: #999;
-          margin: 0px auto;
-          cursor: pointer;
-          margin-bottom: 10px;
-        }
-
-        #linkbutton:hover, #linkbutton:active {
-          background-color: rgba(245, 245, 245);
-        }
-    </style>
-</div>
-
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%;margin-bottom: 200px; margin-top: 50px">
-    <a href="../../../../2020/10/14/optimizing-a-wing/" id="linkbutton" target="_blank" style="margin-right: 10px;">Post #3: Optimizing a Wing</a>
+    <a href="../../../../2020/10/14/optimizing-a-wing/" id="featuredlink" target="_blank" style="margin-right: 10px;">Post #3: Optimizing a Wing</a>
 </div>
 
 ### Appendix: Airfoil Timeline

@@ -6,7 +6,6 @@ excerpt: "Synthetic gradients achieve the perfect balance of crazy and brilliant
 date:   2016-11-26 11:00:00
 mathjax: true
 thumbnail: /assets/synthetic-gradients/thumbnail.png
-author: Sam Greydanus
 ---
 
 <!-- <center>
@@ -14,7 +13,7 @@ author: Sam Greydanus
 </center> -->
 
 <div class="imgcap_noborder">
-	<img src="/assets/synthetic-gradients/synthgrad.gif" width="20%">
+	<img src="/assets/synthetic-gradients/synthgrad.gif" width="30%">
 	<div class="thecap" style="text-align:center">Synthetic gradients in action (from the DeepMind <a href="https://deepmind.com/blog/decoupled-neural-networks-using-synthetic-gradients/">blog post)</a></div>
 </div>
 
@@ -183,7 +182,7 @@ Consider two adjacent, fully connected layers $$l_I$$ and $$l_J$$ with $$m$$ and
 Imagine you're a researcher tossing around the idea of synthetic gradients. How could you tell whether it's a crazy idea that will waste your time or a useful idea that will make a difference? It's a tricky question...a little like the infamous puppy vs. bagel meme.
 
 <div class="imgcap">
-	<img src="/assets/synthetic-gradients/puppy_or_bagel.jpg" width="40%">
+	<img src="/assets/synthetic-gradients/puppy_or_bagel.jpg" width="50%">
 	<div class="thecap" style="text-align:center">Puppy or bagel?</div>
 </div>
 

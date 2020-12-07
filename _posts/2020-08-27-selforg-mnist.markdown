@@ -2,10 +2,9 @@
 layout: post
 comments: true
 title:  "Self-classifying MNIST Digits"
-excerpt: "We treat every pixel in an image as a biological cell. Then we train these cells to send signals to their neighbors so that, over time, the entire population will agree on what digit they are shaping."
+excerpt: "We treat every pixel in an image as a biological cell. We train these cells to signal to one another and determine what digit they are shaping."
 date:   2020-08-27 11:00:00
 mathjax: true
-author: Sam Greydanus
 thumbnail: /assets/selforg-digits/thumbnail.png
 ---
 
@@ -73,7 +72,7 @@ In this project, we treat every pixel in an image as a biological cell. Then we 
 I encourage you to read the article and try the interactive demo for yourself on Distill:
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-	<a href="https://distill.pub/2020/selforg/mnist/" id="linkbutton" target="_blank" style="margin-right: 10px;">Read the article on Distill</a>
+	<a href="https://distill.pub/2020/selforg/mnist/" id="featuredlink" target="_blank" style="margin-right: 10px;">Read the article on Distill</a>
 </div>
 
 ## Useful properties of Cellular Automata

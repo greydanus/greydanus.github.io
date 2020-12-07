@@ -5,39 +5,14 @@ title:  "The Paths Perspective on Value Learning"
 excerpt: "I recently published a Distill article about value learning. This post includes a link to the article and some meta-commentary about the Distill format."
 date:   2020-01-27 11:00:00
 mathjax: true
-author: Sam Greydanus
 thumbnail: /assets/paths-perspective/thumbnail.png
 author: Sam Greydanus
 ---
 
-<div>
-	<style>
-		#linkbutton:link, #linkbutton:visited {
-		  padding: 6px 0px;
-		  text-decoration: none;
-		  display: inline-block;
-
-		  border: 2px solid #777;
-		  padding: 10px;
-		  font-size: 20px;
-		  width: 300px;
-		  text-align: center;
-		  color: #999;
-		  margin: 0px auto;
-		  cursor: pointer;
-		  margin-bottom: 10px;
-		}
-
-		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(245, 245, 245);
-		}
-	</style>
-</div>
-
 I recently published a Distill article about value learning. This post includes a link to the article and some meta-commentary about the Distill format.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-	<a href="https://distill.pub/2019/paths-perspective-on-value-learning/" id="linkbutton" target="_blank" style="margin-right: 10px;">Read this article on Distill</a>
+	<a href="https://distill.pub/2019/paths-perspective-on-value-learning/" id="featuredlink" target="_blank" style="margin-right: 10px;">Read this article on Distill</a>
 </div>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
@@ -57,7 +32,7 @@ I've admired Distill since its inception. Early on I could tell by the clean dia
 	<div class="thecap" style="text-align:left; width:100%"><b>Figure 2.</b> The number of ML papers on arXiv is rapidly increasing (plot credit: <a href="https://t.co/6tjdLocleT?amp=1">Jeff Dean</a>). With this flood of new papers, much more "publication noise" has entered our field. Distill is one promising medium for separating the signal from the noise.</div>
 </div> -->
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:52%">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
 	<!-- <img src="/assets/paths-perspective/research-debt.jpg"> -->
 	<img src="/assets/paths-perspective/arxiv-papers.jpeg">
 	<div class="thecap" style="text-align:left; width:100%"><b>Figure 1.</b> The number of ML papers uploaded to ArXiv has increased exponentially in recent years. Distill aims to <a href="https://distill.pub/2017/research-debt/">reduce publication noise</a> by summarizing key research ideas in a low-volume, peer-reviewed setting.</div>
@@ -66,7 +41,7 @@ I've admired Distill since its inception. Early on I could tell by the clean dia
 **Niche 2: Highlighting qualitative results.** These days, it can be difficult to publish a deep learning paper [without a nice table showing that your approach achieves state-of-the-art results](https://twitter.com/TacoCohen/status/1073902391270014976). These tables are certainly important, but a qualitative understanding of _what_ the model is doing and _why_ is just as important. Distill prioritizes these "science of deep learning" questions as Chris Olah told me, "because there is so much more to a neural network than its test loss."
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:43%">
-	<img src="/assets/paths-perspective/flowers.jpeg" style="width:70%">
+	<img src="/assets/paths-perspective/flowers.jpeg" style="width:85%">
 	<div class="thecap" style="text-align:left; width:100%"><b>Figure 2.</b> Distill advocates <a href="https://distill.pub/2017/feature-visualization/">visualization</a> <a href="https://distill.pub/2018/differentiable-parameterizations/">techniques</a> that help researchers answer qualitative questions about their models.</div>
 </div>
 

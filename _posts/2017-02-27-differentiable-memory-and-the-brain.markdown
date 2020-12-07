@@ -2,11 +2,10 @@
 layout: post
 comments: true
 title:  "Differentiable Memory and the Brain"
-excerpt: "DeepMind's Differentiable Neural Computer (DNC) represents the state of the art in differentiable memory models. I introduce an analogy between the DNC and human memory, then discuss where it breaks down."
+excerpt: "We compare the Differentiable Neural Computer, a strong neural memory model, to human memory and discuss where the analogy breaks down."
 date:   2017-02-27 11:00:00
 mathjax: true
 thumbnail: /assets/dnc/thumbnail.png
-author: Sam Greydanus
 ---
 
 <div class="imgcap_noborder">
@@ -19,7 +18,7 @@ DeepMind's Differentiable Neural Computer (DNC) represents the state of the art 
 
 **Motivation.** Neural networks represent the state of the art in computer vision, translation, and artificial intelligence. They are also of interest to neuroscientists because they perform computations in much the same way as the human brain. In recent years, researchers have introduced several neural-network based models that can read and write to external memory in a fully differentiable manner.
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:90%">
     <div style="overflow:hidden; padding-top: 56%; position: relative;" >
         <iframe style="border: 0;height: 100%;left: 0;position: absolute;top: 0;width: 100%;" src="https://www.youtube.com/embed/B9U8sI7TcMY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
@@ -47,24 +46,23 @@ To solve this problem, researchers have proposed a variety of interfaces between
 
 Using Michael Kahana's college textbook, _Foundations of Human Memory_, I will explain how the DNC schema uses five key human memory concepts:
 
-* 
 1. Attribute theory
 2. Similarity measures
 3. Search of Associative Memory (SAM)
 4. Temporal Context Model (TCM)
 5. Serial recall
 
-**Attribute theory.** In attribute theory, each memory is represented by a list of attribute values, one value for each attribute[^fn8] [^fn9]. These attributes describe both the memory and the context in which it was formed. We can concatenate these values together to form _attribute vectors_. In fact, Heusser et al (Heusser 2017)[^fn10] built attribute vectors from human fMRI data and used them to explore the human 'memory space' (Manning 2017)[^fn11].
+**1. Attribute theory.** In attribute theory, each memory is represented by a list of attribute values, one value for each attribute[^fn8] [^fn9]. These attributes describe both the memory and the context in which it was formed. We can concatenate these values together to form _attribute vectors_. In fact, Heusser et al (Heusser 2017)[^fn10] built attribute vectors from human fMRI data and used them to explore the human 'memory space' (Manning 2017)[^fn11].
 
 The DNC also uses vectors to store memories. Each row of the memory matrix $$M \in \mathbb{R}^{N \times W}$$ (part **c** in the figure below) corresponds to a different memory[^fn4]. If $$E \in \mathbb{R}^{N \times W}$$ is a matrix of ones, $$w \in \mathbb{R}^N$$ is a normalized vector of write weights, $$\mathbf{v} \in \mathbb{R}^W$$ is a new memory, and $$\mathbf{e} \in \mathbb{R}^W$$ is an erase vector, then the DNC's memory matrix can be updated with
 
 $$ M_t = M_{t-1} \circ (E-\mathbf{w}_t^w \mathbf{e}_t^\intercal) + \mathbf{w}_t^w \mathbf{v}_t^\intercal $$
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/dnc-attribute.png" width="90%">
+    <img src="/assets/dnc/dnc-attribute.png" width="100%">
 </div>
 
-**Similarity measures.** In _Foundations of Human Memory_[^fn8], Kahana introduces the summed similarity model to explain results from Hintzman and Block (1971)[^fn9]. The model uses a similarity measure (e.g. cosine similarity) to determine whether a probe vector matches a set of memory vectors. The idea is that the brain might use a related similarity measure to access memories.
+**2. Similarity measures.** In _Foundations of Human Memory_[^fn8], Kahana introduces the summed similarity model to explain results from Hintzman and Block (1971)[^fn9]. The model uses a similarity measure (e.g. cosine similarity) to determine whether a probe vector matches a set of memory vectors. The idea is that the brain might use a related similarity measure to access memories.
 
 The DNC also uses cosine similarity to retrieve memories. If \\(\beta \in \mathbb{R} \\) is a strength parameter, \\(\mathbf{k} \in \mathbb{R}^W\\), and \\(\mathcal{D}(\mathbf{u},\mathbf{v})\\) is the cosine similarity measure, then the probability that the DNC will access memory location \\(i\\) is given by:
 
@@ -76,20 +74,20 @@ $$
 $$
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/dnc-similarity.png" width="90%">
+    <img src="/assets/dnc/dnc-similarity.png" width="100%">
 </div>
 
-**Search of Associative Memory (SAM).** Kahana introduces the SAM model of human memory in Chapter 7 of _Foundations of Human Memory_ [^fn8]. SAM was proposed by (Atkinson 1968)[^fn13] to explain human free recall studies such as (Raaijmakers 1980)[^fn12], (Murdock 1962)[^fn14] and (Kahana 2008)[^fn15]. As a dual-store model, it divides human memory into Short Term Storage (STS) and Long Term Storage (LTS).
+**3. Search of Associative Memory (SAM).** Kahana introduces the SAM model of human memory in Chapter 7 of _Foundations of Human Memory_ [^fn8]. SAM was proposed by (Atkinson 1968)[^fn13] to explain human free recall studies such as (Raaijmakers 1980)[^fn12], (Murdock 1962)[^fn14] and (Kahana 2008)[^fn15]. As a dual-store model, it divides human memory into Short Term Storage (STS) and Long Term Storage (LTS).
 
 The DNC has mechanisms for both STS and LTS. The DNC's entire differentiable memory module is operated by a [Long Short Term Memory (LSTM)]((https://colah.github.io/posts/2015-08-Understanding-LSTMs/)) RNN which has a form of short-term memory analogous to STS. The memory matrix $$M$$ is, of course, analogous to LTS. The output of the DNC, $$\mathbf{y}_t$$ is the sum of the RNN's output, $$\mathbf{u}_t$$ and a transformed representation of all the vectors read from the memory matrix $$W_r [\mathbf{r}_t^1; \ldots ;\mathbf{r}_t^R]$$. In other words, the DNC produces responses based on both STS and LTS[^fn4]:
 
 $$ \mathbf{y}_t = \mathcal{u}_t + W_r [\mathbf{r}_t^1; \ldots ;\mathbf{r}_t^R] $$
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/dnc-SAM.png" width="90%">
+    <img src="/assets/dnc/dnc-SAM.png" width="100%">
 </div>
 
-**Temporal Context Model (TCM).** Kahana introduces a second model of free recall called the Temporal Context Model (TCM)[^fn8]. The idea is that when a human subject memorizes a sequence, the sequence itself determines context. In this model, context drives both memory storage and recovery.
+**4. Temporal Context Model (TCM).** Kahana introduces a second model of free recall called the Temporal Context Model (TCM)[^fn8]. The idea is that when a human subject memorizes a sequence, the sequence itself determines context. In this model, context drives both memory storage and recovery.
 
 How does the DNC use context to store and retrieve memories? First, the memory vectors themselves can contain context or point to related memories. Second, a _temporal linkage matrix_ stores the order in which attribute vectors are written to memory. If \\(\mathbf{p} \in \mathbb{R}^N\\) is the precedence vector which represents "the degree to which location \\(i\\) was the last one written to"[10], \\(\mathbf{w}^w \in \mathbb{R}^W\\) is the normalized write weighting, and \\(L \in \mathbb{R}^{N \times N}\\) is the temporal linkage matrix, then \\(L\\) gets updated according to
 
@@ -103,10 +101,10 @@ $$
 According to the authors, _"\\(L_t[i, j]\\) represents the degree to which location \\(i\\) was the location written to after location \\(j\\)"_[^fn4].
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/dnc-temporal.png" width="90%">
+    <img src="/assets/dnc/dnc-temporal.png" width="100%">
 </div>
 
-**Serial recall.** Chapter 8 of _Foundations of Human Memory_ addresses serial recall models of human memory[^fn8]. The two prevailing theories are _chaining_ and _positional coding_ (**A** and **B** respectively). If you are familiar with computer science, _chaining_ basically says memory is a linked list and _positional coding_ says memory is a regular list.
+**5. Serial recall.** Chapter 8 of _Foundations of Human Memory_ addresses serial recall models of human memory[^fn8]. The two prevailing theories are _chaining_ and _positional coding_ (**A** and **B** respectively). If you are familiar with computer science, _chaining_ basically says memory is a linked list and _positional coding_ says memory is a regular list.
 
 <div class="imgcap_noborder">
     <img src="/assets/dnc/serial.png" width="100%">
@@ -141,7 +139,7 @@ In case you're unfamiliar with free recall, this term refers to a memory task wh
 **Human results.** In human free recall experiments, subjects are more likely to respond with items near the beginning (primacy effect) or end (recency effect) of the sequence. The degree to which primacy and recency matter change according to sequence length, time delay, and other variables but human responses always exhibit these effects. Will the DNC?
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/human-free.png" width="45%">
+    <img src="/assets/dnc/human-free.png" width="55%">
     <div class="thecap" style="text-align:center">Data for human subjects on the free recall task (Murdock 1962)[^fn14]</div>
 </div>
 
@@ -150,23 +148,23 @@ In case you're unfamiliar with free recall, this term refers to a memory task wh
 The DNC exhibits both primacy and recency effects which supports the authors' claim. But these effects, though present, are almost negligible compared to human subjects...our analogy is breaking down.
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/dnc-free-unscaled.png" width="60%">
+    <img src="/assets/dnc/dnc-free-unscaled.png" width="65%">
     <div class="thecap" style="text-align:center">DNC free recall results show primacy and recency effects</div>
 </div>
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/dnc-free-scaled.png" width="60%">
+    <img src="/assets/dnc/dnc-free-scaled.png" width="65%">
     <div class="thecap" style="text-align:center">Same scale as human free recall results</div>
 </div>
 
-## The analogy breaks down
+## Where does the analogy break down?
 
 > "See that the imagination of nature is far, far greater than the imagination of man." -- Richard Feynman, [Thoughts of a Citizen](http://www.nytimes.com/books/first/f/feynman-meaning.html)
 
 **Context.** The DNC's ability to store context is excellent. First, its temporal linkage matrix allows it to recall the exact order of write operations. Second, it can devote portions of the memory vectors themselves to context. For example, a given memory vector might contain both a memory and a 'pointer' pattern that tells the DNC how to access the next memory vector.
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/context.png" width="60%">
+    <img src="/assets/dnc/context.png" width="70%">
     <div class="thecap" style="text-align:center">Context determines how we form memories, even in controlled laboratory settings</div>
 </div>
 
@@ -178,14 +176,14 @@ The DNC's weakness lies in context-based recall. If it rains outside, your brain
 There are a few ways to get around the backpropagation issue. Geoffrey Hinton points to [spike-time-dependent plasticity](https://www.cs.toronto.edu/~hinton/backpropincortex2014.pdf). A 2016 paper by neuroscientist Greg Wayne steps over the issue by arguing that the [brain optimizes cost functions](https://arxiv.org/abs/1606.03813) just like deep learning algorithms, regardless of the technical details. While these papers take research in the right direction, they don't offer convincing proof one way or another.
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/backpropagation.png" width="70%">
+    <img src="/assets/dnc/backpropagation.png" width="85%">
     <div class="thecap" style="text-align:center">Visualizing backpropagation in a 2-layer neural network (see my <a href="https://greydanus.github.io/2016/11/26/synthetic-gradients/">synthetic gradients</a> post)</div>
 </div>
 
 **Forgetting.** Forgetting $$\neq$$ erasing. In fact, forgetting is a complex process which the brain modulates on many timescales. Sleep research indicates that humans consolidate memories during slow-wave sleep (SWS) and stabilize memories during random-eye-movement (REM) cycles (Rasch 2013)[^fn16]. While sleep strengthens some memories, it weakens others. Since the DNC's ability to forget is limited to an erase vector and an allocation gate, it cannot perform memory consolidation as humans do during sleep.
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/forgetting.png" width="70%">
+    <img src="/assets/dnc/forgetting.png" width="100%">
     <div class="thecap" style="text-align:center">Neuron spike patterns in a young songbird (see (Rasch 2013)[^fn16])</div>
 </div>
 
@@ -196,7 +194,7 @@ I suspect that forgetting is the key reason the DNC performs differently from hu
 There is a new area of deep learning research that aims to produce models that, like the brain, perform well across a [large range of tasks](https://universe.openai.com/). One model is the [PathNet](https://arxiv.org/abs/1701.08734), which can learn to reuse its trained parameters on different tasks.
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/transfer.png" width="40%">
+    <img src="/assets/dnc/transfer.png" width="55%">
     <div class="thecap" style="text-align:center">Transfer learning uses old knowledge to solve a new task (in <a href="https://www.researchgate.net/publication/261259202_From_N_to_N1_Multiclass_Transfer_Incremental_Learning">this case</a>, recognizing a dog)</div>
 </div>
 
@@ -205,7 +203,7 @@ There is a new area of deep learning research that aims to produce models that, 
 **Reinforcement learning and memory.** In reinforcement learning, an agent $$A$$ exists in an environment $$E$$. It has state $s$ from which it can make observations $$o$$ and take actions $$a$$ according to some policy $$\pi(s_t, o_t, a_{t-1})$$. Through trial and error, the agent learns to behave according to policy $$\pi^*(s_t, o_t, a_{t-1})$$, the policy which maximizes the total discounted reward (see [intro blog post](http://www.breloff.com/DeepRL-OnlineGAE/)).
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/rl.png" width="40%">
+    <img src="/assets/dnc/rl.png" width="50%">
     <div class="thecap" style="text-align:center">Reinforcement learning schema.</div>
 </div>
 
@@ -214,7 +212,7 @@ This framework can help us address some important issues in human memory. For ex
 There's a fair bit of evidence for this assertion. First, [problems with working memory can impair reinforcement learning in humans](http://www.jneurosci.org/content/34/41/13747.short). A 2016 paper explores memory in the context of reinforcement learning and demonstrates that [memory consolidation improves reinforcement learning in dynamic environments](http://www.jneurosci.org/content/36/48/12228). Finally, a recent [review of reinforcement learning and episodic memory in humans](http://www.annualreviews.org/doi/abs/10.1146/annurev-psych-122414-033625) claims that _"the ubiquitous and diverse roles of memory in RL may function as part of an integrated learning system"_.
 
 <div class="imgcap_noborder">
-    <img src="/assets/dnc/rl-memory.png" width="80%">
+    <img src="/assets/dnc/rl-memory.png" width="90%">
     <div class="thecap" style="text-align:center"><a href="http://www.annualreviews.org/doi/abs/10.1146/annurev-psych-122414-033625">Gershman and Daw</a> propose an interaction between memory and reinforcement learning.</div>
 </div>
 
