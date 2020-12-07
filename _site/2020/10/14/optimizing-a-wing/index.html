@@ -12,7 +12,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
 
     <!-- Google Analytics -->
     <script>
@@ -43,7 +43,7 @@
 
     <div style="float:left; margin-top:4px; margin-right:10px;">
       <a class="site-title" style="padding-top:0px; padding-bottom:0px;" href="/ ">Natural Intelligence</a>
-      <p style="padding-bottom:6px; font-size:14px">A science blog by Sam Greydanus</p>
+      <p style="padding-bottom:6px; font-size:15px">A science blog by Sam Greydanus</p>
     </div>
 
     <!-- <a class="site-title" style="padding-top:8px; font-size:28px" href="/ ">Natural Intelligence</a> -->
@@ -85,61 +85,21 @@
 
   <header class="post-header">
     <h1>Optimizing a Wing</h1>
-    <p class="meta">Oct 14, 2020 • Sam Greydanus</p>
+    <p class="meta">Oct 14, 2020</p>
   </header>
 
   <article class="post-content">
   <p style="font-size: 20px;text-align: center;color: #999;"><i>(My last post in a series about human flight; <a target="_blank" style="color: #777;" href="../../../../2020/10/12/story-of-flight/">post 1</a>, <a target="_blank" style="color: #777;" href="../../../../2020/10/13/stepping-stones/">post 2</a>).</i></p>
 
-<div>
-	<style>
-		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgb(180,180,180);
-		  border-radius: 4px;
-		  color: white;
-		  padding: 6px 0px;
-		  width: 150px;
-		  text-align: center;
-		  text-decoration: none;
-		  display: inline-block;
-		  text-transform: uppercase;
-		  font-size: 13px;
-		  margin: 8px;
-		}
-
-		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(160,160,160);
-		}
-
-		.playbutton {
-		  background-color: rgba(0, 153, 51);
-		  /*background-color: rgba(255, 130, 0);*/
-		  border-radius: 4px;
-		  color: white;
-		  padding: 3px 8px;
-		  /*width: 60px;*/
-		  text-align: center;
-		  text-decoration: none;
-		  text-transform: uppercase;
-		  font-size: 12px;
-		  /*display: block;*/
-		  /*margin-left: auto;*/
-		  margin: 8px 0px;
-		  margin-right: auto;
-		  min-width:80px;
-		}
-	</style>
-</div>
-
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; text-align:center; width:70%">
-    <img alt="" src="/assets/optimizing-a-wing/wing_shape.png" onclick="toggleWingShape()" style="width:300px" id="wingShapeImage" />
-    <img alt="" src="/assets/optimizing-a-wing/wing_flow.png" onclick="toggleWingFlow()" style="width:300px" id="wingFlowImage" />
-	<div class="thecap" style="text-align:center;"><b>Figure 1:</b> In this post, we'll simulate a wind tunnel, place a rectangular occlusion in it, and then use gradient descent to turn it into a wing. <p style="color:grey; display:inline;">[The images above are videos. Click them to pause or play.]</p></div>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; text-align:center; width:80%">
+    <img alt="" src="/assets/optimizing-a-wing/wing_shape.png" onclick="toggleWingShape()" style="width:315px" id="wingShapeImage" />
+    <img alt="" src="/assets/optimizing-a-wing/wing_flow.png" onclick="toggleWingFlow()" style="width:315px" id="wingFlowImage" />
+	<div class="thecap" style="text-align:left;"><b>Figure 1:</b> In this post, we'll simulate a wind tunnel, place a rectangular occlusion in it, and then use gradient descent to turn it into a wing. <p style="color:grey; display:inline;">[The images above are videos. Click to pause or play.]</p></div>
 </div>
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
 	<a href="https://bit.ly/3j3Wcu4" id="linkbutton" target="_blank">Read the paper</a>
-	<a href="https://bit.ly/2H5r401" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="https://bit.ly/2H5r401" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
 	<a href="https://github.com/greydanus/optimize_wing" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
@@ -173,14 +133,14 @@
 
 <ul>
 	<li>
-		• Rule 1: Velocity follows itself <div id="advection_info_toggle" onclick="hideShowAdvection()" style="cursor: pointer;display:inline">(+)</div>
+		Rule 1: Velocity follows itself <div id="advection_info_toggle" onclick="hideShowAdvection()" style="cursor: pointer;display:inline">(+)</div>
 		<ul>
 		<div id="advection_info" style="display: none;"><i>The technical term for this effect is "self-advection." Advection is when a field, say, of smoke, is moved around by the velocity of a fluid. Self-advection is a special case where the field being advected is the velocity field, and so it actually advects itself. In principle, a self-advection step is as simple as moving the velocity field according to x' = v * dt + x at every point on the grid. We can simulate self-advection over time by repeating this over and over again.</i></div>
 		</ul>
 	</li>
 	<li>
 		<!-- <b>Rule 1: Velocity follows itself</b> -->
-		• Rule 2: Volume is conserved <div id="projection_info_toggle" onclick="hideShowProjection()" style="cursor: pointer;display:inline">(+)</div>
+		Rule 2: Volume is conserved <div id="projection_info_toggle" onclick="hideShowProjection()" style="cursor: pointer;display:inline">(+)</div>
 		<ul>
 		<div id="projection_info" style="display: none;"><i>This rule comes from our incompressibility assumption and the process of enforcing it is called projection. Since volume is conserved, fluid parcels can only move into positions that their neighbors have recently vacated. This puts a strong constraint on our simulation's velocity field: it needs to be volume-conserving. Fortunately, Helmholtz’s theorem tells us that any vector field can be decomposed into an incompressible field and a gradient field, as a figure from <a href="https://drive.google.com/file/d/1upKFdtnM0xcTVxNsPHI1KCvmcanAJheL/view?usp=sharing">this paper</a> shows:
 			<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:70%">
@@ -252,11 +212,11 @@
 
 <p>So let’s review. Our goal is to simulate a wind tunnel and use it to derive a wing shape. We began by writing down the general Navier-Stokes equation and eliminating irrelevant terms: all of them but self-advection. Next, we figured out how to represent a wing shape in the tunnel using a continuously-deformable occlusion. Finally, we wrote down an equation for what a good wing should do and discussed how to optimize it. Now it is time to put everything together in about two hundred lines of code and see what happens when we run it…</p>
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px; text-align:center;">
 	<img alt="" src="/assets/optimizing-a-wing/optimize_wing.png" />
 </div>
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:37%; min-width: 300px">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:43%; min-width: 300px; text-align:center;">
 	<p style="display:inline;"><div style="color:black;font-size: 18px">Final result</div> <div style="color:grey;">[Click image to pause or play.]</div></p>
 	<img style="width:100%" alt="" src="/assets/optimizing-a-wing/wing.png" onclick="toggleBasicWing()" id="basicWing" />
 </div>
@@ -319,7 +279,7 @@
 <p>The deeper objectives do not change as quickly. Even as the early aviators progressed from wingsuits to gliders to planes, they retained the same fundamental desire to fly. Their specific desires, of course, were different: some wanted to survive a tower jump and others wanted to break the speed of sound. And their specific desires led to specific improvements in technology such as a better understanding of the Smeaton coefficient or a stable supercritical airfoil. Once they made these improvements, the next generation was able to use them to pursue more ambitious goals. But even as this cycle progressed, the more deeply-held desire to fly continued to inspire and unify their efforts.</p>
 
 <!-- The desire to fly is remarkable in that it is something that our biology alone cannot satisfy. In this way we are a bit like hermit crabs -- creatures who are born without the ability to grow a shell and yet need one to survive as adults. As they mature, they must cast about their tide pools for a suitable shell. And when they find one, they clean it, fit themselves to it, and their bodies grow or shrink to make the fit perfect. But whereas hermit crabs seek out shells because they want safety, humans seek out flight because they are after things like freedom, adventure, and beauty. We are not trying to achieve stasis; rather, we are aiming for a future that is different and better. That is what made us a flying species in the first place and that is what will propel us even higher tomorrow. -->
-<div class="imgcap_noborder">
+<div class="imgcap_noborder" style="text-align:center">
   <img src="/assets/optimizing-a-wing/hummingbird.png" style="width:15%;min-width:150px;" />
 </div>
 

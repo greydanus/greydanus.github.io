@@ -6,50 +6,12 @@ excerpt: "Instead of crafting Hamiltonians by hand, we propose parameterizing th
 date:   2019-05-15 11:00:00
 mathjax: true
 thumbnail: /assets/hamiltonian-nns/thumbnail.png
-author: Sam Greydanus, Misko Dzamba, and Jason Yosinski
+author: With Misko Dzamba and Jason Yosinski
 ---
-
-<div>
-	<style>
-		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgb(180,180,180);
-		  border-radius: 4px;
-		  color: white;
-		  padding: 6px 0px;
-		  width: 150px;
-		  text-align: center;
-		  text-decoration: none;
-		  display: inline-block;
-		  text-transform: uppercase;
-		  font-size: 13px;
-		  margin: 8px;
-		}
-
-		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(160,160,160);
-		}
-
-		.playbutton {
-		  background-color: rgba(0, 153, 51);
-		  /*background-color: rgba(255, 130, 0);*/
-		  border-radius: 4px;
-		  color: white;
-		  padding: 3px 8px;
-		  /*width: 60px;*/
-		  text-align: center;
-		  text-decoration: none;
-		  text-transform: uppercase;
-		  font-size: 12px;
-		  display: block;
-		  /*margin-left: auto;*/
-		  margin-right: auto;
-		}
-	</style>
-</div>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
 	<img src="/assets/hamiltonian-nns/overall-idea.png">
-	<div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:80%"><b>Figure 1:</b> Instead of crafting a Hamiltonian by hand, we parameterize it with a neural network and then learn it directly from data. The variables <b>q</b> and <b>p</b> correspond to position and momentum coordinates. As there is no friction, the baseline's inward spiral is due to model errors. By comparison, the Hamiltonian Neural Network learns to exactly conserve an energy-like quantity.</div>
+	<div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%"><b>Figure 1:</b> Instead of crafting a Hamiltonian by hand, we parameterize it with a neural network and then learn it directly from data. The variables <b>q</b> and <b>p</b> correspond to position and momentum coordinates. As there is no friction, the baseline's inward spiral is due to model errors. By comparison, the Hamiltonian Neural Network learns to exactly conserve an energy-like quantity.</div>
 </div>
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
@@ -76,9 +38,9 @@ As an example, consider the ideal mass-spring system shown in Figure 1. Here the
 
 It turns out we can. Drawing inspiration from Hamiltonian mechanics, a branch of physics concerned with conservation laws and invariances, we define Hamiltonian Neural Networks, or HNNs. By construction, these models learn conservation laws from data. We’ll show that they have some major advantages over regular neural networks on a variety of physics problems.
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%" >
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%;" >
+    <img alt="" src="/assets/hamiltonian-nns/orbits-compare.png" width="70%" id="orbitImage" /><br>
     <button id="orbitButton" onclick="toggleOrbits()" class="playbutton">Play</button>
-    <img alt="" src="/assets/hamiltonian-nns/orbits-compare.png" width="80%" id="orbitImage" />
 	<div class="thecap" style="text-align:left"><b>Figure 3:</b> Two bodies interact via a gravitational force. The dynamics of the baseline model do not conserve total energy and quickly diverge from ground truth. Meanwhile, the HNN learns to conserve a quantity that is close to total energy. This makes its predicted trajectories more stable.</div>
 </div>
 
@@ -156,7 +118,7 @@ $$
 
 Now this expression is beginning to look like the \\(\mathcal{L_2}\\) loss function used in supervised learning. The \\(\mathcal{L_2}\\) loss term usually takes the form \\(\big \Vert y - f_{\theta}(x) \big \Vert^2 \\) where \\(x\\) is the input and \\(y\\) is the target. The key difference is that here we are minimizing something of the form \\( \big \Vert y - \frac{\partial f_{\theta}(x)}{\partial x} \big \Vert^2 \\). In other words, we are optimizing the gradient of a neural network.
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
 	<img src="/assets/hamiltonian-nns/overall-schema.png">
 	<div class="thecap" style="text-align:left"><b>Figure 4:</b> Schema of the Baseline and HNN models. The Baseline NN in the figure above represents the supervised learning approach to modeling the time derivatives of (<b>q</b>, <b>p</b>). In both cases, the inputs are the coordinates of the system and the targets are their time derivatives.</div>
 </div>
@@ -166,10 +128,9 @@ There are not many previous works that optimize the gradients of a neural networ
 **Results on simple tasks.** We trained an HNN and a baseline model on three simple physics tasks. You can explore the setup and results for each of these tasks in Figure 5. Generally speaking, the HNN trained about as easily as the baseline model and produced better results. In order to predict dynamics, we integrated our models using `scipy.integrate.solve_ivp` and set the error tolerance to \\(10^{-9}\\)
 
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
-	<!-- <img src="/assets/hamiltonian-nns/blog-summary-spring.png" style="width:100%"> -->
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%;text-align:center;">
+	<img alt="" src="/assets/hamiltonian-nns/blog-summary-spring.png" width="100%" id="simpleImage"/><br>
 	<button id="simpleButton" onclick="toggleSimple()" class="playbutton">Next task</button>
-	<img alt="" src="/assets/hamiltonian-nns/blog-summary-spring.png" width="100%" id="simpleImage"/>
 	<div class="thecap" style="text-align:left"><b>Figure 5:</b>
 		<span id="simpleImageCap">In Task 1, we trained the HNN on data from a simulated mass-spring system. The dynamics of this system were perfectly linear, making this the simplest system we considered. Notice how the HNN learns to conserve a quantity very similar to the total energy of the system.</span>
 	</div>
@@ -206,9 +167,9 @@ There are not many previous works that optimize the gradients of a neural networ
 
 Having established baselines on a few simple tasks, our next step was to tackle a larger system involving more than one pair of \\((\mathbf{q},\mathbf{p})\\) coordinates. One well-studied problem that fits this description is the \\(N\\)-body problem, which requires \\(2N\\) pairs, where \\(N\\) is the number of bodies. 
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:95%">
-	<img src="/assets/hamiltonian-nns/orbit-results.png" style="width:45%; padding-right:1%">
-	<img src="/assets/hamiltonian-nns/3body-results.png" style="width:45%; padding-left:1%">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+	<img src="/assets/hamiltonian-nns/orbit-results.png" style="width:49%;">
+	<img src="/assets/hamiltonian-nns/3body-results.png" style="width:49%; padding-left:1%">
 	<div class="thecap" style="text-align:left"><b>Figure 6: (Left)</b> Two bodies interact via a gravitational force. The dynamics of the baseline model do not conserve total energy and quickly diverge from ground truth. The HNN, meanwhile, approximately conserves total energy and accrues a small amount of error after one full orbit. <b>(Right)</b> Three bodies interact via a gravitational force. This system is chaotic and has a large dynamic range. While neither of our models achieves good performance on this dataset, the HNN substantially outperforms the baseline and shows promising generalization.</div>
 </div>
 
@@ -220,9 +181,9 @@ One of the key strengths of neural networks is that they can learn abstract repr
 
 **The Pixel Pendulum.** First, we constructed a dataset of pixel observations of a pendulum by stepping through the OpenAI Gym `Pendulum-v0` environment. Then we combined an autoencoder with an HNN to learn the dynamics of the system. The autoencoder would consume two adjacent frames (for velocity information) and then pass its latent codes to the HNN, which used them just as it would a set of \\((\mathbf{q},\mathbf{p})\\) coordinates. We trained the entire model end-to-end and found that it outperformed the baseline by a significant margin. To our knowledge this is the first instance of a Hamiltonian learned directly from pixel data!
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%" >
-	<button id="pendButton" onclick="togglePend()" class="playbutton">Play</button>
-    <img alt="" src="/assets/hamiltonian-nns/pend-compare.png" width="70%" id="pendImage"  />
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%;text-align: center;" >
+    <img alt="" src="/assets/hamiltonian-nns/pend-compare.png" width="60%" id="pendImage"  /><br>
+    <button id="pendButton" onclick="togglePend()" class="playbutton">Play</button>
 	<div class="thecap" style="text-align:left"><b>Figure 7:</b> Predicting the dynamics of the pixel pendulum. We train an HNN and its baseline to predict dynamics in the latent space of an autoencoder. Then we project the latent trajectory back to pixel space for visualization. The baseline model rapidly decays to lower energy states whereas the HNN remains close to ground truth even after hundreds of frames.</div>
 </div>
 
@@ -251,12 +212,11 @@ While the main purpose of HNNs is to endow neural networks with better physics p
 
 **Adding and removing energy.** So far, we have only integrated the symplectic gradient of the Hamiltonian. This keeps the scalar, energy-like value of \\(\mathcal{H}(\mathbf{q},\mathbf{p})\\) fixed. But we could just as easily follow the regular gradient of the Hamiltonian in order to increase or decrease \\(\mathcal{H}\\). We can even alternate between changing and conserving the energy-like value. Figure 8 shows how we can use this process to “bump" the pendulum to a higher energy level. We could imagine using this technique to answer counterfactual questions e.g. “What would have happened if we added 1 Joule of energy?""
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%" >
-
-	<button id="energyButton" onclick="toggleEnergy()" class="playbutton">Play</button>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%" >
 	<img src="/assets/hamiltonian-nns/addenergy-static.png" style="width:60%">
-    <img alt="" src="/assets/hamiltonian-nns/addenergy.png" style="width:20%;padding-bottom:35px" id="energyImage"/>
-	<div class="thecap" style="text-align:left"><b>Figure 8:</b> Visualizing integration in the latent space of the Pixel Pendulum model. We alternately integrate the symplectic gradient at low energy (blue circle), the regular gradient (purple line), and then the symplectic gradient at higher energy (red circle).</div>
+    <img alt="" src="/assets/hamiltonian-nns/addenergy.png" style="width:25%;padding-bottom:35px" id="energyImage"/><br>
+    <button id="energyButton" onclick="toggleEnergy()" class="playbutton">Play</button>
+	<div class="thecap" style="text-align:left"><b>Figure 8:</b> Visualizing integration in the latent space of the Pixel Pendulum model. We alternate between integrating the symplectic gradient at low energy (blue circle), the regular gradient (purple line), and then the symplectic gradient at higher energy (red circle).</div>
 </div>
 
 <script language="javascript">

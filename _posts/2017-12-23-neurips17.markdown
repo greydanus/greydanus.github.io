@@ -2,15 +2,14 @@
 layout: post
 comments: true
 title:  "A Review of NeurIPS"
-excerpt: "Billion dollar investments. Top-tier scientists. Flo Rida. NeurIPS was a confusing, absurd, and inspirational roller coaster ride. Let's try to understand what happened."
+excerpt: "Billion dollar investments. Top-tier scientists. Flo Rida. NeurIPS was a confusing, absurd, and inspirational roller coaster. Let's try to understand what happened."
 date:   2017-12-23 11:00:00
 mathjax: true
 thumbnail: /assets/neurips17/thumbnail.png
-author: Sam Greydanus
 ---
 
 <div class="imgcap">
-	<img src="/assets/neurips17/nips-registrations.png" width="60%">
+	<img src="/assets/neurips17/nips-registrations.png" width="70%">
 	<div class="thecap" style="text-align:center">AI hype in one picture.</div>
 </div>
 
@@ -21,7 +20,7 @@ Billion dollar investments. Top-tier scientists. Flo Rida. NeurIPS 2017 was a co
 **Hype.** Everyone agrees that the hype for NeurIPS 2017 was incredible. Just look at the plot above: the entire conference sold out during early registration. The conference was packed. Big companies were desperately recruiting dewy-eyed and geeky-dispositioned PhD students. There were countless afterparties hosted at luxury venues by Intel, DeepMind, OpenAI, Uber, Facebook, Borealis, CapitalOne, Apple, etc. Intel even got Flo Rida to help them unveil a new chip. _You mean the rapper Flo Rida_?! Yes. Him. Although I can't confirm because the bouncer wouldn't let me in :/
 
 <div class="imgcap">
-	<img src="/assets/neurips17/gradient-flo.png" width="45%">
+	<img src="/assets/neurips17/gradient-flo.png" width="55%">
 	<div class="thecap" style="text-align:center">He likes Apple Bottom jeans, boots with the fur...and apparently GPUs.</div>
 </div>
 
@@ -33,7 +32,7 @@ Billion dollar investments. Top-tier scientists. Flo Rida. NeurIPS 2017 was a co
  3. Top academic talent has moved into the private sector. Examples: Uber hired 40 people from Carnegie Mellon’s groundbreaking AI program in 2015 to work on its self-driving-car project. Four of the best-known academic AI researchers have left or taken leave from their professorships at Stanford.
 
 <div class="imgcap">
-	<img src="/assets/neurips17/m-and-a.jpg" width="40%">
+	<img src="/assets/neurips17/m-and-a.jpg" width="50%">
 	<div class="thecap" style="text-align:center">Taken from <a href="https://www.economist.com/news/business/21732125-tech-giants-are-investing-billions-transformative-technology-google-leads-race">the Economist</a>.</div>
 </div>
 
@@ -57,7 +56,7 @@ After day one, I did my best to look _beyond_ the hype and find examples of peop
 > "We're building systems that govern healthcare and mediate our civil dialogue. We influence elections. I would like to live in a society whose systems are built on top of verifiable, rigorous, thorough knowledge, and not on alchemy."
 
 <div class="imgcap">
-	<img src="/assets/neurips17/email_ba.png" width="45%">
+	<img src="/assets/neurips17/email_ba.png" width="55%">
 	<div class="thecap" style="text-align:center">An example of "alchemy" in AI, taken from Ali's NeurIPS keynote.</div>
 </div>
 
@@ -65,7 +64,7 @@ Several hours later, [Yann LeCun](https://en.wikipedia.org/wiki/Yann_LeCun) post
 
 **Metalearning.** Pieter Abbeel and friends are pushing metalearning. Since he is one of the world's most respected researchers, this was a huge theme at NeurIPS. The idea of metalearning is to teach a computer _how to learn_. Instead of teaching a computer how to solve a maze, you would teach a computer to _teach itself_ how to solve a maze. Yes, this is more complicated. The idea is that by "learning to learn," you get AIs that generalize to new situations effectively.
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:90%">
 	<div style="overflow:hidden; padding-top: 52%; position: relative;" >
 		<iframe style="border: 0;height: 100%;left: 0;position: absolute;top: 0;width: 100%;" src="https://www.youtube.com/embed/cLpSBtlbdyY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 	</div>
@@ -77,7 +76,7 @@ I think everyone agrees that metalearning is desirable. The real question is how
 **Deep reinforcement learning (Deep RL).** The young and ambitious field of deep reinforcement learning continues to deliver great results. Earlier this year, Google DeepMind published a fourth Nature paper. The team described how to teach an algorithm, which they call AlphaGo Zero, to [play Go at superhuman level](https://deepmind.com/blog/alphago-zero-learning-scratch/), starting from zero human knowledge. During NeurIPS they released an updated version which plays Go, Shogui, and Chess at a dominant level.
 
 <div class="imgcap">
-	<img src="/assets/neurips17/alphago-zero.gif" width="55%">
+	<img src="/assets/neurips17/alphago-zero.gif" width="65%">
 	<div class="thecap" style="text-align:center">AlphaGo Zero rediscovering 3000 years of Go strategy.</div>
 </div>
 
@@ -101,7 +100,7 @@ I attended a workshop centered around this idea. People whose work and ideas I f
 I was surprised to find that some of my conversations were not about science at all. They were about the relationship between AI and society. Many of these occurred at the fascinating but sparsely-attended [_Kinds of Intelligence_](http://kindsofintelligence.org/) symposium. This symposium brought together influential thinkers from psychology ([Alison Gopnik](https://en.wikipedia.org/wiki/Alison_Gopnik)), neuroscience ([Gary Marcus](https://en.wikipedia.org/wiki/Gary_Marcus), [Lucia Jacobs](http://psychology.berkeley.edu/people/lucia-f-jacobs)), deep learning ([Demis Hassabis](https://en.wikipedia.org/wiki/Demis_Hassabis), [Zoubin Ghahramani](https://en.wikipedia.org/wiki/Zoubin_Ghahramani)), privacy ([Cynthia Dwork](https://en.wikipedia.org/wiki/Cynthia_Dwork)), and public policy ([David Runciman](https://en.wikipedia.org/wiki/David_Runciman)).
 
 <div class="imgcap">
-	<img src="/assets/neurips17/ai-4-good.jpg" width="60%">
+	<img src="/assets/neurips17/ai-4-good.jpg" width="70%">
 </div>
 
 **People and perspectives.** The _Kinds of Intelligence_ symposium made me think critically about the ways AI will affect society. I ended up having some fascinating conversations on the topic. Here is a brief list of the most striking people and perspectives:

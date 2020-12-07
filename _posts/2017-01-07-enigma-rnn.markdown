@@ -2,34 +2,11 @@
 layout: post
 comments: true
 title:  "Learning the Enigma with Recurrent Neural Networks"
-excerpt: "Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can approximate any function. As a tip of the hat to Alan Turing, let's see if we can use them to learn the Enigma cipher."
+excerpt: "Recurrent Neural Networks are Turing-complete and can approximate any function. As a tip of the hat to Alan Turing, let's approximate the Enigma cipher."
 date:   2017-01-07 11:00:00
 mathjax: true
 thumbnail: /assets/enigma-rnn/thumbnail.png
-author: Sam Greydanus
 ---
-
-<div>
-    <style>
-        #linkbutton:link, #linkbutton:visited {
-          background-color: rgb(180,180,180);
-          border-radius: 4px;
-          color: white;
-          padding: 6px 0px;
-          width: 150px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          text-transform: uppercase;
-          font-size: 13px;
-          margin: 8px;
-        }
-
-        #linkbutton:hover, #linkbutton:active {
-          background-color: rgba(160,160,160);
-        }
-    </style>
-</div>
 
 <div class="imgcap_noborder">
     <img src="/assets/enigma-rnn/enigma-machine.jpg" width="30%">
@@ -50,7 +27,7 @@ Recurrent Neural Networks (RNNs) are Turing-complete. In other words, they can a
 **By hand.** Long ago, cryptanalysis was done by hand. People would count the frequencies of symbols, compare encrypted text to decrypted text, and try to find patterns. It was a meticulous process which required days and weeks of concentration. Starting with World War II, the heavy lifting was transferred to machines and humans experts started spending their time on problems in pure mathematics which enabled them to crack all but the toughest ciphers. But even today, cryptanalysts spend much of their time meticulously dissecting the structure of the cipher they're trying to crack. Does this need to be the case?
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/frequency.png" style="width:50%;min-width: 300px">
+    <img src="/assets/enigma-rnn/frequency.png" style="width:60%;min-width: 300px">
     <div class="thecap" style="text-align:center">The frequency table is a classic codebreaking tool</div>
 </div>
 
@@ -73,7 +50,7 @@ $$
 **Framing the problem.** Let's consider the general problem of decryption where there is a 1:1 mapping between the plaintext and ciphertext. If you think of the plaintext as English and the ciphertext as a strange foriegn language, the training objective resembles that of machine translation. Given a string of letters in English - let's use "You know nothing Jon Snow" as an example - we should learn to scramble them according to the rules of the cipher.
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/objective.png" style="width:50%;min-width: 300px">
+    <img src="/assets/enigma-rnn/objective.png" style="width:60%;min-width: 300px">
     <div class="thecap" style="text-align:center">Basic training objective where "BCHLN" is the key</div>
 </div>
 
@@ -82,14 +59,14 @@ $$
 **Solve something simpler.** Before tackling a really tough problem like the Enigma, it's a good idea to solve something simpler. One of my favorite ciphers is the Vigenere cipher, which shifts the plaintext according to the letters in a keyword (see gif below). For a more in-depth description, check out the [Vigenere](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher) Wikipedia page.
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/vigenere.gif" width="50%">
+    <img src="/assets/enigma-rnn/vigenere.gif" width="60%">
     <div class="thecap" style="text-align:center">Using the Vigenere cipher to encrypt plaintext "CALCUL" with keyword "MATHS" (repeated).</div>
 </div>
 
 **Results.** The Vigenere cipher was easy. A mere 100,000 steps of gradient descent produced a model which learned the decryption function with 99% accuracy.
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/vigenere-rnn.png" width="80%">
+    <img src="/assets/enigma-rnn/vigenere-rnn.png" width="90%">
     <div class="thecap" style="text-align:center">A sample output from the model I trained on the Vigenere cipher.</div>
 </div>
 
@@ -124,12 +101,12 @@ The model needed to be very large to capture all the Enigma's transformations. I
 
 You can find the code on my [GitHub](https://github.com/greydanus/crypto-rnn).
 
-## The Holy Grail: RSA
+## Modern encryption
 
-Learning the Enigma is interesting, but these days it has no practical use. Modern encryption uses public-key factoring algorithms such as [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)). RSA is a different beast from the Enigma, but in theory we could also learn it with deep learning. In practice, this is difficult because RSA uses modulus and multiplication of large integers. These operations are difficult to approximate with RNNs. We need further algorithmic advances in deep learning like the [Neural GPU](https://arxiv.org/abs/1511.08228) or the [Differential Neural Computer](https://deepmind.com/blog/differentiable-neural-computers/) to make this problem feasible.
+Learning the Enigma is interesting, but these days it has no practical use. Modern encryption uses public-key factoring algorithms such as [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)). RSA is a different beast from the Enigma, but in theory we could also learn it with deep learning. In practice, this is difficult because RSA uses modulus and multiplication of large integers. These operations are difficult to approximate with RNNs. We need further algorithmic advances in deep learning like the [Neural GPU](https://arxiv.org/abs/1511.08228) or the [Differential Neural Computer](https://deepmind.com/blog/differentiable-neural-computers/) to make this problem even sort of feasible (and even then, this will be even close to the most efficient approach).
 
 <div class="imgcap_noborder">
-    <img src="/assets/enigma-rnn/rsa.gif" style="width:40%;min-width: 300px">
+    <img src="/assets/enigma-rnn/rsa.gif" style="width:50%;min-width: 300px">
     <div class="thecap" style="text-align:center">Public-key encryption. In theory, we could learn the RSA with deep learning but it presents many practical difficulties</div>
 </div>
 
@@ -140,7 +117,7 @@ Learning the Enigma is interesting, but these days it has no practical use. Mode
 **AI.** In the past several years, Deep Reinforcement Learning has enabled an impressive series of breakthroughs in the field of Artificial Intelligence (AI). Many believe that these breakthroughs will enable machines to perform complex tasks such as [driving cars](https://waymo.com/), [understanding text](http://www.maluuba.com/), and even [reasoning over memory](https://deepmind.com/blog/differentiable-neural-computers/). This project suggests that AIs built from neural networks could also become effective code breakers.
 
 <div class="imgcap">
-    <img src="/assets/enigma-rnn/bombe.jpg" style="width:60%;min-width: 300px">
+    <img src="/assets/enigma-rnn/bombe.jpg" style="width:70%;min-width: 300px">
     <div class="thecap" style="text-align:center">The original Enigma cracker (a Bombe machine). <a href="http://www.cryptomuseum.com/crypto/bombe/">Crypto Museum</a></div>
 </div>
 

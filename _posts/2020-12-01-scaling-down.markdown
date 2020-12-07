@@ -5,75 +5,16 @@ title:  "Scaling down Deep Learning"
 excerpt: "In order to explore the limits of how large we can scale neural networks, we may need to explore the limits of how small we can scale them first."
 date:   2020-12-01 11:00:00
 mathjax: true
-author: Sam Greydanus
 thumbnail: /assets/scaling-down/thumbnail.png
 ---
 
 <div>
 	<style>
-		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgb(180,180,180);
-		  border-radius: 4px;
-		  color: white;
-		  padding: 6px 0px;
-		  width: 150px;
-		  text-align: center;
-		  text-decoration: none;
-		  display: inline-block;
-		  text-transform: uppercase;
-		  font-size: 13px;
-		  margin: 8px;
-		}
-
-		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(160,160,160);
-		}
-
-		.playbutton {
-		  background-color: rgb(148, 196, 146);
-		  border-width: 0;
-		  /*background-color: rgba(255, 130, 0);*/
-		  border-radius: 4px;
-		  color: white;
-		  padding: 5px 8px;
-		  /*width: 60px;*/
-		  text-align: center;
-		  text-decoration: none;
-		  text-transform: uppercase;
-		  font-size: 12px;
-		  /*display: block;*/
-		  /*margin-left: auto;*/
-		  margin: 8px 0px;
-		  margin-right: auto;
-		  min-width:60px;
-		}
-
-	.playbutton:hover, .playbutton:active {
-		  background-color: rgb(128, 176, 126);
-	}
-	 span.colab-span {
-      background-image: url(/assets/colab.svg);
-      background-repeat: no-repeat;
-      background-size: 20px;
-      background-position-y: 2px;
-      display: inline-block;
-      padding-left: 24px;
-      border-radius: 4px;
-      text-decoration: none;
-    }
-    #colab-hero-div { 
-	  grid-column: 1/3;
-	  border-top: 1px solid rgba(0, 0, 0, 0.1);
-	  border-top-width: 1px;
-	  border-top-style: solid;
-	  border-top-color: rgba(0, 0, 0, 0.1);
-	  padding-top: 15px;
-	}
 	</style>
 </div>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
-    <div style="min-width:250px; vertical-align: top;">
+    <div style="min-width:250px; vertical-align: top; text-align:center;">
     <video id="demoDisplay" style="width:100%;min-width:250px;">
     	<source src="/assets/scaling-down/construction.mp4" type="video/mp4">
     </video>
@@ -160,7 +101,8 @@ Since the original paper was published, a multitude of works have sought to expl
     <div class="thecap" style="text-align:left;">Next, in <b>e)</b> we permute the indices of the 1D signal, effectively removing spatial structure from the dataset. This ablation hurts lottery ticket performance significantly more, suggesting that part of the lottery ticket's performance can be attributed to a spatial inductive bias. Finally, in <b>f)</b> we keep the lottery ticket sparsity structure but initialize its weights with a different random seed. Contrary to results reported in <a href="https://arxiv.org/abs/1803.03635">Frankle & Carbin (2019)</a>, we see that our lottery ticket continues to outperform a dense baseline, aligning well with our hypothesis that the lottery ticket mask has a spatial inductive bias. In <b>g)</b>, we verify our hypothesis by measuring how often unmasked weights are adjacent to one another in the first layer of our model. The lottery ticket has many more adjacent weights than chance would predict, implying a local connectivity structure which helps gives rise to spatial biases.</div>
 </div>
 
-You can also visualize the actual masks selected via random and lottery pruning:  <button class="playbutton" id="mask_button" style="width:150px;" onclick="hideShowMasks()">Visualize masks</button> 
+You can also visualize the actual masks selected via random and lottery pruning:
+<br><button class="playbutton" id="mask_button" style="width:150px;" onclick="hideShowMasks()">Visualize masks</button> 
 
 <div class="imgcap" id="lottery_masks" style="display: none; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:100%; min-width:300px; display: inline-block; vertical-align: top;">
@@ -202,13 +144,13 @@ Several properties of this effect, such as what factors affect its width and loc
 Metalearning is a promising topic but it is very difficult to scale. First of all, metalearning algorithms consume enormous amounts of time and compute. Second of all, implementations tend to grow complex since there are twice as many hyperparameters (one set for each level of optimization) and most deep learning frameworks are not set up well for metalearning. This places an especially high incentive on debugging and iterating metalearning algorithms on small-scale datasets such as MNIST-1D. For example, it took just a few hours to implement and debug the gradient-based hyperparameter optimization of a learning rate shown below. You can reproduce these results [here](https://bit.ly/38OSyTu).
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:32.4%; min-width:270px; display: inline-block; vertical-align: top;">
+  <div style="width:32.4%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/metalearn_lr_a.png" style="width:100%">
   </div>
-  <div style="width:33%; min-width:270px; display: inline-block; vertical-align: top;">
+  <div style="width:33%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/metalearn_lr_b.png" style="width:100%">
   </div>
-    <div style="width:32%; min-width:270px; display: inline-block; vertical-align: top;">
+    <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/metalearn_lr_c.png" style="width:100%">
   </div>
   <div class="thecap" style="text-align:left;">Metalearning a learning rate: looking at the third plot, the optimal learning rate appears to be 0.6. Unlike many gradient-based metalearning implementations, ours takes seconds to run and occupies a few dozen lines of code. This allows researchers to iterate on novel ideas before scaling.</div>
@@ -217,13 +159,13 @@ Metalearning is a promising topic but it is very difficult to scale. First of al
 **Metalearning an activation function.** Having implemented a "minimal working example" of gradient-based metalearning, we realized that it permitted a simple and novel extension: metalearning an activation function. With a few more hours of researcher time, we were able to parameterize our classifier's activation function with a second neural network and then learn the weights using meta-gradients. Shown below, our learned activation function substantially outperforms baseline nonlinearities such as ReLU, Elu[^fn5], and Swish[^fn6]. You can reproduce these results [here](https://bit.ly/38V4GlQ).
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:32.7%; min-width:270px; display: inline-block; vertical-align: top;">
+  <div style="width:32.7%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/metalearn_afunc_a.png" style="width:100%">
   </div>
-  <div style="width:32.5%; min-width:270px; display: inline-block; vertical-align: top;">
+  <div style="width:32.5%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/metalearn_afunc_b.png" style="width:100%">
   </div>
-    <div style="width:33%; min-width:270px; display: inline-block; vertical-align: top;">
+    <div style="width:33%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/metalearn_afunc_c.png" style="width:100%">
   </div>
   <div class="thecap" style="text-align:left;">Metalearning an activation function. Starting from an ELU shape, we use gradient-based metalearning to find the optimal activation function of a neural network trained on the MNIST-1D dataset. The activation function itself is parameterized by a second (meta) neural network. Note that the ELU baseline (red) is obscured by the <i>tanh</i> baseline (blue) in the figure above.</div>
@@ -237,13 +179,13 @@ We transferred this activation function to convolutional models trained on MNIST
 **Benchmarking pooling methods.** Our final case study begins with a specific question: _What is the relationship between pooling and sample efficiency?_ We had not seen evidence that pooling makes models more or less sample efficient, but this seemed an important relationship to understand. With this in mind, we trained models with different pooling methods and training set sizes and found that, while pooling tended to be effective in low-data regimes, it did not make much of a difference in high-data regimes. We do not fully understand this effect, but hypothesize that pooling is a mediocre architectural prior which is better than nothing in low-data regimes and then ends up restricting model expression in high-data regimes. By the same token, max-pooling may also be a good architectural prior in the low-data regime, but start to delete information -- and thus perform worse compared to L2 pooling -- in the high-data regime. Reproduce [here](https://bit.ly/3lGmTqY).
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:33%; min-width:270px; display: inline-block; vertical-align: top;">
+  <div style="width:33%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/pooling_a.png" style="width:100%">
   </div>
-  <div style="width:32.3%; min-width:270px; display: inline-block; vertical-align: top;">
+  <div style="width:32.3%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/pooling_b.png" style="width:100%">
   </div>
-    <div style="width:31.9%; min-width:270px; display: inline-block; vertical-align: top;">
+    <div style="width:31.9%; min-width:250px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/pooling_c.png" style="width:100%">
   </div>
   <div class="thecap" style="text-align:left;">Benchmarking common pooling methods. We observe that pooling helps performance in low-data regimes and hinders it in high-data regimes. While we do not entirely understand this effect, we hypothesize that pooling is a mediocre architectural prior that is better than nothing in low-data regimes but becomes overly restrictive in high-data regimes.</div>

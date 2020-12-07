@@ -6,11 +6,10 @@ excerpt: "Do we really need over 100,000 free parameters to build a good MNIST c
 date:   2017-10-30 11:00:00
 mathjax: true
 thumbnail: /assets/subspace-nn/thumbnail.png
-author: Sam Greydanus
 ---
 
 <div class="imgcap">
-    <img src="/assets/subspace-nn/rube.png" width="40%">
+    <img src="/assets/subspace-nn/rube.png" width="50%">
     <div class="thecap" style="text-align:center">Some things, like the "self-operated napkin", are just too complicated!</div>
 </div>
 
@@ -21,7 +20,7 @@ Do we really need over 100,000 free parameters to build a good MNIST classifier?
 The fruit fly was to genetics what the MNIST dataset is to deep learning: the ultimate case study. The idea is to classify handwritten digits between 0 and 9 using 28x28 pixel images. A few examples of these images are shown: 
 
 <div class="imgcap_noborder">
-    <img src="/assets/subspace-nn/mnist.png" width="25%">
+    <img src="/assets/subspace-nn/mnist.png" width="35%">
     <div class="thecap" style="text-align:center">Examples taken from the MNIST dataset.</div>
 </div>
 
@@ -79,13 +78,13 @@ PyTorch | 3,000 | 97.0%
 PyTorch | 1,000 | 93.5%
 
 <div class="imgcap_noborder">
-    <img src="/assets/subspace-nn/conv-large-accuracy.png" width="70%">
+    <img src="/assets/subspace-nn/conv-large-accuracy.png" width="80%">
 </div>
 
 **Ultra small subspaces.** We can take this idea even futher and optimize our model in subspaces with well below 1,000 parameters. Shown below are test accuracies for subspaces of size 3, 10, 30, 100, 300, and 1000. Interestingly, I tried the same thing with a fully connected model and obtained nearly identical curves.
 
 <div class="imgcap_noborder">
-    <img src="/assets/subspace-nn/conv-accuracy.png" width="70%">
+    <img src="/assets/subspace-nn/conv-accuracy.png" width="80%">
     <div class="thecap" style="text-align:center">Performing optimization in very small subspaces. Some of these training trajectories have not reached convergence; the 1,000-parameter model, for example, will converge to 93.5% accuracy after several more epochs.</div>
 </div>
 

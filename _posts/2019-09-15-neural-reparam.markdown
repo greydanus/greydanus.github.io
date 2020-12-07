@@ -2,56 +2,16 @@
 layout: post
 comments: true
 title:  "Neural Reparameterization Improves Structural Optimization"
-excerpt: "We propose using neural networks to reparameterize physics problems. This helps us design better bridges, skyscrapers, and cantilevers while enforcing hard physical constraints."
+excerpt: "We use neural networks to reparameterize structural optimization, building better bridges, skyscrapers, and cantilevers while enforcing hard physical constraints."
 date:   2019-12-15 11:00:00
 mathjax: true
 meta: <a href="https://deep-inverse.org/">NeurIPS 2019 Deep Inverse Workshop</a>
 thumbnail: /assets/neural-reparam/thumbnail.png
 ---
 
-<div>
-	<style>
-		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgb(180,180,180);
-		  border-radius: 4px;
-		  color: white;
-		  padding: 6px 0px;
-		  width: 150px;
-		  text-align: center;
-		  text-decoration: none;
-		  display: inline-block;
-		  text-transform: uppercase;
-		  font-size: 13px;
-		  margin: 8px;
-		}
-
-		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(160,160,160);
-		}
-
-		.playbutton {
-		  background-color: rgba(0, 153, 51);
-		  /*background-color: rgba(255, 130, 0);*/
-		  border-radius: 4px;
-		  color: white;
-		  padding: 3px 8px;
-		  /*width: 60px;*/
-		  text-align: center;
-		  text-decoration: none;
-		  text-transform: uppercase;
-		  font-size: 12px;
-		  /*display: block;*/
-		  /*margin-left: auto;*/
-		  margin: 8px 0px;
-		  margin-right: auto;
-		  min-width:80px;
-		}
-	</style>
-</div>
-
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:90%" >
-    <button id="bridgeButton" onclick="toggleBridge()" class="playbutton">Play</button>
     <img alt="" src="/assets/neural-reparam/bridge-start.png" width="95%" id="bridgeImage" />
+    <button id="bridgeButton" onclick="toggleBridge()" class="playbutton">Play</button>
 	<div class="thecap" style="text-align:left; width:85%;padding-left:22px"><b>Figure 1:</b> Optimizing a bridge structure. In the top frame, optimization happens in the weight space of a CNN. In the next two frames it happens on a finite element grid.</div>
 </div>
 
@@ -74,7 +34,7 @@ thumbnail: /assets/neural-reparam/thumbnail.png
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
 	<a href="https://arxiv.org/abs/1909.04240" id="linkbutton" target="_blank">Read the paper</a>
-	<a href="https://colab.research.google.com/github/google-research/neural-structural-optimization/blob/master/notebooks/optimization-examples.ipynb" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="https://colab.research.google.com/github/google-research/neural-structural-optimization/blob/master/notebooks/optimization-examples.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
 	<a href="https://github.com/google-research/neural-structural-optimization" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
@@ -83,7 +43,7 @@ thumbnail: /assets/neural-reparam/thumbnail.png
 In this post we propose using neural networks to reparameterize physics problems. This helps us design better bridges, skyscrapers, and cantilevers while enforcing hard physical constraints. In the figure above, you can see that our approach optimizes more quickly and has a smoother transition from large-scale to small-scale features. In the figure below, you can explore all 116 tasks that we studied.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-	<img src="/assets/neural-reparam/selected-tasks.png" style="width:50%">
+	<img src="/assets/neural-reparam/selected-tasks.png" style="width:55%">
 	<div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:60%"><b>Figure 2:</b> Results from the 116 structural optimization tasks. The scores below each structure measure how much worse the design was than the best overall design.</div>
 
 	<button id="tasksButton1" onclick="toggleTasks1()" class="playbutton" style="display: block; margin-left: auto; margin-right: auto;">Show more tasks</button>
@@ -122,7 +82,7 @@ The word “parameterization” means different things in different fields. Gene
 
 **Reparameterization.** And yet, some parameterizations are better than others _for solving particular types of problems_. This is why reparameterization -- the process of switching between parameterizations -- is so important. It lets us take advantage of the good properties of two different parameterizations at the same time. For example, when we are editing a photograph in Photoshop, we may edit specific objects while working in a pixel parameterization. Then we may switch to a Fourier basis in order to adjust lighting and saturation. Technically speaking, we’ve just taken advantage of reparameterization.
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:55%">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
 	<img src="/assets/neural-reparam/photoshop.png">
 	<div class="thecap" style="text-align:left; width:100%"><b>Figure 3:</b> A simple example of reparameterization. We might use the pixel image of Baby Yoda (on the left) to make spatially localized edits. Then we might use its spectral decomposition (on the right) to adjust lighting and saturation.</div>
 </div>
@@ -146,7 +106,7 @@ Neural networks have all sorts of nice properties. They work well with high-dime
 
 **[The Deep Image Prior](https://dmitryulyanov.github.io/deep_image_prior).[^fn1]** The first study tells us that even untrained networks have fantastic image priors. The authors hammer this point home by showing that it's possible to perform state-of-the-art denoising, super-resolution, and inpainting on a single image with an untrained network.
 
-<div class="imgcap_noborder" style="display:block; margin-left: auto; margin-right: auto; width:60%">
+<div class="imgcap_noborder" style="display:block; margin-left: auto; margin-right: auto; width:70%">
 	<img src="/assets/neural-reparam/deep-prior.png">
 	<div class="thecap" style="text-align:left; width:100%"><b>Figure 4:</b> Visualization of the Deep Image Prior. Optimizing a single image using the weight space of an untrained CNN gives state of the art super-resolution results.</div>
 </div>
@@ -159,9 +119,9 @@ Neural networks have all sorts of nice properties. They work well with high-dime
 <li>Implicitly optimize other objects (eg a 3D surface projected to 2D)</li>
 </ul>
 
-<div class="imgcap_noborder" style="display:block; margin-left: auto; margin-right: auto; width:90%">
+<div class="imgcap_noborder" style="display:block; margin-left: auto; margin-right: auto; width:100%">
 	<img src="/assets/neural-reparam/diff-params.png">
-	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:70%"><b>Figure 5:</b> Specific examples of differentiable image parameterizations applied to neural network visualizations and art.</div>
+	<div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%"><b>Figure 5:</b> Specific examples of differentiable image parameterizations applied to neural network visualizations and art.</div>
 </div>
 
 These two papers are interesting because they don’t focus on the process of training neural networks. Rather, they focus on how this process is shaped by good priors.
@@ -225,7 +185,7 @@ $$
 
 **Automatic differentiation.** The coolest thing about our implementation is that it is fully differentiable. In fact, we implemented everything in Autograd and then used automatic differentiation to solve for updates to the parameters. This made our code much simpler than previous approaches (which had implemented reverse-mode differentiation by hand).
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:52%; min-width:250px">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:60%; min-width:250px">
 	<img src="/assets/neural-reparam/implicit-diff.png">
 	<div class="thecap" style="text-align:left; width:100%"><b>Figure 8:</b> Instead of differentiating directly through the root finder, we can use the <a href="https://en.wikipedia.org/wiki/Implicit_function_theorem">implicit function theorem</a> to <a href="https://link.springer.com/article/10.1023/A:1016051717120">differentiate through the optimal point</a>.</div>
 </div>
@@ -244,7 +204,7 @@ The careful reader might be wondering how we differentiated through our root fin
 
 In order to compare our method to baselines, we developed a suite of 116 structural optimization tasks. In designing these tasks, our goal was to create a distribution of diverse, well-studied problems with real-world significance. We started with a selection of problems from (Valdez et al. 2017)[^fn8] and (Sokol 2011).[^fn9] Most of these problems were simple beams with only a few forces, so we hand-designed additional tasks reflecting real-world designs such as bridges, towers, and trees.
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:60%; min-width:280px">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:70%; min-width:280px">
 	<img src="/assets/neural-reparam/quant-results.png">
 	<div class="thecap" style="text-align:left; width:100%"><b>Figure 10:</b> Neural reparameterization improves structural optimization, especially for large problems.</div>
 </div>

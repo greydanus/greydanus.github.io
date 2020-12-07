@@ -1,0 +1,147 @@
+I"?=<div class="imgcap">
+    <img src="/assets/visualize-atari/robots.png" width="60%" />
+</div>
+
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+    <a href="https://arxiv.org/abs/1711.00138" id="linkbutton" target="_blank">Read the paper</a>
+    <a href="https://github.com/greydanus/visualize_atari" id="linkbutton" target="_blank">Get the code</a>
+    <a href="https://www.sciencemag.org/news/2018/08/why-does-ai-stink-certain-video-games-researchers-made-one-play-ms-pac-man-find-out" id="linkbutton" target="_blank">Coverage by Science</a>
+</div>
+
+<p>Deep RL agents are effective at maximizing rewards but it’s often unclear what strategies they use to do so. I’ll talk about a paper<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup> I just finished, aimed at solving this problem.</p>
+
+<h2 id="solving-atari-in-180-lines">Solving Atari in 180 lines</h2>
+
+<p><strong>Deep RL.</strong> It’s hard not to get excited about deep reinforcement learning (deep RL). The field is exciting from an experimental standpoint because a major innovation or state-of-the-art result seems to emerge every few months. Most recently, Google DeepMind described <a href="https://deepmind.com/blog/alphago-zero-learning-scratch/">AlphaGo Zero</a>, a Go-playing algorithm which, over the course of 72 hours, rediscovered many of the strategies used by top human players…and then discarded them in favor of strategies unknown to humans. Deep RL is exciting from a theoretical standpoint because it combines the elegant simplicity of reinforcement learning with the raw power of deep neural networks.</p>
+
+<p><strong>Getting started is hard.</strong> Though deep RL is a ~glamorous~ field, it’s painfully difficult for newcomers to get started. Getting started with deep (supervised) learning is not easy, but training deep RL agents is far more difficult (<a href="https://www.alexirpan.com/2018/02/14/rl-hard.html">see rant</a>). In my experience, adjusting a single hyperparameter (e.g. learning rate, discount factor, etc.) or changing the code in a way that feels pretty innocent often results in catastrophic failure. At the same time, this is what helps one learn deep RL: fiddling with settings and then watching your model crash and burn…again and again and again (sort of meta, when you think about it).</p>
+
+<p>I got sick of Cartpole quickly. It’s not a rich environment, and succeeding at Cartpole does NOT mean you’re succeeding at deep RL. The PyTorch tutorial is <a href="http://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html">feeding you a lie</a>! A better totem for the challenges – and the impressive results – of training deep RL agents is the Atari 2600 suite.</p>
+
+<p><strong>Baby-A3C.</strong> The problem with Atari agents is that most open-source implementations are clunky and opaque. I ran them, got good results, and understood nothing. There was only one thing left to do: write my own one-file, 180-line, high-performance A3C Atari agent. <a href="https://github.com/greydanus/baby-a3c">GitHub link</a>.</p>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/breakout-v0.gif" width="25%" style="margin: 0px 20px" />
+    <img src="/assets/visualize-atari/pong-v0.gif" width="25%" style="margin: 0px 20px" />
+    <img src="/assets/visualize-atari/spaceinvaders-v0.gif" width="25%" style="margin: 0px 20px" />
+    <div class="thecap" style="text-align:center"><a href="https://github.com/greydanus/baby-a3c">Baby-A3C</a> after training on 40M frames.</div>
+</div>
+
+<p>At this point, I had obtained three really strong Atari agents using the exact same code/hyperparameters. It was pretty cool to watch them play Atari with superhuman skill…but what exactly had they learned? What were they thinking? As a visiting researcher at <a href="https://twitter.com/DARPA/status/872547502616182785">DARPA’s Explainable AI Project</a> at <a href="http://oregonstate.edu/ua/ncs/archives/2017/jun/research-aims-make-artificial-intelligence-explain-itself">Oregon State</a>, it was my job to come up with some answers.</p>
+
+<h2 id="why-should-i-trust-you">Why should I trust you?</h2>
+
+<blockquote>
+  <p>Deep learning can make good guesses about whether or not you have cancer or whether or not there is a stop sign ahead, but it can’t explain these guesses. Clearly, this is a problem.</p>
+</blockquote>
+
+<p>For better or worse, AI (I’m using AI and machine learning interchangeably here, which is <a href="https://www.nytimes.com/2016/12/14/magazine/the-great-ai-awakening.html">common</a> but <a href="https://blogs.nvidia.com/blog/2016/07/29/whats-difference-artificial-intelligence-machine-learning-deep-learning-ai/">not technically correct</a>) is going to play a larger and larger role in our lives. Deep learning can already do quite a bit: <a href="https://www.forbes.com/sites/bernardmarr/2017/05/16/how-ai-and-deep-learning-is-now-used-to-diagnose-cancer/#5a86d200c783">diagnose cancer</a>, <a href="https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/">drive cars</a>, <a href="http://blog.kaggle.com/2012/11/01/deep-learning-how-i-did-it-merck-1st-place-interview/">discover drugs</a>, <a href="https://www.nytimes.com/2016/12/14/magazine/the-great-ai-awakening.html">translate languages</a>, and <a href="http://www.fakenewschallenge.org/">detect fake news</a>. While deep RL is still in the research phase, many believe that it will have an equally dramatic impact.</p>
+
+<p><strong>The black box problem.</strong> Unfortunately, these models are extremely difficult to interpret. The way things are right now, they can make good guesses about whether or not you have cancer or whether or not there is a stop sign ahead, but they can’t explain these guesses. Clearly, this is a problem.</p>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/divination.jpg" width="60%" />
+    <div class="thecap" style="text-align:center">Deep learning algorithms are often perceived as black boxes.</div>
+</div>
+
+<p><strong>Past work.</strong> Many papers aim to fix this. Some focus on feedforward models, which are used for computer vision. Others focus on recurrent models, often preferred for translation. My research group was surprised to find, though, that very little has been done in the way of understanding deep RL models. To our knowledge, there’s just <a href="https://arxiv.org/abs/1602.02658">one strong paper</a> on the topic. This paper does a good job of explaining deep RL policies to experts: think t-SNE plots, Jacobian saliency plots, and a way of extracting a Markov Decision Process (MDP) from a Deep Q-Network (DQN). Sadly, there’s not much a non-expert could glean from these results.</p>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/jacobian-vs-perturb.png" width="60%" />
+    <div class="thecap" style="text-align:center">Previous methods vs. our approach.</div>
+</div>
+
+<p><strong>Our approach <a href="https://goo.gl/AMAoSc">(link to paper)</a>.</strong> We decided to explain deep RL agents in way that was informative to experts and non-experts alike. The question we asked was <em>“What is the agent looking at in order to make its decisions?”</em> and the answer we came up with was a technique for generating “saliency maps” that show where the agent is “looks” in order to make decisions. Let me be clear: before our paper, there were methods for generating saliency maps like this…but ours is a lot better :).</p>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/breakout-tunneling.gif" width="25%" style="margin: 0px 20px" />
+    <img src="/assets/visualize-atari/pong-killshot.gif" width="25%" style="margin: 0px 20px" />
+    <img src="/assets/visualize-atari/spaceinv-aiming.gif" width="25%" style="margin: 0px 20px" />
+    <div class="thecap" style="text-align:center">Strategies of strong Atari agents: <b>a)</b> the Breakout agent has learned a tunneling strategy <b>b)</b> the Pong agent has learned to make a killshot <b>c)</b> the SpaceInvaders agent has learned to aim at individual targets. We're visualizing and actor-critic model here (blue=actor and red=critic)</div>
+</div>
+
+<p>Before looking at saliency videos for our agents, we made guesses about that they were doing. After watching the videos (above), we found that <em>all three agents</em> were doing things differently from we had imagined (see paper). <a href="https://github.com/greydanus/visualize_atari">GitHub link</a>.</p>
+
+<h2 id="catching-cheaters">Catching cheaters</h2>
+
+<p><strong>Hint pixels.</strong> The next step was to determine whether our method could spot agents that were making <em>the right decisions for the wrong reasons</em>. We modified each Atari environment by inserting green “hint pixels” at the top of the game space. We used the hint pixels to send information about what an “expert” (pretrained Atari agent) would do, given the current state of the game. Then, we trained “overfit” agents to predict the actions of the “expert.” We also trained “control” agents in the same manner, but with the hint pixels set to random values.</p>
+
+<p><strong>Overfit vs. control.</strong> The overfit agents learned to use the hint pixels to mimic the expert. Think of this strategy as “cheating”: doing the right things for the wrong reasons. Meanwhile, the control agents learned to use relevant features of the gamespace (ball, paddle, etc.) to reconstruct the expert’s policy from scratch. In spite of these very different underlying strategies, the two agents looked almost identical in replays.</p>
+
+<div class="imgcap_noborder">
+	<iframe width="260" height="400" style="margin: 0px 20px" src="https://www.youtube.com/embed/xXGC6CQW97E?showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+    <iframe width="260" height="400" style="margin: 0px 20px" src="https://www.youtube.com/embed/eeXLUI73RTo?showinfo=0" frameborder="0" allowfullscreen=""></iframe>
+	<div class="thecap" style="text-align:center">A control agent (left) versus an overfit agent (right)</div>
+</div>
+
+<p><strong>Survey.</strong> We made videos of both agents, with and without saliency maps. Next, we instructed 30 engineering students to watch these videos and answer questions about the agents. Even though these students had limited – if any – experience with deep RL and Atari, the majority of them were able to identify the overfit agent with the help of our saliency technique.</p>
+
+<blockquote>
+  <p>Table 1: Which agent has a more robust strategy?</p>
+</blockquote>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Video type</th>
+      <th style="text-align: center">Can’t tell</th>
+      <th style="text-align: center">Agent 1 (overfit)</th>
+      <th style="text-align: center">Agent 2 (control)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Without saliency</td>
+      <td style="text-align: center">16.1</td>
+      <td style="text-align: center"><strong>48.4</strong></td>
+      <td style="text-align: center">35.5</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">With saliency</td>
+      <td style="text-align: center">16.1</td>
+      <td style="text-align: center">25.8</td>
+      <td style="text-align: center"><strong>58.1</strong></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="watching-agents-learn">Watching agents learn</h2>
+
+<p>Deep RL agents are known to transition through a broad spectrum of strategies. Some of these strategies are eventually discarded in favor of better ones (recall the AlphaGo Zero example). We wanted to see if we could visualize this process in Atari agents. Below are some cool results: the leftmost frames represent how untrained agents see their environment whereas the rightmost frames represent how fully-trained agents see their environment. Each frame is separated by about 10 million frames of training.</p>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/breakout-learning.png" width="80%" />
+    <div class="thecap" style="text-align:center">A Breakout agent <b>learning to tunnel</b>. An untrained agent looks pretty much everywhere. Early in training, it has learned to look at the paddle and ball, probably because its policy is to simply return the ball (without aiming). Later on, the agent has learned to direct the ball towards a "tunnel" in the brick wall in order to maximize its score.</div>
+</div>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/pong-learning.png" width="80%" />
+    <div class="thecap" style="text-align:center">A Pong agent <b>learning a kill shot</b>. There's not much to see here, but you'll notice that saliency starts out evenly distributed across the two paddles and the ball (the agent we're training controls the paddle on the right). Later in training, our agent starts to ignore the opponent during the kill shot because there's nothing the opponent can do to return the shot.</div>
+</div>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/spaceinvaders-learning.png" width="80%" />
+    <div class="thecap" style="text-align:center">A SpaceInvaders agent <b>learning an aiming strategy</b>. Like the Breakout agent, the agent starts out looking everywhere. Early in training, it shifts its attention entirely to the spaceship at the bottom of the screen. Its strategy at this point is probably based on avoiding enemy bullets and "spraying" its own bullets without aiming. Later in training, it has switched to an aiming strategy, in which it attends to specific enemies.</div>
+</div>
+
+<h2 id="going-forward">Going forward</h2>
+
+<p><strong>Recap.</strong> Our long-term purpose is not to explain Atari agents; it is to explain <em>any</em> deep RL agents. In this project, we introduced a tool we believe takes us one step closer to that goal. We used it to explore Atari agents in a variety of different ways, and learned a lot about them in the process.</p>
+
+<div class="imgcap_noborder">
+    <img src="/assets/visualize-atari/darpa-xai.jpg" width="50%" />
+    <div class="thecap" style="text-align:center">The mission statement of <a href="https://twitter.com/DARPA/status/872547502616182785">DARPA's XAI Project</a>, summarized in an image.</div>
+</div>
+
+<p><strong>Memory.</strong> One major limitation of our technique is that our agents use recurrent connections (in the form of an LSTM layer), so memory plays a key role in their policies. A simple example is an agent which has learned to reason about the velocity of a ball (e.g. in Pong); it needs information about previous frames in addition to information from the current frame to do this. We present preliminary results for “the saliency of memory over time” in our paper, but it’s not the main focus of this project.</p>
+
+<p><strong>More than one tool.</strong> I think the comment about memory suggests a fundamental truth about explanations for deep RL: we need more than one. To produce explanations that satisfy human users, researchers will need to assemble <em>many</em> complimentary explanation techniques. To this end, I see this project as something which compliments previous efforts while motivating future efforts, taking the field one step closer to producing <em>truly</em> satisfying explanations.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:fn1" role="doc-endnote">
+      <p>Selected for an oral presentation at the NIPS 2017 Interpretability Workshop! <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

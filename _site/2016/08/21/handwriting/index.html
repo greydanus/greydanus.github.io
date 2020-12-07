@@ -12,7 +12,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
 
     <!-- Google Analytics -->
     <script>
@@ -43,7 +43,7 @@
 
     <div style="float:left; margin-top:4px; margin-right:10px;">
       <a class="site-title" style="padding-top:0px; padding-bottom:0px;" href="/ ">Natural Intelligence</a>
-      <p style="padding-bottom:6px; font-size:14px">A science blog by Sam Greydanus</p>
+      <p style="padding-bottom:6px; font-size:15px">A science blog by Sam Greydanus</p>
     </div>
 
     <!-- <a class="site-title" style="padding-top:8px; font-size:28px" href="/ ">Natural Intelligence</a> -->
@@ -85,34 +85,12 @@
 
   <header class="post-header">
     <h1>Scribe: Generating Realistic Handwriting with TensorFlow</h1>
-    <p class="meta">Aug 21, 2016 • Sam Greydanus</p>
+    <p class="meta">Aug 21, 2016</p>
   </header>
 
   <article class="post-content">
-  <div>
-    <style>
-        #linkbutton:link, #linkbutton:visited {
-          background-color: rgb(180,180,180);
-          border-radius: 4px;
-          color: white;
-          padding: 6px 0px;
-          width: 150px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          text-transform: uppercase;
-          font-size: 13px;
-          margin: 8px;
-        }
-
-        #linkbutton:hover, #linkbutton:active {
-          background-color: rgba(160,160,160);
-        }
-    </style>
-</div>
-
-<div class="imgcap_noborder">
-	<img src="/assets/scribe/author.png" width="60%" />
+  <div class="imgcap_noborder">
+	<img src="/assets/scribe/author.png" width="70%" />
 </div>
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
@@ -124,7 +102,7 @@
 <p>Like most elementary school kids in the 2000’s, I was a master of WordArt. I gleefully overused the big rainbow-colored fonts on everything from class essays to school newspaper articles. One thing that bothered me was the lack of good cursive fonts. Some years later I realized why: each letter in cursive gets shaped differently depending on what letters surround it. That makes mimicking someone’s cursive style with a computer – or even by hand - tricky. It’s the reason we still sign our names in cursive on legal documents.</p>
 
 <div class="imgcap">
-	<img src="/assets/scribe/lucinda.png" width="30%" />
+	<img src="/assets/scribe/lucinda.png" width="40%" />
 	<div class="thecap" style="text-align:center">The best MS Word can do is make it curly</div>
 </div>
 
@@ -141,11 +119,11 @@
 <p>First let’s look at the data. I used the <a href="http://www.fki.inf.unibe.ch/databases/iam-handwriting-database">IAM Handwriting Database</a> to train my model. As far as datasets go, it’s very small (less than 50 MB once parsed). A total of 657 writers contributed to the dataset and each has a unique handwriting style:</p>
 
 <div class="imgcap_noborder">
-	<img src="/assets/scribe/style_0.png" width="75%" />
-	<img src="/assets/scribe/style_1.png" width="75%" />
-	<img src="/assets/scribe/style_2.png" width="75%" />
-	<img src="/assets/scribe/style_3.png" width="75%" />
-	<img src="/assets/scribe/style_4.png" width="75%" />
+	<img src="/assets/scribe/style_0.png" width="85%" />
+	<img src="/assets/scribe/style_1.png" width="85%" />
+	<img src="/assets/scribe/style_2.png" width="85%" />
+	<img src="/assets/scribe/style_3.png" width="85%" />
+	<img src="/assets/scribe/style_4.png" width="85%" />
 	<div class="thecap" style="text-align:center">Five different handwriting styles. The average character contains about 25 points.</div>
 </div>
 
@@ -155,13 +133,13 @@
 <p>The data is three dimensional, sequential, and highly correlated both in space and in time. In other words, it’s a big ugly mess. It was originally meant for training online handwriting recognition models which learn that a series of pen points represents, say, the letter ‘a’:</p>
 
 <div class="imgcap">
-	<img src="/assets/scribe/stroke_to_ascii.png" width="50%" />
+	<img src="/assets/scribe/stroke_to_ascii.png" width="60%" />
 	<div class="thecap" style="text-align:center">Online handwriting recognition (the original purpose of this dataset. RNN graphic courtesy of <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">colah</a>.</div>
 </div>
 
 <p>Ok, that is a tough challenge but it can be done using out-of-the-box sequential models such as recurrent neural networks (RNNs). A much more difficult challenge is to reverse the process, ie. to train a model that takes the letter ‘a’ as an input and produces a series of points that we can connect to make the letter ‘a.’</p>
 <div class="imgcap">
-	<img src="/assets/scribe/ascii_to_stroke.png" width="50%" />
+	<img src="/assets/scribe/ascii_to_stroke.png" width="60%" />
 	<div class="thecap" style="text-align:center">Handwriting generation from ascii characters (a much harder challenge!).</div>
 </div>
 <p>In order to make this happen, we’ll start with a recurrent neural network structure and then add some bells and whistles.</p>
@@ -170,14 +148,14 @@
 <p>It’s easy to think of the Graves handwriting model is as three separate models. Each of these models can be trained using gradient backpropagation, so we basically stack them on top of each other like Legos and then train the whole beast from end-to-end. I’ll describe each model in turn and give an intuition for how they work together to generate handwriting.</p>
 
 <div class="imgcap">
-	<img src="/assets/scribe/model_rolled.png" width="40%" />
+	<img src="/assets/scribe/model_rolled.png" width="50%" />
 	<div class="thecap" style="text-align:center">The structure of the Graves handwriting model. Differentiable components have corners and &lt;eos&gt; is the end-of-stroke tag.</div>
 </div>
 
 <p><strong>The Long Short-Term Memory (LSTM) Cell.</strong> At the core of the Graves handwriting model are three Long Short-Term Memory (LSTM) Recurrent Neural Networks (RNNs). We could just as easily have used Gated Recurrent Units (GRUs), <a href="https://arxiv.org/abs/1607.03474">Recurrent Highway Networks</a> (RHNs), or some other <code class="language-plaintext highlighter-rouge">seq2seq</code> cell. TensorFlow provides a <a href="https://www.tensorflow.org/versions/master/tutorials/seq2seq/index.html">built-in API</a> for these models so it doesn’t really matter. If you don’t know what recurrent neural networks or LSTMs are, read <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">this post</a> to see how they work and <a href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/">this post</a> to see what they can do.</p>
 
 <div class="imgcap">
-	<img src="/assets/scribe/model_unrolled.png" width="90%" />
+	<img src="/assets/scribe/model_unrolled.png" width="100%" />
 	<div class="thecap" style="text-align:center">The recurrent structure allows the model to feed information forward from past iterations. Arrows represent how data flows through the model (gradients flow backwards)</div>
 </div>
 
@@ -186,7 +164,7 @@
 <p><strong>The Mixture Density Network (MDN).</strong> Think of Mixture Density Networks as neural networks which can measure their own uncertainty. Their output parameters are \(\mu\), \(\sigma\), and \(\rho\) for several multivariate Gaussian components. They also estimate a parameter \(\pi\) for each of these distributions. Think of \(\pi\) as the probability that the output value was drawn from that particular component’s distribution. Last year, I wrote an <a href="https://nbviewer.jupyter.org/github/greydanus/adventures/blob/master/mixture_density/mdn.ipynb">Jupyter notebook</a> about MDNs.</p>
 
 <div class="imgcap">
-	<img src="/assets/scribe/MDN.png" width="40%" />
+	<img src="/assets/scribe/MDN.png" width="50%" />
 	<div class="thecap" style="text-align:center">The importance of π: what is the probability the red point was drawn from each of the three distributions?</div>
 </div>
 
@@ -195,12 +173,12 @@
 <p><strong>The Attention Mechanism.</strong> Imagine that we want our model to write <i>‘You know nothing Jon Snow.’</i> In order to get the information about which characters make up this sentence, the model uses a differentiable attention mechanism. In technical terms, it is a Gaussian convolution over a <a href="https://en.wikipedia.org/wiki/One-hot">one-hot</a> ascii encoding. Think of this convolution operation as a soft window through which the handwriting model can look at a small subset of characters, ie. the letters ‘kn’ in the word ‘know’. Since all the parameters of this window are differentiable, the model learns to shift the window from character to character as it writes them</p>
 
 <div class="imgcap">
-	<img src="/assets/scribe/diag_window.png" width="50%" />
+	<img src="/assets/scribe/diag_window.png" width="65%" />
 	<div class="thecap" style="text-align:center">A time series plot of the window's position. The vertical axis is time (descending) and the horizontal axis is the sequence of ascii characters that the model is drawing.</div>
 </div>
 
 <div class="imgcap">
-	<img src="/assets/scribe/onehot_window.png" width="50%" />
+	<img src="/assets/scribe/onehot_window.png" width="65%" />
 	<div class="thecap" style="text-align:center">A time series of one-hot encodings produced by the attention mechanism. Again, the vertical axis is time. The horizontal axis is what the model sees when it looks through the soft window.</div>
 </div>
 
@@ -226,11 +204,11 @@
 <p>To better understand what is happening here, check out my <a href="https://nbviewer.jupyter.org/github/greydanus/scribe/blob/master/sample.ipynb">Jupyter notebook</a> or the <a href="https://arxiv.org/abs/1308.0850">original paper</a>. Below are results for \(b={0.5,0.75,1.0}\)</p>
 
 <div class="imgcap_noborder">
-	<img src="/assets/scribe/bias-1.png" width="50%" />
+	<img src="/assets/scribe/bias-1.png" width="60%" />
 	<div class="thecap" style="text-align:center">bias = 1.0</div>
-	<img src="/assets/scribe/bias-0.75.png" width="50%" />
+	<img src="/assets/scribe/bias-0.75.png" width="60%" />
 	<div class="thecap" style="text-align:center">bias = 0.75</div>
-	<img src="/assets/scribe/bias-0.5.png" width="50%" />
+	<img src="/assets/scribe/bias-0.5.png" width="60%" />
 	<div class="thecap" style="text-align:center">bias = 0.5</div>
 </div>
 
@@ -244,7 +222,7 @@
 <p>The Graves handwriting model is one of the first examples of the Lego Effect. As I explained above, it’s actually a combination of three different types of models. The RNN cell learns to reproduce sequences of pen points, the MDN models randomness and style in the handwriting, and the attention mechanism tells the model what to write.</p>
 
 <div class="imgcap">
-	<img src="/assets/scribe/densecap.jpg" width="50%" />
+	<img src="/assets/scribe/densecap.jpg" width="60%" />
 	<div class="thecap" style="text-align:center">Image captioning using a ConvNet + LSTM model. More info <a href="https://cs.stanford.edu/people/karpathy/densecap/">here</a></div>
 </div>
 
