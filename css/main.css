@@ -9,19 +9,20 @@
 html, body { height: 100%; }
 
 body {
-/*  font-family: Helvetica, Arial, sans-serif;*/
-  font-family: "Georgia", sans-serif;
-  color: #232323;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  /*font-family: Charter, Georgia, serif;*/
+  color: #000;
   font-size: 17.5px;
   line-height: 1.5;
   font-weight: 300;
-/*  background-color: #fdfdfd;*/
+  /*background-color: #fdfdfd;*/
 }
 
-h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: 400}
+h1, h2, h3, h4, h5, h6 { font-size: 100%; font-weight: normal}
 
 table {
-    font-family: "Georgia", sans-serif;
+    font-family: "Roboto", Helvetica, Arial, sans-serif;
+    /*font-family: "Georgia", sans-serif;*/
     border-collapse: collapse;
     width: 100%;
 }
@@ -72,13 +73,14 @@ a:visited { color: #205caa; }
 .site-title:hover,
 .site-title:visited {
   display: block;
-  color: #232323;
+  color: #000;
   font-size: 31px;
   float: left;
 /*  line-height: 56px;*/
 /*  position: relative;*/
   z-index: 1;
   padding-bottom: 0;
+  font-weight: 300;
 }
 
 .site-nav {
@@ -427,7 +429,8 @@ span.colab-span {
 @media screen and (max-width: 600px) {
 
   body {
-  font-family: "Georgia", sans-serif;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  /*font-family: "Georgia", sans-serif;*/
   color: #232323;
   font-size: 16.5px;
   line-height: 1.5;
