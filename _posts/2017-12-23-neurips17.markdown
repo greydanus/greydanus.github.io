@@ -45,11 +45,11 @@ Billion dollar investments. Top-tier scientists. Flo Rida. NeurIPS 2017 was a co
 
 But which researchers are setting trends in the field, and which ones are making relatively small contributions? A quick review of the conference schedule shows that five of the seven invited speakers and 10 of the 19 symposium organizers had industry affiliations. This means that industry-funded researchers "set the curve" at NeurIPS.
 
-Why can't more research be done in academia, where the interests of the community are better served, rather than the interests of a few dopey CEOs? _"But they had free fidget spinners..."_ -- all the PhD students.
+Why can't more research be done in academia, where the interests of the community are better served, rather than the interests of a few CEOs? _"But they had free fidget spinners..."_.
 
 ## Big ideas and trends
 
-After day one, I did my best to look _beyond_ the hype and find examples of people doing good science. My initial pessimism ("Is NeurIPS just a recruiting event?") faded and I discovered some interesting themes.
+After day one, I did my best to look beyond the hype and find examples of people doing good science. My initial pessimism faded and I discovered some interesting themes.
 
 **Are we alchemists?** Researcher Ali Rahimi received a Test of Time award for [his contributions to the field](https://scholar.google.com/scholar?cluster=2545838671944402764&hl=en&as_sdt=0,38&as_vis=1) back in 2007-08. He used his [acceptance speech](https://www.youtube.com/watch?v=ORHFOnaEzPc) as an opportunity to make a strong, controversial claim about the state of machine learning: "it is the new alchemy." Ali's point is that we spend too much of our time trying to improve the performance of AI on various datasets and too little time trying to understand why things go right or wrong.
 
