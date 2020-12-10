@@ -1,4 +1,4 @@
-I"qr<div>
+I";r<div>
 	<style>
 		#linkbutton:link, #linkbutton:visited {
 		  background-color: rgb(180,180,180);
@@ -185,15 +185,15 @@ function playPauseInterp() {
 
 <p>One of the things that makes these models so flexible is that they use a hidden vector \(h\) to store memories of past observations. And they can <em>learn</em> to read, write, and erase information from \(h\) in order to make accurate predictions about the future. RNNs are Turing-complete and, unlike other models that are Turing-complete (eg. HMMs or FSMs) they can learn and operate on noisy, high-dimensional data. Here is an incomplete list of things people have trained RNNs to do:</p>
 <ul>
-  <li>•  <a href="http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-">Translate text from one language to another</a></li>
-  <li>•  <a href="https://openai.com/blog/solving-rubiks-cube/">Control a robot hand in order to solve a Rubik’s Cube</a></li>
-  <li>•  <a href="https://rdcu.be/bVI7G">Defeat professional human gamers in StarCraft</a></li>
-  <li>•  <a href="https://openaccess.thecvf.com/content_cvpr_2016/html/Johnson_DenseCap_Fully_Convolutional_CVPR_2016_paper.html">Caption images</a></li>
-  <li>•  <a href="https://arxiv.org/abs/1308.0850">Generate realistic handwriting</a></li>
-  <li>•  <a href="https://www.isca-speech.org/archive/interspeech_2014/i14_1964.html">Convert text to speech</a></li>
-  <li>•  <a href="http://www.jmlr.org/proceedings/papers/v48/amodei16.html">Convert speech to text</a></li>
-  <li>•  <a href="https://arxiv.org/abs/1704.03477">Sketch simple images</a></li>
-  <li>•  <a href="https://greydanus.github.io/2017/01/07/enigma-rnn/">Learn the Enigma cipher</a></li>
+  <li><a href="http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-">Translate text from one language to another</a></li>
+  <li><a href="https://openai.com/blog/solving-rubiks-cube/">Control a robot hand in order to solve a Rubik’s Cube</a></li>
+  <li><a href="https://rdcu.be/bVI7G">Defeat professional human gamers in StarCraft</a></li>
+  <li><a href="https://openaccess.thecvf.com/content_cvpr_2016/html/Johnson_DenseCap_Fully_Convolutional_CVPR_2016_paper.html">Caption images</a></li>
+  <li><a href="https://arxiv.org/abs/1308.0850">Generate realistic handwriting</a></li>
+  <li><a href="https://www.isca-speech.org/archive/interspeech_2014/i14_1964.html">Convert text to speech</a></li>
+  <li><a href="http://www.jmlr.org/proceedings/papers/v48/amodei16.html">Convert speech to text</a></li>
+  <li><a href="https://arxiv.org/abs/1704.03477">Sketch simple images</a></li>
+  <li><a href="https://greydanus.github.io/2017/01/07/enigma-rnn/">Learn the Enigma cipher</a></li>
 </ul>
 
 <h2 id="the-limitations-of-rnns">The Limitations of RNNs</h2>
