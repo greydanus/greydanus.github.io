@@ -195,15 +195,15 @@ I am going to give more specific examples of how Jumpy RNNs improve over regular
 Recurrent neural networks are interesting because they can learn complex, long-range structure in time series data simply by predicting one point at a time. For example, if you train them on sequences of words, you can use them to translate from one language to another, or to generate possible completions to a prompt. And if you train them on observations of a robot arm, you can use them to generate realistic paths that the arm might take.
 
 One of the things that makes these models so flexible is that they use a hidden vector \\(h\\) to store memories of past observations. And they can _learn_ to read, write, and erase information from \\(h\\) in order to make accurate predictions about the future. RNNs are Turing-complete and, unlike other models that are Turing-complete (eg. HMMs or FSMs) they can learn and operate on noisy, high-dimensional data. Here is an incomplete list of things people have trained RNNs to do:
-* •&nbsp; [Translate text from one language to another](http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-)
-* •&nbsp; [Control a robot hand in order to solve a Rubik’s Cube](https://openai.com/blog/solving-rubiks-cube/)
-* •&nbsp; [Defeat professional human gamers in StarCraft](https://rdcu.be/bVI7G)
-* •&nbsp; [Caption images](https://openaccess.thecvf.com/content_cvpr_2016/html/Johnson_DenseCap_Fully_Convolutional_CVPR_2016_paper.html)
-* •&nbsp; [Generate realistic handwriting](https://arxiv.org/abs/1308.0850)
-* •&nbsp; [Convert text to speech](https://www.isca-speech.org/archive/interspeech_2014/i14_1964.html)
-* •&nbsp; [Convert speech to text](http://www.jmlr.org/proceedings/papers/v48/amodei16.html)
-* •&nbsp; [Sketch simple images](https://arxiv.org/abs/1704.03477)
-* •&nbsp; [Learn the Enigma cipher](https://greydanus.github.io/2017/01/07/enigma-rnn/)
+* [Translate text from one language to another](http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-)
+* [Control a robot hand in order to solve a Rubik’s Cube](https://openai.com/blog/solving-rubiks-cube/)
+* [Defeat professional human gamers in StarCraft](https://rdcu.be/bVI7G)
+* [Caption images](https://openaccess.thecvf.com/content_cvpr_2016/html/Johnson_DenseCap_Fully_Convolutional_CVPR_2016_paper.html)
+* [Generate realistic handwriting](https://arxiv.org/abs/1308.0850)
+* [Convert text to speech](https://www.isca-speech.org/archive/interspeech_2014/i14_1964.html)
+* [Convert speech to text](http://www.jmlr.org/proceedings/papers/v48/amodei16.html)
+* [Sketch simple images](https://arxiv.org/abs/1704.03477)
+* [Learn the Enigma cipher](https://greydanus.github.io/2017/01/07/enigma-rnn/)
 
 
 ## The Limitations of RNNs

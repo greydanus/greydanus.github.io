@@ -60,15 +60,15 @@ When I was growing up, hummingbirds used to fly into our garage and get stuck. I
 Since my encounter with the hummingbird, I have always been naturally drawn to flight. It's a bizarre desire to possess, since humans did not evolve to fly. And yet many humans have felt the same way over the years. Entire cultures, even, have dreamed of flight. And step by step, they have used technology to fashion their own artificial wings and bring about the modern-day miracle of flight. The purpose of this series of posts is to recount that epic adventure. I will tell it through the lens of history, looking at the individual people who wanted to fly, the lens of technology, looking at the key inventions leading up to modern airplanes, and the lens of physics, looking at the equations of airflow that made it all possible. As a final flourish, I will derive a wing from scratch by simulating a wind tunnel, differentiating through it, and using gradient descent to deform a rectangular occlusion into a wing.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:33%; min-width:200px; display: inline-block; vertical-align: top;">
+  <div style="width:32.8%; min-width:200px; display: inline-block; vertical-align: top;">
     <img src="/assets/story-of-flight/leonardo.jpg" style="width:100%">
     <div style="text-align: left;">Leonardo da Vinci, an important figure in the history of flight.</div>
   </div>
-  <div style="width:33%; min-width:200px; display: inline-block; vertical-align: top;">
+  <div style="width:32.8%; min-width:200px; display: inline-block; vertical-align: top;">
     <img src="/assets/story-of-flight/lilienthal.jpg" style="width:100%">
     <div style="text-align:left;">Otto Lilienthal, who made key technological breakthroughs in wing shape and design.</div>
   </div>
-  <div style="width:33%; min-width:200px; display: inline-block; vertical-align: top;">
+  <div style="width:32.8%; min-width:200px; display: inline-block; vertical-align: top;">
     <img src="/assets/story-of-flight/wing_shape.png" id="wingShapeImage" onclick="toggleWingShape()" style="width:100%">
     <div style="text-align:left;">Optimizing our own wing in a fluid simulation. <p style="color:grey;display:inline;">[Click to pause or play.]</p></div>
   </div>
