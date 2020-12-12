@@ -1,49 +1,4 @@
-I";r<div>
-	<style>
-		#linkbutton:link, #linkbutton:visited {
-		  background-color: rgb(180,180,180);
-		  border-radius: 4px;
-		  color: white;
-		  padding: 6px 0px;
-		  width: 150px;
-		  text-align: center;
-		  text-decoration: none;
-		  display: inline-block;
-		  text-transform: uppercase;
-		  font-size: 13px;
-		  margin: 8px;
-		}
-
-		#linkbutton:hover, #linkbutton:active {
-		  background-color: rgba(160,160,160);
-		}
-
-		.playbutton {
-		  background-color: rgb(148, 196, 146);
-		  border-width: 0;
-		  /*background-color: rgba(255, 130, 0);*/
-		  border-radius: 4px;
-		  color: white;
-		  padding: 5px 8px;
-		  /*width: 60px;*/
-		  text-align: center;
-		  text-decoration: none;
-		  text-transform: uppercase;
-		  font-size: 12px;
-		  /*display: block;*/
-		  /*margin-left: auto;*/
-		  margin: 8px 0px;
-		  margin-right: auto;
-		  min-width:60px;
-		}
-
-		.playbutton:hover, .playbutton:active {
-		  background-color: rgb(128, 176, 126);
-		}
-	</style>
-</div>
-
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+I".p<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <video id="video_sim" style="width:100%;min-width:250px;">
     	<source src="/assets/jumpy-rnn/video_simulator.mp4" type="video/mp4" />
@@ -104,7 +59,7 @@ function playPauseJumpy() {
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
 	<a href="https://openreview.net/pdf?id=4c3WeBTErrE" id="linkbutton" target="_blank">Read the paper</a>
-	<a href="" id="linkbutton" target="_blank">Run in browser</a>
+	<a href="" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
 	<a href="https://github.com/greydanus" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
@@ -268,6 +223,23 @@ function playPausePool() {
 <p>In order to test this hypothesis, we tested our model against a baseline RNN on a simple planning task in the billiards environment. The goal was to impart one ball, the “cue ball” (visualized in tan) with an initial velocity such that it would collide with the second ball and the second ball would ultimately enter a target region (visualized in black).</p>
 
 <p>We found that our model used half the wall time of the baseline and produced plans with a higher probability of success. These results are preliminary – and part of ongoing work – but they do confirm our hypothesis that the jumpy model would be useful for model-based planning.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Simulator</th>
+      <th style="text-align: center">Baseline RNN</th>
+      <th style="text-align: center">Jumpy RNN</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">77.2%</td>
+      <td style="text-align: center">52.8%</td>
+      <td style="text-align: center">58.0%</td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- Quite a few researchers have wrestled with the fact that RNNs tick through time at a uniform rate. So there are a number of recent projects that aim to make RNNs more temporally abstract. Our work is related, and hopefully complementary, to these approaches. -->
 
