@@ -18,7 +18,6 @@ thumbnail: /assets/scaling-down/thumbnail.png
   	</div>
 </div>
 
-
 <script language="javascript">
 	function playPauseDemo() { 
 	  var video = document.getElementById("demoDisplay");
