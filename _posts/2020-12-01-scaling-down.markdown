@@ -8,11 +8,6 @@ mathjax: true
 thumbnail: /assets/scaling-down/thumbnail.png
 ---
 
-<div>
-	<style>
-	</style>
-</div>
-
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
     <div style="min-width:250px; vertical-align: top; text-align:center;">
     <video id="demoDisplay" style="width:100%;min-width:250px;">
