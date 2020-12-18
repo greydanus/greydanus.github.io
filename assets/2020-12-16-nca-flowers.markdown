@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Growing Flowers with Neural Cellular Automata"
+title:  "Growing Flowers with Cellular Automata"
 excerpt: "We train simulated cells to grow into flowers starting from a single seed cell. In doing so, we obtain a powerful model of biological morphogenesis."
 date:   2020-12-01 11:00:00
 mathjax: true
@@ -10,32 +10,32 @@ thumbnail: /assets/nca-flowers/thumbnail.png
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
-    <video id="video_rose1" style="width:100%;min-width:250px;">
+    <video id="video_rose" style="width:100%;min-width:250px;">
       <source src="/assets/nca-flowers/rose.mp4" type="video/mp4">
     </video>
-    <button class="playbutton" id="video_rose1_button" onclick="playPauseRose1()">Play</button> 
+    <button class="playbutton" id="video_rose_button" onclick="playPauseRose()">Play</button> 
     <div style="text-align: left;margin-left:10px;margin-right:10px;">Using model-based planning to play billiards. The goal is to impart the tan cue ball with an initial velocity so as to move the blue ball to the black target.</div>
   </div>
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
-    <video id="video_rose2" style="width:100%;min-width:250px;">
-      <source src="/assets/nca-flowers/rose2.mp4" type="video/mp4">
+    <video id="video_sunflower" style="width:100%;min-width:250px;">
+      <source src="/assets/nca-flowers/sunflower.mp4" type="video/mp4">
     </video>
-    <button class="playbutton" id="video_rose2_button" onclick="playPauseRose2()">Play</button> 
+    <button class="playbutton" id="video_sunflower_button" onclick="playPauseSunflower()">Play</button> 
     <div style="text-align:left;margin-left:10px;margin-right:10px;">A baseline RNN trained on billiards dynamics can also be used for model-based planning. It's inefficient because it has to "tick" at a constant rate.</div>
   </div>
    <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
-    <video id="video_rose3" style="width:100%;min-width:250px;">
-      <source src="/assets/nca-flowers/rose.mp4" type="video/mp4">
+    <video id="video_pansy" style="width:100%;min-width:250px;">
+      <source src="/assets/nca-flowers/pansy.mp4" type="video/mp4">
     </video>
-    <button class="playbutton" id="video_rose3_button" onclick="playPauseRose3()">Play</button> 
+    <button class="playbutton" id="video_pansy_button" onclick="playPausePansy()">Play</button> 
     <div style="text-align:left;margin-left:10px;margin-right:10px;">By contrast, a Jumpy RNN trained on the same task can perform planning in many fewer steps by jumping over spans of time where motion is predictable.</div>
   </div>
 </div>
 
 <script> 
-function playPauseRose1() { 
-  var video = document.getElementById("video_rose1"); 
-  var button = document.getElementById("video_rose1_button");
+function playPauseRose() { 
+  var video = document.getElementById("video_rose"); 
+  var button = document.getElementById("video_rose_button");
   if (video.paused) {
     video.play();
   button.textContent = "Pause";}
@@ -44,9 +44,9 @@ function playPauseRose1() {
   button.textContent = "Play";}
 } 
 
-function playPauseRose2() { 
-  var video = document.getElementById("video_rose2"); 
-  var button = document.getElementById("video_rose2_button");
+function playPauseSunflower() { 
+  var video = document.getElementById("video_sunflower"); 
+  var button = document.getElementById("video_sunflower_button");
   if (video.paused) {
     video.play();
   button.textContent = "Pause";}
@@ -55,9 +55,9 @@ function playPauseRose2() {
   button.textContent = "Play";}
 } 
 
-function playPauseRose3() { 
-  var video = document.getElementById("video_rose3"); 
-  var button = document.getElementById("video_rose3_button");
+function playPausePansy() { 
+  var video = document.getElementById("video_pansy"); 
+  var button = document.getElementById("video_pansy_button");
   if (video.paused) {
     video.play();
   button.textContent = "Pause";}

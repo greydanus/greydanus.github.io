@@ -1,4 +1,4 @@
-I"�w<p style="font-size: 20px;text-align: center;color: #999;"><i>(My last post in a series about human flight; <a target="_blank" style="color: #777;" href="../../../../2020/10/12/story-of-flight/">post 1</a>, <a target="_blank" style="color: #777;" href="../../../../2020/10/13/stepping-stones/">post 2</a>).</i></p>
+I"�z<p style="font-size: 20px;text-align: center;color: #999;"><i>(My last post in a series about human flight; <a target="_blank" style="color: #777;" href="../../../../2020/10/12/story-of-flight/">post 1</a>, <a target="_blank" style="color: #777;" href="../../../../2020/10/13/stepping-stones/">post 2</a>).</i></p>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; text-align:center; width:80%">
     <img alt="" src="/assets/optimizing-a-wing/wing_shape.png" onclick="toggleWingShape()" style="width:315px" id="wingShapeImage" />
@@ -194,6 +194,13 @@
 
 <!-- So we beat on, wings angled into the wind, borne ceaselessly into the future. -->
 
+<h2 id="thanks">Thanks</h2>
+
+<p>Thanks to Maclaurin et al. (2018) for releasing Autograd<sup id="fnref:fn18:1" role="doc-noteref"><a href="#fn:fn18" class="footnote">1</a></sup> to the world along with a number of thought-provoking demos.
+Thanks to Stephan Hoyer, Shan Carter, and Matthew Johnson for conversations that shaped some of the early versions
+of this work. And thanks to Andrew Sosanya, Jason Yosinski, and Tina White for feedback on early versions of this
+essay. Special thanks to my family and friends for serving as guinea pigs for early iterations of this story.</p>
+
 <h2 id="footnotes">Footnotes</h2>
 
 <script language="javascript">
@@ -299,7 +306,7 @@ if(parseInt(getBrowserSize().width) > 600){
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:fn18" role="doc-endnote">
-      <p>Specifically, we build on ideas laid out in <a href="https://github.com/HIPS/autograd/blob/master/examples/fluidsim/wing.png">Maclaurin et al. (2018)</a>. <a href="#fnref:fn18" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>Specifically, we build on ideas laid out in <a href="https://github.com/HIPS/autograd/blob/master/examples/fluidsim/wing.png">Maclaurin et al. (2018)</a>. <a href="#fnref:fn18" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:fn18:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
     <li id="fn:fn14" role="doc-endnote">
       <p>See <a href="https://optimization.mccormick.northwestern.edu/index.php/Wing_Shape_Optimization">this online textbook page</a> for an overview of full-scale wing optimization techniques. <a href="#fnref:fn14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
