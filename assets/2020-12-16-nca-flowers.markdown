@@ -75,7 +75,16 @@ function playPausePansy() {
 **Relevant things**
 * Minimal 100-line PyTorch reimplementation
 * Improvements that help; changes; ease of training
-* 
+* Grow some flowers at 70x70
+* Learning seeds for different flowers (shared weights) (make a small dataset of different flowers...then breed them)
+* Make a garden of flowers
+* Talk about connections to biology & what that would allow us to do
+* Draw a schema of what it would look like
+* Talk about what this would let us do someday
+* Close with some artistic quotes about growth; maybe end with some mushroons
+
+Also
+* Other loss functions: fluid sim, structural optimization, 
 
 **Outline**
 * Romantic and beautiful introduction; channel Phil Anderson & More is different; talk about _simplicity_
