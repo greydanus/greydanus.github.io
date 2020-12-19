@@ -1,4 +1,4 @@
-I"ñ<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+I"£<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <video id="video_rose" style="width:100%;min-width:250px;">
       <source src="/assets/nca-flowers/daffodil.mp4" type="video/mp4" />
@@ -61,6 +61,13 @@ function playPausePansy() {
   <a href="" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
   <a href="https://github.com/greydanus" id="linkbutton" target="_blank">Get the code</a>
 </div>
+
+<p><strong>Relevant things</strong></p>
+<ul>
+  <li>Minimal 100-line PyTorch reimplementation</li>
+  <li>Improvements that help; changes; ease of training</li>
+  <li></li>
+</ul>
 
 <p><strong>Outline</strong></p>
 <ul>

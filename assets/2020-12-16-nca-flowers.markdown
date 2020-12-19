@@ -72,6 +72,11 @@ function playPausePansy() {
   <a href="https://github.com/greydanus" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
+**Relevant things**
+* Minimal 100-line PyTorch reimplementation
+* Improvements that help; changes; ease of training
+* 
+
 **Outline**
 * Romantic and beautiful introduction; channel Phil Anderson & More is different; talk about _simplicity_
 * 
