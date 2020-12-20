@@ -7,7 +7,7 @@
     <title>Growing Flowers with Cellular Automata</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A science blog by Sam Greydanus">
-    <link rel="canonical" href="http://localhost:4000/assets/2020-12-16-nca-flowers/">
+    <link rel="canonical" href="http://localhost:4000/2020/12/16/nca-flowers/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -65,8 +65,6 @@
 <!--         
           <a class="page-link" href="/assets/2020-12-02-jumpy-rnn/">Jumpy Recurrent Neural Networks</a>
         
-          <a class="page-link" href="/assets/2020-12-16-nca-flowers/">Growing Flowers with Cellular Automata</a>
-        
           
         
           <a class="page-link" href="/papers/">Interesting papers</a>
@@ -92,32 +90,32 @@
   <article class="post-content">
   <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
-    <video id="video_rose" style="width:100%;min-width:250px;">
-      <source src="/assets/nca-flowers/daffodil.mp4" type="video/mp4" />
+    <video id="video1" style="width:100%;min-width:250px;">
+      <source src="/assets/nca-flowers/rose.mp4" type="video/mp4" />
     </video>
-    <button class="playbutton" id="video_rose_button" onclick="playPauseRose()">Play</button> 
+    <button class="playbutton" id="video1_button" onclick="playPauseVideo1()">Play</button> 
     <div style="text-align: left;margin-left:10px;margin-right:10px;">Using model-based planning to play billiards. The goal is to impart the tan cue ball with an initial velocity so as to move the blue ball to the black target.</div>
   </div>
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
-    <video id="video_sunflower" style="width:100%;min-width:250px;">
-      <source src="/assets/nca-flowers/rose.mp4" type="video/mp4" />
+    <video id="video2" style="width:100%;min-width:250px;">
+      <source src="/assets/nca-flowers/marigold.mp4" type="video/mp4" />
     </video>
-    <button class="playbutton" id="video_sunflower_button" onclick="playPauseSunflower()">Play</button> 
+    <button class="playbutton" id="video2_button" onclick="playPauseVideo2()">Play</button> 
     <div style="text-align:left;margin-left:10px;margin-right:10px;">A baseline RNN trained on billiards dynamics can also be used for model-based planning. It's inefficient because it has to "tick" at a constant rate.</div>
   </div>
    <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
-    <video id="video_pansy" style="width:100%;min-width:250px;">
+    <video id="video3" style="width:100%;min-width:250px;">
       <source src="/assets/nca-flowers/crocus.mp4" type="video/mp4" />
     </video>
-    <button class="playbutton" id="video_pansy_button" onclick="playPausePansy()">Play</button> 
+    <button class="playbutton" id="video3_button" onclick="playPauseVideo3()">Play</button> 
     <div style="text-align:left;margin-left:10px;margin-right:10px;">By contrast, a Jumpy RNN trained on the same task can perform planning in many fewer steps by jumping over spans of time where motion is predictable.</div>
   </div>
 </div>
 
 <script> 
-function playPauseRose() { 
-  var video = document.getElementById("video_rose"); 
-  var button = document.getElementById("video_rose_button");
+function playPauseVideo1() { 
+  var video = document.getElementById("video1"); 
+  var button = document.getElementById("video1_button");
   if (video.paused) {
     video.play();
   button.textContent = "Pause";}
@@ -126,9 +124,9 @@ function playPauseRose() {
   button.textContent = "Play";}
 } 
 
-function playPauseSunflower() { 
-  var video = document.getElementById("video_sunflower"); 
-  var button = document.getElementById("video_sunflower_button");
+function playPauseVideo2() { 
+  var video = document.getElementById("video2"); 
+  var button = document.getElementById("video2_button");
   if (video.paused) {
     video.play();
   button.textContent = "Pause";}
@@ -137,9 +135,9 @@ function playPauseSunflower() {
   button.textContent = "Play";}
 } 
 
-function playPausePansy() { 
-  var video = document.getElementById("video_pansy"); 
-  var button = document.getElementById("video_pansy_button");
+function playPauseVideo3() { 
+  var video = document.getElementById("video3"); 
+  var button = document.getElementById("video3_button");
   if (video.paused) {
     video.play();
   button.textContent = "Pause";}
