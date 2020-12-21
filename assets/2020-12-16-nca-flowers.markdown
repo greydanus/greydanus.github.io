@@ -82,6 +82,7 @@ function playPauseVideo3() {
 * Draw a schema of what it would look like
 * Talk about what this would let us do someday
 * Close with some artistic quotes about growth; maybe end with some mushroons
+*[Nautilus link](https://www.nicepng.com/ourpic/u2t4e6t4o0i1w7q8_549-x-750-4-nautilus-shell-drawing/)
 
 Also
 * Other loss functions: fluid sim, structural optimization, 
