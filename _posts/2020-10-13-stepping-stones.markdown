@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "The Technological Stepping Stones of Flight"
+title:  "The Stepping Stones of Flight"
 excerpt: "How did flight become a reality? Let's look at the inventors who took flight from the world of ideas to the world of things – focusing in particular on airfoil design."
 date:   2020-10-13 11:00:00
 mathjax: true
