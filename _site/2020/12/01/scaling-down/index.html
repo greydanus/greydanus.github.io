@@ -7,7 +7,7 @@
     <title>Scaling down Deep Learning</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A science blog by Sam Greydanus">
-    <link rel="canonical" href="http://localhost:4000/2020/12/01/scaling-down/">
+    <link rel="canonical" href="http://greydanus.github.io/2020/12/01/scaling-down/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -64,6 +64,8 @@
 <!--         <a class="page-link" href="/ ">Home</a> -->
 <!--         
           <a class="page-link" href="/assets/2020-12-02-jumpy-rnn/">Jumpy Recurrent Neural Networks</a>
+        
+          <a class="page-link" href="/assets/2020-12-16-studying-growth/">Studying Growth with Cellular Automata</a>
         
           
         
@@ -170,7 +172,7 @@
   <div style="width:100%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/scaling-down/lottery_b2.png" style="width:100%" />
   </div>
-    <div class="thecap" style="text-align:left;">Next, in <b>e)</b> we permute the indices of the 1D signal, effectively removing spatial structure from the dataset. This ablation hurts lottery ticket performance significantly more, suggesting that part of the lottery ticket's performance can be attributed to a spatial inductive bias. Finally, in <b>f)</b> we keep the lottery ticket sparsity structure but initialize its weights with a different random seed. Contrary to results reported in <a href="https://arxiv.org/abs/1803.03635">Frankle &amp; Carbin (2019)</a>, we see that our lottery ticket continues to outperform a dense baseline, aligning well with our hypothesis that the lottery ticket mask has a spatial inductive bias. In <b>g)</b>, we verify our hypothesis by measuring how often unmasked weights are adjacent to one another in the first layer of our model. The lottery ticket has many more adjacent weights than chance would predict, implying a local connectivity structure which helps gives rise to spatial biases.</div>
+    <div class="thecap" style="text-align:left;">Next, in <b>e)</b> we permute the indices of the 1D signal, effectively removing spatial structure from the dataset. This ablation hurts lottery ticket performance significantly more, suggesting that part of the lottery ticket's performance can be attributed to a spatial inductive bias. Finally, in <b>f)</b> we keep the lottery ticket sparsity structure but initialize its weights with a different random seed. Contrary to results reported in <a href="https://arxiv.org/abs/1803.03635">Frankle &amp; Carbin (2019)</a>, we see that our lottery ticket continues to outperform a dense baseline, aligning well with our hypothesis that the lottery ticket mask has a spatial inductive bias. In <b>g)</b>, we verify our hypothesis by measuring how often unmasked weights are adjacent to one another in the first layer of our model. The lottery ticket has many more adjacent weights than chance would predict, implying a local connectivity structure which helps give rise to spatial biases.</div>
 </div>
 
 <p>You can also visualize the actual masks selected via random and lottery pruning:
