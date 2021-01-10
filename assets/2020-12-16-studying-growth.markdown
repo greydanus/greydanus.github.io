@@ -1,11 +1,11 @@
 ---
 layout: post
 comments: true
-title:  "Growing Flowers with Cellular Automata"
-excerpt: "We train simulated cells to grow into flowers starting from a single seed cell. In doing so, we obtain a powerful model of biological morphogenesis."
+title:  "Studying Growth with Cellular Automata"
+excerpt: "We train simulated cells to organize themselves via morphogenesis. We use them to study motifs of biological growth."
 date:   2020-12-16 11:00:00
 mathjax: true
-thumbnail: /assets/nca-flowers/thumbnail.png
+thumbnail: /assets/studying-growth/thumbnail.png
 ---
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
