@@ -6,6 +6,8 @@ baseurl: ""
 url: "http://greydanus.github.io"
 twitter_username: samgreydanus
 github_username: greydanus
+plugins:
+  - jekyll-feed
 
 # Build settings
 markdown: kramdown
