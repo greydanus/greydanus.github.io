@@ -70,6 +70,8 @@
         
           <a class="page-link" href="/assets/2020-12-16-studying-growth/">Studying Growth with Cellular Automata</a>
         
+          <a class="page-link" href="/assets/2021-06-10-piecewise-nodes/">Piecewise-constant Neural ODEs</a>
+        
           
         
           <a class="page-link" href="/papers/">Interesting papers</a>
@@ -91,32 +93,30 @@
 
   <header class="post-header">
     <h1>Studying Growth with Cellular Automata</h1>
-    <p class="meta">Dec 16, 2020</p>
+    <p class="meta">May 7, 2021</p>
   </header>
 
   <article class="post-content">
   <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <video id="video1" style="width:100%;min-width:250px;">
-      <source src="/assets/nca-flowers/rose.mp4" type="video/mp4" />
+      <source src="/assets/studying-growth/rose.mp4" type="video/mp4" />
     </video>
-    <button class="playbutton" id="video1_button" onclick="playPauseVideo1()">Play</button> 
-    <div style="text-align: left;margin-left:10px;margin-right:10px;">Using model-based planning to play billiards. The goal is to impart the tan cue ball with an initial velocity so as to move the blue ball to the black target.</div>
+    <button class="playbutton" id="video1_button" onclick="playPauseVideo1()">Play</button>
   </div>
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <video id="video2" style="width:100%;min-width:250px;">
-      <source src="/assets/nca-flowers/marigold.mp4" type="video/mp4" />
+      <source src="/assets/studying-growth/marigold.mp4" type="video/mp4" />
     </video>
-    <button class="playbutton" id="video2_button" onclick="playPauseVideo2()">Play</button> 
-    <div style="text-align:left;margin-left:10px;margin-right:10px;">A baseline RNN trained on billiards dynamics can also be used for model-based planning. It's inefficient because it has to "tick" at a constant rate.</div>
+    <button class="playbutton" id="video2_button" onclick="playPauseVideo2()">Play</button>
   </div>
    <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
     <video id="video3" style="width:100%;min-width:250px;">
-      <source src="/assets/nca-flowers/crocus.mp4" type="video/mp4" />
+      <source src="/assets/studying-growth/crocus.mp4" type="video/mp4" />
     </video>
-    <button class="playbutton" id="video3_button" onclick="playPauseVideo3()">Play</button> 
-    <div style="text-align:left;margin-left:10px;margin-right:10px;">By contrast, a Jumpy RNN trained on the same task can perform planning in many fewer steps by jumping over spans of time where motion is predictable.</div>
+    <button class="playbutton" id="video3_button" onclick="playPauseVideo3()">Play</button>
   </div>
+  <div style="text-align:left;margin-left:20px;margin-right:20px;">In this post, we'll train simulated cells to organize themselves in a process that resembles biological morphogenesis. In this figure, for example, we are growing a rose, marigold, and crocus from scratch, respectively. The dynamics of these systems resemble common motifs in biological growth.</div>
 </div>
 
 <script> 
