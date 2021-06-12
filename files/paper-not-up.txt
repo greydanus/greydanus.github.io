@@ -1,0 +1,16 @@
+The paper for this project is not on arXiv yet. But we're working on it -- check back soon. In the meantime, enjoy this hyptnotizing ascii art.
+
+  ____  ____  ____  ____
+ /\   \/\   \/\   \/\   \
+/  \___\ \___\ \___\ \___\
+\  /___/ /   / /   / /   /
+ \//\   \___/\/___/\/___/
+  /  \___\    /  \___\
+  \  / __/_  _\  /   /
+   \/_/\   \/\ \/___/
+     /  \__/  \___\
+     \  / _\  /   /
+      \/_/\ \/___/
+        /  \___\
+        \  /   /
+         \/___/

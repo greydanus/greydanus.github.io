@@ -3,7 +3,7 @@ layout: post
 comments: true
 title:  "Piecewise-constant Neural ODEs"
 excerpt: "We propose a timeseries model that can be adaptively integrated. It jumps over simulation steps that are predictable and spends more time on those that are not."
-date:   2021-06-10 11:00:00
+date:   2021-06-11 11:00:00
 mathjax: true
 author: Sam Greydanus, Stefan Lee, and Alan Fern
 thumbnail: /assets/piecewise-nodes/thumbnail.png
@@ -69,7 +69,7 @@ function playPauseOurs() {
 </script>
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
-	<a href="" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="../../../../../files/paper-not-up.txt" id="linkbutton" target="_blank">Read the paper</a>
 	<a href="https://github.com/greydanus/piecewise_node#run-in-your-browser" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
 	<a href="https://github.com/greydanus/piecewise_node" id="linkbutton" target="_blank">Get the code</a>
 </div>
@@ -82,17 +82,17 @@ A recent family of models called [Neural ODEs](https://arxiv.org/abs/1806.07366)
 
 Adaptive integration is especially attractive in scenarios where "key events" are separated by variable amounts of time. In the game of billiards, these key events may consist of collisions between balls, walls, and pockets. Between these events, the balls simply undergo linear motion. That motion is not difficult to predict, but it is non-trivial for a model to learn to skip over it so as to focus on the more chaotic dynamics of collisions; this requires a model to employ some notion of [_temporal abstraction_](https://www.sciencedirect.com/science/article/pii/S0004370299000521). This problem is not unique to billiards. The same challenge occurs in robotics, where a robot arm occasionally interacts with external objects at varying intervals. It may also occur in financial markets, scientific timeseries, and other environments where change happens at a variable rate.
 
-## Towards temporally abstract hidden state dynamics
+## Towards temporally-abstract hidden state dynamics
 
-In this post, I am going to introduce a special case of Neural ODEs that my research group has been experimenting with recently. The core idea is to restrict the hidden state of a Neural ODE so that it has locally-linear dynamics. The benefit of such a model is that it can be integrated _exactly_ using Euler integration, and it can also be integrated _adaptively_ because we allow these locally-linear dynamics to extend over variable-sized durations of time. Like recurrent neural networks, our model uses a hidden state \\(h\\) to summarize knowledge about the world at a given point in time. Also, it performs updates on this hidden state using cell updates (eg. with vanilla, LSTM, or GRU cells). But our model differs from existing RNNs in that the amount of simulation time that occurs between cell updates is not fixed. Rather, it changes according to the variable \\(\Delta t\\), which is itself predicted.
+In this post, I am going to introduce a special case of Neural ODEs that my research group has been experimenting with recently. The core idea is to restrict the hidden state of a Neural ODE so that it has locally-linear dynamics. The benefit of such a model is that it can be integrated _exactly_ using Euler integration, and it can also be integrated _adaptively_ because we allow these locally-linear dynamics to extend over variable-sized durations of time. Like RNNS and Neural ODEs, our model uses a hidden state \\(h\\) to summarize knowledge about the world at a given point in time. Also, it performs updates on this hidden state using cell updates (eg. with vanilla, LSTM, or GRU cells). But our model differs from existing models in that the amount of simulation time that occurs between cell updates is not fixed. Rather, it changes according to the variable \\(\Delta t\\), which is itself predicted.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
   <img src="/assets/piecewise-nodes/hero.png" style="width:100%">
 </div>
 
-Our model also predicts a _hidden state velocity_, \\(\dot h\\), at each cell update; this enables us to evolve the hidden state dynamics continuously over time according to: \\(h(t+\Delta t) = h + \dot h \Delta t\\). In other words, the hidden state velocity allows us to parameterize _the locally-linear dynamics of the hidden state_. Thus when our model needs to simulate long spans of homogeneous change (eg, a billiard ball undergoing linear motion), it can do so with a single cell update.
+Our model also predicts a _hidden state velocity_, \\(\dot h\\), at each cell update; this enables us to evolve the hidden state dynamics continuously over time according to \\(h(t+\Delta t) = h + \dot h \Delta t\\). In other words, the hidden state velocity allows us to parameterize _the locally-linear dynamics of the hidden state_. Thus when our model needs to simulate long spans of homogeneous change (eg, a billiard ball undergoing linear motion), it can do so with a single cell update.
 
-In order to compare our model to existing timeseries models (RNNs and Neural ODEs), we used both of them to model a series of simple physics problems including the collisions of two billiards balls. We found that our jumpy model was able to learn these dynamics at least as well as the baseline while using a fraction of the forward simulation steps. This makes it a great candidate for model-based planning because it can predict the outcome of taking an action much more quickly than a baseline model. And since the hidden-state dynamics are piecewise-linear over time, we can solve for the hidden state at arbitrary points along a trajectory. This allows us to simulate the dynamics of billiards, for example, at a higher temporal resolution than the original training data:
+In order to compare our model to existing timeseries models (RNNs and Neural ODEs), we used both of them to model a series of simple physics problems including the collisions of two billiards balls. We found that our jumpy model was able to learn these dynamics at least as well as the baseline while using a fraction of the forward simulation steps. This makes it a great candidate for model-based planning because it can predict the outcome of taking an action much more quickly than a baseline model. And since the hidden-state dynamics are piecewise-linear over time, we can solve for the hidden state at arbitrary points along a trajectory. This allows us to simulate the dynamics _at a higher temporal resolution than the original training data_:
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
     <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
@@ -163,7 +163,7 @@ One of the things that makes these models so flexible is that they use a hidden 
 * [Convert text to speech](https://www.isca-speech.org/archive/interspeech_2014/i14_1964.html)
 * [Convert speech to text](http://www.jmlr.org/proceedings/papers/v48/amodei16.html)
 * [Sketch simple images](https://arxiv.org/abs/1704.03477)
-* [Learn the Enigma cipher](https://greydanus.github.io/2017/01/07/enigma-rnn/)
+* [Learn the Enigma cipher](https://greydanus.github.io/2017/01/07/enigma-rnn/) [one of my first projects :D]
 * [Predict patient ICU data such as aiastolic arterial blood pressure](https://arxiv.org/abs/1907.03907) [Neural ODEs]
 
 
@@ -200,15 +200,15 @@ function playPausePool() {
 
 **Discrete time steps.** Another issue with RNNs is that they perceive time as a series of discrete “time steps” that connect neighboring states. Since time is actually a continuous variable -- it has a definite value even in between RNN ticks -- we really should use models that treat it as such. In other words, when we ask our model what the world looked like at time \\( t=1.42\\) seconds, it should not have to locate the two ticks that are nearest in time and then interpolate between them, as is the case with RNNs. Rather, it should be able to give a well-defined answer.
 
-**Avoiding discrete, uniform timesteps with Neural ODEs.** The problems with RNNs that we have just discussed represent some of the core motivations for Neural ODEs. These models parameterize the time derivative of the hidden state and, when combined with an ODE integrator, can be used to model dynamical systems where time is a continuous variable. These models represent a young and rapidly expanding area of machine learning research. One unresolved challenge with these models is getting them to run efficiently with adaptive ODE integrators.
+**Avoiding discrete, uniform timesteps with Neural ODEs.** These problems represent some of the core motivations for Neural ODEs. Neural ODEs parameterize the time derivative of the hidden state and, when combined with an ODE integrator, can be used to model dynamical systems where time is a continuous variable. These models represent a young and rapidly expanding area of machine learning research. One unresolved challenge with these models is getting them to run efficiently with adaptive ODE integrators...
 
-These integrators must perform several function evaluations in order to estimate local curvature when performing an integration step. The curvature information determines how far the integrator can step forward in time, subject to a constant error budget. This is a particularly serious issue in the context of neural networks, which may have very irregular local curvatures at initialization. A single Neural ODE training step can take up to five times longer to evaluate than a comparable RNN architecture, making it challenging to scale these models[^fn7]. The curvature problem has, in fact, already motivated some work on regularizing the curvature of Neural ODEs so as to train them more efficiently[^fn6]. But even with regularization, these models are more difficult to train than RNNs. Furthermore, there are many tasks where regularizing curvature is counterproductive, for example, modeling elastic collisions between two bodies[^fn18].
+The problem is that adaptive ODE integrators must perform several function evaluations in order to estimate local curvature when performing an integration step. The curvature information determines how far the integrator can step forward in time, subject to a constant error budget. This is a particularly serious issue in the context of neural networks, which may have very irregular local curvatures at initialization. A single Neural ODE training step can take up to five times longer to evaluate than a comparable RNN architecture, making it challenging to scale these models.[^fn7] The curvature problem has, in fact, already motivated some work on regularizing the curvature of Neural ODEs so as to train them more efficiently.[^fn6] But even with regularization, these models are more difficult to train than RNNs. Furthermore, there are many tasks where regularizing curvature is counterproductive, for example, modeling elastic collisions between two bodies.[^fn18]
 
 
 
 ## Our Results
 
-Our work on piecewise-constant Neural ODEs was an attempt to fix these issues. Our model can jump over different durations of time and can tick more often when a lot is happening and less often otherwise. As I explained earlier, these models are different from regular RNNs in that they predict a hidden state velocity in addition to a hidden state. Taken together, these two quantities represent a linear dynamics function in the RNN’s latent space. A second modification we make is to have the model predict the duration of time \\(\Delta t\\) over which its dynamics functions are valid. In some cases, when change is happening at a constant rate, this value can be quite large.
+Our work on piecewise-constant Neural ODEs was an attempt to fix these issues. Our model can jump over different durations of time and can tick more often when a lot is happening and less often otherwise. As I explained earlier, these models are different from regular RNNs in that they predict a hidden state velocity in addition to a hidden state. Taken together, these two quantities represent a linear dynamics function in the RNN’s latent space. A second modification is to have the model predict the duration of time \\(\Delta t\\) over which its dynamics functions are valid. In some cases, when change is happening at a constant rate, this value can be quite large.
 
 **Learning linear motion.** To show this more clearly, we conducted a simple toy experiment. We created a toy dataset of perfectly linear motion and checked to see whether our model would learn to summarize the whole thing in one step. As the figure below shows, it learned to do exactly that. Meanwhile, the regular RNN had to summarize the same motion in a series of tiny steps.
 
@@ -216,9 +216,9 @@ Our work on piecewise-constant Neural ODEs was an attempt to fix these issues. O
   <img src="/assets/piecewise-nodes/lines.png" style="width:100%">
 </div>
 
-**Learning a change of basis.** It’s worth noting that the way a system changes in time is only linear with respect to a particular coordinate system. For example, an object undergoing constant circular motion has nonlinear dynamics when we use Cartesian coordinates, but linear dynamics when we use Polar coordinates. That’s why physicists use different coordinates to describe different physical systems: _all else being equal, the best coordinates are those that are maximally linear with respect to the dynamics._
+**Learning a change of basis.** Physicists will tell you that the way a system changes over time is only linear with respect to a particular coordinate system. For example, an object undergoing constant circular motion has nonlinear dynamics when we use Cartesian coordinates, but linear dynamics when we use polar coordinates. That’s why physicists use different coordinates to describe different physical systems: <u><i>all else being equal, the best coordinates are those that are maximally linear with respect to the dynamics.</i></u>
 
-Since our model forces dynamics to be linear in latent space, the encoder and decoder layers naturally learn to transform input data into a basis where the dynamics are linear. For example, when we train our model on a dataset of circular trajectories represented in Cartesian coordinates, it learns to summarize such trajectories in a single step. This implies that our model has effectively learned a Cartesian-to-Polar change of basis.
+Since our model forces dynamics to be linear in latent space, the encoder and decoder layers naturally learn to transform input data into a basis where the dynamics are linear. For example, when we train our model on a dataset of circular trajectories represented in Cartesian coordinates, it learns to summarize such trajectories in a single step. This implies that our model has learned a Cartesian-to-Polar change of basis.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px">
   <img src="/assets/piecewise-nodes/circles.png" style="width:100%">
@@ -230,17 +230,17 @@ Since our model forces dynamics to be linear in latent space, the encoder and de
   <img src="/assets/piecewise-nodes/pixel_billiards.png" style="width:100%">
 </div>
 
-In fact, we suspect that forcing dynamics to be linear in latent space actually biased our model to find linear dynamics. We hypothesize that the baseline model performed worse on this task because it had no such inductive bias.
+In fact, we suspect that forcing dynamics to be linear in latent space actually biased our model to find linear dynamics. We hypothesize that the baseline model performed worse on this task because it had no such inductive bias. This is generally a good inductive bias to build into a model because most real-world dynamics can be approximated with piecewise-linear functions
 
 
 
 ## Planning
 
-One of the reasons we originally set out to build this model was that we wanted to use it for planning. We were struck by the fact that many events one would want to plan over -- collisions, in the case of billiards -- are separated by variable durations of time. We suspected that a model that could jump through uneventful time intervals would be particularly effective at planning.
+One of the reasons we originally set out to build this model was that we wanted to use it for planning. We were struck by the fact that many events one would want to plan over -- collisions, in the case of billiards -- are separated by variable durations of time. We suspected that a model that could jump through uneventful time intervals would be particularly effective at planning because it could plan over the events that really mattered (eg, collisions).
 
-In order to test this hypothesis, we tested our model against baseline RNN and ODE-RNN models on a simple planning task in the billiards environment. The goal was to impart one ball, the “cue ball” (visualized in tan) with an initial velocity such that it would collide with the second ball and the second ball would ultimately enter a target region (visualized in black).
+In order to test this hypothesis, we compared our model to RNN and ODE-RNN baselines on a simple planning task in the billiards environment. The goal was to impart one ball, the “cue ball” (visualized in tan) with an initial velocity such that it would collide with the second ball and the second ball would ultimately enter a target region (visualized in black). You can see videos of such plans at the beginning of this post.
 
-We found that our model used half the wall time of the baseline and produced plans with a higher probability of success. These results are preliminary -- and part of ongoing work -- but they do confirm our hypothesis that our model is useful for model-based planning.
+We found that our model used at least half the wall time of the baselines and produced plans with a higher probability of success. These results are preliminary -- and part of ongoing work -- but they do support our initial hypothesis.
 
 Simulator | Baseline RNN | Baseline ODE-RNN | Our model
 :---: | :---: | :---:| :---:
@@ -252,24 +252,25 @@ Simulator | Baseline RNN | Baseline ODE-RNN | Our model
 
 <!-- Quite a few researchers have wrestled with the fact that RNNs tick through time at a uniform rate. So there are a number of recent projects that aim to make RNNs more temporally abstract. Our work is related, and hopefully complementary, to these approaches. -->
 
-## Neural ODEs and other related work
+## Related work aside from RNNs and Neural ODEs
 
-Quite a few researchers have wrestled with the same limitations of RNNs that we have. So there are a number of related works aimed at solving the same issues. Among the most relevant of these works is a family of models called Neural ODEs.
-<!-- As I mentioned earlier, Jumpy RNNs are closely related to a family of models called Neural ODEs. In this section, we will review Neural ODEs and briefly discuss their connection to this work. -->
+<!-- Quite a few researchers have wrestled with the same limitations of RNNs that we have. So there are a number of related works aimed at solving the same issues. Among the most relevant of these works is a family of models called Neural ODEs.
 
 **Neural ODEs.** The past few years have seen a surge of interest in these models. The basic idea of a Neural ODE is to parameterize the derivative of some variable with a neural network and then integrate it. For example, if you wanted to obtain the continuous-time dynamics of a hidden state \\(h_t\\), you would start by setting \\(\frac{\partial h_t}{\partial t}=f_{NN}(h_t)\\) where \\(f_{NN}\\) is a neural network. Then you could integrate that function over time to get dynamics:
 
 $$ h_{t_1} ~=~ h_{t_0} + \int_{t_0}^{t_1} f_{NN}(h_t) ~~ dt $$
 
-One of the remarkable things about this approach is that you can literally integrate your model with an ODE integrator, eg. ``scipy.integrate.solve_ivp``. Likewise, you can backpropagate error signals to your model with a second call to the integrator. 
-<!-- In the time since this idea was popularized by a NeurIPS paper by Chen et al., a healthy family of Neural ODE-like models has sprung up. -->
+One of the remarkable things about this approach is that you can literally integrate your model with an ODE integrator, eg. ``scipy.integrate.solve_ivp``. Likewise, you can backpropagate error signals to your model with a second call to the integrator.
 
 **Connection to our work.** Neural ODEs can be integrated _adaptively_; in other words, the size of the integration step can be made proportional to the local curvature. So in theory, if one were to regularize a Neural ODE to have very low curvature, one might be able to see the same jumpy behavior that we document in Jumpy RNNs. In practice, figuring out how to properly regularize the curvature of these models remains an open question.[^fn6] And current versions of Neural ODEs tend to be _more_ computationally demanding to evaluate than regular RNN models. In a recent paper about modeling RNN hidden state dynamics with ODEs[^fn7], for example, the authors mention that the ODE forward passes took 60% -- 120% longer than standard RNNs since they had to be continuously solved even when no observations were occurring.
 
 Jumpy RNNs resemble Neural ODEs in that they parameterize the derivative of a hidden state. But unlike Neural ODEs, Jumpy RNNs assume that the function being integrated is piecewise-linear and they do not require an ODE solver. The local linearity assumption makes our model extremely efficient to integrate over long spans of time -- much more efficient, for example, than a baseline RNN, and by extension, a Neural ODE.[^fn0]
 
-**Other related works.** There are other RNN-based models designed with temporal abstraction in mind. Koutnik et al. (2014)[^fn1] proposed dividing an RNN internal state into groups and only performing cell updates on the \\(i^{th}\\) group after \\(2^{i-1}\\) time steps. More recent works have aimed to make this hierarchical structure more adaptive, either by data-specific rules[^fn2] or by a learning  mechanism[^fn3]. But although these hierarchical recurrent models can model data at different timescales, they still must perform cell updates at every time step in a sequence and cannot jump over regions of homogeneous change. Recent work in the context of reinforcement learning develops a jumpy planning model which does not use an RNN cell or perform continuous interpolation of latent states[^fn4]. 
+**Other related works.**  -->
 
+Quite a few researchers have wrestled with the same limitations of RNNs and Neural ODEs that we have in this post. For example, there are a number of other RNN-based models designed with temporal abstraction in mind: Koutnik et al. (2014)[^fn1] proposed dividing an RNN internal state into groups and only performing cell updates on the \\(i^{th}\\) group after \\(2^{i-1}\\) time steps. More recent works have aimed to make this hierarchical structure more adaptive, either by data-specific rules[^fn2] or by a learning  mechanism[^fn3]. But although these hierarchical recurrent models can model data at different timescales, they still must perform cell updates at every time step in a sequence and cannot jump over regions of homogeneous change.
+
+For a discussion of these methods (and many others), check out [the full paper](../../../../../files/paper-not-up.txt), which we link to at the top of this post.
 <!-- Another relevant work from reinforcement learning is "Embed to Control"[^fn5]. This work is similar to ours in that it assumes that dynamics are linear in latent space. But unlike our work, the E2C model performs inference over discrete, uniform time steps and does not learn a jumpy behavior. -->
 
 
