@@ -1,4 +1,307 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2021-06-11T17:09:22-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A science blog by Sam Greydanus</subtitle><entry><title type="html">Scaling down Deep Learning</title><link href="http://greydanus.github.io/2020/12/01/scaling-down/" rel="alternate" type="text/html" title="Scaling down Deep Learning" /><published>2020-12-01T03:00:00-08:00</published><updated>2020-12-01T03:00:00-08:00</updated><id>http://greydanus.github.io/2020/12/01/scaling-down</id><content type="html" xml:base="http://greydanus.github.io/2020/12/01/scaling-down/">&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2021-06-12T14:56:00-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A science blog by Sam Greydanus</subtitle><entry><title type="html">Piecewise-constant Neural ODEs</title><link href="http://greydanus.github.io/2021/06/11/piecewise-nodes/" rel="alternate" type="text/html" title="Piecewise-constant Neural ODEs" /><published>2021-06-11T04:00:00-07:00</published><updated>2021-06-11T04:00:00-07:00</updated><id>http://greydanus.github.io/2021/06/11/piecewise-nodes</id><content type="html" xml:base="http://greydanus.github.io/2021/06/11/piecewise-nodes/">&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;video_sim&quot; style=&quot;width:100%;min-width:250px;&quot;&gt;
+    	&lt;source src=&quot;/assets/piecewise-nodes/video_simulator_2.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video_sim_button&quot; onclick=&quot;playPauseSim()&quot;&gt;Play&lt;/button&gt; 
+    &lt;div style=&quot;text-align: left;margin-left:10px;margin-right:10px;&quot;&gt;Using model-based planning to play billiards. The goal is to impart the tan cue ball with an initial velocity so as to move the blue ball to the black target.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;video_base&quot; style=&quot;width:100%;min-width:250px;&quot;&gt;
+    	&lt;source src=&quot;/assets/piecewise-nodes/video_base_2.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video_base_button&quot; onclick=&quot;playPauseBase()&quot;&gt;Play&lt;/button&gt; 
+    &lt;div style=&quot;text-align:left;margin-left:10px;margin-right:10px;&quot;&gt;A baseline ODE-RNN trained on billiards dynamics can also be used for model-based planning. It&apos;s inefficient because it has to &quot;tick&quot; at a constant rate.&lt;/div&gt;
+  &lt;/div&gt;
+   &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;&quot;&gt;
+    &lt;video id=&quot;video_ours&quot; style=&quot;width:100%;min-width:250px;&quot;&gt;
+    	&lt;source src=&quot;/assets/piecewise-nodes/video_ours_2.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video_ours_button&quot; onclick=&quot;playPauseOurs()&quot;&gt;Play&lt;/button&gt; 
+    &lt;div style=&quot;text-align:left;margin-left:10px;margin-right:10px;&quot;&gt;By contrast, our model, trained on the same task, can perform planning in many fewer steps by jumping over spans of time where motion is predictable.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt; 
+function playPauseSim() { 
+  var video = document.getElementById(&quot;video_sim&quot;); 
+  var button = document.getElementById(&quot;video_sim_button&quot;);
+  if (video.paused) {
+    video.play();
+	button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+	button.textContent = &quot;Play&quot;;}
+} 
+
+function playPauseBase() { 
+  var video = document.getElementById(&quot;video_base&quot;); 
+  var button = document.getElementById(&quot;video_base_button&quot;);
+  if (video.paused) {
+    video.play();
+	button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+	button.textContent = &quot;Play&quot;;}
+} 
+
+function playPauseOurs() { 
+  var video = document.getElementById(&quot;video_ours&quot;); 
+  var button = document.getElementById(&quot;video_ours_button&quot;);
+  if (video.paused) {
+    video.play();
+	button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+	button.textContent = &quot;Play&quot;;}
+} 
+&lt;/script&gt;
+
+&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
+	&lt;a href=&quot;../../../../../files/paper-not-up.txt&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Read the paper&lt;/a&gt;
+	&lt;a href=&quot;https://github.com/greydanus/piecewise_node#run-in-your-browser&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Run&lt;/span&gt; in browser&lt;/a&gt;
+	&lt;a href=&quot;https://github.com/greydanus/piecewise_node&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Get the code&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;change-it-is-said-happens-slowly-and-then-all-at-once&quot;&gt;Change, it is said, happens slowly and then all at once…&lt;/h2&gt;
+
+&lt;p&gt;Billiards balls move across a table before colliding and changing trajectories; water molecules cool slowly and then undergo a rapid phase transition into ice; and economic systems enjoy periods of stability interspersed with abrupt market downturns. That is to say, many time series exhibit periods of relatively homogeneous change divided by important events. Despite this, recurrent neural networks (RNNs), popular for time series modeling, treat time in uniform intervals – potentially wasting prediction resources on long intervals of relatively constant change.&lt;/p&gt;
+
+&lt;p&gt;A recent family of models called &lt;a href=&quot;https://arxiv.org/abs/1806.07366&quot;&gt;Neural ODEs&lt;/a&gt; has attracted interest as a means of mitigating these problems. They parameterize the &lt;em&gt;time derivative&lt;/em&gt; of a hidden state with a neural network and then integrate it over arbitrary amounts of time. This allows them to treat time as a continuous variable. Integration can even be performed using adaptive integrators like &lt;a href=&quot;https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods&quot;&gt;Runge-Kutta&lt;/a&gt;, thus allocating more compute to difficult state transitions.&lt;/p&gt;
+
+&lt;p&gt;Adaptive integration is especially attractive in scenarios where “key events” are separated by variable amounts of time. In the game of billiards, these key events may consist of collisions between balls, walls, and pockets. Between these events, the balls simply undergo linear motion. That motion is not difficult to predict, but it is non-trivial for a model to learn to skip over it so as to focus on the more chaotic dynamics of collisions; this requires a model to employ some notion of &lt;a href=&quot;https://www.sciencedirect.com/science/article/pii/S0004370299000521&quot;&gt;&lt;em&gt;temporal abstraction&lt;/em&gt;&lt;/a&gt;. This problem is not unique to billiards. The same challenge occurs in robotics, where a robot arm occasionally interacts with external objects at varying intervals. It may also occur in financial markets, scientific timeseries, and other environments where change happens at a variable rate.&lt;/p&gt;
+
+&lt;h2 id=&quot;towards-temporally-abstract-hidden-state-dynamics&quot;&gt;Towards temporally-abstract hidden state dynamics&lt;/h2&gt;
+
+&lt;p&gt;In this post, I am going to introduce a special case of Neural ODEs that my research group has been experimenting with recently. The core idea is to restrict the hidden state of a Neural ODE so that it has locally-linear dynamics. The benefit of such a model is that it can be integrated &lt;em&gt;exactly&lt;/em&gt; using Euler integration, and it can also be integrated &lt;em&gt;adaptively&lt;/em&gt; because we allow these locally-linear dynamics to extend over variable-sized durations of time. Like RNNS and Neural ODEs, our model uses a hidden state \(h\) to summarize knowledge about the world at a given point in time. Also, it performs updates on this hidden state using cell updates (eg. with vanilla, LSTM, or GRU cells). But our model differs from existing models in that the amount of simulation time that occurs between cell updates is not fixed. Rather, it changes according to the variable \(\Delta t\), which is itself predicted.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px&quot;&gt;
+  &lt;img src=&quot;/assets/piecewise-nodes/hero.png&quot; style=&quot;width:100%&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Our model also predicts a &lt;em&gt;hidden state velocity&lt;/em&gt;, \(\dot h\), at each cell update; this enables us to evolve the hidden state dynamics continuously over time according to \(h(t+\Delta t) = h + \dot h \Delta t\). In other words, the hidden state velocity allows us to parameterize &lt;em&gt;the locally-linear dynamics of the hidden state&lt;/em&gt;. Thus when our model needs to simulate long spans of homogeneous change (eg, a billiard ball undergoing linear motion), it can do so with a single cell update.&lt;/p&gt;
+
+&lt;p&gt;In order to compare our model to existing timeseries models (RNNs and Neural ODEs), we used both of them to model a series of simple physics problems including the collisions of two billiards balls. We found that our jumpy model was able to learn these dynamics at least as well as the baseline while using a fraction of the forward simulation steps. This makes it a great candidate for model-based planning because it can predict the outcome of taking an action much more quickly than a baseline model. And since the hidden-state dynamics are piecewise-linear over time, we can solve for the hidden state at arbitrary points along a trajectory. This allows us to simulate the dynamics &lt;em&gt;at a higher temporal resolution than the original training data&lt;/em&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+    &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;video_sim2&quot; style=&quot;width:100%;min-width:250px;&quot;&gt;
+      &lt;source src=&quot;/assets/piecewise-nodes/video_sim_2.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video_sim2_button&quot; onclick=&quot;playPauseSim2()&quot;&gt;Play&lt;/button&gt; 
+    &lt;div style=&quot;text-align: left;margin-left:10px;margin-right:10px;&quot;&gt;This video will give you a sense of the underlying temporal resolution of the billiards dataset on which we trained the model.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;&quot;&gt;
+    &lt;video id=&quot;video_interp&quot; style=&quot;width:100%;min-width:250px;&quot;&gt;
+    	&lt;source src=&quot;/assets/piecewise-nodes/video_interp_2.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video_interp_button&quot; onclick=&quot;playPauseInterp()&quot;&gt;Play&lt;/button&gt; 
+    &lt;div style=&quot;text-align:left;margin-left:10px;&quot;&gt;This video shows how we can use our model to generate simulations at a higher temporal resolution than that of the original simulator. 
+&lt;!--     We can do this because the latent dynamics of the model are continuous and piecewise-linear in time. --&gt;
+  &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt; 
+function playPauseSim2() { 
+  var video = document.getElementById(&quot;video_sim2&quot;); 
+  var button = document.getElementById(&quot;video_sim2_button&quot;);
+  if (video.paused) {
+    video.play();
+	button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+	button.textContent = &quot;Play&quot;;}
+} 
+
+function playPauseJumpy2() { 
+  var video = document.getElementById(&quot;video_jumpy2&quot;); 
+  var button = document.getElementById(&quot;video_jumpy2_button&quot;);
+  if (video.paused) {
+    video.play();
+	button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+	button.textContent = &quot;Play&quot;;}
+} 
+
+function playPauseInterp() { 
+  var video = document.getElementById(&quot;video_interp&quot;); 
+  var button = document.getElementById(&quot;video_interp_button&quot;);
+  if (video.paused) {
+    video.play();
+	button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+	button.textContent = &quot;Play&quot;;}
+} 
+&lt;/script&gt;
+
+&lt;p&gt;I am going to give more specific examples of how our model improves over regular timeseries models later. But first we need to talk about what these timeseries models are good at and why they are worth improving in the first place.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-value-of-timeseries-models&quot;&gt;The value of timeseries models&lt;/h2&gt;
+
+&lt;p&gt;Neural network-based timeseries models like RNNs and Neural ODEs are interesting because they can learn complex, long-range structure in time series data simply by predicting one point at a time. For example, if you train them on observations of a robot arm, you can use them to generate realistic paths that the arm might take.&lt;/p&gt;
+
+&lt;p&gt;One of the things that makes these models so flexible is that they use a hidden vector \(h\) to store memories of past observations. And they can &lt;em&gt;learn&lt;/em&gt; to read, write, and erase information from \(h\) in order to make accurate predictions about the future. RNNs do this in discrete steps whereas Neural ODEs permit hidden state dynamics to be continuous in time. Both models are Turing-complete and, unlike other models that are Turing-complete (eg. HMMs or FSMs), they can learn and operate on noisy, high-dimensional data. Here is an incomplete list of things people have trained these models (mostly RNNs) to do:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-&quot;&gt;Translate text from one language to another&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://openai.com/blog/solving-rubiks-cube/&quot;&gt;Control a robot hand in order to solve a Rubik’s Cube&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://rdcu.be/bVI7G&quot;&gt;Defeat professional human gamers in StarCraft&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://openaccess.thecvf.com/content_cvpr_2016/html/Johnson_DenseCap_Fully_Convolutional_CVPR_2016_paper.html&quot;&gt;Caption images&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/1308.0850&quot;&gt;Generate realistic handwriting&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.isca-speech.org/archive/interspeech_2014/i14_1964.html&quot;&gt;Convert text to speech&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.jmlr.org/proceedings/papers/v48/amodei16.html&quot;&gt;Convert speech to text&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/1704.03477&quot;&gt;Sketch simple images&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://greydanus.github.io/2017/01/07/enigma-rnn/&quot;&gt;Learn the Enigma cipher&lt;/a&gt; [one of my first projects :D]&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/1907.03907&quot;&gt;Predict patient ICU data such as aiastolic arterial blood pressure&lt;/a&gt; [Neural ODEs]&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;limitations-of-these-sequence-models&quot;&gt;Limitations of these sequence models&lt;/h2&gt;
+
+&lt;p&gt;Let’s begin with the limitations of RNNs, use them to motivate Neural ODEs, and then discuss the contexts in which even Neural ODEs have shortcomings. The first and most serious limitation of RNNs is that they can only predict the future by way of discrete, uniform “ticks”.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Uniform ticks.&lt;/strong&gt; At each tick they make one observation of the world, perform one read-erase-write operation on their memory, and output one state vector. This seems too rigid. We wouldn’t divide our perception of the world into uniform segments of, say, ten minutes. This would be silly because the important events of our daily routines are not spaced equally apart.&lt;/p&gt;
+
+&lt;p&gt;Consider the game of billiards. When you prepare to strike the cue ball, you imagine how it will collide with other balls and eventually send one of them into a pocket. And when you do this, you do not think about the constant motion of the cue ball as it rolls across the table. Instead, you think about the near-instantaneous collisions between the cue ball, walls, and pockets. Since these collisions are separated by variable amounts of time, making this plan requires that you jump from one collision event to another without much regard for the intervening duration. This is something that RNNs cannot do.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+    &lt;div style=&quot;width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;video_pool&quot; style=&quot;width:100%;min-width:250px;&quot;&gt;
+      &lt;source src=&quot;/assets/piecewise-nodes/pool_shot.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video_pool_button&quot; onclick=&quot;playPausePool()&quot;&gt;Play&lt;/button&gt; 
+    &lt;div style=&quot;text-align: left;&quot;&gt;A professional pool player making a remarkable shot. We&apos;ll never know exactly what was going through his head when he did this, but we can say at the very least he was planning over a sequence of collisions. An RNN, by contrast, would focus most of its compute on simulating the linear motion of the ball in between collisions.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt; 
+function playPausePool() { 
+  var video = document.getElementById(&quot;video_pool&quot;); 
+  var button = document.getElementById(&quot;video_pool_button&quot;);
+  if (video.paused) {
+    video.play();
+  button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+&lt;/script&gt;
+
+&lt;p&gt;&lt;strong&gt;Discrete time steps.&lt;/strong&gt; Another issue with RNNs is that they perceive time as a series of discrete “time steps” that connect neighboring states. Since time is actually a continuous variable – it has a definite value even in between RNN ticks – we really should use models that treat it as such. In other words, when we ask our model what the world looked like at time \( t=1.42\) seconds, it should not have to locate the two ticks that are nearest in time and then interpolate between them, as is the case with RNNs. Rather, it should be able to give a well-defined answer.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Avoiding discrete, uniform timesteps with Neural ODEs.&lt;/strong&gt; These problems represent some of the core motivations for Neural ODEs. Neural ODEs parameterize the time derivative of the hidden state and, when combined with an ODE integrator, can be used to model dynamical systems where time is a continuous variable. These models represent a young and rapidly expanding area of machine learning research. One unresolved challenge with these models is getting them to run efficiently with adaptive ODE integrators…&lt;/p&gt;
+
+&lt;p&gt;The problem is that adaptive ODE integrators must perform several function evaluations in order to estimate local curvature when performing an integration step. The curvature information determines how far the integrator can step forward in time, subject to a constant error budget. This is a particularly serious issue in the context of neural networks, which may have very irregular local curvatures at initialization. A single Neural ODE training step can take up to five times longer to evaluate than a comparable RNN architecture, making it challenging to scale these models.&lt;sup id=&quot;fnref:fn7&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn7&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; The curvature problem has, in fact, already motivated some work on regularizing the curvature of Neural ODEs so as to train them more efficiently.&lt;sup id=&quot;fnref:fn6&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn6&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; But even with regularization, these models are more difficult to train than RNNs. Furthermore, there are many tasks where regularizing curvature is counterproductive, for example, modeling elastic collisions between two bodies.&lt;sup id=&quot;fnref:fn18&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn18&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;our-results&quot;&gt;Our Results&lt;/h2&gt;
+
+&lt;p&gt;Our work on piecewise-constant Neural ODEs was an attempt to fix these issues. Our model can jump over different durations of time and can tick more often when a lot is happening and less often otherwise. As I explained earlier, these models are different from regular RNNs in that they predict a hidden state velocity in addition to a hidden state. Taken together, these two quantities represent a linear dynamics function in the RNN’s latent space. A second modification is to have the model predict the duration of time \(\Delta t\) over which its dynamics functions are valid. In some cases, when change is happening at a constant rate, this value can be quite large.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Learning linear motion.&lt;/strong&gt; To show this more clearly, we conducted a simple toy experiment. We created a toy dataset of perfectly linear motion and checked to see whether our model would learn to summarize the whole thing in one step. As the figure below shows, it learned to do exactly that. Meanwhile, the regular RNN had to summarize the same motion in a series of tiny steps.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px&quot;&gt;
+  &lt;img src=&quot;/assets/piecewise-nodes/lines.png&quot; style=&quot;width:100%&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Learning a change of basis.&lt;/strong&gt; Physicists will tell you that the way a system changes over time is only linear with respect to a particular coordinate system. For example, an object undergoing constant circular motion has nonlinear dynamics when we use Cartesian coordinates, but linear dynamics when we use polar coordinates. That’s why physicists use different coordinates to describe different physical systems: &lt;u&gt;&lt;i&gt;all else being equal, the best coordinates are those that are maximally linear with respect to the dynamics.&lt;/i&gt;&lt;/u&gt;&lt;/p&gt;
+
+&lt;p&gt;Since our model forces dynamics to be linear in latent space, the encoder and decoder layers naturally learn to transform input data into a basis where the dynamics are linear. For example, when we train our model on a dataset of circular trajectories represented in Cartesian coordinates, it learns to summarize such trajectories in a single step. This implies that our model has learned a Cartesian-to-Polar change of basis.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px&quot;&gt;
+  &lt;img src=&quot;/assets/piecewise-nodes/circles.png&quot; style=&quot;width:100%&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Learning from pixel videos.&lt;/strong&gt; Our model can learn more complicated change-of-basis functions as well. Later in the paper, we trained our model on pixel observations of two billiards balls. The pixel “coordinate system” is extremely nonlinear with respect to the linear motion of the two balls. And yet our model was able to predict the dynamics of the system far more effectively than the baseline model, while using three times fewer “ticks”. The fact that our model could make jumpy predictions on this dataset implies that it found a basis where the billiards dynamics were linear for significant durations of time – something that is strictly impossible in a pixel basis.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px&quot;&gt;
+  &lt;img src=&quot;/assets/piecewise-nodes/pixel_billiards.png&quot; style=&quot;width:100%&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In fact, we suspect that forcing dynamics to be linear in latent space actually biased our model to find linear dynamics. We hypothesize that the baseline model performed worse on this task because it had no such inductive bias. This is generally a good inductive bias to build into a model because most real-world dynamics can be approximated with piecewise-linear functions&lt;/p&gt;
+
+&lt;h2 id=&quot;planning&quot;&gt;Planning&lt;/h2&gt;
+
+&lt;p&gt;One of the reasons we originally set out to build this model was that we wanted to use it for planning. We were struck by the fact that many events one would want to plan over – collisions, in the case of billiards – are separated by variable durations of time. We suspected that a model that could jump through uneventful time intervals would be particularly effective at planning because it could plan over the events that really mattered (eg, collisions).&lt;/p&gt;
+
+&lt;p&gt;In order to test this hypothesis, we compared our model to RNN and ODE-RNN baselines on a simple planning task in the billiards environment. The goal was to impart one ball, the “cue ball” (visualized in tan) with an initial velocity such that it would collide with the second ball and the second ball would ultimately enter a target region (visualized in black). You can see videos of such plans at the beginning of this post.&lt;/p&gt;
+
+&lt;p&gt;We found that our model used at least half the wall time of the baselines and produced plans with a higher probability of success. These results are preliminary – and part of ongoing work – but they do support our initial hypothesis.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Simulator&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Baseline RNN&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Baseline ODE-RNN&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Our model&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;85.2%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;55.6%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;17.0%&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;61.6%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px&quot;&gt;
+  &lt;img src=&quot;/assets/piecewise-nodes/planning2d.png&quot; style=&quot;width:45%&quot; /&gt;
+&lt;/div&gt;
+
+&lt;!-- Quite a few researchers have wrestled with the fact that RNNs tick through time at a uniform rate. So there are a number of recent projects that aim to make RNNs more temporally abstract. Our work is related, and hopefully complementary, to these approaches. --&gt;
+
+&lt;h2 id=&quot;related-work-aside-from-rnns-and-neural-odes&quot;&gt;Related work aside from RNNs and Neural ODEs&lt;/h2&gt;
+
+&lt;!-- Quite a few researchers have wrestled with the same limitations of RNNs that we have. So there are a number of related works aimed at solving the same issues. Among the most relevant of these works is a family of models called Neural ODEs.
+
+**Neural ODEs.** The past few years have seen a surge of interest in these models. The basic idea of a Neural ODE is to parameterize the derivative of some variable with a neural network and then integrate it. For example, if you wanted to obtain the continuous-time dynamics of a hidden state \\(h_t\\), you would start by setting \\(\frac{\partial h_t}{\partial t}=f_{NN}(h_t)\\) where \\(f_{NN}\\) is a neural network. Then you could integrate that function over time to get dynamics:
+
+$$ h_{t_1} ~=~ h_{t_0} + \int_{t_0}^{t_1} f_{NN}(h_t) ~~ dt $$
+
+One of the remarkable things about this approach is that you can literally integrate your model with an ODE integrator, eg. ``scipy.integrate.solve_ivp``. Likewise, you can backpropagate error signals to your model with a second call to the integrator.
+
+**Connection to our work.** Neural ODEs can be integrated _adaptively_; in other words, the size of the integration step can be made proportional to the local curvature. So in theory, if one were to regularize a Neural ODE to have very low curvature, one might be able to see the same jumpy behavior that we document in Jumpy RNNs. In practice, figuring out how to properly regularize the curvature of these models remains an open question.[^fn6] And current versions of Neural ODEs tend to be _more_ computationally demanding to evaluate than regular RNN models. In a recent paper about modeling RNN hidden state dynamics with ODEs[^fn7], for example, the authors mention that the ODE forward passes took 60% -- 120% longer than standard RNNs since they had to be continuously solved even when no observations were occurring.
+
+Jumpy RNNs resemble Neural ODEs in that they parameterize the derivative of a hidden state. But unlike Neural ODEs, Jumpy RNNs assume that the function being integrated is piecewise-linear and they do not require an ODE solver. The local linearity assumption makes our model extremely efficient to integrate over long spans of time -- much more efficient, for example, than a baseline RNN, and by extension, a Neural ODE.[^fn0]
+
+**Other related works.**  --&gt;
+
+&lt;p&gt;Quite a few researchers have wrestled with the same limitations of RNNs and Neural ODEs that we have in this post. For example, there are a number of other RNN-based models designed with temporal abstraction in mind: Koutnik et al. (2014)&lt;sup id=&quot;fnref:fn1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn1&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; proposed dividing an RNN internal state into groups and only performing cell updates on the \(i^{th}\) group after \(2^{i-1}\) time steps. More recent works have aimed to make this hierarchical structure more adaptive, either by data-specific rules&lt;sup id=&quot;fnref:fn2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn2&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt; or by a learning  mechanism&lt;sup id=&quot;fnref:fn3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn3&quot; class=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt;. But although these hierarchical recurrent models can model data at different timescales, they still must perform cell updates at every time step in a sequence and cannot jump over regions of homogeneous change.&lt;/p&gt;
+
+&lt;p&gt;For a discussion of these methods (and many others), check out &lt;a href=&quot;../../../../../files/paper-not-up.txt&quot;&gt;the full paper&lt;/a&gt;, which we link to at the top of this post.
+&lt;!-- Another relevant work from reinforcement learning is &quot;Embed to Control&quot;[^fn5]. This work is similar to ours in that it assumes that dynamics are linear in latent space. But unlike our work, the E2C model performs inference over discrete, uniform time steps and does not learn a jumpy behavior. --&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;closing-thoughts&quot;&gt;Closing thoughts&lt;/h2&gt;
+
+&lt;p&gt;Neural networks are already a widely used tool, but they still have fundamental limitations. In this post, we reckoned with the fact that they struggle at adaptive timestepping and the computational expense of integration. In order to make RNNs and Neural ODEs more useful in more contexts, it is essential to find solutions to such restrictions. With this in mind, we proposed a PC-ODE model which can skip over long durations of comparatively homogeneous change and focus on pivotal events as the need arises. We hope that this line of work will lead to models that can represent time more efficiently and flexibly.&lt;/p&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:fn7&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Yulia Rubanova, Ricky TQ Chen, and David Duvenaud. &lt;a href=&quot;https://papers.nips.cc/paper/8773-latent-ordinary-differential-equations-for-irregularly-sampled-time-series&quot;&gt;Latent odes for irregularly-sampled time series&lt;/a&gt;. &lt;em&gt;Advances in Neural Information Processing Systems&lt;/em&gt;, 2019. &lt;a href=&quot;#fnref:fn7&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn6&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Chris Finlay, Jörn-Henrik Jacobsen, Levon Nurbekyan, and Adam M Oberman. &lt;a href=&quot;https://arxiv.org/abs/2002.02798&quot;&gt;How to train your neural ode: the world of jacobian and kinetic regularization&lt;/a&gt;. &lt;em&gt;International Conference on Machine Learning&lt;/em&gt;, 2020. &lt;a href=&quot;#fnref:fn6&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn18&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Jia, Junteng, and Austin R. Benson. &lt;a href=&quot;https://papers.nips.cc/paper/2019/hash/59b1deff341edb0b76ace57820cef237-Abstract.html&quot;&gt;Neural jump stochastic differential equations&lt;/a&gt;. Neural Information Processing Systems, 2019 &lt;a href=&quot;#fnref:fn18&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Jan Koutnik, Klaus Greff, Faustino Gomez, and Juergen Schmidhuber. &lt;a href=&quot;https://arxiv.org/abs/1402.3511&quot;&gt;A Clockwork RNN&lt;/a&gt;. &lt;em&gt;International Conference on Machine Learning&lt;/em&gt;, pp. 1863–1871, 2014. &lt;a href=&quot;#fnref:fn1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Wang Ling, Isabel Trancoso, Chris Dyer, and Alan W Black. &lt;a href=&quot;https://arxiv.org/abs/1511.04586&quot;&gt;Character-based neural machine translation&lt;/a&gt;. &lt;em&gt;Proceedings of the 54th Annual Meeting of the Association for Computational Linguistics&lt;/em&gt;, 2015. &lt;a href=&quot;#fnref:fn2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Junyoung Chung, Sungjin Ahn, and Yoshua Bengio. &lt;a href=&quot;https://arxiv.org/abs/1609.01704&quot;&gt;Hierarchical multiscale recurrent neural networks&lt;/a&gt;. &lt;em&gt;5th International Conference on Learning Representations&lt;/em&gt;, ICLR 2017. &lt;a href=&quot;#fnref:fn3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name>Sam Greydanus, Stefan Lee, and Alan Fern</name></author><summary type="html">We propose a timeseries model that can be adaptively integrated. It jumps over simulation steps that are predictable and spends more time on those that are not.</summary></entry><entry><title type="html">Scaling down Deep Learning</title><link href="http://greydanus.github.io/2020/12/01/scaling-down/" rel="alternate" type="text/html" title="Scaling down Deep Learning" /><published>2020-12-01T03:00:00-08:00</published><updated>2020-12-01T03:00:00-08:00</updated><id>http://greydanus.github.io/2020/12/01/scaling-down</id><content type="html" xml:base="http://greydanus.github.io/2020/12/01/scaling-down/">&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px&quot;&gt;
     &lt;div style=&quot;min-width:250px; vertical-align: top; text-align:center;&quot;&gt;
     &lt;video id=&quot;demoDisplay&quot; style=&quot;width:100%;min-width:250px;&quot;&gt;
     	&lt;source src=&quot;/assets/scaling-down/construction.mp4&quot; type=&quot;video/mp4&quot; /&gt;
@@ -1817,144 +2120,4 @@ if(parseInt(getBrowserSize().width) &gt; 800){
       &lt;p&gt;To see why energy is relative, imagine a cat that is at an elevation of 0 m in one reference frame and 1 m in another. Its potential energy (and total energy) will differ by a constant factor depending on frame of reference. &lt;a href=&quot;#fnref:fn9&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>With Misko Dzamba and Jason Yosinski</name></author><summary type="html">Instead of crafting Hamiltonians by hand, we propose parameterizing them with neural networks and then learning them directly from data.</summary></entry><entry><title type="html">A Review of NeurIPS</title><link href="http://greydanus.github.io/2017/12/23/neurips17/" rel="alternate" type="text/html" title="A Review of NeurIPS" /><published>2017-12-23T03:00:00-08:00</published><updated>2017-12-23T03:00:00-08:00</updated><id>http://greydanus.github.io/2017/12/23/neurips17</id><content type="html" xml:base="http://greydanus.github.io/2017/12/23/neurips17/">&lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/neurips17/nips-registrations.png&quot; width=&quot;70%&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;AI hype in one picture.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Billion dollar investments. Top-tier scientists. Flo Rida. NeurIPS 2017 was a confusing, absurd, and inspirational roller coaster ride. Let’s try to understand what happened.&lt;/p&gt;
-
-&lt;h2 id=&quot;understanding-the-hype&quot;&gt;Understanding the hype&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Hype.&lt;/strong&gt; Everyone agrees that the hype for NeurIPS 2017 was incredible. Just look at the plot above: the entire conference sold out during early registration. The conference was packed. Big companies were desperately recruiting dewy-eyed and geeky-dispositioned PhD students. There were countless afterparties hosted at luxury venues by Intel, DeepMind, OpenAI, Uber, Facebook, Borealis, CapitalOne, Apple, etc. Intel even got Flo Rida to help them unveil a new chip. &lt;em&gt;You mean the rapper Flo Rida&lt;/em&gt;?! Yes. Him. Although I can’t confirm because the bouncer wouldn’t let me in :/&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/neurips17/gradient-flo.png&quot; width=&quot;55%&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;He likes Apple Bottom jeans, boots with the fur...and apparently GPUs.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Money.&lt;/strong&gt; All this sudden hype stems from the fact that large companies are placing big bets on AI. Many of them (Apple, Google, Microsoft, Intel, Uber, Facebook, Amazon) have their own research labs. Scientists at these labs publish papers, attend conferences, and sometimes advise younger researchers, just as they would in academia. The main difference is that their research is generally focused on projects that these companies find useful. I will not want to spend too much time talking about money and AI because &lt;a href=&quot;https://www.nytimes.com/2017/10/22/technology/artificial-intelligence-experts-salaries.html&quot;&gt;this NYT article does a better job&lt;/a&gt;. That said, I’ll repost a few of its most interesting statistics:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Fewer than 10,000 people in the world have the skills necessary to tackle serious artificial intelligence research, according to Element AI, an independent lab in Montreal.&lt;/li&gt;
-  &lt;li&gt;Last year, Google DeepMind’s “staff costs” were $138 million for 400 employees. That’s $345,000 per employee. These salaries are not uncommon in industrial research labs, even for students fresh out of their PhDs.&lt;/li&gt;
-  &lt;li&gt;Top academic talent has moved into the private sector. Examples: Uber hired 40 people from Carnegie Mellon’s groundbreaking AI program in 2015 to work on its self-driving-car project. Four of the best-known academic AI researchers have left or taken leave from their professorships at Stanford.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/neurips17/m-and-a.jpg&quot; width=&quot;50%&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;Taken from &lt;a href=&quot;https://www.economist.com/news/business/21732125-tech-giants-are-investing-billions-transformative-technology-google-leads-race&quot;&gt;the Economist&lt;/a&gt;.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Impact on research.&lt;/strong&gt; In years past, &lt;a href=&quot;https://scholar.google.com/citations?user=09kJn28AAAAJ&quot;&gt;one of my advisors&lt;/a&gt; explained, NeurIPS was a mellow conference. It was generally aimed at professors and their graduate students. Doing a quick scan over the NeurIPS 2017 accepted papers, I found that the organization with the most affiliated authors was Google/DeepMind/Brain (210), followed by Carnegie Mellon (108), MIT (93), Stanford (81), Berkeley (81), and Microsoft (70)&lt;sup id=&quot;fnref:fn1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. So the majority of NeurIPS attendees are still academic, but industry participation (read: Google) is growing.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/neurips17/avg_attendee.jpg&quot; width=&quot;50%&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;Taken from &lt;a href=&quot;https://twitter.com/MLpuppy&quot;&gt;@MLpuppy&lt;/a&gt;.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;But which researchers are setting trends in the field, and which ones are making relatively small contributions? A quick review of the conference schedule shows that five of the seven invited speakers and 10 of the 19 symposium organizers had industry affiliations. This means that industry-funded researchers “set the curve” at NeurIPS.&lt;/p&gt;
-
-&lt;p&gt;Why can’t more research be done in academia, where the interests of the community are better served, rather than the interests of a few CEOs? &lt;em&gt;“But they had free fidget spinners…“&lt;/em&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;big-ideas-and-trends&quot;&gt;Big ideas and trends&lt;/h2&gt;
-
-&lt;p&gt;After day one, I did my best to look beyond the hype and find examples of people doing good science. My initial pessimism faded and I discovered some interesting themes.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Are we alchemists?&lt;/strong&gt; Researcher Ali Rahimi received a Test of Time award for &lt;a href=&quot;https://scholar.google.com/scholar?cluster=2545838671944402764&amp;amp;hl=en&amp;amp;as_sdt=0,38&amp;amp;as_vis=1&quot;&gt;his contributions to the field&lt;/a&gt; back in 2007-08. He used his &lt;a href=&quot;https://www.youtube.com/watch?v=ORHFOnaEzPc&quot;&gt;acceptance speech&lt;/a&gt; as an opportunity to make a strong, controversial claim about the state of machine learning: “it is the new alchemy.” Ali’s point is that we spend too much of our time trying to improve the performance of AI on various datasets and too little time trying to understand why things go right or wrong.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“We’re building systems that govern healthcare and mediate our civil dialogue. We influence elections. I would like to live in a society whose systems are built on top of verifiable, rigorous, thorough knowledge, and not on alchemy.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/neurips17/email_ba.png&quot; width=&quot;55%&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;An example of &quot;alchemy&quot; in AI, taken from Ali&apos;s NeurIPS keynote.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Several hours later, &lt;a href=&quot;https://en.wikipedia.org/wiki/Yann_LeCun&quot;&gt;Yann LeCun&lt;/a&gt; posted &lt;a href=&quot;https://www.reddit.com/r/MachineLearning/comments/7i1uer/n_yann_lecun_response_to_ali_rahimis_nips_lecture/&quot;&gt;a strong criticism&lt;/a&gt; of Ali’s speech. This debate soon diffused into countless lunchtime and hallway conversations. Whether people sided with Yann or Ali on this, they seemed grateful for a chance to discuss the issue. The machine learning community is results-driven and there have been few forums for these debates until now.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Metalearning.&lt;/strong&gt; Pieter Abbeel and friends are pushing metalearning. Since he is one of the world’s most respected researchers, this was a huge theme at NeurIPS. The idea of metalearning is to teach a computer &lt;em&gt;how to learn&lt;/em&gt;. Instead of teaching a computer how to solve a maze, you would teach a computer to &lt;em&gt;teach itself&lt;/em&gt; how to solve a maze. Yes, this is more complicated. The idea is that by “learning to learn,” you get AIs that generalize to new situations effectively.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:90%&quot;&gt;
-	&lt;div style=&quot;overflow:hidden; padding-top: 52%; position: relative;&quot;&gt;
-		&lt;iframe style=&quot;border: 0;height: 100%;left: 0;position: absolute;top: 0;width: 100%;&quot; src=&quot;https://www.youtube.com/embed/cLpSBtlbdyY&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-	&lt;/div&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center; display: block; margin-left: auto; margin-right: auto; width:60%&quot;&gt;Metalearning for efficient maze navigation.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;I think everyone agrees that metalearning is desirable. The real question is how to make it work. Even Pieter was unclear on this point, although he presented a wealth of recent ideas. I especially liked his paper presenting an agent that could explore a maze until it found a target. When dropped back into the maze, the agent used its past experience to navigate quickly to the target.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Deep reinforcement learning (Deep RL).&lt;/strong&gt; The young and ambitious field of deep reinforcement learning continues to deliver great results. Earlier this year, Google DeepMind published a fourth Nature paper. The team described how to teach an algorithm, which they call AlphaGo Zero, to &lt;a href=&quot;https://deepmind.com/blog/alphago-zero-learning-scratch/&quot;&gt;play Go at superhuman level&lt;/a&gt;, starting from zero human knowledge. During NeurIPS they released an updated version which plays Go, Shogui, and Chess at a dominant level.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/neurips17/alphago-zero.gif&quot; width=&quot;65%&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center&quot;&gt;AlphaGo Zero rediscovering 3000 years of Go strategy.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The problem with deep RL is that it still learns far too slowly. For example, it can outperform humans at most Atari games…but whereas a human needs a few minutes to learn the game, the computer needs to play for hundreds of hours (see &lt;a href=&quot;https://www.dropbox.com/s/fdw7q8mx3x4wr0c/2017_12_xx_NIPS-keynote-final.pdf?dl=0&quot;&gt;slide 15&lt;/a&gt;). Talks, posters, and presentations tended to focus on how to make deep RL learn tasks of greater complexity, more quickly. Popular ideas included hierarchical RL, metalearning, and various unsupervised auxilliary tasks.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Interpretability.&lt;/strong&gt; There was a big symposium (3000+ people) and two workshops about this. The interpretability issue relates to the fact that we often want to get machine learning systems to explain themselves. Consider applications where human well-being is involved: self-driving cars, medical applications, and financial decisions. In these situations, we want humans to trust the algorithms. The best way to do this is to make the computer explain its decision-making process in the way that humans understand.&lt;/p&gt;
-
-&lt;p&gt;Between Ali’s keynote, several new government grants aimed at interpretability, and a push among companies to use AI to solve real-world problems, interpretability felt like a central issue this year. I am happy about this because my research – the reason I attended NeurIPS – is centered around interpretability. Here I am giving a talk about it:&lt;/p&gt;
-
-&lt;center&gt;
-&lt;blockquote class=&quot;twitter-tweet&quot; data-lang=&quot;en&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Nice talk by &lt;a href=&quot;https://twitter.com/samgreydanus?ref_src=twsrc%5Etfw&quot;&gt;@samgreydanus&lt;/a&gt; on visualizing and understanding deep RL.  I like the &lt;a href=&quot;https://twitter.com/ATLASexperiment?ref_src=twsrc%5Etfw&quot;&gt;@ATLASexperiment&lt;/a&gt; sticker on his laptop. &lt;a href=&quot;https://t.co/YVTGX7M0kc&quot;&gt;pic.twitter.com/YVTGX7M0kc&lt;/a&gt;&lt;/p&gt;&amp;mdash; Kyle Cranmer (@KyleCranmer) &lt;a href=&quot;https://twitter.com/KyleCranmer/status/939667242358226945?ref_src=twsrc%5Etfw&quot;&gt;December 10, 2017&lt;/a&gt;&lt;/blockquote&gt;
-&lt;script async=&quot;&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
-&lt;/center&gt;
-
-&lt;p&gt;&lt;strong&gt;Disentangled representations.&lt;/strong&gt; The power of deep learning is that it can transform features at the pixel level, such as color and shape, into more complex ones such as “ears”, “wheels”, or “leaves”. Clearly, it’s easier to explain what is going on in a picture using the latter. The problem is that these concepts get mixed together like a plate of spagetthi. As Yoshua Bengio said (hungrily), &lt;em&gt;“If we can take that spaghetti and disentangle it, that would be very nice.”&lt;/em&gt; So we’d like algorithms that discover high-level features like “ears,” “wheels,” or “leaves” that are &lt;em&gt;separable&lt;/em&gt;. We’d also like to do this in an &lt;em&gt;unsupervised&lt;/em&gt; manner.&lt;/p&gt;
-
-&lt;p&gt;I attended a workshop centered around this idea. People whose work and ideas I found interesting included Yoshua Bengio (Montreal), Stefano Soatto (UCLA), Josh Tenenbaum (MIT), and DeepMind’s Irina Higgins, Peter Battaglia, David Pfau, and Tejas Kulkarni. This theme was not big at NeurIPS, but I think it is promising.&lt;/p&gt;
-
-&lt;h2 id=&quot;ai-and-society&quot;&gt;AI and society&lt;/h2&gt;
-
-&lt;p&gt;I was surprised to find that some of my conversations were not about science at all. They were about the relationship between AI and society. Many of these occurred at the fascinating but sparsely-attended &lt;a href=&quot;http://kindsofintelligence.org/&quot;&gt;&lt;em&gt;Kinds of Intelligence&lt;/em&gt;&lt;/a&gt; symposium. This symposium brought together influential thinkers from psychology (&lt;a href=&quot;https://en.wikipedia.org/wiki/Alison_Gopnik&quot;&gt;Alison Gopnik&lt;/a&gt;), neuroscience (&lt;a href=&quot;https://en.wikipedia.org/wiki/Gary_Marcus&quot;&gt;Gary Marcus&lt;/a&gt;, &lt;a href=&quot;http://psychology.berkeley.edu/people/lucia-f-jacobs&quot;&gt;Lucia Jacobs&lt;/a&gt;), deep learning (&lt;a href=&quot;https://en.wikipedia.org/wiki/Demis_Hassabis&quot;&gt;Demis Hassabis&lt;/a&gt;, &lt;a href=&quot;https://en.wikipedia.org/wiki/Zoubin_Ghahramani&quot;&gt;Zoubin Ghahramani&lt;/a&gt;), privacy (&lt;a href=&quot;https://en.wikipedia.org/wiki/Cynthia_Dwork&quot;&gt;Cynthia Dwork&lt;/a&gt;), and public policy (&lt;a href=&quot;https://en.wikipedia.org/wiki/David_Runciman&quot;&gt;David Runciman&lt;/a&gt;).&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot;&gt;
-	&lt;img src=&quot;/assets/neurips17/ai-4-good.jpg&quot; width=&quot;70%&quot; /&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;People and perspectives.&lt;/strong&gt; The &lt;em&gt;Kinds of Intelligence&lt;/em&gt; symposium made me think critically about the ways AI will affect society. I ended up having some fascinating conversations on the topic. Here is a brief list of the most striking people and perspectives:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;u&gt;Taras (grad student at KTH)&lt;/u&gt;&lt;/span&gt; is worried about AI making the poor poorer and the rich richer. Based on how corporate NeurIPS 2017 was, I think this is valid. Far too much of current AI research is aimed at finding better ways to sell things.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;span style=&quot;color:green&quot;&gt;&lt;u&gt;Kyle Cranmer (NYU)&lt;/u&gt;&lt;/span&gt; is leading the effort to &lt;a href=&quot;https://dl4physicalsciences.github.io/&quot;&gt;bring AI to the natural sciences&lt;/a&gt;. Applications include particle track reconstruction (particle physics), tracking supermassive black hole emissions (astronomy), analysis of LIGO data (gravity waves), and solving the many-body problem (quantum mechanics). These are examples of basic research which can help society as a whole rather than a single company.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;u&gt;Rich Caruana (Microsoft Research)&lt;/u&gt;&lt;/span&gt; is trying to prevent bias in new AI systems. An example of this bias is the COMPAS system, which &lt;a href=&quot;https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing&quot;&gt;was more likely to recommend white inmates for parole than black ones&lt;/a&gt;. We can’t let this happen in the future.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;span style=&quot;color:green&quot;&gt;&lt;u&gt;Sam Greydanus (Me! Working for the DARPA Explainable AI Project)&lt;/u&gt;&lt;/span&gt; has decided that if we are going to introduce AI to society, we need to be able to explain its decisions. He introduced &lt;a href=&quot;https://greydanus.github.io/2017/11/01/visualize-atari/&quot;&gt;a new way of doing this&lt;/a&gt; and showed how it can catch AIs that are “cheating” at certain tasks.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;u&gt;Dhruv Batra (Facebook AI Research)&lt;/u&gt;&lt;/span&gt; is concerned about misreporting of AI in the media. A &lt;a href=&quot;https://www.snopes.com/facebook-ai-developed-own-language/&quot;&gt;series of fake news articles&lt;/a&gt; about his work recently caused massive – and totally unfounded – hysteria.&lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;u&gt;Alonso (my Uber driver)&lt;/u&gt;&lt;/span&gt; was mostly concerned that, &lt;em&gt;“Robots are gonna take over the world!”&lt;/em&gt; He should talk to Dhruv.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;span style=&quot;color:green&quot;&gt;&lt;u&gt;Nenad (DeepMind Health)&lt;/u&gt;&lt;/span&gt; pointed to ways AI will improve health care. &lt;a href=&quot;https://www.nvidia.com/object/deep-learning-in-medicine.html&quot;&gt;Examples&lt;/a&gt; include personalized medicine, better diagnostic tools, and accelerated drug discovery.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;span style=&quot;color:green&quot;&gt;&lt;u&gt;Ishmael (a gorilla in a book I&apos;m reading)&lt;/u&gt;&lt;/span&gt; &lt;a href=&quot;https://en.wikipedia.org/wiki/Ishmael_(novel)&quot;&gt;would probably say&lt;/a&gt;, &lt;em&gt;“Humans have GOT to stop worrying about themselves and start thinking about how their actions affect the rest of the planet. How will AI help or hurt the environment?”&lt;/em&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;u&gt;Peter Battaglia (DeepMind)&lt;/u&gt;&lt;/span&gt; was concerned about how AI will reduce privacy. Corporations and governments already own a massive amount of our personal information but they don’t have the means to piece it together into a comprehensive story. AI will change that.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;&lt;span style=&quot;color:black&quot;&gt;&lt;u&gt;David Runciman (Cambridge)&lt;/u&gt;&lt;/span&gt; is interested in the relationship between AI and Artificial Agents (AAs). These AAs are institutions such as states, corporations, or markets. They wield a great deal of influence over our world but have motives and priorities that are different from those of humans. How will AI and AA interact?!&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;span style=&quot;color:green&quot;&gt;&lt;u&gt;Jonnie Penn (AI historian at Cambridge)&lt;/u&gt;&lt;/span&gt; reminded me that AI will solve some problems and create new ones. What’s cool is that &lt;em&gt;we&lt;/em&gt; get to determine how the story unfolds. This is a big responsibility for us researchers. It means taking the time to &lt;em&gt;communicate&lt;/em&gt; our work in a way the public can understand. It means &lt;em&gt;thinking carefully&lt;/em&gt; about &lt;a href=&quot;https://www.ibm.com/blogs/insights-on-business/ibmix/building-brain-trust-good-ai/&quot;&gt;how our work is changing society&lt;/a&gt;…and whether we are proud of these changes.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;&lt;strong&gt;What can we do?&lt;/strong&gt; Jonnie and I are organizing an informal group, &lt;em&gt;AI for Good&lt;/em&gt;, aimed at addressing these issues. If you want to join the conversation, &lt;a href=&quot;/files/email.txt&quot;&gt;email me&lt;/a&gt; and I will send you an application. If you are a US citizen, you should also email your congress(wo)men. &lt;a href=&quot;/files/letter-to-rep.txt&quot;&gt;I did it&lt;/a&gt; and it only took five minutes.&lt;/p&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:fn1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Note that some authors are featured on more than one paper and thus are counted more than once &lt;a href=&quot;#fnref:fn1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">Billion dollar investments. Top-tier scientists. Flo Rida. NeurIPS was a confusing, absurd, and inspirational roller coaster. Let&apos;s try to understand what happened.</summary></entry></feed>
+&lt;/div&gt;</content><author><name>With Misko Dzamba and Jason Yosinski</name></author><summary type="html">Instead of crafting Hamiltonians by hand, we propose parameterizing them with neural networks and then learning them directly from data.</summary></entry></feed>
