@@ -69,7 +69,7 @@ function playPauseOurs() {
 </script>
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
-	<a href="../../../../../files/paper-not-up.txt" id="linkbutton" target="_blank">Read the paper</a>
+	<a href="https://arxiv.org/abs/2106.06621" id="linkbutton" target="_blank">Read the paper</a>
 	<a href="https://github.com/greydanus/piecewise_node#run-in-your-browser" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
 	<a href="https://github.com/greydanus/piecewise_node" id="linkbutton" target="_blank">Get the code</a>
 </div>
@@ -270,7 +270,7 @@ Jumpy RNNs resemble Neural ODEs in that they parameterize the derivative of a hi
 
 Quite a few researchers have wrestled with the same limitations of RNNs and Neural ODEs that we have in this post. For example, there are a number of other RNN-based models designed with temporal abstraction in mind: Koutnik et al. (2014)[^fn1] proposed dividing an RNN internal state into groups and only performing cell updates on the \\(i^{th}\\) group after \\(2^{i-1}\\) time steps. More recent works have aimed to make this hierarchical structure more adaptive, either by data-specific rules[^fn2] or by a learning  mechanism[^fn3]. But although these hierarchical recurrent models can model data at different timescales, they still must perform cell updates at every time step in a sequence and cannot jump over regions of homogeneous change.
 
-For a discussion of these methods (and many others), check out [the full paper](../../../../../files/paper-not-up.txt), which we link to at the top of this post.
+For a discussion of these methods (and many others), check out [the full paper](https://arxiv.org/abs/2106.06621), which we link to at the top of this post.
 <!-- Another relevant work from reinforcement learning is "Embed to Control"[^fn5]. This work is similar to ours in that it assumes that dynamics are linear in latent space. But unlike our work, the E2C model performs inference over discrete, uniform time steps and does not learn a jumpy behavior. -->
 
 
