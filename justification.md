@@ -145,4 +145,6 @@ They got scars, fam. Kindness. And love. When God our Savior appeared, he did no
 * [Mere Christianity](https://www.amazon.com/Mere-Christianity-C-S-Lewis/dp/0060652926) by CS Lewis
 * [My email](/static/email.txt)
 
+_"As water reflects the face, so one’s life reflects the heart." — Proverbs 27:19_
+
 <!-- <div class="imgcap_noborder" style="text-align:center"><img src="/assets/justification/bread.jpeg" style="width:25%;min-width:150px;"></div> -->
