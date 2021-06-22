@@ -9,7 +9,7 @@ includelink: true
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
     <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <video style="width:100%;min-width:250px;" controls>
-      <source src="/assets/about.mp4" type="video/mp4">
+      <source src="/assets/idea-of-god.mp4" type="video/mp4">
       Your browser does not support HTML video.
     </video>
     <div style="text-align: center;">A two minute introduction to the idea of God.</div>
