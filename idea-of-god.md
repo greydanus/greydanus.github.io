@@ -4,8 +4,6 @@ permalink: /idea-of-god/
 includelink: true
 ---
 
-## The Idea of God
-
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
     <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <video style="width:100%;min-width:250px;" controls>
