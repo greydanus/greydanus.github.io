@@ -20,9 +20,9 @@ I am a recent graduate of Dartmouth College, where I majored in physics. My work
 * 2013-2017, Dartmouth college, physics major
 
 ## Links
-* [My Google Scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en)
-* [My Twitter](https://twitter.com/samgreydanus)
-* [My GitHub](https://github.com/greydanus)
-* [My email](/static/email.txt)
-* My old, but more flashy, [personal website](/about.html) has a few more links
-* A sermon explaining the Christian message of [justification](/justification/)
+* [Google Scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en)
+* [Twitter](https://twitter.com/samgreydanus)
+* [Github](https://github.com/greydanus)
+* [Personal website](/about.html)
+* [Email](/static/email.txt)
+* [The idea of God](/idea-of-god/)
