@@ -24,3 +24,4 @@ I am a recent graduate of Dartmouth College, where I majored in physics. My work
 * [My Twitter](https://twitter.com/samgreydanus)
 * [My GitHub](https://github.com/greydanus)
 * My old, but more flashy, [personal website](/about.html) has a few more links
+* A sermon explaining the Christian message of [justification](https://greydanus.github.io/justification/)
