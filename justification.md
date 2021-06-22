@@ -78,8 +78,7 @@ But every time you see an encounter of a sinful person anywhere near the presenc
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
-    <img src="/assets/justification/night_painting.jpeg" style="width:100%">
-    <!-- <div class="thecap" style="text-align:left">Night painting.</div> -->
+    <img src="/assets/justification/night_painting.png" style="width:100%">
   </div>
 </div>
 
