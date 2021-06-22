@@ -20,7 +20,7 @@ I am a recent graduate of Dartmouth College, where I majored in physics. My work
 * 2013-2017, Dartmouth college, physics major
 
 ## Links
-* [Google Scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en)
+* [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en)
 * [Twitter](https://twitter.com/samgreydanus)
 * [Github](https://github.com/greydanus)
 * [Personal website](/about.html)
