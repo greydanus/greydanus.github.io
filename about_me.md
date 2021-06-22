@@ -17,7 +17,7 @@ I am a recent graduate of Dartmouth College, where I majored in physics. My work
 * 2017, International Physicist's Tournament, US team, Gothenburg, Sweden
 * 2017, Senior honors thesis, quantum mechanics with James Whitfield.
 * 2015, Semester at CERN, simulating Higgs radiation
-* 2013, Dartmouth college, physics major
+* 2013-2017, Dartmouth college, physics major
 
 ## Links
 * [My Google Scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en)
