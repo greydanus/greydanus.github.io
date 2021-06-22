@@ -10,7 +10,7 @@ includelink: true
       <source src="/assets/idea-of-god.mp4" type="video/mp4">
       Your browser does not support HTML video.
     </video>
-    <div style="text-align: center;">A two minute introduction to the idea of God.</div>
+    <div style="text-align: left;">A two minute introduction to the idea of God.</div>
   </div>
 </div>
 
