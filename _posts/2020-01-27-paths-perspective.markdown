@@ -2,14 +2,14 @@
 layout: post
 comments: true
 title:  "The Paths Perspective on Value Learning"
-excerpt: "I recently published a Distill article about value learning. This post includes a link to the article and some meta-commentary about the Distill format."
+excerpt: "I recently published a Distill article about value learning. This post includes a link to the article and some commentary on the Distill format."
 date:   2020-01-27 11:00:00
 mathjax: true
 thumbnail: /assets/paths-perspective/thumbnail.png
 author: Sam Greydanus
 ---
 
-I recently published a Distill article about value learning. This post includes a link to the article and some meta-commentary about the Distill format.
+I recently published a Distill article about value learning. This post includes a link to the article and some commentary on the Distill format.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
 	<a href="https://distill.pub/2019/paths-perspective-on-value-learning/" id="featuredlink" target="_blank" style="margin-right: 10px;">Read this article on Distill</a>
