@@ -23,6 +23,6 @@ I am a recent graduate of Dartmouth College, where I majored in physics. My work
 * [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en)
 * [Twitter](https://twitter.com/samgreydanus)
 * [Github](https://github.com/greydanus)
-* [Personal website](/about.html)
+* [Old personal website (has some old pet projects at the bottom)](/about.html)
 * [Email](/static/email.txt)
 * [The idea of God](/idea-of-god/)
