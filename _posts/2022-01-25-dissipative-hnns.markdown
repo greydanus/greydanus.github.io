@@ -51,7 +51,7 @@ The core idea is to use a neural network to parameterize both a Hamiltonian _and
 
 **Putting it together.** In [Hamiltonian Neural Networks](https://greydanus.github.io/2019/05/15/hamiltonian-nns/), we showed how to parameterize the Hamiltonian function and then learn it directly from data. Here, we parameterize a Rayleigh function as well. Our model looks the same as an HNN except now it has a second scalar output which we use for the Rayleigh function (see the first image in this post). During the forward pass, we take the symplectic gradient of the Hamiltonian to obtain conservative forces. Note that as we do this, the symplectic gradient constitutes a rotational vector field over the model's inputs. During the forward pass we also take the gradient of the Rayleigh function to obtain dissipative forces. This gradient gives us an irrotational vector field over the same domain.
 
-All of this means that, by construction, our model will learn an implicit Helmholtz decomposition of the forces acting on a system.
+All of this means that, by construction, our model will learn an implicit Helmholtz decomposition of the forces acting on the system.
 
 
 ## An introductory model
