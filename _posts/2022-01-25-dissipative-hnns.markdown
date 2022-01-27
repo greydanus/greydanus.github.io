@@ -18,7 +18,7 @@ thumbnail: /assets/dissipative-hnns/thumbnail.png
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
   <a href="https://arxiv.org/abs/2201.10085" id="linkbutton" target="_blank">Read the paper</a>
-  <a href="https://github.com/greydanus/dissipative_hnns" id="linkbutton" target="_blank">Get the code</a>
+  <a href="https://github.com/DrewSosa/dissipative_hnns" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
 
@@ -26,7 +26,7 @@ thumbnail: /assets/dissipative-hnns/thumbnail.png
 
 We are immersed in a complex, dynamic world where change is the only constant. And yet there are certain patterns to this change that suggest natural laws. These laws include conservation of mass, energy, and momentum. Taken together, they constitute a powerful simplifying constraint on reality. Indeed, physics tells us that a small set of laws and their associated invariances are at the heart of all natural phenomena. Whether we are studying weather, ocean currents, earthquakes, or molecular interactions, we should take care to respect these laws. And when we apply learning algorithms to these domains, we should ensure that they, too, respect these laws.
 
-We can do this by building models that are primed to learn invariant quantities from data: these models include [HNNs](https://greydanus.github.io/2019/05/15/hamiltonian-nns/), [LNNs](https://greydanus.github.io/2020/03/10/lagrangian-nns/), and a [growing class]((https://scholar.google.com/scholar?hl=en&as_sdt=0%2C38&q=hamiltonian+neural+networks&btnG=)) of [related models](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C38&q=sympletic+neural+networks&btnG=). But one problem with these models is that, for the most part, they can only handle data where some quantity (such as energy) is exactly conserved. If the data is collected in the real world and there is even a small amount of friction, then these models struggle. In this post, we introduce Dissipative HNNs, a class of models which can learn conservation laws from data even when energy isn't perfectly conserved.
+We can do this by building models that are primed to learn invariant quantities from data: these models include [HNNs](https://greydanus.github.io/2019/05/15/hamiltonian-nns/), [LNNs](https://greydanus.github.io/2020/03/10/lagrangian-nns/), and a [growing class](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C38&q=hamiltonian+neural+networks&btnG=) of [related models](https://scholar.google.com/scholar?hl=en&as_sdt=0,38&q=symplectic+neural+networks). But one problem with these models is that, for the most part, they can only handle data where some quantity (such as energy) is exactly conserved. If the data is collected in the real world and there is even a small amount of friction, then these models struggle. In this post, we introduce Dissipative HNNs, a class of models which can learn conservation laws from data even when energy isn't perfectly conserved.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/dissipative-hnns/sea_of_change.jpg">
@@ -39,7 +39,7 @@ The core idea is to use a neural network to parameterize both a Hamiltonian _and
 
 ## A quick theory section
 
-**The Hamiltonian function.** The Hamiltonian \\(\mathcal{H}(\textbf{q},\textbf{p})\\) is scalar function where by definition \\( \frac{\partial \mathcal{H}}{\partial \textbf{p}} = \frac{\partial \textbf{q}}{dt},  -\frac{\partial \mathcal{H}}{\partial \textbf{q}} = \frac{\partial \textbf{p}}{dt} \\). This constraint tells us that, even as the position and momentum coordinates of the system \\(\textbf{(q, p)}\\) change, the scalar output \\(\mathcal{H}\\) remains fixed. In other words, \\(\mathcal{H}\\) is invariant with respect to \\(\textbf{q}\\) and \\(\textbf{p}\\) as they change over time; it is a conserved quantity. Hamiltonians often appear in physics because for every natural symmetry (or law) in the universe, there is a corresponding conserved quantity (see [Noether's theorem](https://en.wikipedia.org/wiki/Noether%27s_theorem)).
+**The Hamiltonian function.** The Hamiltonian \\(\mathcal{H}(\textbf{q},\textbf{p})\\) is scalar function where by definition \\( \frac{\partial \mathcal{H}}{\partial \textbf{p}} = \frac{\partial \textbf{q}}{dt},  -\frac{\partial \mathcal{H}}{\partial \textbf{q}} = \frac{\partial \textbf{p}}{dt} \\). This constraint tells us that, even as the position and momentum coordinates of the system \\(\textbf{(q, p)}\\) change, the scalar output \\(\mathcal{H}\\) remains fixed. In other words, \\(\mathcal{H}\\) is invariant with respect to \\(\textbf{q}\\) and \\(\textbf{p}\\) as they change over time; it is a conserved quantity. Hamiltonians often appear in physics because for every natural symmetry/law in the universe, there is a corresponding conserved quantity (see [Noether's theorem](https://en.wikipedia.org/wiki/Noether%27s_theorem)).
 
 **The Rayleigh function.** The Rayleigh dissipation function \\(\mathcal{D}(\textbf{q},\textbf{p})\\) is a scalar function that provides a way to account for dissipative forces such as friction in the context of Hamiltonian mechanics. As an example, the Rayleigh function for linear, velocity-dependent dissipation would be \\(\mathcal{D} = \frac{1}{2}\rho\dot{q}^2\\) where \\(\rho\\) is a constant and \\(\dot q\\) is the velocity coordinate. We add this function to a Hamiltonian whenever the conserved quantity we are trying to model is changing due to sources and sinks. For example, if \\(\mathcal{H}\\) measures the total energy of a damped mass-spring system, then we could add the \\(\mathcal{D}\\) we wrote down above to account for the change in total energy due to friction.
 
@@ -89,7 +89,7 @@ We also trained our model on data from a real pendulum and ocean current data fr
 
 ## Closing thoughts
 
-This work is a small, practical contribution to science in that it proposes a new physics prior for machine learning models. But it is also a step towards a larger and more ambitious goal: that of building models that can extract conservation laws directly from noisy real-world data. We hope that future work in that direction will benefit from our findings.
+This work is a small, practical contribution to science in that it proposes a new physics prior for machine learning models. But it is also a step towards a larger and more ambitious goal: that of building models that can extract conservation laws directly from noisy real-world data. We hope that future work in this direction will benefit from our findings.
 
 ## Footnotes
 
