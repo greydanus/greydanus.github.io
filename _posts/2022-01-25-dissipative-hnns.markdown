@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Dissipative Hamiltonian Neural Networks"
-excerpt: "This class of models can learn Hamiltonians from data even when the total energy of the system is not perfectly conserved (due to, for example, friction)."
+excerpt: "This class of models can learn Hamiltonians from data even when the total energy of the system is not perfectly conserved."
 date:   2022-01-25 11:00:00
 mathjax: true
 author: Andrew Sosanya and Sam Greydanus
