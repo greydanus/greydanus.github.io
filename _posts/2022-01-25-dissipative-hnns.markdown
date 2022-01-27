@@ -12,7 +12,7 @@ thumbnail: /assets/dissipative-hnns/thumbnail.png
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/dissipative-hnns/hero.jpg">
   <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
-  Dissipative HNNs (D-HNNs) improve upon <a href="https://greydanus.github.io/2019/05/15/hamiltonian-nns/">Hamiltonian Neural Networks</a>. They output two scalar functions, denoted here by <i><b>H</b></i> and <i><b>D</b></i>. The first of these two, <i><b>H</b></i>, is the Hamiltonian. We use its symplectic gradient to model energy-conserving dynamics. The second, <i><b>D</b></i>, is the Rayleigh dissipation function. We use it to model the dissipative component of the system. The addition of this dissipation function allows D-HNNs to model systems where energy is not quite conserved, as, for example, in the case of a damped mass-spring system.
+  Dissipative HNNs (D-HNNs) improve upon <a href="https://greydanus.github.io/2019/05/15/hamiltonian-nns/">Hamiltonian Neural Networks</a>. They output two scalar functions, denoted here by <i><b>H</b></i> and <i><b>D</b></i>. The first of these two, <i><b>H</b></i>, is the Hamiltonian. We use its symplectic gradient to model energy-conserving dynamics. The second, <i><b>D</b></i>, is the Rayleigh dissipation function. We use it to model the dissipative component of the system. The addition of this dissipation function allows D-HNNs to model systems where energy is not quite conserved, as, for example, in the case of the damped mass-spring system shown here.
   </div>
 </div>
 
