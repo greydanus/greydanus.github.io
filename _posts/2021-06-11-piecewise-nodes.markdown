@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Piecewise-constant Neural ODEs"
-excerpt: "We propose a timeseries model that can be adaptively integrated. It jumps over simulation steps that are predictable and spends more time on those that are not."
+excerpt: "We propose a timeseries model that can be integrated adaptively. It jumps over simulation steps that are predictable and spends more time on those that are not."
 date:   2021-06-11 11:00:00
 mathjax: true
 author: Sam Greydanus, Stefan Lee, and Alan Fern
