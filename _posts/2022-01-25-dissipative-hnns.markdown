@@ -87,7 +87,7 @@ We also trained our model on data from a real pendulum and ocean current data fr
 
 ## Closing thoughts
 
-This work is a small, practical contribution to science in that it proposes a new physics prior for machine learning models. But it is also a step towards a larger and more ambitious goal: that of building models that can extract conservation laws directly from noisy real-world data. We hope that future work will benefit from our findings.
+This work is a small, practical contribution to science in that it proposes a new physics prior for machine learning models. But it is also a step towards a larger and more ambitious goal: that of building models that can extract conservation laws directly from noisy real-world data. We hope that future work in that direction will benefit from our findings.
 
 ## Footnotes
 
