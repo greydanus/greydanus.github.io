@@ -78,7 +78,7 @@ If we were to suddenly double the coefficient of friction \\(\rho\\), our MLP mo
 
 ## Additional experiments
 
-We also trained our model on data from a real pendulum and ocean current data from the OSCAR dataset (shown below). On these larger and more more difficult tasks, our model continuted to decouple conservative and dissipative dynamics. The details and results are outside the scope of this post. If you want to see them, you should read [the full paper](https://github.com/greydanus/dissipative_hnns).
+We also trained our model on data from a real pendulum and ocean current data from the OSCAR dataset (shown below). On these larger and more more difficult tasks, our model continuted to decouple conservative and dissipative dynamics. The details and results are outside the scope of this post, but you can find them in [our paper](https://github.com/greydanus/dissipative_hnns).
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/dissipative-hnns/ocean.jpg" style="width:100%">
