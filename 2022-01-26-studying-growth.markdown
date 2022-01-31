@@ -1,12 +1,14 @@
 ---
 layout: post
 comments: true
-title:  "Studying Growth with Cellular Automata"
-excerpt: "We train simulated cells to organize themselves via morphogenesis. We use them to study motifs of biological growth."
+title:  "Studying Growth with Neural Cellular Automata"
+excerpt: "We train simulated cells grow into organisms by communicating with their neighbors. Then we use them to study growth patterns found in nature."
 date:   2022-01-26 11:00:00
 mathjax: true
 thumbnail: /assets/studying-growth/thumbnail.png
 ---
+
+<!-- We train simulated cells to organize themselves via morphogenesis. We use them to study motifs of biological growth. -->
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
