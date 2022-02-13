@@ -74,23 +74,27 @@ function playPauseVideo3() {
 
 How does a single fertilized egg grow into a population of seventy trillion cells -- a population which can walk, talk, and even write sonnets? This is one of the great unanswered questions of biology. We may never finish answering it; indeed, the mere asking of it should be tempered with a certain degree of humility. Nevertheless, it is a productive question. By asking it over the course of the past seventy years, humans have discovered the structure of DNA, sequenced the human genome, and transformed modern medicine.
 
-In this post, we will use cellular automata to look at one aspect of this question: namely, how basic patterns of biological growth are implemented at the cellular level. We will begin by simulating a large population of cells and letting them to interact with one another. Then, by experimenting with the rules that govern their interactions, we will first replicate certain patterns of biological growth and then try to figure out how they are implemented.
+In this post, we will use cellular automata to look at one aspect of this question: namely, what rules and logic are executed at the level of a cell in order to produce organized growth at the level of an organism. We will begin by simulating a large population of cells and letting them to interact with one another. Then, by experimenting with the rules that govern their interactions, we will first replicate patterns of biological growth and then examine how they are implemented.
 
-As you may have gathered, cellular automata are a simple algorithmic method of simulating biological cells. The basic idea is to represent a population of cells with a grid of pixels, letting each pixel stand in for a cell. Then we choose a set of growth rules which determine how adjacent cells interact with one another. These rules tend to be quite simple; Conway's Game of Life, for example, has just three rules. But this setup, as simple as it sounds, can give rise to surprisingly complex emergent patterns.
+## Growing Neural Cellular Automata
+
+The purpose of cellular automata (CA) is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels with each pixel representing a different cell. Then a set of growth rules, which control how each cell responds to its neighbors, are repeatedly applied to all the cells in the grid. Although these growth rules are simple to write down, they are chosen so as to produce complex, self-organizing behaviors across the population as a whole. Conway's Game of Life, for example, has just three simple growth rules but it produces wild structures like the one shown below
 
 [image: rules of Conway's Game of Life plus a video of the simulation in action]
 
-The problem with this kind of cellular automata is that it is too simple. Cells only get to have two states: dead or alive. Biological cells, on the other hand, have non-binary states which are determined by a vast array of genetic material, enzymes and signaling protiens. In order to model them properly, we should switch to a list of scalar values representing all the various concentrations of enzymes and signaling protiens in a given cell. We should also allow for more expressive growth rules, rules which can vary according to all of these different factors.
+Classic versions of cellular automata like the one above are interesting because they produce emergent behavior in spite of using very simple rules. But in many ways these versions of CA are _too simple_. Their cells only get to have two states, dead or alive, whereas biological cells get to have a near-infinite number of states, states which are determined by a wide variety of genetic materials, enzymes, and signaling protiens. We refer to all these things as _morphogens_ because they work together to control growth and guide organisms towards specific final shapes or _morphologies_.
 
-An important step in this direction is Mordvintsev et al.'s [Neural Cellular Automata](https://distill.pub/2020/growing-ca) (NCA) model. In this model, they represent each cell state with an n-dimensional vector of scalar values and then allow arbitrary growth rules to operate on this expanded domain. To accomplish this in practice, _they parameterize the NCA's growth rules with a neural network and then optimize them using gradient descent_. Using this approach, they obtain an NCA that can grow from a single cell into a large population of cells in the shape and color of a lizard emoji.
+Based on this observation, we should move away from cells that are only dead or alive. Rather, we should allow cells to exist in a variety of states, with each state defined by a list of variables. Growth rules should operate on combinations of these variables in the same way that biological growth rules operate on combinations of different morphogens. Finally, the self-organizing behaviors of these cells should be able to converge to _specific_ large-scale morphologies rather than arbitrary ones.
+
+[image: chart comparing biological cells vs. cellular automata vs. neural cellular automata]
+
+A major step in this direction was Mordvintsev et al. (2020)'s [Neural Cellular Automata](https://distill.pub/2020/growing-ca) (NCA) model. This model represented each cell state with an \\(n\\)-dimensional vector of scalar values and then allowed arbitrary growth rules to operate on the expanded domain. It did this by _parameterizing growth rules with a neural network and then optimizing the neural network to obtain the desired pattern of growth_. Mordvintsev et al. trained their model to arrange a population of over a thousand cells in the shape of a lizard using purely local interactions.
 
 [image: lizard NCA]
 
-## Simulating populations of cells
+## Growing flowers with NCA
 
-Even more importantly, NCA allow us to find growth rules that lead to specific population patterns. These patterns may have complicated large-scale shapes and textures (like the flower patterns at the beginning of the blog) and the simulated cells will still be able to grow into these patterns using purely local, and sometimes noisy, interactions.
-
-We say that each cell has four visible attributes: red, blue, green, and transparency. Each cell also has a set of invisible attributes; this set can vary in size, but we can think of each to these attributes as the concentration of a particular protein at that particular cell’s location. Each of these simulated cells can only observe its status and that of its neighbors. And from these observations, it can alter its observable attributes (red, green blue, and alpha channels) and its hidden attributes (local protein gradients).
+Neural Cellular Automata represent a promising and underexplored tool for simulating growth. The purpose of this work is to see what they can tell us about how specific patterns of biological growth unfold.
 
 
 ## Outline
