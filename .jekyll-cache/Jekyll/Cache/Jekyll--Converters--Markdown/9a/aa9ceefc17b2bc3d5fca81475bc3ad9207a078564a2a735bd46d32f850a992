@@ -1,0 +1,182 @@
+I"7<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <video id="video1" style="width:100%;min-width:250px;" poster="/assets/studying-growth/rose.jpg">
+      <source src="/assets/studying-growth/rose.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="video1_button" onclick="playPauseVideo1()">Play</button>
+  </div>
+  <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <video id="video2" style="width:100%;min-width:250px;" poster="/assets/studying-growth/marigold.jpg">
+      <source src="/assets/studying-growth/marigold.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="video2_button" onclick="playPauseVideo2()">Play</button>
+  </div>
+   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="video3" style="width:100%;min-width:250px;" poster="/assets/studying-growth/crocus.jpg">
+      <source src="/assets/studying-growth/crocus.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="video3_button" onclick="playPauseVideo3()">Play</button>
+  </div>
+  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:75%">We train simulated cells to grow into organisms by communicating with their neighbors. Here these cells are growing into flowers starting from single "seed" pixels.</div>
+</div>
+
+<script> 
+function playPauseVideo1() { 
+  var video = document.getElementById("video1"); 
+  var button = document.getElementById("video1_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+
+function playPauseVideo2() { 
+  var video = document.getElementById("video2"); 
+  var button = document.getElementById("video2_button");
+  if (video.paused) {
+    video.play();
+  button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+
+function playPauseVideo3() { 
+  var video = document.getElementById("video3"); 
+  var button = document.getElementById("video3_button");
+  if (video.paused) {
+    video.play();
+  button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
+
+<div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+  <a href="https://colab.research.google.com/drive/1TgGN5qjjH6MrMrTcStEkdHO-giEJ4bZr#scrollTo=k-2PCTfGI-pq" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+  <a href="https://github.com/greydanus/studying_growth" id="linkbutton" target="_blank">Get the code</a>
+</div>
+
+<!-- ## A Productive Question -->
+
+<p>How does a single fertilized egg grow into a population of seventy trillion cells – a population which can walk, talk, and even write sonnets? This is one of the great unanswered questions of biology. We may never finish answering it; indeed, the mere asking of it should be tempered with a certain degree of humility. Nevertheless, it is a productive question. By asking it over the course of the past seventy years, humans have discovered the structure of DNA, sequenced the human genome, and transformed modern medicine.</p>
+
+<p>In this post, we will use cellular automata to look at one aspect of this question: namely, what rules and logic are executed at the level of a cell in order to produce organized growth at the level of an organism. We will begin by simulating a large population of cells and letting them to interact with one another. Then, by experimenting with the rules that govern their interactions, we will first replicate patterns of biological growth and then examine how they are implemented.</p>
+
+<h2 id="simulating-populations-of-cells">Simulating populations of cells</h2>
+
+<p>As you may have gathered, the purpose of cellular automata is to mimic the dynamics of biological growth at the cellular level. They begin with a grid of pixels where each pixel represents a cell. Then a set of growth rules, which control how these cells respond to their neighbors, is repeatedly applied to every cell in the grid. Although these growth rules are simple to write down, they are chosen so as to produce complex, self-organizing behaviors across the population as a whole. Conway’s Game of Life, for example, has just three simple growth rules, but they give rise to some pretty wild patterns.</p>
+
+<p>[image: rules of Conway’s Game of Life plus a video of the simulation in action]</p>
+
+<p>Classic versions of cellular automata like the one above are interesting because they produce emergent behavior in spite of using very simple rules. But in many ways they are <em>too simple</em>. Their cells only get to have two states: dead or alive. In biology, cells get to have complex states consisting of many different genetic materials, enzymes, and signaling protiens. We refer to all these things as <em>morphogens</em> because they work together to control growth and guide organisms towards their specific final shapes or <em>morphologies</em>.</p>
+
+<p>Based on this observation, we should move away from cells that are only dead or alive. Rather, we should allow cells to exist in a variety of states, with each state defined by a list of variables. Growth rules should operate on combinations of these variables in the same way that biological growth rules operate on combinations of different morphogens. Finally, the self-organizing behaviors of these cells should be able to converge to <em>specific</em> large-scale morphologies rather than arbitrary ones.</p>
+
+<p>[image: chart comparing biological cells vs. cellular automata vs. neural cellular automata]</p>
+
+<p>A major step in this direction was Mordvintsev et al.’s <a href="https://distill.pub/2020/growing-ca">Neural Cellular Automata</a> (NCA) model. This model represents each cell state with an n-dimensional vector of scalar values and then allows arbitrary growth rules to operate on it. They accomplish this by <em>parameterizing growth rules with a neural network and then optimizing the neural network to obtain the desired type of growth.</em> As a tour de force of this approach, they show how to train a model that uses purely local interactions between adjacent cells to arrange a population of over a thousand cells in the shape of a lizard.</p>
+
+<p>[image: lizard NCA]</p>
+
+<h2 id="more">More</h2>
+
+<p>Even more importantly, NCA allow us to find growth rules that lead to specific population patterns. These patterns may have complicated large-scale shapes and textures (like the flower patterns at the beginning of the blog) and the simulated cells will still be able to grow into these patterns using purely local, and sometimes noisy, interactions.</p>
+
+<p>We say that each cell has four visible attributes: red, blue, green, and transparency. Each cell also has a set of invisible attributes; this set can vary in size, but we can think of each to these attributes as the concentration of a particular protein at that particular cell’s location. Each of these simulated cells can only observe its status and that of its neighbors. And from these observations, it can alter its observable attributes (red, green blue, and alpha channels) and its hidden attributes (local protein gradients).</p>
+
+<h2 id="outline">Outline</h2>
+
+<ul>
+  <li>The miracle of growth (charismatic introduction)</li>
+  <li>Simulating populations of cells
+    <ul>
+      <li>Use flowers as an example</li>
+      <li>Flesh out analogy: seed=one pixel, target photo=adult organism, etc.</li>
+      <li>Show videos after varying number of training steps</li>
+      <li>Talk about value and expressiveness of this approach</li>
+    </ul>
+  </li>
+  <li>Healing tissues with self-organization</li>
+  <li>Orchestrating growth with embryonic induction</li>
+  <li>Building rigid structures with gnomonic growth</li>
+  <li>Apoptosis: death to form the living</li>
+  <li>Directing growth with genetic material</li>
+  <li>Closing thoughts (+ future experiments)</li>
+</ul>
+
+<h3 id="simulating-populations-of-cells-1"><a href="https://colab.research.google.com/drive/1TgGN5qjjH6MrMrTcStEkdHO-giEJ4bZr#scrollTo=k-2PCTfGI-pq"><strong>Simulating populations of cells</strong></a></h3>
+<p>Grow a 64x64 flower using the code in this GitHub repo. Scales up to 70x70 and hundreds of timesteps, which is nearly double the size of the model published in Distill. Flower options include <code class="language-plaintext highlighter-rouge">rose</code>, <code class="language-plaintext highlighter-rouge">marigold</code>, and <code class="language-plaintext highlighter-rouge">crocus</code> as shown in the lead image of this README.</p>
+
+<p><img src="/assets/studying-growth/grow_rose.png" alt="grow_rose.png" /></p>
+
+<h3 id="healing-tissues-with-self-organization"><a href="https://colab.research.google.com"><strong>Healing tissues with self-organization</strong></a></h3>
+<p>Look at neural textures, taking images and videos from Distill article</p>
+
+<h3 id="orchestrating-growth-with-embryonic-induction"><a href="https://colab.research.google.com/drive/1fbakmrgkk1y-ZXamH1mKbN1tvkogNrWq"><strong>Orchestrating growth with embryonic induction</strong></a></h3>
+<p>We grow an image of a newt and then graft its eye onto its belly during development. We do this in homage to <a href="https://en.wikipedia.org/wiki/Hans_Spemann">Hans Spemann</a> and his student Hilde, who won a Nobel Prize in 1935 for doing something similar with real newts. Need to modify the experiment so that some transplanted skin cells are able to induce growth of a second eye on the newt’s belly.</p>
+
+<p><img src="/assets/studying-growth/newt_graft.png" alt="newt_graft.png" /></p>
+
+<h3 id="building-rigid-structures-with-gnomonic-growth"><a href="https://colab.research.google.com/drive/1DUFL5glyej725r8VAYDZIFrWvpR6a6-0"><strong>Building rigid structures with gnomonic growth</strong></a></h3>
+<p>Grow a Nautilus shell. The neural CA learns to implement a fractal growth pattern which is mostly rotation and scale invariant. The technical term for this pattern is <em><a href="https://www.geogebra.org/m/waR6eVCQ">gnomonic growth</a></em>.</p>
+
+<p><img src="/assets/studying-growth/grow_nautilus.gif" alt="grow_nautilus.png" /></p>
+
+<h3 id="apoptosis-using-death-to-form-the-living"><a href="https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww?usp=sharing"><strong>Apoptosis: using death to form the living</strong></a></h3>
+<p>In this experiment we simulate bone growth. Bone growth is interesting because it uses apoptosis (programmed cell death) in order to produce a hollow area in the center of the bone. We see something analogous happen in our model, with a circular tan frontier that gradually expands outwards until it reaches the size of the target image.</p>
+
+<p><img src="/assets/studying-growth/grow_bone.png" alt="grow_bone.png" /></p>
+
+<h3 id="directing-growth-with-genetic-material"><a href="https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-"><strong>Directing growth with genetic material</strong></a></h3>
+<p>Train a neural CA that can grow from a seed pixel into one of three different flowers depending on initial value of the seed. From a dynamical systems perspective, we are training a model that has three different basins of attraction, one for each flower. The initial seed determines which basin the system ultimately converges to. The initial seed vs. the shared attractor dynamics are analogous to the DNA of a specific flower vs. the shared cellular dynamics across related flower species.</p>
+
+<p><img src="/assets/studying-growth/grow_multiclass.gif" alt="grow_multiclass.png" /></p>
+
+<h3 id="closing-thoughts--future-experiments">Closing thoughts (+ future experiments)</h3>
+
+<hr />
+
+<p><strong>Relevant things</strong></p>
+<ul>
+  <li>Minimal 100-line PyTorch reimplementation</li>
+  <li>Improvements that help; changes; ease of training</li>
+  <li>Grow some flowers at 70x70</li>
+  <li>Learning seeds for different flowers (shared weights) (make a small dataset of different flowers…then breed them)</li>
+  <li>Make a garden of flowers</li>
+  <li>Talk about connections to biology &amp; what that would allow us to do</li>
+  <li>Draw a schema of what it would look like</li>
+  <li>Talk about what this would let us do someday</li>
+  <li>Close with some artistic quotes about growth; maybe end with some mushroons
+*<a href="https://www.nicepng.com/ourpic/u2t4e6t4o0i1w7q8_549-x-750-4-nautilus-shell-drawing/">Nautilus link</a></li>
+</ul>
+
+<p>Also</p>
+<ul>
+  <li>Other loss functions: fluid sim, structural optimization,</li>
+</ul>
+
+<p><strong>Outline</strong></p>
+<ul>
+  <li>Romantic and beautiful introduction; channel Phil Anderson &amp; More is different; talk about <em>simplicity</em></li>
+  <li></li>
+</ul>
+
+<p><strong>Applications</strong></p>
+<ul>
+  <li>Art</li>
+  <li>Studying developmental diseases</li>
+  <li>Tackling cancer</li>
+  <li>A more decentralized internet</li>
+  <li>Physics simulations</li>
+</ul>
+
+<h2 id="closing-thoughts">Closing thoughts</h2>
+
+<p>There is a counterintuitive possibility that in order to explore the limits of how large we can scale neural networks, we may need to explore the limits of how small we can scale them first. Scaling models and datasets downward in a way that preserves the nuances of their behaviors at scale will allow researchers to iterate quickly on fundamental and creative ideas. This fast iteration cycle is the best way of obtaining insights about how to incorporate progressively more complex inductive biases into our models. We can then transfer these inductive biases across spatial scales in order to dramatically improve the sample efficiency and generalization properties of large-scale models. We see the humble MNIST-1D dataset as a first step in that direction.</p>
+
+<h2 id="footnotes">Footnotes</h2>
+:ET
