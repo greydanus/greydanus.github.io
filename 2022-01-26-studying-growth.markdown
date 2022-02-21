@@ -78,7 +78,7 @@ In this post, we will use cellular automata to look at one aspect of this questi
 
 ## Growing Neural Cellular Automata
 
-The purpose of cellular automata (CA) is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels with each pixel representing a different cell. Then a set of growth rules, which control how each cell responds to its neighbors, are repeatedly applied to all the cells in the grid. Although these growth rules are simple to write down, they are chosen so as to produce complex, self-organizing behaviors across the population as a whole. Conway's Game of Life, for example, has just three simple growth rules but it produces wild dynamics and structures like those shown shown below.
+The purpose of cellular automata (CA) is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels with each pixel representing a different cell. Then a set of growth rules, which control how each cell responds to its neighbors, are repeatedly applied to the population. Although these growth rules are simple to write down, they are chosen so as to produce complex, self-organizing behaviors across the population as a whole. Conway's Game of Life, for example, has just three simple growth rules but can give rise to some wild structures and dynamics:
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:49.4%; min-width:280px; display: inline-block; vertical-align: top;text-align:center;">
@@ -91,15 +91,15 @@ The purpose of cellular automata (CA) is to mimic biological growth at the cellu
   </div>
 </div>
 
-Classic versions of cellular automata like the one above are interesting because they produce emergent behavior in spite of using very simple rules. But in many ways these versions of CA are _too simple_. Their cells only get to have two states, dead or alive, whereas biological cells get to have a near-infinite number of states, states which are determined by a wide variety of genetic materials, enzymes, and signaling protiens. We refer to all these things as _morphogens_ because they work together to control growth and guide organisms towards specific final shapes or _morphologies_.
+Classic versions of cellular automata like the one above are interesting because they produce emergent behavior in spite of using very simple rules. But in a way, these versions of CA are _too simple_. Their cells only get to have two states, dead or alive, whereas biological cells get to have a near-infinite number of states, states which are determined by a wide variety of signaling molecules. We refer to these molecules as _morphogens_ because they work together to control growth and guide organisms towards specific final shapes or _morphologies_.
 
-Based on this observation, we should move away from cells that are only dead or alive. Rather, we should allow cells to exist in a variety of states, with each state defined by a list of variables. Growth rules should operate on combinations of these variables in the same way that biological growth rules operate on combinations of different morphogens. Finally, the self-organizing behaviors of these cells should be able to converge to _specific_ large-scale morphologies rather than arbitrary ones.
+Based on this observation, we should move away from cells that are only dead or alive. Rather, we should allow cells to exist in a variety of states, with each state defined by a list of variables. Growth rules should operate on combinations of these variables in the same way that biological growth rules operate on combinations of different morphogens. And unlike Conway's Game of Life and other classic CAs, the self-organizing behaviors that arise should not be arbitrary. Rather, they should involve convergence to _specific_ large-scale morphologies like those that occur in biology. As you might imagine, this requires much more complex growth rules.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/comparison.jpg">
 </div>
 
-A major step in this direction was Mordvintsev et al. (2020)'s [Neural Cellular Automata](https://distill.pub/2020/growing-ca) (NCA) model. This model represented each cell state with an \\(n\\)-dimensional vector of scalar values and then allowed arbitrary growth rules to operate on the expanded domain. It did this by _parameterizing growth rules with a neural network and then optimizing the neural network to obtain the desired pattern of growth_. Mordvintsev et al. trained their model to arrange a population of over a thousand cells in the shape of a lizard using purely local interactions.
+A major step in the right direction was Mordvintsev et al. (2020)'s [Neural Cellular Automata](https://distill.pub/2020/growing-ca) (NCA) model. This model represents each cell state with a real-valued \\(n\\)-dimensional vector and then allows arbitrary growth rules to operate on the expanded domain. It does this by _parameterizing growth rules with a neural network and then optimizing the neural network to obtain the desired pattern of growth_. To showcase the model's expressivity, the authors trained it to arrange a population of a few thousand cells in the shape of a lizard using purely local interactions.
 
 <!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/nca_schema.jpg">
