@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Resurrecting Realism in Quantum Mechanics</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="A science blog by Sam Greydanus">
+    <link rel="canonical" href="http://greydanus.github.io/2022-03-14-logistics-of-simulating/">
+    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Duc in Altum posts" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/assets/main.css">
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-72311215-6', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <!-- Allow RSS subscribers, as described in https://dzhavat.github.io/2020/01/19/adding-an-rss-feed-to-github-pages.html -->
+    <link rel="alternate" type="application/atom+xml" title="Sam Greydanus’ blog" href="/feed.xml">
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+  <div class="wrap">
+
+    <div style="float:left; margin-top:11px; margin-right:10px;">
+    <img src="/assets/oak.png" width="50px">
+    </div>
+
+    <div style="float:left; margin-top:4px; margin-right:10px;">
+      <a class="site-title" style="padding-top:0px; padding-bottom:0px;" href="/ ">Duc in Altum</a>
+      <p style="font-size:14px;">‎‎ㅤㅤㅤ&zwnj;</p> <!-- This is very hacky but I couldn't find a better way -->
+      <br>
+      <p style="padding-bottom:6px; font-size:15px;font-weight: 300;">A science blog by Sam Greydanus</p>
+    </div>
+
+<!--     <a class="site-title" style="padding-top:8px; font-size:28px" href="/ ">Duc in Altum</a> -->
+    
+    <nav class="site-nav">
+      <a href="#" class="menu-icon">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
+          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
+            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
+            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
+            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+        </svg>
+      </a>
+
+      <div class="trigger" style="margin-bottom:0px; padding-top:10px; font-size:13px;font-weight: 300;">
+<!--         <a class="page-link" href="/ ">Home</a> -->
+<!--         
+          <a class="page-link" href="/assets/2017-12-23-neurips17/">A Review of NeurIPS</a>
+        
+          <a class="page-link" href="/2022-01-26-studying-growth/">Studying Growth with Cellular Automata</a>
+        
+          <a class="page-link" href="/2022-01-26-studying-growth_/">Studying Growth with Cellular Automata</a>
+        
+          <a class="page-link" href="/2022-03-14-logistics-of-simulating/">Resurrecting Realism in Quantum Mechanics</a>
+        
+          
+        
+          
+        
+          
+        
+          <a class="page-link" href="/justification/">Trimmer on Justification</a>
+        
+          <a class="page-link" href="/papers/">Interesting papers</a>
+        
+          
+         -->
+        <a class="page-link" style="margin-bottom: 0px; padding-bottom:0px;" href="../../../../index.html">Home</a>
+<!--         <a class="page-link" style="margin-bottom: 0px; padding-bottom:0px;" href="../../../../about.html">About me (old)</a> -->
+        <a class="page-link" style="margin-bottom: 0px; padding-bottom:0px;" href="/about_me">About me</a>
+      </div>
+    </nav>
+  </div>
+
+</header>
+
+
+    <div class="page-content">
+      <div class="wrap">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Resurrecting Realism in Quantum Mechanics</h1>
+    <p class="meta">Mar 11, 2022</p>
+  </header>
+
+  <article class="post-content">
+  <p>Let’s imagine we were going to build a simulation of the universe. Starting from what we know about physics, how would we inmplement it? I wrote down a few ideas. It would be:</p>
+
+<ol>
+  <li><strong>Massively parallel.</strong> By taking advantage of the fact that all interactions are local and causal interactions cannot propagate faster than the speed of light, one could parallelize the simulation in a dramatic way. Spatially adjacent parts of the simulation would be run on the same CPUs and spatially distant parts would almost certainly be run on separate CPUs.</li>
+  <li><strong>Conservation laws enforced.</strong> Physics is built on the idea that certain quantities are strictly conserved. Scalar quantities like mass-energy are conserved. So are vector quantities like spin and angular momentum.</li>
+  <li><strong>Binary logic.</strong> Our computers use discrete, binary logic to represent and manipulate information. In this world, non-discrete numbers (eg. floats) are represented with sequences of discrete symbols. Let’s assume that a simulation of the universe would do the same thing.</li>
+  <li><strong>Adaptive computation.</strong> A lot more happens in some times and places in the universe than others. To simulate it efficiently, we would not want to make a 3D grid and then put mass in each of the cells of that grid – 99% of the grid would be empty. Instead, we’d want to use a particle-based (Lagrangian) simulation where the distribution of matter and energy is represented as nodes on a graph.</li>
+</ol>
+
+<p>We can check to see whether these are good assumptions by looking at whether they hold true for existing state-of-the-art physics simulations. Taking a quick glance over the best <a href="https://www.myroms.org/">oceanography</a>, <a href="https://confluence.ecmwf.int/display/S2S/ECMWF+model+description">meteorology</a>, <a href="https://arxiv.org/abs/0810.5757">plasma</a>, and <a href="https://en.wikipedia.org/wiki/Computational_fluid_dynamics">computational fluid dynamics</a> models, this appear to be the case.</p>
+
+<p>Now, having laid out some basic assumptions about our simulation of the universe, let’s look at their implications.</p>
+
+<p>The first thing to see is that assumptions 1 and 2 are in tension with one another. In order to ensure that a quantity (eg. mass or energy or mass-energy) is conserved, you need to sum that quantity across the entire simulation, determine whether a correction is needed, and then apply that correction to the system as a whole. Computationally, this requires a synchronous reduction operation and an element-wise divide across the whole system, and this has to be done at virtually every simulation step. When you write a single-threaded physics simulation, this can account for about half of the computational cost (here are examples from the simple <a href="https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L57">fluid</a> and <a href="https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L236">topology</a> simulations I have written).</p>
+
+<p>As you parallelize the simulation, you can expect the cost of enforcing conservation laws to grow much higher. This is because simulating interactions between adjacent particles is pretty easy to do in a parallel and asynchronous manner. But enforcing system-wide conservation laws requires transferring data between distant CPU cores and keeping them more or less in sync. As a result, enforcing conservation laws in this manner quickly grows to be a limiting factor on runtime.</p>
+
+<p>We may ask if perhaps there is some other way to enforce conservation laws without tallying conserved quantities across the entire simulation at each step. Probably yes! One way to do this is to quantize the conserved quantity. For example, we could quantize energy and then only transfer it in the form of discrete packets. Let’s take financial markets as an analogy. They are massively parallel and it’s important to keep a proper accounting of the total amount of currency in circulation at a given moment. The solution is to allow currency to function as a continuous value on a practical level, but to quantize it by making small measures of value (pennies) indivisible.</p>
+
+<p>Quantization may work well for conserving scalar values like energy. But what about conserving vector quantities like angular momentum? In these cases, rotational symmetry makes things difficult. Imagine two particles with angular momentum vectors pointing in arbitrary directions. When we compute the angular momentum of the entire system, odds are we will get an irrational number. There is simply no way to quantize the directions of the two particles’ angular momentum vectors so that the sum of the two is also quantized without sacrificing rotational symmetry.</p>
+
+<p>So how are we to implement exact conservation of vector quantities without sacrificing rotational symmetry? One option is to require that a particle’s vector quantities always be defined win reference to some other particle’s vector quantities. This would be implemented by creating multiple <a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)">pointer references</a> to a single variable and then giving each of those pointers to a different particle. As a concrete example, we might imagine an atom releasing energy in the form of two photons. The polarization angle of the first photon would be expressed as a pointer to variable <code class="language-plaintext highlighter-rouge">x</code> whereas that of the second photon would be expressed as a 90 degree rotation of a pointer to variable <code class="language-plaintext highlighter-rouge">x</code>. Moving our simulation forward, the polarization angles of the two phorons will change over time and perhaps some small amount of integration error will accumualte. But even if some integration error occurs, we can say with confidence that the net polarization of the two photons is zero because they are defined in terms of the same latent variable.</p>
+
+<p>This approach is a good way to enforce exact conservation of vector quantities. However, it comes at a price. We must sacrifice locality – the principle that an object is influenced directly only by its immediate surroundings. It’s one of the most sacred principles in physics. This gets violated in the example of the two photons because a change in the polarization of the first photon will update the value of <code class="language-plaintext highlighter-rouge">x</code>, which will implicitly change the polarization of the second photon.</p>
+
+<p>Interestingly, the mechanics of this nonlocal relationship would predict the violation of <a href="https://www.youtube.com/watch?v=zcqZHYo7ONs&amp;vl=en">Bell’s inequality</a>.</p>
+
+<p>Physicists agree violation of Bell’s inequality implies that nature violates either realism (the principle that reality exists with definite properties even when not being observed) or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism: in other words, entangled particles cannot be said to have deterministic states and exist in a state of superposition until their are measured. As a contrast, in our simulated universe, realism would be preserved whereas exact locality would be sacrificed. Entangled particles could be said to have a definite state at all times, but whenever one particle interacted with some piece of matter, that interaction would affect the state of the other particle instantaneously.</p>
+
+<p>This observation may lead us to ask whether other quantum mechanical phenomena are byproducts of simulation. The double slit experiment is an interesting example. We cannot explain a photon’s “self-interaction” using the argument we made above about conservation of vector quantities. Why, then, might particles exhibit wave-particle duality in a simulation?</p>
+
+<p>The probable answer is filtering. Filtering is a common technique where a Gaussian (or cone) filter is convolved with a grid in order to smooth out the physics on the grid and make them appear as though they were occuring on a continuous medium. This step is absolutely essential when one wants to simulate continous physics on a discrete domain. The filtering steps in the <a href="https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L83">fluid</a> and <a href="https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L84">topology</a> simulations I referred to earlier were just as essential as enforcing conservation laws. Moreover, filtering is used in most large-scale simulations like the ones we discussed at the beginning of the post.</p>
+
+<p>How would one implement filtering in a large-scale particle-based simulation of the universe? Well, since the simulation is adaptively integrated across space, it would be hard to apply a Gaussian or cone filter directly. An alternative would be to simulate the dynamics of every particle as an ensemble. One would initialize a cloud of particles with slightly different initial conditions (but sharing pointer references to the same conserved quantities as discussed earlier) and then simulate all of them through time. If you allowed them to interact with one another, then collectively they would behave as a wave.</p>
+
+<p>But you might notice that there is a tension between this spatially delocalized, wave-like behavior (a consequence of filtering, which is related to assumption 3) and the exact conservation of quantities like energy (assumption 2). The tension is this: when a wave interacts with an object, it transfers energy in a delocalized manner, in proportion to its amplitude. But we have decided to quantize energy in order to keep an exact accounting of it across our simulation. So when our ensemble of particles interacts with some matter, it must transfer exactly one quanta of energy and it must do so at one particular location. The simplest way to implement this would be to choose one particle out of the ensemble and allow it to transfer energy to other particles. The rest of the particles in the ensemble would be removed from the simulation upon coming into direct contact with some piece of matter.</p>
+
+<p>To review – we’d need to implement filtering in our simulation in order to simulate continuous physics on a discrete domain. The best way to do it would be an ensemble method. And that ensemble method, along with the requirement that energy be quantized, would produce the empirical results we observe in the double slit experiment (namely: photons passing through both slits as if they were delocalized waves, but then transferring discrete quanta of energy to discrete locations on a photographic film).</p>
+
+<p>Suppose we are living in a simulation, and the logistics of its implementation has led to some quantum mechanical effects. Suppose that in order to explain quantum mechanics we need to abandon locality assumptions and resurrect realism and determinism. How would we test all of this?</p>
+
+<p>I can’t think of a good way to do it yet. I have the sense that it could be done by modifying the polarizer apparatus used by Clauser and Horne to test Bell’s theorem. But so far I haven’t the faintest idea how it could be modified so as to rule out realism and demonstrate the particular flavor of nonlocality we’ve described in this post.</p>
+
+  </article>
+
+  <!-- mathjax -->
+  
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+  <!-- disqus comments -->
+ 
+  <div id="disqus_thread"></div>
+  <script>
+      /**
+       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+       *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+       */
+      /*
+      var disqus_config = function () {
+          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+      };
+      */
+      (function() {  // DON'T EDIT BELOW THIS LINE
+          var d = document, s = d.createElement('script');
+          
+          s.src = '//greydanus-blog.disqus.com/embed.js';
+          
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+  
+
+
+  
+</div>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrap">
+
+    <!-- <h2 class="footer-heading">Duc in Altum</h2> -->
+
+    <div class="footer-col-1 column">
+      <ul>
+        <li>Duc in Altum</li>
+        <!-- <li><a href="mailto:greydanus.17(at)gmail.com">greydanus.17(at)gmail.com</a></li> -->
+      </ul>
+    </div>
+
+    <div class="footer-col-2 column">
+      <ul>
+        <li>
+          <a href="https://github.com/greydanus">
+            <span class="icon github">
+              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
+                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
+                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
+                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
+                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
+                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
+                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
+                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
+                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
+              </svg>
+            </span>
+            <span class="username">greydanus</span>
+          </a>
+        </li>
+        <li>
+          <a href="https://twitter.com/samgreydanus">
+            <span class="icon twitter">
+              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
+                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
+                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
+                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
+                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
+                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
+                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
+              </svg>
+            </span>
+            <span class="username">samgreydanus</span>
+          </a>
+        </li>
+        <li>
+          <a href="../../../../feed.xml">
+            <span class="icon rss">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#C2C2C2" d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/></svg>
+            </span>
+            <span class="username">RSS</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer-col-3 column">
+      <p class="text">A science blog by Sam Greydanus</p>
+    </div>
+
+  </div>
+
+</footer>
+
+
+    </body>
+</html>

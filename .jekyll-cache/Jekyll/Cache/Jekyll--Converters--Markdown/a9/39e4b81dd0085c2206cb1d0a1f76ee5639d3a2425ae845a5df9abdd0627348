@@ -1,0 +1,19 @@
+I"�<p>Let’s imagine we were going to build a simulation of the universe. Starting from what we know about physics, how would we inmplement it? I wrote down a few ideas. It would be:</p>
+
+<ul>
+  <li><strong>Massively parallel.</strong> By taking advantage of the fact that all interactions are local and causal interactions cannot propagate faster than the speed of light, one could parallelize the simulation in a dramatic way. Spatially adjacent parts of the simulation would be run on the same CPUs and spatially distant parts would almost certainly be run on separate CPUs.</li>
+  <li><strong>Conservation laws enforced.</strong> Physics is built on the idea that certain quantities are strictly conserved. Scalar quantities like mass-energy are conserved. So are vector quantities like spin and angular momentum.</li>
+  <li><strong>Binary logic.</strong> Our computers use discrete, binary logic to represent and manipulate information. In this world, non-discrete numbers (eg. floats) are represented with sequences of discrete symbols. Let’s assume that a simulation of the universe would do the same thing.</li>
+  <li><strong>Adaptive computation.</strong> A lot more happens in some times and places in the universe than others. To simulate it efficiently, we would not want to make a 3D grid and then put mass in each of the cells of that grid – 99% of the grid would be empty. Instead, we’d want to use a particle-based (Lagrangian) simulation where the distribution of matter and energy is represented as nodes on a graph.</li>
+</ul>
+
+<p>Let’s imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Here are a few ideas
+Massively parallel. By taking advantage of the fact that all interactions are local, one could parallelize the simulation in a dramatic way. Spatially adjacent parts of the simulation would be run on the same CPUs or on adjacent CPUs
+Conservation laws enforced. Physics is built on the idea that certain quantities are strictly conserved. Scalar quantities like mass-energy are conserved. And vectors like spin and angular momentum are conserved.
+Binary logic. Our computers use discrete logic – more specifically, the binary logic of (0’s and 1’s) – to represent everything. Continuous values like floats are represented via a series of binary values. Let’s assume that a simulation of the universe would do the same thing.
+Same code across time and space. As far as we can tell, the laws of physics remain invariant across space and time. The simplest assumption is that the code implementing those laws does the same thing.</p>
+
+<p>Adaptive computation. A lot more is happening in some areas of the universe than others. So to simulate it efficiently, one would probably not parameterize it with a volumetric 3D grid. Instead, one would probably represent the state of the universe as a mesh or a graph where the interacting nodes are at different distances from one another. If you look at a piece of matter over time, you’ll notice that sometimes more is happening (eg a supernova occurs, or life on earth appears) and other times less is happening (a cold asteroid simply exists for a million years)
+We can check to see whether these are good assumptions by looking at whether they hold true for current state of the art physics simulations. For the most part, they do: most computational physics simulations are massively parallel, they take great care to enforce conservation laws (a step sometimes called “projection” in computational fluid dynamics), and they tend to use adaptive computation across time and space (via adaptive ODE solvers across time and mesh parameterizations across space).</p>
+
+:ET
