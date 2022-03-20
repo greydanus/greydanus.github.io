@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Quantum Mechanics as Simulation Code"
+title:  "Simulating the Universe Could Yield Quantum Mechanics"
 excerpt: "We look at the logistics of simulating the universe and conclude that quantum mechanics may be a consequence of simulation code."
 date:   2022-03-11 11:00:00
 mathjax: true
