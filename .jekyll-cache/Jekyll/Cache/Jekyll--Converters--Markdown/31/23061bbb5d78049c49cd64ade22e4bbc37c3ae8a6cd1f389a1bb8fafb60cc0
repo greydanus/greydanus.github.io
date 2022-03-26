@@ -1,0 +1,75 @@
+I"R:<h2 id="the-universe-as-a-simulation">The universe as a simulation</h2>
+
+<p>Let’s imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Well, it would probably have:</p>
+
+<ol>
+  <li><strong>Massive parallelism.</strong> Taking advantage of the fact that, in physics, all interactions are local and limited by the speed of light, one could parallelize the simulation. Spatially adjacent regions would run on the same CPUs whereas spatially distant regions would run on separate CPUs.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup></li>
+  <li><strong>Conservation laws enforced.</strong> Physics is built on the idea that certain quantities are strictly conserved. Scalar quantities like <a href="https://en.wikipedia.org/wiki/Conservation_law#Exact_laws">mass-energy</a> are conserved, as are vector quantities like <a href="https://en.wikipedia.org/wiki/Conservation_law#Exact_laws">angular momentum</a>.<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">2</a></sup></li>
+  <li><strong>Binary logic.</strong> Our computers use discrete, binary logic to represent and manipulate information. Non-discrete numbers are represented with sequences of discrete symbols (see <a href="https://en.wikipedia.org/wiki/Single-precision_floating-point_format">float32</a>). Let’s assume our simulation does the same thing.</li>
+  <li><strong>Adaptive computation.</strong> To simulate the universe efficiently, we would want to spend most of our compute time on regions where a lot of matter and energy are concentrated: that’s where the dynamics would be most complex. So we’d probably want to use a <a href="https://en.wikipedia.org/wiki/Lagrangian_particle_tracking">particle-based (Lagrangian) simulation</a> of some sort.</li>
+  <li><strong>Isotropy.</strong> Space would be <a href="https://en.wikipedia.org/wiki/Isotropy">uniform in all directions</a>; physics would be invariant under rotation.</li>
+</ol>
+
+<p>We can check to see whether these are reasonable assumptions by looking at whether they hold true for existing state-of-the-art physics simulations. It turns our that they hold true for the best <a href="https://www.myroms.org/">oceanography</a>, <a href="https://confluence.ecmwf.int/display/S2S/ECMWF+model+description">meteorology</a>, <a href="https://arxiv.org/abs/0810.5757">plasma</a>, <a href="https://en.wikipedia.org/wiki/NEMO_(Stellar_Dynamics_Toolbox)">cosmology</a>, and <a href="https://en.wikipedia.org/wiki/Computational_fluid_dynamics">computational fluid dynamics</a> models. So, having laid out some basic assumptions about how our simulation would be implemented, let’s look at their implications.</p>
+
+<h2 id="enforcing-conservation-laws-in-parallel">Enforcing conservation laws in parallel</h2>
+
+<p>The first thing to see is that assumptions 1 and 2 are in tension with one another. In order to ensure that a quantity (eg mass-energy) is conserved, you need to sum that quantity across the entire simulation, determine whether a correction is needed, and then apply that correction to the system as a whole. Computationally, this requires a synchronous <a href="https://en.wikipedia.org/wiki/Reduction_operator">reduction operation</a> and an element-wise divide at virtually every timestep.</p>
+
+<p>When you write a single-threaded physics simulation, this can account for about half of the computational cost (these <a href="https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L57">fluid</a> and <a href="https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L236">topology</a> simulations are good examples). As you parallelize your simulation more and more, you can expect the cost of enforcing conservation laws to grow higher in proportion. This is because simulating dynamics is pretty easy to do in parallel. But enforcing system-wide conservation laws requires transferring data between distant CPU cores and keeping them more or less in sync. As a result, enforcing conservation laws in this manner quickly grows to be a limiting factor on runtime. And so we find ourselves asking:</p>
+
+<blockquote>
+  <p>Is there a more parallelizable approach to enforcing global conservation laws?</p>
+</blockquote>
+
+<p>One option is to quantize the conserved quantity. For example, we could quantize energy and then only transfer it in the form of discrete packets.</p>
+
+<p>To see why this would be a good idea, let’s use financial markets as an analogy. Financial markets are massively parallel and keeping a proper accounting of the total amount of currency in circulation is very important. So they allow currency to function as a continuous quantity on a practical level, but they quantize it at a certain scale by making small measures of value (pennies) indivisible. We could enforce conservation of energy in the same way, for the same reasons.</p>
+
+<h2 id="conserving-vector-quantities">Conserving vector quantities</h2>
+
+<p>Quantization may work well for conserving scalar values like energy. But what about conserving vector quantities like angular momentum? In these cases, isotropy/rotational symmetry (assumption 5) makes things difficult. Isotropy says that our simulation will be invariant under rotation, but if we quantized our angular momentum vectors, we would be unable to represent all spatial directions equally. We’d get <a href="https://en.wikipedia.org/wiki/Round-off_error">rounding errors</a> which would compound over time.</p>
+
+<p>So how are we to implement exact conservation of vector quantities? One option is to require that one particle’s vector quantities always be defined in reference to some other particle’s vector quantities. This could be implemented by creating multiple <a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)">pointer references</a> to a single variable and then giving each of those pointers to a different particle. As a concrete example, we might imagine an atom releasing energy in the form of two photons. The polarization angle of the first photon could be expressed as a 45\(^\circ\) clockwise rotation of a pointer to variable <code class="language-plaintext highlighter-rouge">x</code>. Meanwhile, the polarization angle of the second photon could be expressed as a 45\(^\circ\) counterclockwise rotation of a pointer to the same variable <code class="language-plaintext highlighter-rouge">x</code>. As we advance our simulation through time, the polarization angles of the two photons would change. Perhaps some small integration and rounding errors would even accumulate. But even if that happens, we can say with confidence that the relative difference in polarization angle will be a constant 90\(^\circ\). In this way, we could enforce conservation of angular momentum in parallel across the entire simulation.</p>
+
+<p>We should recognize that this approach comes at a price. It demands that we sacrifice <em>locality</em>, the principle that an object is influenced directly only by its immediate surroundings. It’s one of the most sacred principles in physics. This gets violated in the example of the two photons because a change in the polarization of the first photon will update the value of <code class="language-plaintext highlighter-rouge">x</code>, implicitly changing the polarization of the second photon.</p>
+
+<p>Interestingly, the mechanics of this nonlocal relationship would predict a violation of <a href="https://www.youtube.com/watch?v=zcqZHYo7ONs&amp;vl=en">Bell’s inequality</a> which matches experimental results. Physicists agree that violation of Bell’s inequality implies that nature violates either <em>realism</em>, the principle that reality exists with definite properties even when not being observed, or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism: in other words, that entangled particles cannot be said to have deterministic states and instead exist in a state of superposition until they are measured. In our simulated universe, realism would be preserved whereas locality would be sacrificed. Entangled particles would have definite states but sometimes those states would change due to shared references to spatially distant “twins.”</p>
+
+<p>Physicists have certainly entertained the idea of using non-local theories to explain Bell’s inequality. One of the reasons these theories are not more popular is that <a href="https://drive.google.com/file/d/1RTlV08KhQ7lNwOukbNcMok0f6E42uMyI/view?usp=sharing">Groblacher et al, 2007</a> and others have reported experimental results that rule out most reasonable options. More specifically, they have ruled out all theories that say <em>__</em>. However,…</p>
+
+<h2 id="explaining-the-double-slit-experiment">Explaining the double slit experiment</h2>
+
+<p>Our findings thusfar may lead us to ask whether other quantum mechanical phenomena can be derived from the simulation <em>ansatz</em>. For example, what could be causing the wave-particle duality of light seen in the double slit experiment? The important idea here is filtering. <a href="https://en.wikipedia.org/wiki/Filter_(large_eddy_simulation)">Filtering</a> is a common technique where a Gaussian or cone filter is convolved with a grid in order to smooth out the physics and eliminate grid-level pathologies. This step is essential in most simulations. For example, these <a href="https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L83">fluid</a> and <a href="https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L84">topology</a> simulations do not work without filtering.</p>
+
+<p>How would one implement filtering in a large-scale, particle-based simulation of the universe? Well, if the simulation were a particle-based instead of grid-based, we couldn’t apply a Gaussian or cone filter. An alternative would be to simulate the dynamics of each particle using ensembles of virtual particles. One could initialize a group of these virtual particles with slightly different initial conditions and then simulate all of them through time. If you allowed these virtual particles to interact with other virtual particles in the ensemble, then the entire ensemble would collectively behave as though it were a wave.</p>
+
+<p>You might notice that there is a tension between this spatially delocalized, wave-like behavior (a consequence of filtering, which is related to assumption 3) and the exact conservation – and thus quantization – of quantities like energy (assumption 2). The tension is this: when a wave interacts with an object, it transfers energy in a manner that is delocalized and in proportion to its amplitude at a given location. But we have decided to quantize energy in order to keep an exact accounting of it across our simulation. So when our ensemble of particles interacts with some matter, it must transfer exactly one quanta of energy and it must do so at one particular location.</p>
+
+<p>The simplest way to implement this would be to choose one particle out of the ensemble and allow it to interact with other matter and transfer energy. The rest of the particles in the ensemble would be removed from the simulation upon coming into contact with other matter. The interesting thing about this approach is that it could help explain the wave-particle duality of subatomic particles such as photons. For example, it could be used to reproduce the empirical results of the double slit experiment in a fully deterministic manner.</p>
+
+<h2 id="testing-this-hypothesis">Testing this hypothesis</h2>
+
+<p>Suppose all of the ideas we have discussed are true. How would we be able to test them? One place to start would be to show that in quantum mechanics, realism is actually preserved whereas locality is not. To that end, here’s a possible experiment:</p>
+
+<p><em>Set up the apparatus used to test Bell’s theorem. Entangled photons emerge from a source and head in opposite directions. Eventually they get their polarizations measured. On one side, you set up the double slit experiment. As photons pass through it, you will observe wavelike diffraction patterns, provided the photons are in non-homogeneous quantum states. BUT, if you measure the photons which are heading in the opposite direction of the double slit experiment first, then you would expect the photons entering the double slit experiment to have already collapsed into hetereogenous states. And so you might expect those photons to act like particles rather than waves when they pass through the double slit experiment. That would be a surprising result because such a setup would violate the locality assumption and could be used to transmit information faster than light!</em></p>
+
+<h2 id="closing-thoughts">Closing thoughts</h2>
+
+<p>To the followers of Plato, the world of the senses was akin to shadows dancing on the wall of a cave. The essential truths and realities of life were not to be found on the wall at all, but rather somewhere behind you in the form of real dancers and real flames. A meaningful life was to be spent seeking to understand those forms, elusive as they might seem.</p>
+
+<p>This post, though it covers esoteric ideas like quantum mechanics and simulation theory, is aimed at exploring the unseen aspects of reality in the same way that Plato’s followers did. At this point, we cannot say for sure whether we live in a simulation. We may never know. But in looking at the logistics of such a simulation, we have come across an interesting interpretation of quantum mechanics which may bear additional investigation. Perhaps there is experimental evidence that we are unaware of which invalidates this theory. But at the very least, it makes for a provocative and entertaining thought experiment.</p>
+
+<h2 id="footnotes">Footnotes</h2>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:fn1" role="doc-endnote">
+      <p>This is connected to the notion of <a href="https://plato.stanford.edu/entries/cellular-automata/#CAModeReal">cellular automata as models of reality</a>. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:fn2" role="doc-endnote">
+      <p>As a subset of conservation of angular momentum, <a href="https://www.nature.com/articles/s41467-019-10939-x">polarization</a> is also conserved. This is relevant to later examples which assume conservation of polarization. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET
