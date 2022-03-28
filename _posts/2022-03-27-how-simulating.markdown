@@ -9,7 +9,7 @@ thumbnail: /assets/how-simulating/thumbnail.png
 ---
 
   <div onclick="hideShowNote()" class="btn" style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;cursor: pointer; width: 180px;background-color: #FFFDDD">
-  <div style="display:inline"><b>Note to the reader</b></div> <div id="note_toggle" style="display:inline">(+)</div>
+  <div style="display:inline">Note to the reader</div> <div id="note_toggle" style="display:inline">(+)</div>
   </div>
 
 <div style='background-color: #FFFDDD'>
