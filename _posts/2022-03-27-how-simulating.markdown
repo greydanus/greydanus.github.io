@@ -100,7 +100,7 @@ _Then we change the experiment by measuring the second photon in the pair before
 
 To the followers of Plato, the world of the senses was akin to shadows dancing on the wall of a cave. The essential truths and realities of life were not to be found on the wall at all, but rather somewhere else in the cave in the form of real dancers and real flames. A meaningful life was to be spent seeking to understand these forms, elusive though they might be.
 
-In this post, we took part in that tradition. More specifically, we used what we know about simulations to propose a new interpretation of quantum mechanics. There is no way to know for sure whether we live in a simulation. We may never know. But at the very least, exploring the idea leads to some surprising and thought-provoking conclusions.
+In this post, we took part in that tradition by using our knowledge of physics simulations to propose a new interpretation of quantum mechanics. It's hard to know whether we do indeed live in a simulation. Perhaps we will never know. But at the very least, it seems that exploring the idea leads to some surprising and thought-provoking conclusions.
 
 ## Footnotes
 
