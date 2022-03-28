@@ -90,7 +90,7 @@ _We set up the apparatus used to test Bell’s inequality. Entangled photons eme
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/how-simulating/fig4.png" style="width:80%">
   <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
-  One possible means of testing the hypothesis we have outlined. If photons used to test the Bell inequality behave in this manner when they encounter a double slit setup, one could use them to transmit information faster than the speed of light (violating the locality assumption off quantum mechanics).
+  One possible means of testing the hypothesis we have outlined. If photons used to test the Bell inequality behave in this manner when they encounter a double slit setup, one could use them to transmit information faster than the speed of light, violating the locality assumption.
   </div>
 </div>
 
