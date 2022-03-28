@@ -87,14 +87,14 @@ Suppose the ideas we have discussed are an accurate model of reality. How would 
 
 _We set up the apparatus used to test Bell’s inequality. Entangled photons emerge from a source and head in opposite directions. Eventually they get their polarizations measured. We allow the first photon in the pair to enter a double slit experiment. As it passes through the double slit, it interferes with itself, producing a wavelike diffraction pattern on the detector._
 
-_We change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption[^fn3] and could be used to transmit information faster than light._
-
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/how-simulating/fig4.png" style="width:80%">
   <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
   One possible means of testing the hypothesis we have outlined. If photons used to test the Bell inequality behave in this manner when they encounter a double slit setup, one could use them to transmit information faster than the speed of light (violating the locality assumption off quantum mechanics).
   </div>
 </div>
+
+_We change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption[^fn3] and could be used to transmit information faster than light._
 
 ## Closing thoughts
 
