@@ -94,7 +94,7 @@ _We set up the apparatus used to test Bell’s inequality. Entangled photons eme
   </div>
 </div>
 
-_We change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption[^fn3] and could be used to transmit information faster than light._
+_Then we change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption[^fn3] and could be used to transmit information faster than light._
 
 ## Closing thoughts
 
