@@ -1,4 +1,129 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-03-26T23:15:34-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Duc in Altum</title><subtitle>A science blog by Sam Greydanus</subtitle><entry><title type="html">Dissipative Hamiltonian Neural Networks</title><link href="http://greydanus.github.io/2022/01/25/dissipative-hnns/" rel="alternate" type="text/html" title="Dissipative Hamiltonian Neural Networks" /><published>2022-01-25T03:00:00-08:00</published><updated>2022-01-25T03:00:00-08:00</updated><id>http://greydanus.github.io/2022/01/25/dissipative-hnns</id><content type="html" xml:base="http://greydanus.github.io/2022/01/25/dissipative-hnns/">&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-03-27T17:00:44-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Duc in Altum</title><subtitle>A science blog by Sam Greydanus</subtitle><entry><title type="html">How Simulating the Universe Could Yield Quantum Mechanics</title><link href="http://greydanus.github.io/2022/03/27/how-simulating/" rel="alternate" type="text/html" title="How Simulating the Universe Could Yield Quantum Mechanics" /><published>2022-03-27T04:00:00-07:00</published><updated>2022-03-27T04:00:00-07:00</updated><id>http://greydanus.github.io/2022/03/27/how-simulating</id><content type="html" xml:base="http://greydanus.github.io/2022/03/27/how-simulating/">&lt;div onclick=&quot;hideShowNote()&quot; class=&quot;btn&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;cursor: pointer; width: 180px;background-color: #FFFDDD&quot;&gt;
+  &lt;div style=&quot;display:inline&quot;&gt;&lt;b&gt;Note to the reader&lt;/b&gt;&lt;/div&gt; &lt;div id=&quot;note_toggle&quot; style=&quot;display:inline&quot;&gt;(+)&lt;/div&gt;
+  &lt;/div&gt;
+
+&lt;div style=&quot;background-color: #FFFDDD&quot;&gt;
+  &lt;div id=&quot;note_to_reader&quot; style=&quot;display: none;&quot;&gt;&lt;i&gt;In this post, we will explore a rather unusual interpretation of how and why quantum mechanics works. What I have written is accurate to the best of my knowledge. However, you may discover that I&apos;ve made an error in reasoning or perhaps missed an important reference. If that&apos;s the case, please let me know – in the comments or over email – and I&apos;ll make the appropriate fix.&lt;/i&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;the-universe-as-a-simulation&quot;&gt;The universe as a simulation&lt;/h2&gt;
+
+&lt;p&gt;Let’s imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Well, it would probably have:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;Massive parallelism.&lt;/strong&gt; Taking advantage of the fact that, in physics, all interactions are local and limited by the speed of light, one could parallelize the simulation. Spatially adjacent regions would run on the same CPUs whereas spatially distant regions would run on separate CPUs.&lt;sup id=&quot;fnref:fn1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Conservation laws enforced.&lt;/strong&gt; Physics is built on the idea that certain quantities are strictly conserved. Scalar quantities like &lt;a href=&quot;https://en.wikipedia.org/wiki/Conservation_law#Exact_laws&quot;&gt;mass-energy&lt;/a&gt; are conserved, as are vector quantities like &lt;a href=&quot;https://en.wikipedia.org/wiki/Conservation_law#Exact_laws&quot;&gt;angular momentum&lt;/a&gt;.&lt;sup id=&quot;fnref:fn2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Binary logic.&lt;/strong&gt; Our computers use discrete, binary logic to represent and manipulate information. Non-discrete numbers are represented with sequences of discrete symbols (see &lt;a href=&quot;https://en.wikipedia.org/wiki/Single-precision_floating-point_format&quot;&gt;float32&lt;/a&gt;). Let’s assume our simulation does the same thing.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Adaptive computation.&lt;/strong&gt; To simulate the universe efficiently, we would want to spend most of our compute time on regions where a lot of matter and energy are concentrated: that’s where the dynamics would be most complex. So we’d probably want to use a &lt;a href=&quot;https://en.wikipedia.org/wiki/Lagrangian_particle_tracking&quot;&gt;particle-based (Lagrangian) simulation&lt;/a&gt; of some sort.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Isotropy.&lt;/strong&gt; Space would be &lt;a href=&quot;https://en.wikipedia.org/wiki/Isotropy&quot;&gt;uniform in all directions&lt;/a&gt;; physics would be invariant under rotation.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We can determine whether these are reasonable assumptions by checking that they hold true for existing state-of-the-art physics simulations. It turns our that they hold true for the best &lt;a href=&quot;https://www.myroms.org/&quot;&gt;oceanography&lt;/a&gt;, &lt;a href=&quot;https://confluence.ecmwf.int/display/S2S/ECMWF+model+description&quot;&gt;meteorology&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/0810.5757&quot;&gt;plasma&lt;/a&gt;, &lt;a href=&quot;https://en.wikipedia.org/wiki/NEMO_(Stellar_Dynamics_Toolbox)&quot;&gt;cosmology&lt;/a&gt;, and &lt;a href=&quot;https://en.wikipedia.org/wiki/Computational_fluid_dynamics&quot;&gt;computational fluid dynamics&lt;/a&gt; models. So, having laid out some basic assumptions about how our simulation would be implemented, let’s look at their implications.&lt;/p&gt;
+
+&lt;h2 id=&quot;enforcing-conservation-laws-in-parallel&quot;&gt;Enforcing conservation laws in parallel&lt;/h2&gt;
+
+&lt;p&gt;The first thing to see is that assumptions 1 and 2 are in tension with one another. In order to ensure that a quantity (eg mass-energy) is conserved, you need to sum that quantity across the entire simulation, determine whether a correction is needed, and then apply that correction to the system as a whole. Computationally, this requires a synchronous &lt;a href=&quot;https://en.wikipedia.org/wiki/Reduction_operator&quot;&gt;reduction operation&lt;/a&gt; and an element-wise divide at virtually every timestep.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/how-simulating/fig1.png&quot; /&gt;
+      &lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  A conceptual outline of a large-scale physics simulation where different regions of space are being simulated in parallel. This parallelization is possible because nothing can travel faster than the speed of light; thus the separate regions can be simulated independently over short timescales.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;When you write a single-threaded physics simulation, this can account for about half of the computational cost (these &lt;a href=&quot;https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L57&quot;&gt;fluid&lt;/a&gt; and &lt;a href=&quot;https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L236&quot;&gt;topology&lt;/a&gt; simulations are good examples). As you parallelize your simulation more and more, you can expect the cost of enforcing conservation laws to grow higher in proportion. This is because simulating dynamics is pretty easy to do in parallel. But enforcing system-wide conservation laws requires transferring data between distant CPU cores and keeping them more or less in sync. As a result, enforcing conservation laws in this manner quickly grows to be a limiting factor on runtime. We find ourselves asking &lt;em&gt;is there a more parallelizable approach to enforcing global conservation laws?&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;One option is to quantize the conserved quantity. For example, we could quantize energy and then only transfer it in the form of discrete packets.&lt;/p&gt;
+
+&lt;p&gt;To see why this would be a good idea, let’s use financial markets as an analogy. Financial markets are massively parallel and keeping a proper accounting of the total amount of currency in circulation is very important. So they allow currency to function as a continuous quantity on a practical level, but they quantize it at a certain scale by making small measures of value (pennies) indivisible. We could enforce conservation of energy in the same way, for the same reasons.&lt;/p&gt;
+
+&lt;h2 id=&quot;conserving-vector-quantities&quot;&gt;Conserving vector quantities&lt;/h2&gt;
+
+&lt;p&gt;Quantization may work well for conserving scalar values like energy. But what about conserving vector quantities like angular momentum? In these cases, isotropy/rotational symmetry (assumption 5) makes things difficult. Isotropy says that our simulation will be invariant under rotation, but if we quantized the directions of our angular momentum vectors, we would be unable to represent all spatial directions equally. We’d get &lt;a href=&quot;https://en.wikipedia.org/wiki/Round-off_error&quot;&gt;rounding errors&lt;/a&gt; which would compound over time.&lt;/p&gt;
+
+&lt;p&gt;So how are we to implement exact conservation of vector quantities? One option is to require that one particle’s vector quantities always be defined in reference to some other particle’s vector quantities. This could be implemented by creating multiple &lt;a href=&quot;https://en.wikipedia.org/wiki/Pointer_(computer_programming)&quot;&gt;pointer references&lt;/a&gt; to a single variable and then giving each of those pointers to a different particle. As a concrete example, we might imagine an atom releasing energy in the form of two photons. The polarization angle of the first photon could be expressed as a 45\(^\circ\) clockwise rotation of a pointer to variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt;. Meanwhile, the polarization angle of the second photon could be expressed as a 45\(^\circ\) counterclockwise rotation of a pointer to the same variable &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt;. As we advance our simulation through time, the polarization angles of the two photons would change. Perhaps some small integration and rounding errors would even accumulate. But even if that happens, we can say with confidence that the relative difference in polarization angle will be a constant 90\(^\circ\). In this way, we could enforce conservation of angular momentum in parallel across the entire simulation.&lt;/p&gt;
+
+&lt;p&gt;We should recognize that this approach comes at a price. It demands that we sacrifice &lt;em&gt;locality&lt;/em&gt;, the principle that an object is influenced directly only by its immediate surroundings. It’s one of the most sacred principles in physics. This gets violated in the example of the two photons because a change in the polarization of the first photon will update the value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt;, implicitly changing the polarization of the second photon.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/how-simulating/fig2.png&quot; /&gt;
+    &lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  This figure is inspired by the experimental setup of Clauser and Horne (1974) used to test the Bell inequality. Here we are hypothesizing the existence of a shared hidden variable &lt;i&gt;x&lt;/i&gt; which, when updated due the left photon&apos;s interaction with a polarizer, also affects the right photons polarization.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Interestingly, the mechanics of this nonlocal relationship would predict a violation of &lt;a href=&quot;https://www.youtube.com/watch?v=zcqZHYo7ONs&amp;amp;vl=en&quot;&gt;Bell’s inequality&lt;/a&gt; which matches experimental results. Physicists agree that violation of Bell’s inequality implies that nature violates either &lt;em&gt;realism&lt;/em&gt;, the principle that reality exists with definite properties even when not being observed, or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism: in other words, that entangled particles cannot be said to have deterministic states and instead exist in a state of superposition until they are measured. In our simulated universe, realism would be preserved whereas locality would be sacrificed. Entangled particles would have definite states but sometimes those states would change due to shared references to spatially distant “twins.”&lt;sup id=&quot;fnref:fn4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn4&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;explaining-the-double-slit-experiment&quot;&gt;Explaining the double slit experiment&lt;/h2&gt;
+
+&lt;p&gt;Our findings thusfar may lead us to ask whether other quantum mechanical phenomena can be derived from the simulation &lt;em&gt;ansatz&lt;/em&gt;. For example, what could be causing the wave-particle duality of light as seen in the double slit experiment?&lt;/p&gt;
+
+&lt;p&gt;The important idea here is &lt;a href=&quot;https://en.wikipedia.org/wiki/Filter_(large_eddy_simulation)&quot;&gt;filtering&lt;/a&gt;. Filtering is a common technique where a Gaussian or cone filter is convolved with a grid in order to smooth out the physics and eliminate grid-level pathologies. This step is essential – for example, these &lt;a href=&quot;https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L83&quot;&gt;fluid&lt;/a&gt; and &lt;a href=&quot;https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L84&quot;&gt;topology&lt;/a&gt; simulations would not work without it.&lt;/p&gt;
+
+&lt;p&gt;How would one implement filtering in a large-scale, particle-based simulation of the universe? Well, if the simulation were particle-based instead of grid-based, we couldn’t apply a Gaussian or cone filter. An alternative would be to simulate the dynamics of each particle using ensembles of virtual particles. One could initialize a group of these virtual particles with slightly different initial conditions and then simulate all of them through time. If you allowed these virtual particles to interact with other virtual particles in the ensemble, the entire ensemble would collectively behave as though it were a wave.&lt;/p&gt;
+
+&lt;p&gt;You might notice that there is a tension between this spatially delocalized, wave-like behavior (a consequence of filtering, which is related to assumption 3) and the conservation/quantization of quantities like energy (assumption 2). The tension is this: when a wave interacts with an object, it transfers energy in a manner that is delocalized and in proportion to its amplitude at a given location. But we have decided to quantize energy in order to keep an exact accounting of it across our simulation. So when our ensemble of particles interacts with some matter, it must transfer exactly one quanta of energy and it must do so at one particular location.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/how-simulating/fig3.png&quot; style=&quot;width:90%&quot; /&gt;
+    &lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  Wave-particle behavior of a photon as a consequence of using an ensemble of virtual particles and selecting just one to transfer a quanta of energy to the photoreceptor.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The simplest way to implement this would be to choose one particle out of the ensemble and allow it to interact with other matter and transfer energy. The rest of the particles in the ensemble would be removed from the simulation upon coming into contact with other matter. The interesting thing about this approach is that it could help explain the wave-particle duality of subatomic particles such as photons. For example, it could be used to reproduce the empirical results of the double slit experiment in a fully deterministic manner.&lt;/p&gt;
+
+&lt;h2 id=&quot;testing-our-hypothesis&quot;&gt;Testing our hypothesis&lt;/h2&gt;
+
+&lt;p&gt;Suppose the ideas we have discussed are an accurate model of reality. How would we test them? We could start by showing that in quantum mechanics, realism is actually preserved whereas locality is not. To that end, here’s one potential experiment:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;We set up the apparatus used to test Bell’s inequality. Entangled photons emerge from a source and head in opposite directions. Eventually they get their polarizations measured. We allow the first photon in the pair to enter a double slit experiment. As it passes through the double slit, it interferes with itself, producing a wavelike diffraction pattern on the detector.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;We change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption&lt;sup id=&quot;fnref:fn3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn3&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; and could be used to transmit information faster than light.&lt;/em&gt;&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/how-simulating/fig4.png&quot; style=&quot;width:80%&quot; /&gt;
+  &lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  One possible means of testing the hypothesis we have outlined. If photons used to test the Bell inequality behave in this manner when they encounter a double slit setup, one could use them to transmit information faster than the speed of light (violating the locality assumption off quantum mechanics).
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;closing-thoughts&quot;&gt;Closing thoughts&lt;/h2&gt;
+
+&lt;p&gt;To the followers of Plato, the world of the senses was akin to shadows dancing on the wall of a cave. The essential truths and realities of life were not to be found on the wall at all, but rather somewhere else in the cave in the form of real dancers and real flames. A meaningful life was to be spent seeking to understand these forms, elusive though they might be.&lt;/p&gt;
+
+&lt;p&gt;In this post, we took part in that tradition. More specifically, we used what we know about simulations to propose a new interpretation of quantum mechanics. There is no way to know for sure whether we live in a simulation. We may never know. But at the very least, exploring the idea leads to some surprising and thought-provoking conclusions.&lt;/p&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+
+&lt;script language=&quot;javascript&quot;&gt;
+function hideShowNote() {
+  var x = document.getElementById(&quot;note_to_reader&quot;);
+  var y = document.getElementById(&quot;note_toggle&quot;);
+  if (x.style.display === &quot;none&quot;) {
+    x.style.display = &quot;inline&quot;; y.textContent = &quot;(–)&quot;
+  } else {
+    x.style.display = &quot;none&quot;; y.textContent = &quot;(+)&quot;
+  }
+}
+&lt;/script&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:fn1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;This is connected to the notion of &lt;a href=&quot;https://plato.stanford.edu/entries/cellular-automata/#CAModeReal&quot;&gt;cellular automata as models of reality&lt;/a&gt;. &lt;a href=&quot;#fnref:fn1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;As a subset of conservation of angular momentum, &lt;a href=&quot;https://www.nature.com/articles/s41467-019-10939-x&quot;&gt;polarization&lt;/a&gt; is also conserved. This is relevant to later examples which assume conservation of polarization. &lt;a href=&quot;#fnref:fn2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn4&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Physicists have certainly entertained the idea of using non-local theories to explain Bell’s inequality. One of the reasons these theories are not more popular is that &lt;a href=&quot;https://drive.google.com/file/d/1RTlV08KhQ7lNwOukbNcMok0f6E42uMyI/view?usp=sharing&quot;&gt;Groblacher et al, 2007&lt;/a&gt; and others have reported experimental results that rule out some of the more reasonable options (eg Leggett-style non-local theories). But the idea we are proposing here is somewhat more radical; it would permit information to travel faster than the speed of light, violating the &lt;a href=&quot;https://en.wikipedia.org/wiki/No-communication_theorem&quot;&gt;No-communication theorem&lt;/a&gt;. Of course, the only information that could be communicated faster than the speed of light would be &lt;em&gt;whether a given pair of particles is in a superposition of states or not&lt;/em&gt;. Look at the “Testing our hypothesis” section for more discussion on this topic. &lt;a href=&quot;#fnref:fn4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Relatedly, it will also violate the &lt;a href=&quot;https://en.wikipedia.org/wiki/No-communication_theorem&quot;&gt;no-communication theorem&lt;/a&gt;, which is a core claim of quantum mechanics. &lt;a href=&quot;#fnref:fn3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">We look at the logistics of simulating the universe. We find that enforcing conservation laws, isotropy, etc. in parallel could lead to quantum-like effects.</summary></entry><entry><title type="html">Dissipative Hamiltonian Neural Networks</title><link href="http://greydanus.github.io/2022/01/25/dissipative-hnns/" rel="alternate" type="text/html" title="Dissipative Hamiltonian Neural Networks" /><published>2022-01-25T03:00:00-08:00</published><updated>2022-01-25T03:00:00-08:00</updated><id>http://greydanus.github.io/2022/01/25/dissipative-hnns</id><content type="html" xml:base="http://greydanus.github.io/2022/01/25/dissipative-hnns/">&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
   &lt;img src=&quot;/assets/dissipative-hnns/hero.jpg&quot; /&gt;
   &lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
   Dissipative HNNs (D-HNNs) improve upon &lt;a href=&quot;https://greydanus.github.io/2019/05/15/hamiltonian-nns/&quot;&gt;Hamiltonian Neural Networks&lt;/a&gt;. They output two scalar functions, denoted here by &lt;i&gt;&lt;b&gt;H&lt;/b&gt;&lt;/i&gt; and &lt;i&gt;&lt;b&gt;D&lt;/b&gt;&lt;/i&gt;. The first of these two, &lt;i&gt;&lt;b&gt;H&lt;/b&gt;&lt;/i&gt;, is the Hamiltonian. We use its symplectic gradient to model energy-conserving dynamics. The second, &lt;i&gt;&lt;b&gt;D&lt;/b&gt;&lt;/i&gt;, is the Rayleigh dissipation function. We use it to model the dissipative component of the system. The addition of this dissipation function allows D-HNNs to model systems where energy is not quite conserved, as, for example, in the case of the damped mass-spring system shown here.
@@ -1624,324 +1749,4 @@ if(parseInt(getBrowserSize().width) &gt; 800){
 	&lt;li&gt;&lt;u&gt;Sense of wonder&lt;/u&gt;. The very best modes of science communication have a way of inspiring wonder and excitement in their audience. Distill is no exception. Its articles help young researchers see the beauty and promise of the field in a way that conference papers, textbooks, and boring lectures cannot. An implicit part of writing a Distill article involves channeling your &quot;sense of wonder&quot; so that your readers can experience it too.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;strong&gt;Takeaway.&lt;/strong&gt; I had a good experience working with Distill and would recommend it to others. I’m happy to answer specific questions about the process over email.&lt;/p&gt;</content><author><name>Sam Greydanus</name></author><summary type="html">I recently published a Distill article about value learning. This post includes a link to the article and some commentary on the Distill format.</summary></entry><entry><title type="html">Neural Reparameterization Improves Structural Optimization</title><link href="http://greydanus.github.io/2019/12/15/neural-reparam/" rel="alternate" type="text/html" title="Neural Reparameterization Improves Structural Optimization" /><published>2019-12-15T03:00:00-08:00</published><updated>2019-12-15T03:00:00-08:00</updated><id>http://greydanus.github.io/2019/12/15/neural-reparam</id><content type="html" xml:base="http://greydanus.github.io/2019/12/15/neural-reparam/">&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:90%&quot;&gt;
-    &lt;img alt=&quot;&quot; src=&quot;/assets/neural-reparam/bridge-start.png&quot; width=&quot;95%&quot; id=&quot;bridgeImage&quot; /&gt;
-    &lt;button id=&quot;bridgeButton&quot; onclick=&quot;toggleBridge()&quot; class=&quot;playbutton&quot;&gt;Play&lt;/button&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; width:85%;padding-left:22px&quot;&gt;&lt;b&gt;Figure 1:&lt;/b&gt; Optimizing a bridge structure. In the top frame, optimization happens in the weight space of a CNN. In the next two frames it happens on a finite element grid.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;script language=&quot;javascript&quot;&gt;
-	function toggleBridge() {
-
-		path = document.getElementById(&quot;bridgeImage&quot;).src
-	    if (path.split(&apos;/&apos;).pop() == &quot;bridge-start.png&quot;) 
-	    {
-	        document.getElementById(&quot;bridgeImage&quot;).src = &quot;/assets/neural-reparam/bridge.gif&quot;;
-	        document.getElementById(&quot;bridgeButton&quot;).textContent = &quot;Reset&quot;;
-	    }
-	    else 
-	    {
-	        document.getElementById(&quot;bridgeImage&quot;).src = &quot;/assets/neural-reparam/bridge-start.png&quot;;
-	        document.getElementById(&quot;bridgeButton&quot;).textContent = &quot;Play&quot;;
-	    }
-	}
-&lt;/script&gt;
-
-&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
-	&lt;a href=&quot;https://arxiv.org/abs/1909.04240&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Read the paper&lt;/a&gt;
-	&lt;a href=&quot;https://colab.research.google.com/github/google-research/neural-structural-optimization/blob/master/notebooks/optimization-examples.ipynb&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Run&lt;/span&gt; in browser&lt;/a&gt;
-	&lt;a href=&quot;https://github.com/google-research/neural-structural-optimization&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Get the code&lt;/a&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;a-visual-introduction&quot;&gt;A Visual Introduction&lt;/h2&gt;
-
-&lt;p&gt;In this post we propose using neural networks to reparameterize physics problems. This helps us design better bridges, skyscrapers, and cantilevers while enforcing hard physical constraints. In the figure above, you can see that our approach optimizes more quickly and has a smoother transition from large-scale to small-scale features. In the figure below, you can explore all 116 tasks that we studied.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/selected-tasks.png&quot; style=&quot;width:55%&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:60%&quot;&gt;&lt;b&gt;Figure 2:&lt;/b&gt; Results from the 116 structural optimization tasks. The scores below each structure measure how much worse the design was than the best overall design.&lt;/div&gt;
-
-	&lt;button id=&quot;tasksButton1&quot; onclick=&quot;toggleTasks1()&quot; class=&quot;playbutton&quot; style=&quot;display: block; margin-left: auto; margin-right: auto;&quot;&gt;Show more tasks&lt;/button&gt;
-	&lt;div id=&quot;alltasks1&quot; style=&quot;display:none&quot;&gt;
-		&lt;img src=&quot;/assets/neural-reparam/tasks/tasks1.png&quot; /&gt;
-		&lt;img src=&quot;/assets/neural-reparam/tasks/tasks2.png&quot; /&gt;
-		&lt;img src=&quot;/assets/neural-reparam/tasks/tasks3.png&quot; /&gt;
-		&lt;button id=&quot;tasksButton2&quot; onclick=&quot;toggleTasks2()&quot; class=&quot;playbutton&quot; style=&quot;display: block; margin-left: auto; margin-right: auto;&quot;&gt;Show even more tasks&lt;/button&gt;
-		&lt;div id=&quot;alltasks2&quot; style=&quot;display:none&quot;&gt;
-			&lt;img src=&quot;/assets/neural-reparam/tasks/tasks4.png&quot; /&gt;
-			&lt;img src=&quot;/assets/neural-reparam/tasks/tasks5.png&quot; /&gt;
-			&lt;img src=&quot;/assets/neural-reparam/tasks/tasks6.png&quot; /&gt;
-			&lt;img src=&quot;/assets/neural-reparam/tasks/tasks7.png&quot; /&gt;
-			&lt;img src=&quot;/assets/neural-reparam/tasks/tasks8.png&quot; /&gt;
-			&lt;button id=&quot;tasksButton3&quot; onclick=&quot;toggleTasks3()&quot; class=&quot;playbutton&quot; style=&quot;display: block; margin-left: auto; margin-right: auto;&quot;&gt;Show even more tasks&lt;/button&gt;
-			&lt;div id=&quot;alltasks3&quot; style=&quot;display:none&quot;&gt;
-				&lt;img src=&quot;/assets/neural-reparam/tasks/tasks9.png&quot; /&gt;
-				&lt;img src=&quot;/assets/neural-reparam/tasks/tasks10.png&quot; /&gt;
-				&lt;img src=&quot;/assets/neural-reparam/tasks/tasks11.png&quot; /&gt;
-				&lt;img src=&quot;/assets/neural-reparam/tasks/tasks12.png&quot; /&gt;
-				&lt;img src=&quot;/assets/neural-reparam/tasks/tasks13.png&quot; /&gt;
-				&lt;img src=&quot;/assets/neural-reparam/tasks/tasks14.png&quot; /&gt;
-				&lt;img src=&quot;/assets/neural-reparam/tasks/tasks15.png&quot; /&gt;
-				&lt;img src=&quot;/assets/neural-reparam/tasks/tasks16.png&quot; /&gt;
-			&lt;/div&gt;
-		&lt;/div&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Now that I’ve sparked your curiosity, I’m going to use the rest of this post to put our results in the proper context. The proper context is &lt;em&gt;parameterization&lt;/em&gt; and my message is that it matters much more than you might expect.&lt;/p&gt;
-
-&lt;h2 id=&quot;a-philosophical-take-on-parameterization&quot;&gt;A Philosophical Take on Parameterization&lt;/h2&gt;
-
-&lt;p&gt;The word “parameterization” means different things in different fields. Generally speaking, it’s just a math term for the quirks and biases of a specific view of reality. Consider, for example, the parameterizations of a 3D surface. If the surface is rectilinear, then we’d probably want to use Cartesian coordinates. If it’s cylindrical or spherical, we may be better off using polar or spherical coordinates. So we have three parameterizations but each one describes the same underlying reality. After all, a sphere will remain a sphere regardless of how its equation is written.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Reparameterization.&lt;/strong&gt; And yet, some parameterizations are better than others &lt;em&gt;for solving particular types of problems&lt;/em&gt;. This is why reparameterization – the process of switching between parameterizations – is so important. It lets us take advantage of the good properties of two different parameterizations at the same time. For example, when we are editing a photograph in Photoshop, we may edit specific objects while working in a pixel parameterization. Then we may switch to a Fourier basis in order to adjust lighting and saturation. Technically speaking, we’ve just taken advantage of reparameterization.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:60%&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/photoshop.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; width:100%&quot;&gt;&lt;b&gt;Figure 3:&lt;/b&gt; A simple example of reparameterization. We might use the pixel image of Baby Yoda (on the left) to make spatially localized edits. Then we might use its spectral decomposition (on the right) to adjust lighting and saturation.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Physics examples.&lt;/strong&gt; Physicists use reparameterization or “change of basis” tricks all the time. Sometimes it’s a matter of notation and other times it’s a matter of what question they are asking. Here are a few examples:&lt;/p&gt;
-&lt;ul style=&quot;list-style-type:disc;&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Fourier_analysis&quot;&gt;Spatial vs Fourier analysis&lt;/a&gt; for studying light and sound&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/List_of_map_projections&quot;&gt;Angle vs area preserving projections&lt;/a&gt; for studying different properties of Earth and space&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Spherical_harmonics&quot;&gt;Spherical harmonics vs Cartesian coordinates&lt;/a&gt; for describing the position and momentum of an electron&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Topology_optimization&quot;&gt;Grids&lt;/a&gt; vs &lt;a href=&quot;https://arxiv.org/abs/1910.05585&quot;&gt;adaptive meshes&lt;/a&gt; for structural optimization problems&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Canonical_transformation&quot;&gt;Canonical transformations&lt;/a&gt; for transforming between arbitrary coordinate systems&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;These are some of the simplest examples, but there are countless others. In this post we’ll focus on an exciting new tool for doing this sort of thing: neural networks.&lt;/p&gt;
-
-&lt;h2 id=&quot;reparameterization-and-neural-networks&quot;&gt;Reparameterization and Neural Networks&lt;/h2&gt;
-
-&lt;p&gt;Neural networks have all sorts of nice properties. They work well with high-dimensional data, they have great spatial priors, and they can change their representations during learning. But there is still a lot that we don’t understand about them. In fact, two recent studies suggest that we’ve underestimated the importance of their architectural priors.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://dmitryulyanov.github.io/deep_image_prior&quot;&gt;The Deep Image Prior&lt;/a&gt;.&lt;sup id=&quot;fnref:fn1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/strong&gt; The first study tells us that even untrained networks have fantastic image priors. The authors hammer this point home by showing that it’s possible to perform state-of-the-art denoising, super-resolution, and inpainting on a single image with an untrained network.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display:block; margin-left: auto; margin-right: auto; width:70%&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/deep-prior.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; width:100%&quot;&gt;&lt;b&gt;Figure 4:&lt;/b&gt; Visualization of the Deep Image Prior. Optimizing a single image using the weight space of an untrained CNN gives state of the art super-resolution results.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;&lt;a href=&quot;https://distill.pub/2018/differentiable-parameterizations/&quot;&gt;Differentiable Image Parameterizations&lt;/a&gt;&lt;sup id=&quot;fnref:fn2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/strong&gt; The second study &lt;em&gt;highlights the relationship between image parameterizations and better optimization results&lt;/em&gt;. The authors argue that well-chosen parameterizations can&lt;/p&gt;
-&lt;ul style=&quot;list-style-type:disc;&quot;&gt;
-&lt;li&gt;Precondition the optimization landscape&lt;/li&gt;
-&lt;li&gt;Enforce constraints (such as conservation of volume)&lt;/li&gt;
-&lt;li&gt;Bias optimization towards certain outcomes&lt;/li&gt;
-&lt;li&gt;Implicitly optimize other objects (eg a 3D surface projected to 2D)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/diff-params.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;&lt;b&gt;Figure 5:&lt;/b&gt; Specific examples of differentiable image parameterizations applied to neural network visualizations and art.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;These two papers are interesting because they don’t focus on the process of training neural networks. Rather, they focus on how this process is shaped by good priors.&lt;/p&gt;
-
-&lt;h2 id=&quot;good-priors-for-physics&quot;&gt;Good Priors for Physics&lt;/h2&gt;
-
-&lt;p&gt;With the rise of powerful neural network models, many scientists have grown interested in applying them to physics research. But there are some challenges. Data that is generated by physical processes is subject to exact physical constraints such as conservation of energy, mass, or charge and it can be challenging to enforce these constraints on neural network models. Another challenge is that neural networks require large datasets which are not always practical in physics. So the core challenge is to leverage deep learning…&lt;/p&gt;
-&lt;ul style=&quot;list-style-type:disc;&quot;&gt;
-&lt;li&gt;without sacrificing exact physics (many people train models to approximate physics, but often that isn’t enough)&lt;/li&gt;
-&lt;li&gt;without excessively large training datasets (often we only care about a few solutions)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Satisfying these requirements with supervised learning methods is hard. But what if we used neural networks for &lt;em&gt;reparameterization&lt;/em&gt; instead? When we looked into this idea, we found lots of evidence that the deep image prior extends beyond natural images. Some examples include style transfer in fonts&lt;sup id=&quot;fnref:fn3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;, uncertainty estimation in fluid dynamics&lt;sup id=&quot;fnref:fn4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;, and data upsampling in medical imaging&lt;sup id=&quot;fnref:fn5&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn5&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;. Indeed, whenever data contains translation invariance, spatial correlation, or multi-scale features, the deep image prior is a useful tool. So we decided to push the limits of this idea in the context of physics. We chose structural optimization as a case study because it’s a domain where good spatial priors are essential.&lt;/p&gt;
-
-&lt;h2 id=&quot;the-joys-of-structural-optimization&quot;&gt;The Joys of Structural Optimization&lt;/h2&gt;
-
-&lt;p&gt;Structural optimization is a computational tool which, in an ironic turn of events, often comes up with more organic-looking structures than human engineers do. These structures are beautiful, lightweight, and extremely strong.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/autodesk.png&quot; style=&quot;width:50%&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center; width:100%&quot;&gt;&lt;b&gt;Figure 6:&lt;/b&gt; Autodesk uses structural optimization to augment the design process.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;How it works.&lt;/strong&gt; In structural optimization, you are given a fixed amount of material, a set of anchor points, and a set of force points. Your goal is to design load-bearing structures which balance out the force points as much as possible. You are also given a physics simulator which computes how much your structure is displaced by a given load. By differentiating through this physics simulator, you can take the gradient of the structure’s performance (called compliance) with respect to each of its components. Then you can follow this gradient to improve your design.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Enforcing constraints.&lt;/strong&gt; The most common approach to topology optimization is the “modified SIMP” method&lt;sup id=&quot;fnref:fn6&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn6&quot; class=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt;. In this approach, we begin with a discretized domain of finite elements on a rectangular grid. We associate each grid element with an unconstrained logit and then map this logit to a mass density between 0 and 1. The mapping has two steps. The first step is to convolve the grid of logits with a cone filter in order to enforce local smoothness. The second step is to enforce volume constraints: 1) the volume of every grid cell must stay between 0 and 1 and 2) the total volume must not change.&lt;/p&gt;
-
-&lt;p&gt;We satisfied the first constraint by applying an element-wise sigmoid function to the logits. Then we satisfied the second by using a root finder to choose the sigmoid saturation constant \(b\). We can write these two steps as a single operation&lt;/p&gt;
-
-\[\begin{align}
-    x_{ij} &amp;amp;= \frac{1}{1 + e^{- \hat x_{ij} - b}},\\
-    &amp;amp;\quad\text{with $b$ such that} \quad
-    V(x) = V_0.
-\end{align}\]
-
-&lt;p&gt;&lt;strong&gt;Simulating the physics.&lt;/strong&gt; Letting  \(K(\tilde x)\) be the global stiffness matrix, \(U(K, F)\) be the displacement vector, \(F\) be the vector of applied forces, and \(V (\tilde x)\) be the total volume, we simulated the physics of displacement and wrote our objective as&lt;/p&gt;
-
-\[\begin{align}
-    \min_x: c(x) &amp;amp;= U^T K U
-    \quad\text{such that}\\
-    &amp;amp;\quad
-    K U = F, \quad
-    V(x) = V_0, \\
-    &amp;amp;\quad \text{and }
-    0 \leq x_{ij} \leq 1
-\end{align}\]
-
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:70%&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/baseline-schema.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display: block; margin-left: auto; margin-right: auto; width:90%&quot;&gt;&lt;b&gt;Figure 7:&lt;/b&gt;  Visualization of structural optimization. Here we are using it to design a bridge.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Automatic differentiation.&lt;/strong&gt; The coolest thing about our implementation is that it is fully differentiable. In fact, we implemented everything in Autograd and then used automatic differentiation to solve for updates to the parameters. This made our code much simpler than previous approaches (which had implemented reverse-mode differentiation by hand).&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:60%; min-width:250px&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/implicit-diff.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; width:100%&quot;&gt;&lt;b&gt;Figure 8:&lt;/b&gt; Instead of differentiating directly through the root finder, we can use the &lt;a href=&quot;https://en.wikipedia.org/wiki/Implicit_function_theorem&quot;&gt;implicit function theorem&lt;/a&gt; to &lt;a href=&quot;https://link.springer.com/article/10.1023/A:1016051717120&quot;&gt;differentiate through the optimal point&lt;/a&gt;.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;The careful reader might be wondering how we differentiated through our root finder. At first we tried to naively backpropagate through the full search process. Bad idea. A better solution is to &lt;a href=&quot;https://link.springer.com/article/10.1023/A:1016051717120&quot;&gt;differentiate straight through the optimal point&lt;/a&gt; using implicit differentiation&lt;sup id=&quot;fnref:fn7&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn7&quot; class=&quot;footnote&quot;&gt;7&lt;/a&gt;&lt;/sup&gt; (Figure 7).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Reparameterizing the problem.&lt;/strong&gt; Next, we built a CNN image generator in Keras and used it to reparameterize the grid of logits. The entire process, from the neural network forward pass to the constraint functions to the physics simulation, reduced to a single forward pass:&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:70%&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/our-schema.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; width:100%&quot;&gt;&lt;b&gt;Figure 9:&lt;/b&gt; Reparameterizing structural optimization. We implement the forward pass as a TensorFlow graph and compute gradients via automatic differentiation.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;bridges-towers-and-trees&quot;&gt;Bridges, Towers, and Trees&lt;/h2&gt;
-
-&lt;p&gt;In order to compare our method to baselines, we developed a suite of 116 structural optimization tasks. In designing these tasks, our goal was to create a distribution of diverse, well-studied problems with real-world significance. We started with a selection of problems from (Valdez et al. 2017)&lt;sup id=&quot;fnref:fn8&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn8&quot; class=&quot;footnote&quot;&gt;8&lt;/a&gt;&lt;/sup&gt; and (Sokol 2011).&lt;sup id=&quot;fnref:fn9&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn9&quot; class=&quot;footnote&quot;&gt;9&lt;/a&gt;&lt;/sup&gt; Most of these problems were simple beams with only a few forces, so we hand-designed additional tasks reflecting real-world designs such as bridges, towers, and trees.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:70%; min-width:280px&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/quant-results.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; width:100%&quot;&gt;&lt;b&gt;Figure 10:&lt;/b&gt; Neural reparameterization improves structural optimization, especially for large problems.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Why do large problems benefit more?&lt;/strong&gt; One of the first things we noticed was that large problems benefit more from our approach. Why is this? It turns out that finite grids suffer from a “mesh-dependency problem,” with solutions varying as grid resolution changes.&lt;sup id=&quot;fnref:fn10&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn10&quot; class=&quot;footnote&quot;&gt;10&lt;/a&gt;&lt;/sup&gt; When grid resolution is high, small-scale “spiderweb” patterns interfere with large-scale structures. We suspect that working in the weight space of a CNN allows us to optimize structures on several spatial scales at once, effectively solving the mesh-dependency problem. To investigate this idea, we plotted structures from all 116 design tasks and then chose five examples to highlight important qualitative trends (Figure 2).&lt;/p&gt;
-
-&lt;p&gt;One specific example is that the cantilever beam in Figure 2 had a total of eight supports under our method, whereas the next-best method (MMA&lt;sup id=&quot;fnref:fn11&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn11&quot; class=&quot;footnote&quot;&gt;11&lt;/a&gt;&lt;/sup&gt;) used eighteen. Most of the qualitative results are at the beginning of this post, so refer to that section for more details.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:90%&quot;&gt;
-    &lt;button id=&quot;buildingButton&quot; onclick=&quot;toggleBuilding()&quot; class=&quot;playbutton&quot;&gt;Play&lt;/button&gt;
-    &lt;img alt=&quot;&quot; src=&quot;/assets/neural-reparam/building.png&quot; width=&quot;95%&quot; id=&quot;buildingImage&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; width:90%;padding-left:22px&quot;&gt;&lt;b&gt;Figure 11:&lt;/b&gt; Optimizing a multistory building. In the first frame, optimization happens in the weight space of a CNN. In the next two frames it happens on a finite element grid. Structures 2 and 3 are 7% and 54% worse.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;script language=&quot;javascript&quot;&gt;
-	function toggleBuilding() {
-
-		path = document.getElementById(&quot;buildingImage&quot;).src
-	    if (path.split(&apos;/&apos;).pop() == &quot;building.png&quot;) 
-	    {
-	        document.getElementById(&quot;buildingImage&quot;).src = &quot;/assets/neural-reparam/building.gif&quot;;
-	        document.getElementById(&quot;buildingButton&quot;).textContent = &quot;Reset&quot;;
-	    }
-	    else 
-	    {
-	        document.getElementById(&quot;buildingImage&quot;).src = &quot;/assets/neural-reparam/building.png&quot;;
-	        document.getElementById(&quot;buildingButton&quot;).textContent = &quot;Play&quot;;
-	    }
-	}
-&lt;/script&gt;
-
-&lt;h2 id=&quot;closing-thoughts&quot;&gt;Closing thoughts&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Structural optimization.&lt;/strong&gt; This was a fun project because many of the results were beautiful and surprising. In fact, it convinced me that structural optimization is an undervalued tool for augmenting human creativity. With advances in 3D printing and fabrication, I hope it becomes more common in fields such as engineering and architecture.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Parameterization.&lt;/strong&gt; A more general theme of this project is that &lt;em&gt;parameterization matters much more than you might expect.&lt;/em&gt; We see this again and again. The most fundamental advances in deep learning – convolutional filters, forget gates, residual connections, and self-attention – should be thought of as advances in parameterization.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:70%&quot;&gt;
-	&lt;img src=&quot;/assets/neural-reparam/elegans-connectome.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; width:100%&quot;&gt;&lt;b&gt;Figure 12:&lt;/b&gt; Parameterization is important in biological systems as well. What sorts of priors might the &lt;a href=&quot;https://wormwiring.org/&quot;&gt;C. elegans connectome&lt;/a&gt; encode?&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;This leads me to ask what other sorts of priors one could encode via parameterization. I’m particularly excited about a series of recent works that show how to encode complex, dataset-specific priors via network connectivity: “&lt;a href=&quot;https://weightagnostic.github.io/&quot;&gt;Weight Agnostic Neural Networks&lt;/a&gt;&lt;sup id=&quot;fnref:fn12&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn12&quot; class=&quot;footnote&quot;&gt;12&lt;/a&gt;&lt;/sup&gt;”, “&lt;a href=&quot;https://arxiv.org/abs/1803.03635&quot;&gt;Lottery Tickets&lt;/a&gt;&lt;sup id=&quot;fnref:fn13&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn13&quot; class=&quot;footnote&quot;&gt;13&lt;/a&gt;&lt;/sup&gt;,” and “&lt;a href=&quot;http://papers.nips.cc/paper/6417-interaction-networks-for-learning-about-objects-relations-and-physics&quot;&gt;Interaction Networks&lt;/a&gt;&lt;sup id=&quot;fnref:fn14&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn14&quot; class=&quot;footnote&quot;&gt;14&lt;/a&gt;&lt;/sup&gt;”. There’s evidence that nature hard codes priors in a similar way. For example, a baby antelope can walk just a few minutes after birth, suggesting that this skill is hard-wired into the connectivity structure of its brain.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Takeaway.&lt;/strong&gt; Regardless of whether you care about physics, deep learning, or biological analogies, I hope this post helped you appreciate the pivotal role of parameterization.&lt;/p&gt;
-
-&lt;h2 id=&quot;related-work&quot;&gt;Related Work&lt;/h2&gt;
-
-&lt;script language=&quot;javascript&quot;&gt;
-	function toggleTasks1() {
-
-		var x = document.getElementById(&quot;alltasks1&quot;);
-		if (x.style.display === &quot;none&quot;) {
-			x.style.display = &quot;block&quot;;
-			document.getElementById(&quot;tasksButton1&quot;).textContent = &quot;Hide tasks&quot;;
-		} else {
-			x.style.display = &quot;none&quot;;
-			document.getElementById(&quot;tasksButton1&quot;).textContent = &quot;Show more tasks&quot;;
-		}
-	}
-&lt;/script&gt;
-
-&lt;script language=&quot;javascript&quot;&gt;
-	function toggleTasks2() {
-
-		var x = document.getElementById(&quot;alltasks2&quot;);
-		if (x.style.display === &quot;none&quot;) {
-			x.style.display = &quot;block&quot;;
-			document.getElementById(&quot;tasksButton2&quot;).textContent = &quot;Hide tasks&quot;;
-			document.getElementById(&quot;tasksButton1&quot;).textContent = &quot;Hide all tasks&quot;;
-		} else {
-			x.style.display = &quot;none&quot;;
-			document.getElementById(&quot;tasksButton2&quot;).textContent = &quot;Show even more tasks&quot;;
-			document.getElementById(&quot;tasksButton1&quot;).textContent = &quot;Hide tasks&quot;;
-		}
-	}
-&lt;/script&gt;
-
-&lt;script language=&quot;javascript&quot;&gt;
-	function toggleTasks3() {
-
-		var x = document.getElementById(&quot;alltasks3&quot;);
-		if (x.style.display === &quot;none&quot;) {
-			x.style.display = &quot;block&quot;;
-			document.getElementById(&quot;tasksButton3&quot;).textContent = &quot;Hide tasks&quot;;
-		} else {
-			x.style.display = &quot;none&quot;;
-			document.getElementById(&quot;tasksButton3&quot;).textContent = &quot;Show even more tasks&quot;;
-		}
-	}
-&lt;/script&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:fn1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Ulyanov, Dmitry, Andrea Vedaldi, and Victor Lempitsky. &lt;a href=&quot;https://dmitryulyanov.github.io/deep_image_prior&quot;&gt;Deep Image Prior&lt;/a&gt;. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. 2018. &lt;a href=&quot;#fnref:fn1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn2&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Mordvintsev, Alexander, et al. &lt;a href=&quot;https://distill.pub/2018/differentiable-parameterizations/&quot;&gt;Differentiable Image Parameterizations&lt;/a&gt;. Distill 3.7 (2018): e12. &lt;a href=&quot;#fnref:fn2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn3&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Azadi, S., Fisher, M., Kim, V. G., Wang, Z., Shechtman, E., and Darrell, T. &lt;a href=&quot;https://arxiv.org/abs/1712.00516&quot;&gt;Multi-content GAN for few-shot font style transfer&lt;/a&gt;. In The IEEE Conference on Computer Vision and Pattern Recognition (CVPR), June 2018. &lt;a href=&quot;#fnref:fn3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn4&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Zhu, Y., Zabaras, N., Koutsourelakis, P.-S., and Perdikaris, P. &lt;a href=&quot;https://arxiv.org/abs/1901.06314&quot;&gt;Physics-constrained deep learning for high-dimensional surrogate modeling and uncertainty quantification without labeled data&lt;/a&gt;. Journal of Computational Physics, 394:56–81, 2019. &lt;a href=&quot;#fnref:fn4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn5&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Dittmer, S., Kluth, T., Maass, P., and Baguer, D. O. &lt;a href=&quot;https://arxiv.org/abs/1812.03889&quot;&gt;Regularization by architecture: A deep prior approach for inverse problems&lt;/a&gt;. Preprint, 2018. &lt;a href=&quot;#fnref:fn5&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn6&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Andreassen, E., Clausen, A., Schevenels, M., Lazarov, B. S., and Sigmund, O. &lt;a href=&quot;https://link.springer.com/article/10.1007/s00158-010-0594-7&quot;&gt;Efficient topology optimization in MATLAB using 88 lines of code&lt;/a&gt;. Structural and Multidisciplinary Optimization, 43(1):1–16, 2011. &lt;a href=&quot;#fnref:fn6&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn7&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Griewank, A. and Faure, C. &lt;a href=&quot;https://link.springer.com/article/10.1023/A:1016051717120&quot;&gt;Reduced functions, gradients and hessians from fixed-point iterations for state equations&lt;/a&gt;. Numerical Algorithms, 30(2):113–139, 2002. &lt;a href=&quot;#fnref:fn7&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn8&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Valdez, S. I., Botello, S., Ochoa, M. A., Marroquín, J. L., and Cardoso, V. &lt;a href=&quot;https://link.springer.com/article/10.1007/s11831-016-9190-3&quot;&gt;Topology optimization benchmarks in 2D: Results for minimum compliance and minimum volume in planar stress problems&lt;/a&gt;. Arch. Comput. Methods Eng., 24(4):803–839, November 2017. &lt;a href=&quot;#fnref:fn8&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn9&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Sokol, T. &lt;a href=&quot;https://link.springer.com/article/10.1007/s00158-010-0557-z&quot;&gt;A 99 line code for discretized Michell truss optimization written in Mathematica&lt;/a&gt;. Structural and Multidisciplinary Optimization, 43(2):181–190, 2011. &lt;a href=&quot;#fnref:fn9&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn10&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Sigmund, O. and Petersson, J. &lt;a href=&quot;https://link.springer.com/article/10.1007/BF01214002&quot;&gt;Numerical instabilities in topology optimization: A survey on procedures dealing with checkerboards, mesh-dependencies and local minima&lt;/a&gt;. Structural optimization, 16:68–75, 1998. &lt;a href=&quot;#fnref:fn10&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn11&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Svanberg, K. &lt;a href=&quot;https://onlinelibrary.wiley.com/doi/abs/10.1002/nme.1620240207&quot;&gt;The method of moving asymptotes-a new method for structural optimization&lt;/a&gt;. International Journal for Numerical Methods in Engineering, 24(2):359–373, 1987. &lt;a href=&quot;#fnref:fn11&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn12&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Gaier, Adam, and David Ha. &lt;a href=&quot;https://weightagnostic.github.io/&quot;&gt;Weight Agnostic Neural Networks&lt;/a&gt;. Neural Information Processing Systems (2019). &lt;a href=&quot;#fnref:fn12&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn13&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Frankle, Jonathan, and Michael Carbin. “&lt;a href=&quot;https://arxiv.org/abs/1803.03635&quot;&gt;The lottery ticket hypothesis: Finding sparse, trainable neural networks&lt;/a&gt;.” ICLR 2019. &lt;a href=&quot;#fnref:fn13&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn14&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Battaglia, Peter, et al. “&lt;a href=&quot;http://papers.nips.cc/paper/6417-interaction-networks-for-learning-about-objects-relations-and-physics&quot;&gt;Interaction networks for learning about objects, relations and physics&lt;/a&gt;.” Advances in neural information processing systems. 2016. &lt;a href=&quot;#fnref:fn14&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">We use neural networks to reparameterize structural optimization, building better bridges, skyscrapers, and cantilevers while enforcing hard physical constraints.</summary></entry></feed>
+&lt;p&gt;&lt;strong&gt;Takeaway.&lt;/strong&gt; I had a good experience working with Distill and would recommend it to others. I’m happy to answer specific questions about the process over email.&lt;/p&gt;</content><author><name>Sam Greydanus</name></author><summary type="html">I recently published a Distill article about value learning. This post includes a link to the article and some commentary on the Distill format.</summary></entry></feed>
