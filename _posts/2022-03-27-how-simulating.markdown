@@ -26,7 +26,7 @@ Let's imagine the universe is being simulated. Based on what we know about physi
 4. **Adaptive computation.** To simulate the universe efficiently, we would want to spend most of our compute time on regions where a lot of matter and energy are concentrated: that's where the dynamics would be most complex. So we'd probably want to use a [particle-based (Lagrangian) simulation](https://en.wikipedia.org/wiki/Lagrangian_particle_tracking) of some sort.
 5. **Isotropy.** Space would be [uniform in all directions](https://en.wikipedia.org/wiki/Isotropy); physics would be invariant under rotation.
 
-We can determine whether these are reasonable assumptions by checking that they hold true for existing state-of-the-art physics simulations. It turns our that they hold true for the best [oceanography](https://www.myroms.org/), [meteorology](https://confluence.ecmwf.int/display/S2S/ECMWF+model+description), [plasma](https://arxiv.org/abs/0810.5757), [cosmology](https://en.wikipedia.org/wiki/NEMO_(Stellar_Dynamics_Toolbox)), and [computational fluid dynamics](https://en.wikipedia.org/wiki/Computational_fluid_dynamics) models. So, having laid out some basic assumptions about how our simulation would be implemented, let's look at their implications.
+We can determine whether these are reasonable assumptions by checking that they hold true for existing state-of-the-art physics simulations. It turns out that they hold true for the best [oceanography](https://www.myroms.org/), [meteorology](https://confluence.ecmwf.int/display/S2S/ECMWF+model+description), [plasma](https://arxiv.org/abs/0810.5757), [cosmology](https://en.wikipedia.org/wiki/NEMO_(Stellar_Dynamics_Toolbox)), and [computational fluid dynamics](https://en.wikipedia.org/wiki/Computational_fluid_dynamics) models. So, having laid out some basic assumptions about how our simulation would be implemented, let's look at their implications.
 
 ## Enforcing conservation laws in parallel
 
@@ -56,7 +56,7 @@ We should recognize that this approach comes at a price. It demands that we sacr
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/how-simulating/fig2.png">
     <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
-  This figure is inspired by the experimental setup of Clauser and Horne (1974) used to test the Bell inequality. Here we are hypothesizing the existence of a shared hidden variable <i>x</i> which, when updated due the left photon's interaction with a polarizer, also affects the right photon's polarization.
+  This figure is inspired by the experimental setup of <a href="https://drive.google.com/file/d/1ac4E87cKMgp90PfoNeTaRiVE3HEC9ubJ/view?usp=sharing">Clauser and Horne (1974)</a> used to test the Bell inequality. Here we are hypothesizing the existence of a shared hidden variable <i>x</i> which, when updated due the left photon's interaction with a polarizer, also affects the right photon's polarization.
   </div>
 </div>
 
