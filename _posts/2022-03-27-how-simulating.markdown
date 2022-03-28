@@ -70,14 +70,14 @@ The important idea here is [filtering](https://en.wikipedia.org/wiki/Filter_(lar
 
 How would one implement filtering in a large-scale, particle-based simulation of the universe? Well, if the simulation were particle-based instead of grid-based, we couldn't apply a Gaussian or cone filter. An alternative would be to simulate the dynamics of each particle using ensembles of virtual particles. One could initialize a group of these virtual particles with slightly different initial conditions and then simulate all of them through time. If you allowed these virtual particles to interact with other virtual particles in the ensemble, the entire ensemble would collectively behave as though it were a wave.
 
-You might notice that there is a tension between this spatially delocalized, wave-like behavior (a consequence of filtering, which is related to assumption 3) and the conservation/quantization of quantities like energy (assumption 2). The tension is this: when a wave interacts with an object, it transfers energy in a manner that is delocalized and proportionate to its amplitude at a given location. But we have decided to quantize energy in order to keep an exact accounting of it across our simulation. So when our ensemble of particles interacts with some matter, it must transfer exactly one quanta of energy and it must do so at one particular location.
-
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/how-simulating/fig3.png" style="width:90%">
     <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
   Wave-particle behavior of a photon as a consequence of using an ensemble of virtual particles and selecting just one to transfer a quanta of energy to the photoreceptor.
   </div>
 </div>
+
+You might notice that there is a tension between this spatially delocalized, wave-like behavior (a consequence of filtering, which is related to assumption 3) and the conservation/quantization of quantities like energy (assumption 2). The tension is this: when a wave interacts with an object, it transfers energy in a manner that is delocalized and proportionate to its amplitude at a given location. But we have decided to quantize energy in order to keep an exact accounting of it across our simulation. So when our ensemble of particles interacts with some matter, it must transfer exactly one quanta of energy and it must do so at one particular location.
 
 The simplest way to implement this would be to choose one particle out of the ensemble and allow it to interact with other matter and transfer energy. The rest of the particles in the ensemble would be removed from the simulation upon coming into contact with other matter. The interesting thing about this approach is that it could help explain the wave-particle duality of subatomic particles such as photons. For example, it could be used to reproduce the empirical results of the double slit experiment in a fully deterministic manner.
 
