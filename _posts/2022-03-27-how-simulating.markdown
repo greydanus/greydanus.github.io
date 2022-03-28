@@ -8,7 +8,7 @@ mathjax: true
 thumbnail: /assets/how-simulating/thumbnail.png
 ---
 
-  <div onclick="hideShowNote()" class="btn" style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;cursor: pointer; width: 180px;background-color: #FFFDDD">
+  <div onclick="hideShowNote()" class="btn" style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;cursor: pointer; width: 180px;">
   <div style="display:inline">Note to the reader</div> <div id="note_toggle" style="display:inline">(+)</div>
   </div>
 
