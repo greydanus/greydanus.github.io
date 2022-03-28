@@ -1,9 +1,9 @@
-I"�K<div onclick="hideShowNote()" class="btn" style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;cursor: pointer">
-  <div style="display:inline"><b>Note to the reader</b></div> <div id="note_toggle" style="display:inline">(+)</div>
+I"�J<div onclick="hideShowNote()" class="btn" style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;cursor: pointer; width: 180px;">
+  <div style="display:inline">Note to the reader</div> <div id="note_toggle" style="display:inline">(+)</div>
   </div>
 
 <div style="background-color: #FFFDDD">
-  <div id="note_to_reader" style="display: none;"><i>In this post we will explore a rather unusual interpretation of how and why quantum mechanics works. What I have written is accurate to the best of my knowledge. However, you may discover that I've made an error in reasoning or perhaps missed an important reference on the topic. If that's the case, please let me know (in the comments or over email) and I'll make the appropriate fix.</i></div>
+  <div id="note_to_reader" style="display: none;"><i>In this post, we will explore a rather unusual interpretation of how and why quantum mechanics works. What I have written is accurate to the best of my knowledge. However, you may discover that I've made an error in reasoning or perhaps missed an important reference. If that's the case, please let me know – in the comments or over email – and I'll make the appropriate fix.</i></div>
 </div>
 
 <h2 id="the-universe-as-a-simulation">The universe as a simulation</h2>
@@ -18,7 +18,7 @@
   <li><strong>Isotropy.</strong> Space would be <a href="https://en.wikipedia.org/wiki/Isotropy">uniform in all directions</a>; physics would be invariant under rotation.</li>
 </ol>
 
-<p>We can determine whether these are reasonable assumptions by checking that they hold true for existing state-of-the-art physics simulations. It turns our that they hold true for the best <a href="https://www.myroms.org/">oceanography</a>, <a href="https://confluence.ecmwf.int/display/S2S/ECMWF+model+description">meteorology</a>, <a href="https://arxiv.org/abs/0810.5757">plasma</a>, <a href="https://en.wikipedia.org/wiki/NEMO_(Stellar_Dynamics_Toolbox)">cosmology</a>, and <a href="https://en.wikipedia.org/wiki/Computational_fluid_dynamics">computational fluid dynamics</a> models. So, having laid out some basic assumptions about how our simulation would be implemented, let’s look at their implications.</p>
+<p>We can determine whether these are reasonable assumptions by checking that they hold true for existing state-of-the-art physics simulations. It turns out that they hold true for the best <a href="https://www.myroms.org/">oceanography</a>, <a href="https://confluence.ecmwf.int/display/S2S/ECMWF+model+description">meteorology</a>, <a href="https://arxiv.org/abs/0810.5757">plasma</a>, <a href="https://en.wikipedia.org/wiki/NEMO_(Stellar_Dynamics_Toolbox)">cosmology</a>, and <a href="https://en.wikipedia.org/wiki/Computational_fluid_dynamics">computational fluid dynamics</a> models. So, having laid out some basic assumptions about how our simulation would be implemented, let’s look at their implications.</p>
 
 <h2 id="enforcing-conservation-laws-in-parallel">Enforcing conservation laws in parallel</h2>
 
@@ -48,11 +48,11 @@
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/how-simulating/fig2.png" />
     <div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
-  This figure is inspired by the experimental setup of Clauser and Horne (1974) used to test the Bell inequality. Here we are hypothesizing the existence of a shared hidden variable <i>x</i> which, when updated due the left photon's interaction with a polarizer, also affects the right photons polarization.
+  This figure is inspired by the experimental setup of <a href="https://drive.google.com/file/d/1ac4E87cKMgp90PfoNeTaRiVE3HEC9ubJ/view?usp=sharing">Clauser and Horne (1974)</a> used to test the Bell inequality. Here we are hypothesizing the existence of a shared hidden variable <i>x</i> which, when updated due the left photon's interaction with a polarizer, also affects the right photon's polarization.
   </div>
 </div>
 
-<p>Interestingly, the mechanics of this nonlocal relationship would predict a violation of <a href="https://www.youtube.com/watch?v=zcqZHYo7ONs&amp;vl=en">Bell’s inequality</a> which matches experimental results. Physicists agree that violation of Bell’s inequality implies that nature violates either <em>realism</em>, the principle that reality exists with definite properties even when not being observed, or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism: in other words, that entangled particles cannot be said to have deterministic states and instead exist in a state of superposition until they are measured. In our simulated universe, realism would be preserved whereas locality would be sacrificed. Entangled particles would have definite states but sometimes those states would change due to shared references to spatially distant “twins.”<sup id="fnref:fn4" role="doc-noteref"><a href="#fn:fn4" class="footnote">3</a></sup></p>
+<p>Interestingly, the mechanics of this nonlocal relationship would predict a violation of <a href="https://www.youtube.com/watch?v=zcqZHYo7ONs&amp;vl=en">Bell’s inequality</a> which would match experimental results. Physicists agree that violation of Bell’s inequality implies that nature violates either <em>realism</em>, the principle that reality exists with definite properties even when not being observed, or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism. In this line of thinking, entangled particles cannot be said to have deterministic states and instead exist in a state of superposition until they are measured. But in our simulated universe, realism would be preserved and locality would be sacrificed. Entangled particles would have definite states but sometimes those states would change due to shared references to spatially distant “twins.”<sup id="fnref:fn4" role="doc-noteref"><a href="#fn:fn4" class="footnote">3</a></sup></p>
 
 <h2 id="explaining-the-double-slit-experiment">Explaining the double slit experiment</h2>
 
@@ -62,14 +62,14 @@
 
 <p>How would one implement filtering in a large-scale, particle-based simulation of the universe? Well, if the simulation were particle-based instead of grid-based, we couldn’t apply a Gaussian or cone filter. An alternative would be to simulate the dynamics of each particle using ensembles of virtual particles. One could initialize a group of these virtual particles with slightly different initial conditions and then simulate all of them through time. If you allowed these virtual particles to interact with other virtual particles in the ensemble, the entire ensemble would collectively behave as though it were a wave.</p>
 
-<p>You might notice that there is a tension between this spatially delocalized, wave-like behavior (a consequence of filtering, which is related to assumption 3) and the conservation/quantization of quantities like energy (assumption 2). The tension is this: when a wave interacts with an object, it transfers energy in a manner that is delocalized and in proportion to its amplitude at a given location. But we have decided to quantize energy in order to keep an exact accounting of it across our simulation. So when our ensemble of particles interacts with some matter, it must transfer exactly one quanta of energy and it must do so at one particular location.</p>
-
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/how-simulating/fig3.png" style="width:90%" />
     <div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
   Wave-particle behavior of a photon as a consequence of using an ensemble of virtual particles and selecting just one to transfer a quanta of energy to the photoreceptor.
   </div>
 </div>
+
+<p>You might notice that there is a tension between this spatially delocalized, wave-like behavior (a consequence of filtering, which is related to assumption 3) and the conservation/quantization of quantities like energy (assumption 2). The tension is this: when a wave interacts with an object, it transfers energy in a manner that is delocalized and proportionate to its amplitude at a given location. But we have decided to quantize energy in order to keep an exact accounting of it across our simulation. So when our ensemble of particles interacts with some matter, it must transfer exactly one quanta of energy and it must do so at one particular location.</p>
 
 <p>The simplest way to implement this would be to choose one particle out of the ensemble and allow it to interact with other matter and transfer energy. The rest of the particles in the ensemble would be removed from the simulation upon coming into contact with other matter. The interesting thing about this approach is that it could help explain the wave-particle duality of subatomic particles such as photons. For example, it could be used to reproduce the empirical results of the double slit experiment in a fully deterministic manner.</p>
 
@@ -79,32 +79,22 @@
 
 <p><em>We set up the apparatus used to test Bell’s inequality. Entangled photons emerge from a source and head in opposite directions. Eventually they get their polarizations measured. We allow the first photon in the pair to enter a double slit experiment. As it passes through the double slit, it interferes with itself, producing a wavelike diffraction pattern on the detector.</em></p>
 
-<p><em>We change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">4</a></sup> and could be used to transmit information faster than light.</em></p>
-
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/how-simulating/fig4.png" style="width:80%" />
   <div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
-  One possible means of testing the hypothesis we have outlined. If photons used to test the Bell inequality behave in this manner when they encounter a double slit setup, one could use them to transmit information faster than the speed of light (violating the locality assumption off quantum mechanics).
+  One possible means of testing the hypothesis we have outlined. If photons used to test the Bell inequality behave in this manner when they encounter a double slit setup, one could use them to transmit information faster than the speed of light, violating the locality assumption.
   </div>
 </div>
+
+<p><em>Then we change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">4</a></sup> and could be used to transmit information faster than light.</em></p>
 
 <h2 id="closing-thoughts">Closing thoughts</h2>
 
 <p>To the followers of Plato, the world of the senses was akin to shadows dancing on the wall of a cave. The essential truths and realities of life were not to be found on the wall at all, but rather somewhere else in the cave in the form of real dancers and real flames. A meaningful life was to be spent seeking to understand these forms, elusive though they might be.</p>
 
-<p>In this post, we explored the unseen aspects of reality in the same way as Plato’s followers. We cannot say for sure whether we live in a simulation. We may never know. But at the very least, looking at how such a simulation would be implemented has made for a rather provocative and entertaining thought experiment.</p>
+<p>In this post, we took part in that tradition by using our knowledge of physics simulations to propose a new interpretation of quantum mechanics. It’s hard to know whether we do indeed live in a simulation. Perhaps we will never know. But at the very least, it seems that exploring the idea leads to some surprising and thought-provoking conclusions.</p>
 
 <h2 id="footnotes">Footnotes</h2>
-
-<p>function hideShowFilter() {
-  var x = document.getElementById(“filter_info”);
-  var y = document.getElementById(“filter_info_toggle”);
-  if (x.style.display === “none”) {
-    x.style.display = “inline”; y.textContent = “(–)”
-  } else {
-    x.style.display = “none”; y.textContent = “(+)”
-  }
-}</p>
 
 <script language="javascript">
 function hideShowNote() {
