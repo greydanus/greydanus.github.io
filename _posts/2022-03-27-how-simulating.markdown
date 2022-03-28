@@ -3,10 +3,18 @@ layout: post
 comments: true
 title:  "How Simulating the Universe Could Yield Quantum Mechanics"
 excerpt: "We look at the logistics of simulating the universe. We find that enforcing conservation laws, isotropy, etc. in parallel could lead to quantum-like effects."
-date:   2022-03-26 11:00:00
+date:   2022-03-27 11:00:00
 mathjax: true
 thumbnail: /assets/how-simulating/thumbnail.png
 ---
+
+  <div onclick="hideShowNote()" class="btn" style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;cursor: pointer; width: 180px;background-color: #FFFDDD">
+  <div style="display:inline"><b>Note to the reader</b></div> <div id="note_toggle" style="display:inline">(+)</div>
+  </div>
+
+<div style='background-color: #FFFDDD'>
+  <div id="note_to_reader" style="display: none;"><i>In this post, we will explore a rather unusual interpretation of how and why quantum mechanics works. What I have written is accurate to the best of my knowledge. However, you may discover that I've made an error in reasoning or perhaps missed an important reference. If that's the case, please let me know – in the comments or over email – and I'll make the appropriate fix.</i></div>
+</div>
 
 ## The universe as a simulation
 
@@ -24,6 +32,13 @@ We can determine whether these are reasonable assumptions by checking that they 
 
 The first thing to see is that assumptions 1 and 2 are in tension with one another. In order to ensure that a quantity (eg mass-energy) is conserved, you need to sum that quantity across the entire simulation, determine whether a correction is needed, and then apply that correction to the system as a whole. Computationally, this requires a synchronous [reduction operation](https://en.wikipedia.org/wiki/Reduction_operator) and an element-wise divide at virtually every timestep.
 
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/how-simulating/fig1.png">
+      <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
+  A conceptual outline of a large-scale physics simulation where different regions of space are being simulated in parallel. This parallelization is possible because nothing can travel faster than the speed of light; thus the separate regions can be simulated independently over short timescales.
+  </div>
+</div>
+
 When you write a single-threaded physics simulation, this can account for about half of the computational cost (these [fluid](https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L57) and [topology](https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L236) simulations are good examples). As you parallelize your simulation more and more, you can expect the cost of enforcing conservation laws to grow higher in proportion. This is because simulating dynamics is pretty easy to do in parallel. But enforcing system-wide conservation laws requires transferring data between distant CPU cores and keeping them more or less in sync. As a result, enforcing conservation laws in this manner quickly grows to be a limiting factor on runtime. We find ourselves asking _is there a more parallelizable approach to enforcing global conservation laws?_
 
 One option is to quantize the conserved quantity. For example, we could quantize energy and then only transfer it in the form of discrete packets.
@@ -38,6 +53,13 @@ So how are we to implement exact conservation of vector quantities? One option i
 
 We should recognize that this approach comes at a price. It demands that we sacrifice _locality_, the principle that an object is influenced directly only by its immediate surroundings. It's one of the most sacred principles in physics. This gets violated in the example of the two photons because a change in the polarization of the first photon will update the value of ``x``, implicitly changing the polarization of the second photon.
 
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/how-simulating/fig2.png">
+    <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
+  This figure is inspired by the experimental setup of Clauser and Horne (1974) used to test the Bell inequality. Here we are hypothesizing the existence of a shared hidden variable <i>x</i> which, when updated due the left photon's interaction with a polarizer, also affects the right photons polarization.
+  </div>
+</div>
+
 Interestingly, the mechanics of this nonlocal relationship would predict a violation of [Bell's inequality](https://www.youtube.com/watch?v=zcqZHYo7ONs&vl=en) which matches experimental results. Physicists agree that violation of Bell's inequality implies that nature violates either _realism_, the principle that reality exists with definite properties even when not being observed, or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism: in other words, that entangled particles cannot be said to have deterministic states and instead exist in a state of superposition until they are measured. In our simulated universe, realism would be preserved whereas locality would be sacrificed. Entangled particles would have definite states but sometimes those states would change due to shared references to spatially distant "twins."[^fn4]
 
 ## Explaining the double slit experiment
@@ -50,6 +72,13 @@ How would one implement filtering in a large-scale, particle-based simulation of
 
 You might notice that there is a tension between this spatially delocalized, wave-like behavior (a consequence of filtering, which is related to assumption 3) and the conservation/quantization of quantities like energy (assumption 2). The tension is this: when a wave interacts with an object, it transfers energy in a manner that is delocalized and in proportion to its amplitude at a given location. But we have decided to quantize energy in order to keep an exact accounting of it across our simulation. So when our ensemble of particles interacts with some matter, it must transfer exactly one quanta of energy and it must do so at one particular location.
 
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/how-simulating/fig3.png" style="width:90%">
+    <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
+  Wave-particle behavior of a photon as a consequence of using an ensemble of virtual particles and selecting just one to transfer a quanta of energy to the photoreceptor.
+  </div>
+</div>
+
 The simplest way to implement this would be to choose one particle out of the ensemble and allow it to interact with other matter and transfer energy. The rest of the particles in the ensemble would be removed from the simulation upon coming into contact with other matter. The interesting thing about this approach is that it could help explain the wave-particle duality of subatomic particles such as photons. For example, it could be used to reproduce the empirical results of the double slit experiment in a fully deterministic manner.
 
 ## Testing our hypothesis
@@ -60,11 +89,18 @@ _We set up the apparatus used to test Bell’s inequality. Entangled photons eme
 
 _We change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption[^fn3] and could be used to transmit information faster than light._
 
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/how-simulating/fig4.png" style="width:80%">
+  <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
+  One possible means of testing the hypothesis we have outlined. If photons used to test the Bell inequality behave in this manner when they encounter a double slit setup, one could use them to transmit information faster than the speed of light (violating the locality assumption off quantum mechanics).
+  </div>
+</div>
+
 ## Closing thoughts
 
 To the followers of Plato, the world of the senses was akin to shadows dancing on the wall of a cave. The essential truths and realities of life were not to be found on the wall at all, but rather somewhere else in the cave in the form of real dancers and real flames. A meaningful life was to be spent seeking to understand these forms, elusive though they might be.
 
-In this post, we explored the unseen aspects of reality in the same way as Plato's followers. We cannot say for sure whether we live in a simulation. We may never know. But at the very least, looking at how such a simulation would be implemented has made for a rather provocative and entertaining thought experiment.
+In this post, we took part in that tradition. More specifically, we used what we know about simulations to propose a new interpretation of quantum mechanics. There is no way to know for sure whether we live in a simulation. We may never know. But at the very least, exploring the idea leads to some surprising and thought-provoking conclusions.
 
 ## Footnotes
 
@@ -72,3 +108,16 @@ In this post, we explored the unseen aspects of reality in the same way as Plato
 [^fn2]: As a subset of conservation of angular momentum, [polarization](https://www.nature.com/articles/s41467-019-10939-x) is also conserved. This is relevant to later examples which assume conservation of polarization.
 [^fn3]: Relatedly, it will also violate the [no-communication theorem](https://en.wikipedia.org/wiki/No-communication_theorem), which is a core claim of quantum mechanics.
 [^fn4]: Physicists have certainly entertained the idea of using non-local theories to explain Bell's inequality. One of the reasons these theories are not more popular is that [Groblacher et al, 2007](https://drive.google.com/file/d/1RTlV08KhQ7lNwOukbNcMok0f6E42uMyI/view?usp=sharing) and others have reported experimental results that rule out some of the more reasonable options (eg Leggett-style non-local theories). But the idea we are proposing here is somewhat more radical; it would permit information to travel faster than the speed of light, violating the [No-communication theorem](https://en.wikipedia.org/wiki/No-communication_theorem). Of course, the only information that could be communicated faster than the speed of light would be _whether a given pair of particles is in a superposition of states or not_. Look at the "Testing our hypothesis" section for more discussion on this topic.
+
+
+<script language="javascript">
+function hideShowNote() {
+  var x = document.getElementById("note_to_reader");
+  var y = document.getElementById("note_toggle");
+  if (x.style.display === "none") {
+    x.style.display = "inline"; y.textContent = "(–)"
+  } else {
+    x.style.display = "none"; y.textContent = "(+)"
+  }
+}
+</script>
