@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "How Simulating the Universe Could Yield Quantum Effects"
+title:  "How Simulating the Universe Could Yield Quantum Mechanics"
 excerpt: "We look at the logistics of simulating the universe. We find that enforcing conservation laws, isotropy, etc. in parallel could lead to quantum-like effects."
 date:   2022-03-27 11:00:00
 mathjax: true
@@ -60,7 +60,11 @@ We should recognize that this approach comes at a price. It demands that we sacr
   </div>
 </div>
 
-Interestingly, the mechanics of this nonlocal relationship would predict a violation of [Bell's inequality](https://www.youtube.com/watch?v=zcqZHYo7ONs&vl=en) which would match experimental results. Physicists agree that violation of Bell's inequality implies that nature violates either _realism_, the principle that reality exists with definite properties even when not being observed, or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism. In this line of thinking, entangled particles cannot be said to have deterministic states and instead exist in a state of superposition until they are measured. But in our simulated universe, realism would be preserved and locality would be sacrificed. Entangled particles would have definite states but sometimes those states would change due to shared references to spatially distant "twins."[^fn4]
+Interestingly, the mechanics of this nonlocal relationship would predict a violation of [Bell's inequality](https://www.youtube.com/watch?v=zcqZHYo7ONs&vl=en) which would match experimental results. Physicists agree that violation of Bell's inequality implies that nature violates either _realism_, the principle that reality exists with definite properties even when not being observed, or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism. In this line of thinking, entangled particles cannot be said to have deterministic states and instead exist in a state of superposition until they are measured. But in our simulated universe, realism would be preserved and locality would be sacrificed. Entangled particles would have definite states but sometimes those states would change due to shared references to spatially distant "twins."[^fn4] To see how this would work in practice, try simulating it yourself at the link below.
+
+<div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
+  <a href="https://colab.research.google.com/drive/1b_DJo27Cq9E6zxSD9KpvyilaVV512SkU?usp=sharing" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+</div>
 
 ## Explaining the double slit experiment
 
