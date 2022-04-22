@@ -8,7 +8,7 @@ mathjax: true
 thumbnail: /assets/how-simulating/thumbnail.png
 ---
 
-## The Universe as a simulation
+## The universe as a simulation
 
 Let's imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Well, it would probably have:
 
