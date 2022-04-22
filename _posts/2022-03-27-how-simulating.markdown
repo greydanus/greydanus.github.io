@@ -8,15 +8,7 @@ mathjax: true
 thumbnail: /assets/how-simulating/thumbnail.png
 ---
 
-  <div onclick="hideShowNote()" class="btn" style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;cursor: pointer; width: 180px;">
-  <div style="display:inline">Note to the reader</div> <div id="note_toggle" style="display:inline">(+)</div>
-  </div>
-
-<div style='background-color: #FFFDDD'>
-  <div id="note_to_reader" style="display: none;"><i>In this post, we will explore a rather unusual interpretation of how and why quantum mechanics works. What I have written is accurate to the best of my knowledge. However, you may discover that I've made an error in reasoning or perhaps missed an important reference. If that's the case, please let me know – in the comments or over email – and I'll make the appropriate fix.</i></div>
-</div>
-
-## The universe as a simulation
+## The Universe as a simulation
 
 Let's imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Well, it would probably have:
 
