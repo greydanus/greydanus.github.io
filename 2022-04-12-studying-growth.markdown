@@ -145,9 +145,16 @@ _A eucalyptus native to Uganda has been known to grow 45 feet in two years, wher
 
 Given the extraordinary diversity of life forms on our plane, one of the biggest surprises might actually be how much they have in common. For the most part they have the same genetic materials, signaling pathways, enzymes, and metabolic pathways. Their cells have the same life cycles. And they share the same abstract patterns of growth even though their final forms are quite different. Let's look at some concrete examples of these patterns and see whether we can train NCA that reproduce them.
 
-### [1. Gnomonic growth](https://colab.research.google.com/drive/1DUFL5glyej725r8VAYDZIFrWvpR6a6-0)
+### [Gnomonic growth](https://colab.research.google.com/drive/1DUFL5glyej725r8VAYDZIFrWvpR6a6-0)
 
 One shared pattern of growth is called _gnomonic growth_. This pattern tends to occur whenever an organism's shape is defined by a rigid structure, and yet that organism needs to keep increasing in size. You can see this dilemma in clams, for example. Their shells are rigid and there is no way to deform them. And yet those shells need to increase in size as the organism inside of them grows. Clams solve this problem by incrementally adding long crescent-shaped lips to the edge of their shells. Each new lip is just a bit larger than the one that came before it. These lips, or _gnomons_ as they are called, permit objects to increase in size without increasing in form. They are a pattern of growth that shows up in shells, horns, tusks, and other rigid objects such as tree trunks.
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/studying-growth/nautilus_bw.png">
+  <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
+  Growing flowers with NCA.
+  </div>
+</div>
 
 One of the most famous products of gnomonic growth is the nautilus shell. In this shell, each gnomon increases in size relative to its neighbor in a very consistent manner. This happens with such granularity that the shell is often used as an example of fractals -- or patterns which look the same at different scales of space or time -- in biology.
 
@@ -179,7 +186,7 @@ function playPauseNaut() {
 
 
 
-### [2. Embryonic induction](https://colab.research.google.com/drive/1fbakmrgkk1y-ZXamH1mKbN1tvkogNrWq)
+### [Embryonic induction](https://colab.research.google.com/drive/1fbakmrgkk1y-ZXamH1mKbN1tvkogNrWq)
 
 We grow an image of a newt and then graft its eye onto its belly during development. We do this in homage to [Hans Spemann](https://en.wikipedia.org/wiki/Hans_Spemann) and his student Hilde, who won a Nobel Prize in 1935 for doing something similar with real newts. Need to modify the experiment so that some transplanted skin cells are able to induce growth of a second eye on the newt's belly.
 
@@ -216,7 +223,7 @@ function playPauseNewt() {
 </script>
 
 
-### [3. Apoptosis](https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww)
+### [Apoptosis](https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww)
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
   <img src="/assets/studying-growth/grow_bone.png">
@@ -247,7 +254,7 @@ function playPauseBone() {
 } 
 </script>
 
-### [4. Speciation](https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-)
+### [Speciation](https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-)
 
 Train a neural CA that can grow from a seed pixel into one of three different flowers depending on initial value of the seed. From a dynamical systems perspective, we are training a model that has three different basins of attraction, one for each flower. The initial seed determines which basin the system ultimately converges to. The initial seed vs. the shared attractor dynamics are analogous to the DNA of a specific flower vs. the shared cellular dynamics across related flower species.
 
