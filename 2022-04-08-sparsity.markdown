@@ -1,0 +1,122 @@
+---
+layout: post
+comments: true
+title:  "The Story of Sparsity in Neural Networks"
+excerpt: "Deep learning research is increasingly built around large foundation models. Double sparsity is the tool that can make these models usable."
+date:   2022-04-08 11:00:00
+mathjax: true
+thumbnail: /assets/sparsity/thumbnail.png
+---
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/sparsity/david.png">
+</div>
+
+Someone once asked Michaelangelo how he carved the statue of David. Was it difficult? "No," he replied, "It was easy. I just chipped away the stone that didn't look like David." When we think of building new things, we tend to think about adding materials together to create something larger and more complex. But this is not always what happens. In the case of David, the creative process was one of gradual subtraction.
+
+There is a whole field of science built on applying this principle to how data is processed. It is called sparse computing. Pioneered in the US in the 1950s and now led by large companies like NVIDIA and small startups like Numenta and Moffett AI, it has become an important factor in modern chip design. Sparse computing makes it easier to process large quantities of data by removing the bits of data - and it turns out that there are always many of them - which don’t count.
+
+This technique is becoming particularly important in the field of artificial intelligence. AI models, which are being used to fold proteins, drive Teslas, process medical images, and translate languages [refs], have grown so large that they are hard to run on normal computers. The largest ones, called "foundation models" [ref], can cost millions of dollars in electricity just to develop. Some of them are so large that they have to be kept on specialized hardware [ref]. But by using sparsity to gradually remove unnecessary parameters, researchers are finding ways to make them hundreds of times smaller, and thus usable for commercial applications.
+
+In order to see how this is done, let's begin by taking a closer look at how sparse computing works.
+
+### How sparse computing works
+
+In the early days of computer processors, scientific progress was measured in how many transistors could be made to fit on a chip and how fast the processor’s clock speed was as it processed instructions.
+
+The reason sparse computing is so vital today is that computing progress is no longer that simple. Firstly, a processor on its own is inadequate. The processor now needs to be a system-on-a-chip (SoC) or more commonly a “platform”, which combines software and hardware into one processing engine. Secondly, due to the exponentially increasing volumes of data being processed in AI applications, the problem of speed has now become four problems: how to improve speed and accuracy while at the same time reducing power consumption and cost.
+
+Sparse computing is the key to building platforms that perform well along all four of these dimensions. To see how this works, let's begin by looking at how it is applied to neural networks at a technical level.
+
+### Sparsity in neural networks
+
+Neural networks consist of a set of simulated neurons -- analogous to the neurons which make up a biological brain -- and a set of weighted connections between them. In these models, the behavior of a single neuron can be written as \\(f(x \cdot w)\\), where \\(w\\) is an ordered list, also called a vector, of \\(N\\) numbers which together represent the synaptic weights of a neuron. They describe the strength of the neuron's connections to \\(N\\) of its neighbors. Meanwhile, \\(x\\) is a vector of equal length which describes the activations of those neighbors. The function \\(f\\) is called the "activation function" and is analogous to the threshold function in biological neurons.
+
+[diagram]
+
+Simulating the behavior of this virtual neuron involves calculating a dot product between two vectors of length and then applying \\(f\\) to the result. You might imagine how a group of \\(M\\) of these neurons, all with the same number of synaptic connections, could be represented with a \\(M \times N\\) matrix where each row is a separate neuron. In the same way, \\(B\\) different activations -- each related to a different stimulus -- could be stacked atop one another to form a \\(B \times N\\) matrix. Using these groupings, we could compute the responses of a group of \\(M\\) neurons to \\(B\\) different inputs with a single matrix multiplication: \\(X \cdot W^{T}\\).[^fn3]
+
+[diagram]
+
+So far, we've assumed that every neuron has a connection to every element in the activation vector. But this is not generally the case, either in biological systems or artificial ones. It's much more common for a neuron to have a few strong synapses and let the rest to be zero. Neuron activations tend to be sparse as well. This means that sparse matrices are a natural way to represent both the \\(W\\) and \\(X\\) matrices.
+
+[diagram]
+
+### Types of sparsity in neural networks
+
+For early neural network researchers, the importance of sparsity was reinforced when they looked at the human brain. At the time, it was rare for people to stack more than a few layers of neurons atop one another. In these types of "shallow" networks, the total number of synapses would grow quadratically with the number of neurons. But this is not what was happening in the brain.
+
+**Synaptic sparsity.** By some estimates, the human brain has 86 billion neurons [ref] and 150 trillion synapses [ref]. These numbers imply that only 0.000005%[^fn1] of the possible connections between neurons are actually present. In other words, the connectivity of the brain is 99.999995% sparse. In this regime, the total number of synapses grows linearly with the number of neurons. Each biological neuron gets a fixed number of connections and this number doesn't change even as the total number of neurons increases. Researchers call this property _synaptic sparsity_.
+
+**Activation sparsity.** The human brain is not only sparse in synapses; it is also sparse in neuron activations. The energy consumed by a biological neuron is roughly proportional to the number of times it fires [ref]. So the fewer neurons that fire in the brain, the less energy it consumes. The brain uses this _activation sparsity_ to save energy. By contrast, a simulated neuron like the one we described above consumes the same amount of energy regardless of whether it fires or not. If its output is zero, that zero still gets multiplied with other numbers.
+
+**Double sparsity.** It turns out that these two types of sparsity are complementary to one another. Intuitively, activation sparsity allows signals to be routed through specific subsets of a network while synaptic sparsity keeps those subsets small and efficient. Working together, they lead to much greater efficiency gains than would be possible if only one were being used. Researchers suspect that this "double sparsity" is what permits the brain to be so powerful and efficient [ref].
+
+[diagram showing three types of sparsity]
+
+
+### A short history of sparsity in neural networks
+
+Neural network researchers of the 1990's were aware of the benefits of sparsity and put a great deal of effort into sparsifying their models. They used approaches like weight magnitude regularization, magnitude pruning, and the cheerily named "Optimal Brain Damage" to achieve high levels of synaptic sparsity. These works show that sparsity was important to AI researchers even in the early days of the field.
+
+Even so, sparse neural networks were destined to languish through the 2000's and early 2010's. That they languished in the 2000's should come as no surprise. That era, known as the AI Winter, was a time when funding for neural network research dropped precipitously. Progress slowed across all subfields including sparsity. But the fact that sparsity languished in the early 2010's is more surprising. This was a time when AI more broadly was swept up in a massive tidal wave of interest and funding. During this so-called AI Spring, progress in other areas of AI occurred at a dizzying pace. And yet sparsity stagnated. How could this be?
+
+Perhaps it was because there were so many other fruitful ways to improve models. First of all, there was better data. Since the 1990's, the internet had exploded into popular culture; this made it possible for researchers to construct massive datasets from publicly available data. Second, computing infrastructure grew much better. Not only did computers in general improve, but researchers found that they could massively accelerate their models by putting them on GPUs. A third important event was the rise of automatic differentiation (autodiff) frameworks like Theano, TensorFlow, and PyTorch. These frameworks made it easier to design new models, train them on specialized hardware, and interact with large datasets.
+
+It's worth noting that neither the GPUs nor the autodiff frameworks were amenable to sparse matrix operations. And so while they enabled big advances in model size and architecture, they made it difficult for researchers to reap rewards from sparsity. As long as significant progress was happening in other areas, this was to remain the case. But as the 2010's drew to a close, questions of energy efficiency and the compute-vs-accuracy tradeoff became more pressing. The promise of sparsity began to sweeten.
+
+### The promise of sparsity sweetens
+
+By 2020, AI models and datasets were growing more quickly than the availability of compute. We can take as an example three famous AI models: ResNet (2014) had 0.25 million parameters, BERT (2018) had 3.4 million parameters, and GPT-2 and 3 (2019 and 2020) had 1.5 and 175 billion parameters.
+
+Meanwhile, the rate of improvement in chip technology was beginning to slow. Moore's Law, which had held steady for several decades, was beginning to break down as the sizes of transistors shrank to the limits set by physics. This led to a world in which computing power was increasingly scarce. In this world, the computational benefits of sparsity started to look very attractive.[^fn4]
+
+**Steps toward sparsity.** One of the early signs that a transition towards sparsity is underway is that academic publications referencing sparsity have increased dramatically in the past five years. In 2020, NVIDIA released a chip called the A100 which featured a "sparsity processing unit" (SPU) with a 2x performance boost. Around the same time, Google researchers took a first step towards adding sparsity support to Tensor Processing Units ("[Sparse-TPU](https://dl.acm.org/doi/10.1145/3392717.3392751)"). Since then, other companies, like Intel and Microsoft, have taken steps towards supporting sparse AI models.[^fn5]
+
+### The unrealized potential of sparsity
+
+While these recent developments are moving in the right direction, it is important to put them in context. Researchers have shown that many models can be pruned until they are well over 95% sparse without damaging performance. Naively, this would suggest that such models could be made twenty times smaller and more efficient by adding synaptic sparsity _alone_. And yet, existing speedups due to model sparsification are closer to a factor of two.
+
+**The hardware problem.** So far, companies have made incremental modifications to existing chip architectures, but they have not unlocked the order of magnitude gains that are available in theory. One reason that progress has been slow is that sparsity is a difficult hardware problem. Adding full sparsity support means representing matrices and vectors differently on hardware. It means structuring the implementations of dot products differently. It means parallelizing computations in different ways. There is a growing consensus that, in order to accommodate these changes, AI chips need to be rebuilt from the ground up.
+
+**Startups.** This task, which requires daring and flexibility, is well suited for startups. Indeed, some of the best work being done in this area is happening at small companies. Numenta, a Bay Area startup, recently demonstrated a custom chip with hardware support that runs a popular vision architecture 100 times faster than more traditional chips. Another company, NeuralMagic, offers model sparsification for shrinking foundation models so that they can run on laptop CPUs instead of expensive data center GPUs. But in order to realize the full potential of sparsity, the industry is going to need to design both hardware and software together. So far, only a few startups have tried to do this. One of the most interesting and ambitious of these companies is Moffett AI.
+
+### Moffett AI and the path to double sparsity
+
+Moffett AI, a small startup founded in 2018, is focused specifically on building hardware and software infrastructure to support _double sparsity_.
+
+**Double sparsity.** Double sparsity, as we discussed earlier, refers to sparsity in both the weights and activations of neural networks. The image below gives an intuitive comparison of the differences between dense-dense operations, which the majority of AI chips use currently, dense-sparse operations, which some chips like the NVIDIA A100 offer, and "double sparse" operations which Moffett supports. One thing to notice is that using double sparsity permits researchers to evaluate the products of much larger matrices while using the same amount of memory, compute, and energy. In the image above, this leads to efficiency gains of one to two orders of magnitude. In other words, Moffett's approach permits researchers to train and evaluate models that are 10-100x larger for the same cost.
+
+[diagram]
+
+**Four benefits of double sparsity.** The practical benefits of double sparsity are fourfold: they include increased speed, higher accuracy, less energy consumption and lower cost. To make these benefits more concrete, let's compare Moffett's latest double sparse chip, the ANTOUM, to its dense-dense and dense-sparse counterparts.
+
+[diagram]
+
+The first thing to notice is that it can run sparse models 32x and 8x faster than its two respective baselines. These gains are important because model latency matters a great deal in real-world settings. For example, a self-driving car needs to be able to process frames at a rate of at least 30 fps in order to avoid obstacles while moving at 60 miles per hour. As another example, internet users begin to lose interest in a webpage if its latency grows beyond a few dozen milliseconds, meaning that neural networks used to filter information on these webpages need to perform inference in around one millisecond.
+
+The second benefit of double sparse is that it allows us to run higher accuracy models for the same computational budget. Because inference is 8-32x faster on the ANTOUM, it can run 8-32x larger models, which tend to be much more accurate.
+
+A similar line of reasoning is behind the third benefit, which is less energy consumption. The energy that a chip consumes is roughly proportional to the number of mathematical operations it performs. Since double sparse hardware ignores all the activations and weights that are set to zero, it saves the energy that would have been used to multiply them to get more zeros. These savings end up being between 8-32x as well. And since the cost of running a model scales with the amount of energy it uses, the ANTOUM is 8-32x cheaper to operate.
+
+### Co-designing hardware and software
+
+Of course, these numbers are far from static. As the AI chip industry grows and evolves, the ANTOUM and its baselines will soon be replaced by newer and better models. Given this observation, one of the things that really matters in chip design is potential for future improvements. ANTOUM is interesting because it is a first generation chip with a long roadmap of future improvements. For example, the theoretical efficiency gains that double sparsity offers are much higher than 8-32x. Depending on the model, they can be 100-1000x.
+
+In order to realize these additional benefits, Moffett is focusing on co-designing sparse hardware and software together. Intuitively, this is a good idea because the best way to implement sparse operations in software tends to depend on the chip being used. Meanwhile, the best double sparse chip designs depend on the types of sparse models being run, and how those models are represented at the software level.
+
+Take, for example, Moffett's approach to running convolutional neural networks for computer vision. These models organize visual data along spatial and channel dimensions. Intuitively, the spatial dimensions organize activations according to where they occur in a scene and the channel dimensions do so according to what is in the image. Given that objects, even common ones like wheels and eyes, occur infrequently throughout an image, Moffett's researchers realized that it is possible to make the channel dimension very sparse. Starting from this software observation, they adjusted the chip's physical design to take advantage of the smaller channel dimension.
+
+This fertile cross-pollination between hardware and software teams is rare at larger companies. It's much easier to achieve at small startups like Moffett, where the same researchers tend to be involved in both areas of development. While sometimes this occurs naturally, company structure also plays an important role. In the case of Moffett, for example, its founders chose each other with hardware and software co-design in mind. Two are hardware experts, one is a sparsity software expert, and the fourth has a background in both. Having joined together under a common banner, Moffett's founders have the unique combination of skills needed to make progress on double sparsity.
+
+### Closing thoughts
+
+Although the industry has started to put more time and energy into sparsity, there are many inefficiencies that have yet to be chiseled away. In coming years, we will need to adapt everything in AI -- from chip design to low-level compilers and CUDA kernels to high-level autodiff frameworks -- to better accommodate sparsity. Companies like Moffett are in a good position to lead this revolution. It is very possible that the infrastructure they are building now will, in a few years, be running the most powerful AI models in the world.
+
+### Footnotes
+
+[^fn1]: We obtained this number as follows: $$\quad \textrm{sparsity} = \frac{\textrm{observed number of connections}}{\textrm{possible connections btwn $N$ neurons}} = \frac{150 \times 10^{12}}{N*(N-1)/2} = \frac{150 \cdot 10^{12}}{(86\cdot10^9)(86\cdot10^9-1)/2} = 4\cdot10^{-8} $$
+[^fn2]: This was a tedious task that originally had to be done by hand. Software that did this automatically allowed researchers to rapidly iterate across different types of complicated architectures without having to write custom backpropagation code for each one.
+[^fn3]: Which is really just a group of vector dot products.
+[^fn4]: "Things that deal with sparse parallelism," said Raja Koduri, Intel's head of chip architecture, "...will give rise to some new architectural ideas that are very different from what we are doing in vector-matrix, which is very mainstream right now."
+[^fn5]: As just one example, in early 2022, Intel advertised an "Intel Neural Compressor" tool aimed at model sparsification.
