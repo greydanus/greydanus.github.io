@@ -24,3 +24,9 @@ If you are looking to follow Christ, I would encourage you to read that quote fr
 * [East of Eden](https://www.amazon.com/East-Eden-Penguin-Orange-Collection/dp/0143129481) by John Steinbeck
 * [The Unsettling of America](https://www.amazon.com/Unsettling-America-Culture-Agriculture/dp/161902599X) by Wendell Berry
 * [My email](/static/email.txt)
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
+  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+    <img src="/assets/justification/scrollwork.jpg" style="width:100%">
+  </div>
+</div>
