@@ -8,14 +8,6 @@ mathjax: true
 thumbnail: /assets/how-simulating/thumbnail.png
 ---
 
-  <div onclick="hideShowNote()" class="btn" style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;cursor: pointer; width: 180px;">
-  <div style="display:inline">Note to the reader</div> <div id="note_toggle" style="display:inline">(+)</div>
-  </div>
-
-<div style='background-color: #FFFDDD'>
-  <div id="note_to_reader" style="display: none;"><i>In this post, we will explore a rather unusual interpretation of how and why quantum mechanics works. What I have written is accurate to the best of my knowledge. However, you may discover that I've made an error in reasoning or perhaps missed an important reference. If that's the case, please let me know – in the comments or over email – and I'll make the appropriate fix.</i></div>
-</div>
-
 ## The universe as a simulation
 
 Let's imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Well, it would probably have:
@@ -39,7 +31,7 @@ The first thing to see is that assumptions 1 and 2 are in tension with one anoth
   </div>
 </div>
 
-When you write a single-threaded physics simulation, this can account for about half of the computational cost (these [fluid](https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L57) and [topology](https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L236) simulations are good examples). As you parallelize your simulation more and more, you can expect the cost of enforcing conservation laws to grow higher in proportion. This is because simulating dynamics is pretty easy to do in parallel. But enforcing system-wide conservation laws requires transferring data between distant CPU cores and keeping them more or less in sync. As a result, enforcing conservation laws in this manner quickly grows to be a limiting factor on runtime. We find ourselves asking _is there a more parallelizable approach to enforcing global conservation laws?_
+When you write a single-threaded physics simulation, this can account for about half of the computational cost (these [fluid](https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L57) and [topology](https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L236) simulations are good examples). As you parallelize your simulation more and more, you can expect the cost of enforcing conservation laws to grow higher in proportion. This is because simulating dynamics is pretty easy to do in parallel. But enforcing system-wide conservation laws requires transferring data between distant CPU cores and keeping them more or less in sync. As a result, enforcing conservation laws in this manner quickly grows to be a limiting factor on runtime. We find ourselves asking: _is there a more parallelizable approach to enforcing global conservation laws?_
 
 One option is to quantize the conserved quantity. For example, we could quantize energy and then only transfer it in the form of discrete packets.
 
