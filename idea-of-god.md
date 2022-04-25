@@ -1,14 +1,15 @@
 ---
+title: "The Idea of God"
 layout: page
 permalink: /idea-of-god/
 includelink: true
 ---
 
+_"As water reflects the face, so one’s life reflects the heart." — Proverbs 27:19_
+
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/idea-of-god/gutenberg.jpg">
 </div>
-
-_"As water reflects the face, so one’s life reflects the heart." — Proverbs 27:19_
 
 I’ve always enjoyed learning about how the world works. So growing up, I spent a lot of time reading and studying science. Over time, I came to believe that a person’s values and meaning in life are relative and should be constructed by each individual as they see fit. And so I endeavored to construct these things for myself. This cut me off from the people around me. And yet, the things I craved most were human connection, community, and the chance to have loving relationships. The more I lived according to my own rules, the more lonely I became.
 
