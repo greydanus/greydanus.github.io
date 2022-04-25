@@ -4,7 +4,7 @@ permalink: /idea-of-god/
 includelink: true
 ---
 
-## The Idea of God
+# The Idea of God
 
 _"As water reflects the face, so one’s life reflects the heart." — Proverbs 27:19_
 
