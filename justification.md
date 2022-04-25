@@ -139,12 +139,8 @@ In every moment of the day that is not saturated, being reminded of God's grace 
 They got scars, fam. Kindness. And love. When God our Savior appeared, he did not come to give us what we deserved. But to take it upon himself. So that as a free gift of his grace, we might be justified freely. I don't care how you feel about it. He just says it's what's real. And true. So this morning, if you would like to take communion to celebrate that, or show your gratitude for that you can close out with worship. If here this morning, you want to make that decision: Christianity is a binary thing. It's not “I'm trying to be” or “I'm working at it.” It's a grace you receive or you don't. Working at it and trying harder is not receiving the grace. Do you want to come to the party? It’s an open invitation. It’s not my party but I'm inviting you to it.
 
 
-<!-- ## Links
-* [2-minute Jordan Peterson video](/static/idea-of-god-short.mp4) on the idea of God
-* [2-hour Jordan Peterson video](https://www.youtube.com/watch?v=f-wWBGo6a2w) on the idea of God
-* [Mere Christianity](https://www.amazon.com/Mere-Christianity-C-S-Lewis/dp/0060652926) by CS Lewis
-* [My email](/static/email.txt)
-
-_"As water reflects the face, so one’s life reflects the heart." — Proverbs 27:19_ -->
-
-<!-- <div class="imgcap_noborder" style="text-align:center"><img src="/assets/justification/bread.jpeg" style="width:25%;min-width:150px;"></div> -->
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
+  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+    <img src="/assets/justification/scrollwork.jpg" style="width:100%">
+  </div>
+</div>
