@@ -13,7 +13,7 @@ includelink: true
 * [Twitter](https://twitter.com/samgreydanus)
 * [Github](https://github.com/greydanus)
 <!-- * [Old personal website (has some old pet projects at the bottom)](/about.html) -->
-* [The idea of God](/idea-of-god/)
+* [The Idea of God](/idea-of-god/)
 * [My email](/static/email.txt)
 
 ## About me
