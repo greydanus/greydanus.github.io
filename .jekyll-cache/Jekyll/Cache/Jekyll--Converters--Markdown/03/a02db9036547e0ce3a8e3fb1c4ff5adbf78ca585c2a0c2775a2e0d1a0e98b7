@@ -1,114 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>A Simple Introduction to Structural Optimization</title>
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="A science blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2022-04-26-structural-optimization/">
-    <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/assets/main.css">
-
-    <!-- Google Analytics -->
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-72311215-6', 'auto');
-      ga('send', 'pageview');
-
-    </script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    
-    <!-- Allow RSS subscribers, as described in https://dzhavat.github.io/2020/01/19/adding-an-rss-feed-to-github-pages.html -->
-    <link rel="alternate" type="application/atom+xml" title="Sam Greydanus’ blog" href="/feed.xml">
-
-</head>
-
-
-    <body>
-
-    <header class="site-header">
-
-  <div class="wrap">
-
-    <div style="float:left; margin-top:11px; margin-right:10px;">
-    <img src="/assets/oak.png" width="50px">
-    </div>
-
-    <div style="float:left; margin-top:4px; margin-right:10px;">
-      <a class="site-title" style="padding-top:0px; padding-bottom:0px;" href="/ ">Natural Intelligence</a>
-      <!--<p style="font-size:14px;">‎‎ㅤㅤㅤ&zwnj;</p> This is very hacky but I couldn't find a better way -->
-      <br>
-      <p style="padding-bottom:6px; font-size:15px;font-weight: 300;">A science blog by Sam Greydanus</p>
-    </div>
-
-<!--     <a class="site-title" style="padding-top:8px; font-size:28px" href="/ ">Natural Intelligence</a> -->
-    
-    <nav class="site-nav">
-      <a href="#" class="menu-icon">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-           viewBox="0 0 18 15" enable-background="new 0 0 18 15" xml:space="preserve">
-          <path fill="#505050" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0
-            h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
-          <path fill="#505050" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484
-            h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
-          <path fill="#505050" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0
-            c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
-        </svg>
-      </a>
-
-      <div class="trigger" style="margin-bottom:0px; padding-top:10px; font-size:13px;font-weight: 300;">
-<!--         <a class="page-link" href="/ ">Home</a> -->
-<!--         
-          <a class="page-link" href="/assets/2017-12-23-neurips17/">A Review of NeurIPS</a>
-        
-          <a class="page-link" href="/2022-04-08-sparsity/">The Story of Sparsity in Neural Networks</a>
-        
-          <a class="page-link" href="/2022-04-12-studying-growth/">Studying Growth with Cellular Automata</a>
-        
-          <a class="page-link" href="/2022-04-26-structural-optimization/">A Simple Introduction to Structural Optimization</a>
-        
-          
-        
-          <a class="page-link" href="/idea-of-god/">The Idea of God</a>
-        
-          
-        
-          <a class="page-link" href="/justification/">Trimmer on Justification</a>
-        
-          <a class="page-link" href="/papers/">Interesting papers</a>
-        
-          
-         -->
-        <a class="page-link" style="margin-bottom: 0px; padding-bottom:0px;" href="../../../../index.html">Home</a>
-<!--         <a class="page-link" style="margin-bottom: 0px; padding-bottom:0px;" href="../../../../about.html">About me (old)</a> -->
-        <a class="page-link" style="margin-bottom: 0px; padding-bottom:0px;" href="/about_me">About me</a>
-      </div>
-    </nav>
-  </div>
-
-</header>
-
-
-    <div class="page-content">
-      <div class="wrap">
-      <div class="post">
-
-  <header class="post-header">
-    <h1>A Simple Introduction to Structural Optimization</h1>
-    <p class="meta">Apr 26, 2022 • Sam Greydanus</p>
-  </header>
-
-  <article class="post-content">
-  <style>
+I"�<style>
 .wrap {
     max-width: 900px;
 }
@@ -132,28 +22,9 @@ pre {
 }
 </style>
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
-    <video id="hero_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/mbb.png">
-      <source src="/assets/structural-optimization/mbb.mp4" type="video/mp4" />
-    </video>
-    <button class="playbutton" id="hero_video_button" onclick="playPauseHero()">Play</button>
-  </div>
-  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:75%">We design an MBB beam.</div>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/structural-optimization/hero5.png" />
 </div>
-
-<script> 
-function playPauseHero() { 
-  var video = document.getElementById("hero_video"); 
-  var button = document.getElementById("hero_video_button");
-  if (video.paused) {
-    video.play();
-    button.textContent = "Pause";}
-  else {
-    video.pause(); 
-  button.textContent = "Play";}
-} 
-</script>
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
   <a href="" id="linkbutton" target="_blank">PDF format</a>
@@ -535,14 +406,14 @@ print( "Gradient w.r.t. u is: ", grad_dot_product(u,v))
 </code></pre></div></div>
 <pre class="outputarea">
 Optimizing a problem with 4212 nodes
-step 10, loss 1.28e+03, t=1.31s
-step 20, loss 5.38e+02, t=2.51s
-step 30, loss 4.17e+02, t=3.92s
-step 40, loss 3.67e+02, t=5.36s
-step 50, loss 3.61e+02, t=6.84s
-step 60, loss 3.58e+02, t=8.30s
-step 70, loss 3.55e+02, t=9.67s
-step 80, loss 3.44e+02, t=10.79s
+step 10, loss 1.28e+03, t=1.73s
+step 20, loss 5.38e+02, t=3.51s
+step 30, loss 4.17e+02, t=5.86s
+step 40, loss 3.67e+02, t=8.71s
+step 50, loss 3.61e+02, t=11.57s
+step 60, loss 3.58e+02, t=13.97s
+step 70, loss 3.55e+02, t=15.13s
+step 80, loss 3.44e+02, t=16.30s
 
 Final design space:
 <img src="/assets/structural-optimization/mbb1.png" align="left" />
@@ -555,74 +426,73 @@ Final MBB beam design:
 <img src="/assets/structural-optimization/mbb2.png" align="left" />
 </pre>
 
-<!-- ## Caching arrays for a 2x speedup
+<h2 id="caching-arrays-for-a-2x-speedup">Caching arrays for a 2x speedup</h2>
 
-Caching is a separate subject, so we avoided any discussion of it in the main tutorial. But we should mention that adding LRU caching for NumPy arrays speeds thing up by around 2x.
+<p>Caching is a separate subject, so we avoided any discussion of it in the main tutorial. But we should mention that adding LRU caching for NumPy arrays speeds thing up by around 2x.</p>
 
-```python
-import functools
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">functools</span>
 
-class _WrappedArray:
-  """Hashable wrapper for NumPy arrays."""
-  def __init__(self, value):
-    self.value = value
+<span class="k">class</span> <span class="nc">_WrappedArray</span><span class="p">:</span>
+  <span class="s">"""Hashable wrapper for NumPy arrays."""</span>
+  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="bp">self</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
 
-  def __eq__(self, other):
-    return np.array_equal(self.value, other.value)
+  <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">value</span><span class="p">,</span> <span class="n">other</span><span class="p">.</span><span class="n">value</span><span class="p">)</span>
 
-  def __hash__(self):
-    # Collisions (there won't be many) mean __eq__ is checked: https://bit.ly/3EazdK3
-    return hash(repr(self.value.ravel()))
+  <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># Collisions (there won't be many) mean __eq__ is checked: https://bit.ly/3EazdK3
+</span>    <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">value</span><span class="p">.</span><span class="n">ravel</span><span class="p">()))</span>
 
-def ndarray_safe_lru_cache(maxsize=128):
-  """An ndarray compatible version of functools.lru_cache."""
-  def decorator(func):
-    @functools.lru_cache(maxsize)
-    def cached_func(*args, **kwargs):
-      args = tuple(a.value if isinstance(a, _WrappedArray) else a for a in args)
-      kwargs = {k: v.value if isinstance(v, _WrappedArray) else v for k, v in kwargs.items()}
-      return func(*args, **kwargs)
+<span class="k">def</span> <span class="nf">ndarray_safe_lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">128</span><span class="p">):</span>
+  <span class="s">"""An ndarray compatible version of functools.lru_cache."""</span>
+  <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="o">@</span><span class="n">functools</span><span class="p">.</span><span class="n">lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">cached_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">_WrappedArray</span><span class="p">)</span> <span class="k">else</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span>
+      <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">.</span><span class="n">value</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">_WrappedArray</span><span class="p">)</span> <span class="k">else</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">items</span><span class="p">()}</span>
+      <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-      args = tuple(_WrappedArray(a) if isinstance(a, np.ndarray) else a for a in args)
-      kwargs = {k: _WrappedArray(v) if isinstance(v, np.ndarray) else v for k, v in kwargs.items()}
-      return cached_func(*args, **kwargs)
-    return wrapper
-  return decorator
+    <span class="o">@</span><span class="n">functools</span><span class="p">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+      <span class="n">args</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">_WrappedArray</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="k">else</span> <span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span>
+      <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">_WrappedArray</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="k">else</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">.</span><span class="n">items</span><span class="p">()}</span>
+      <span class="k">return</span> <span class="n">cached_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+  <span class="k">return</span> <span class="n">decorator</span>
 
-@ndarray_safe_lru_cache(1)
-def _get_solver(a_entries, a_indices, size, sym_pos):
-  # a is (usu.) symmetric positive; could solve 2x faster w/sksparse.cholmod.cholesky(a).solve_A
-  a = scipy.sparse.coo_matrix((a_entries, a_indices), shape=(size,)*2).tocsc()
-  return scipy.sparse.linalg.splu(a).solve
+<span class="o">@</span><span class="n">ndarray_safe_lru_cache</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_get_solver</span><span class="p">(</span><span class="n">a_entries</span><span class="p">,</span> <span class="n">a_indices</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">sym_pos</span><span class="p">):</span>
+  <span class="c1"># a is (usu.) symmetric positive; could solve 2x faster w/sksparse.cholmod.cholesky(a).solve_A
+</span>  <span class="n">a</span> <span class="o">=</span> <span class="n">scipy</span><span class="p">.</span><span class="n">sparse</span><span class="p">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">a_entries</span><span class="p">,</span> <span class="n">a_indices</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">,)</span><span class="o">*</span><span class="mi">2</span><span class="p">).</span><span class="n">tocsc</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">scipy</span><span class="p">.</span><span class="n">sparse</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">splu</span><span class="p">(</span><span class="n">a</span><span class="p">).</span><span class="n">solve</span>
 
-@ndarray_safe_lru_cache(1)
-def _get_dof_indices(freedofs, fixdofs, k_xlist, k_ylist):
-  index_map = inverse_permutation(
-      anp.concatenate([freedofs, fixdofs]))
-  keep = anp.isin(k_xlist, freedofs) & anp.isin(k_ylist, freedofs)
-  i = index_map[k_ylist][keep]
-  j = index_map[k_xlist][keep]
-  return index_map, keep, anp.stack([i, j])
+<span class="o">@</span><span class="n">ndarray_safe_lru_cache</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_get_dof_indices</span><span class="p">(</span><span class="n">freedofs</span><span class="p">,</span> <span class="n">fixdofs</span><span class="p">,</span> <span class="n">k_xlist</span><span class="p">,</span> <span class="n">k_ylist</span><span class="p">):</span>
+  <span class="n">index_map</span> <span class="o">=</span> <span class="n">inverse_permutation</span><span class="p">(</span>
+      <span class="n">anp</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">freedofs</span><span class="p">,</span> <span class="n">fixdofs</span><span class="p">]))</span>
+  <span class="n">keep</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">isin</span><span class="p">(</span><span class="n">k_xlist</span><span class="p">,</span> <span class="n">freedofs</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">anp</span><span class="p">.</span><span class="n">isin</span><span class="p">(</span><span class="n">k_ylist</span><span class="p">,</span> <span class="n">freedofs</span><span class="p">)</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="n">index_map</span><span class="p">[</span><span class="n">k_ylist</span><span class="p">][</span><span class="n">keep</span><span class="p">]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="n">index_map</span><span class="p">[</span><span class="n">k_xlist</span><span class="p">][</span><span class="n">keep</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">index_map</span><span class="p">,</span> <span class="n">keep</span><span class="p">,</span> <span class="n">anp</span><span class="p">.</span><span class="n">stack</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
 
-# solve the MBB beam problem again, now with caching
-args = get_args(*mbb_beam())
-print('Optimizing the same structure, this time with caching...')
-losses, x, frames = fast_stopt(args=args, verbose=True)
-```
-<pre class='outputarea'>
+<span class="c1"># solve the MBB beam problem again, now with caching
+</span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">mbb_beam</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Optimizing the same structure, this time with caching...'</span><span class="p">)</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+<pre class="outputarea">
 Optimizing the same structure, this time with caching...
 Optimizing a problem with 4212 nodes
-step 10, loss 1.28e+03, t=0.77s
-step 20, loss 5.38e+02, t=1.50s
-step 30, loss 4.17e+02, t=2.19s
-step 40, loss 3.67e+02, t=2.86s
-step 50, loss 3.61e+02, t=3.53s
-step 60, loss 3.58e+02, t=4.18s
-step 70, loss 3.55e+02, t=4.84s
-step 80, loss 3.44e+02, t=5.62s
-</pre> -->
+step 10, loss 1.28e+03, t=1.38s
+step 20, loss 5.38e+02, t=2.10s
+step 30, loss 4.17e+02, t=2.81s
+step 40, loss 3.67e+02, t=3.50s
+step 50, loss 3.61e+02, t=4.17s
+step 60, loss 3.58e+02, t=4.83s
+step 70, loss 3.55e+02, t=5.51s
+step 80, loss 3.44e+02, t=6.18s
+</pre>
 
 <h2 id="optimizing-a-gazebo-roof-support">Optimizing a gazebo roof support</h2>
 <p>This is a slightly more challenging and interesting task. The problem setup was taken from a real-world gazebo rafter design problem.
@@ -651,42 +521,24 @@ Angle of net force is approximately 20 degrees (0.349 radians)</p>
 <span class="c1"># run the simulation and visualize the result
 </span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">eves</span><span class="p">())</span>
 <span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span> <span class="p">;</span> <span class="n">args</span><span class="p">.</span><span class="n">print_every</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="p">;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 <pre class="outputarea">
-Optimizing a problem with 66306 nodes
-step 10, loss 1.01e+02, t=34.68s
-step 20, loss 7.87e+00, t=69.54s
-step 30, loss 3.05e+00, t=104.69s
-step 40, loss 2.68e+00, t=138.80s
-step 50, loss 2.53e+00, t=173.08s
-step 60, loss 2.48e+00, t=206.53s
-step 70, loss 2.47e+00, t=240.59s
-step 80, loss 2.47e+00, t=278.73s
-step 90, loss 2.46e+00, t=312.37s
-step 100, loss 2.46e+00, t=347.35s
+Optimizing a problem with 40602 nodes
+step 10, loss 9.07e+01, t=19.03s
+step 20, loss 7.93e+00, t=46.51s
+step 30, loss 3.24e+00, t=65.11s
+step 40, loss 2.83e+00, t=83.62s
+step 50, loss 2.74e+00, t=103.63s
+step 60, loss 2.72e+00, t=123.30s
+step 70, loss 2.71e+00, t=145.45s
+step 80, loss 2.70e+00, t=164.12s
 </pre>
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:70%">
-  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
-    <video id="eves_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/eves.png">
-      <source src="/assets/structural-optimization/eves.mp4" type="video/mp4" />
-    </video>
-    <button class="playbutton" id="eves_video_button" onclick="playPauseEves()">Play</button>
-  </div>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
+  <img src="/assets/structural-optimization/eves.png" />
 </div>
-
-<script> 
-function playPauseEves() { 
-  var video = document.getElementById("eves_video"); 
-  var button = document.getElementById("eves_video_button");
-  if (video.paused) {
-    video.play();
-    button.textContent = "Pause";}
-  else {
-    video.pause(); 
-  button.textContent = "Play";}
-} 
-</script>
 
 <h2 id="a-few-other-designs">A few other designs</h2>
 
@@ -706,40 +558,24 @@ function playPauseEves() {
 </span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">causeway_bridge</span><span class="p">())</span>
 <span class="n">args</span><span class="p">.</span><span class="n">opt_steps</span> <span class="o">=</span> <span class="mi">160</span> <span class="p">;</span> <span class="n">args</span><span class="p">.</span><span class="n">print_every</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="p">;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 <pre class="outputarea">
 Optimizing a problem with 33282 nodes
-step 20, loss 6.45e+02, t=32.45s
-step 40, loss 6.99e+01, t=66.31s
-step 60, loss 6.22e+01, t=96.67s
-step 80, loss 6.08e+01, t=127.47s
-step 100, loss 6.01e+01, t=158.28s
-step 120, loss 5.97e+01, t=188.59s
-step 140, loss 5.90e+01, t=222.50s
-step 160, loss 5.84e+01, t=253.61s
+step 20, loss 6.45e+02, t=34.22s
+step 40, loss 6.99e+01, t=67.26s
+step 60, loss 6.22e+01, t=99.40s
+step 80, loss 6.07e+01, t=131.37s
+step 100, loss 6.00e+01, t=164.62s
+step 120, loss 5.92e+01, t=197.78s
+step 140, loss 5.87e+01, t=231.54s
+step 160, loss 5.83e+01, t=264.51s
 </pre>
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:70%">
-  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
-    <video id="causeway_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/causeway.png">
-      <source src="/assets/structural-optimization/causeway.mp4" type="video/mp4" />
-    </video>
-    <button class="playbutton" id="causeway_video_button" onclick="playPauseCauseway()">Play</button>
-  </div>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:70%">
+  <img src="/assets/structural-optimization/causeway_bridge.png" />
 </div>
-
-<script> 
-function playPauseCauseway() { 
-  var video = document.getElementById("causeway_video"); 
-  var button = document.getElementById("causeway_video_button");
-  if (video.paused) {
-    video.play();
-    button.textContent = "Pause";}
-  else {
-    video.pause(); 
-  button.textContent = "Play";}
-} 
-</script>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">staggered_points</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">break_symmetry</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
   <span class="s">"""A staggered grid of points with downward forces, supported from below."""</span>
@@ -759,40 +595,24 @@ function playPauseCauseway() {
 <span class="c1"># run the simulation and visualize the result
 </span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">staggered_points</span><span class="p">())</span>
 <span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="p">;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 <pre class="outputarea">
 Optimizing a problem with 33410 nodes
-step 10, loss 1.91e+02, t=13.35s
-step 20, loss 1.43e+02, t=26.34s
-step 30, loss 6.96e+01, t=39.41s
-step 40, loss 6.46e+01, t=52.50s
-step 50, loss 4.44e+01, t=65.47s
-step 60, loss 3.97e+01, t=78.36s
-step 70, loss 3.76e+01, t=91.24s
-step 80, loss 3.58e+01, t=104.05s
+step 10, loss 1.91e+02, t=14.44s
+step 20, loss 1.43e+02, t=28.38s
+step 30, loss 6.96e+01, t=42.38s
+step 40, loss 6.48e+01, t=56.55s
+step 50, loss 4.44e+01, t=70.57s
+step 60, loss 3.95e+01, t=84.68s
+step 70, loss 3.66e+01, t=99.58s
+step 80, loss 3.58e+01, t=113.55s
 </pre>
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:40%">
-  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
-    <video id="points_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/points.png">
-      <source src="/assets/structural-optimization/points.mp4" type="video/mp4" />
-    </video>
-    <button class="playbutton" id="points_video_button" onclick="playPausePoints()">Play</button>
-  </div>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:40%">
+  <img src="/assets/structural-optimization/staggered_points.png" />
 </div>
-
-<script> 
-function playPausePoints() { 
-  var video = document.getElementById("points_video"); 
-  var button = document.getElementById("points_video_button");
-  if (video.paused) {
-    video.play();
-    button.textContent = "Pause";}
-  else {
-    video.pause(); 
-  button.textContent = "Play";}
-} 
-</script>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">staircase</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">num_stories</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
   <span class="s">"""A ramp that zig-zags upward, supported from the ground."""</span>
@@ -816,42 +636,25 @@ function playPausePoints() {
 </span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">staircase</span><span class="p">())</span>
 <span class="n">args</span><span class="p">.</span><span class="n">opt_steps</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 <pre class="outputarea">
 Optimizing a problem with 132098 nodes
-step 10, loss 9.65e+01, t=98.39s
-step 20, loss 3.04e+01, t=197.26s
-step 30, loss 7.37e+00, t=294.96s
-step 40, loss 4.38e+00, t=390.48s
-step 50, loss 3.98e+00, t=483.45s
-step 60, loss 3.88e+00, t=575.68s
-step 70, loss 3.86e+00, t=668.17s
-step 80, loss 3.83e+00, t=758.19s
-step 90, loss 3.82e+00, t=847.92s
-step 100, loss 3.81e+00, t=939.67s
+step 10, loss 9.65e+01, t=103.76s
+step 20, loss 3.04e+01, t=209.46s
+step 30, loss 7.37e+00, t=310.12s
+step 40, loss 4.38e+00, t=410.57s
+step 50, loss 3.98e+00, t=516.39s
+step 60, loss 3.88e+00, t=620.23s
+step 70, loss 3.86e+00, t=724.45s
+step 80, loss 3.83e+00, t=827.98s
+step 90, loss 3.82e+00, t=933.85s
+step 100, loss 3.80e+00, t=1033.26s
 </pre>
-
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%">
-  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
-    <video id="staircase_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/staircase.png">
-      <source src="/assets/structural-optimization/staircase.mp4" type="video/mp4" />
-    </video>
-    <button class="playbutton" id="staircase_video_button" onclick="playPauseStaircase()">Play</button>
-  </div>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:40%">
+  <img src="/assets/structural-optimization/staircase.png" />
 </div>
-
-<script> 
-function playPauseStaircase() { 
-  var video = document.getElementById("staircase_video"); 
-  var button = document.getElementById("staircase_video_button");
-  if (video.paused) {
-    video.play();
-    button.textContent = "Pause";}
-  else {
-    video.pause(); 
-  button.textContent = "Play";}
-} 
-</script>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">multistory_building</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
   <span class="n">x_ix</span><span class="p">,</span> <span class="n">y_ix</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
@@ -867,49 +670,33 @@ function playPauseStaircase() {
 </span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">multistory_building</span><span class="p">())</span>
 <span class="n">args</span><span class="p">.</span><span class="n">opt_steps</span> <span class="o">=</span> <span class="mi">160</span> <span class="p">;</span> <span class="n">args</span><span class="p">.</span><span class="n">print_every</span> <span class="o">=</span> <span class="mi">10</span>
 <span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">120</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="p">;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 <pre class="outputarea">
 Optimizing a problem with 132354 nodes
-step 10, loss 1.28e+04, t=72.03s
-step 20, loss 8.77e+03, t=144.31s
-step 30, loss 7.23e+03, t=215.94s
-step 40, loss 1.74e+03, t=289.13s
-step 50, loss 9.65e+02, t=362.98s
-step 60, loss 8.40e+02, t=434.95s
-step 70, loss 8.06e+02, t=506.56s
-step 80, loss 7.97e+02, t=577.98s
-step 90, loss 7.89e+02, t=648.11s
-step 100, loss 7.87e+02, t=718.23s
-step 110, loss 7.85e+02, t=787.93s
-step 120, loss 7.83e+02, t=857.21s
-step 130, loss 7.82e+02, t=927.52s
-step 140, loss 7.81e+02, t=996.80s
-step 150, loss 7.79e+02, t=1066.46s
-step 160, loss 7.77e+02, t=1135.57s
+step 10, loss 1.28e+04, t=77.93s
+step 20, loss 8.77e+03, t=155.88s
+step 30, loss 7.23e+03, t=233.90s
+step 40, loss 1.74e+03, t=313.91s
+step 50, loss 9.65e+02, t=391.12s
+step 60, loss 8.41e+02, t=464.78s
+step 70, loss 8.09e+02, t=537.75s
+step 80, loss 7.96e+02, t=611.75s
+step 90, loss 7.92e+02, t=684.93s
+step 100, loss 7.89e+02, t=757.49s
+step 110, loss 7.86e+02, t=828.19s
+step 120, loss 8.22e+02, t=898.78s
+step 130, loss 8.96e+02, t=970.34s
+step 140, loss 7.84e+02, t=1041.95s
+step 150, loss 7.79e+02, t=1113.07s
+step 160, loss 7.78e+02, t=1186.59s
 </pre>
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
-  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
-    <video id="building_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/building.png">
-      <source src="/assets/structural-optimization/building.mp4" type="video/mp4" />
-    </video>
-    <button class="playbutton" id="building_video_button" onclick="playPauseBuilding()">Play</button>
-  </div>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%">
+  <img src="/assets/structural-optimization/multistory_building.png" />
 </div>
 
-<script> 
-function playPauseBuilding() { 
-  var video = document.getElementById("building_video"); 
-  var button = document.getElementById("building_video_button");
-  if (video.paused) {
-    video.play();
-    button.textContent = "Pause";}
-  else {
-    video.pause(); 
-  button.textContent = "Play";}
-} 
-</script>
-
-<p>There are many, many more structures in <a href="https://arxiv.org/src/1909.04240v2/anc/all-designs.pdf">this supplement</a> from Hoyer et al. 2019. The problem setups are all listed <a href="https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/problems.py">here</a>.</p>
+<p>There are many, many more structures in <a href="https://arxiv.org/src/1909.04240v2/anc/all-designs.pdf">this supplement</a> from Hoyer et al. 2019. Their problem setups are all listed <a href="https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/problems.py">here</a>.</p>
 
 <h2 id="closing-thoughts-">Closing thoughts 🌆</h2>
 
@@ -965,116 +752,4 @@ if(parseInt(getBrowserSize().width) > 800){
     </li>
   </ol>
 </div>
-
-  </article>
-
-  <!-- mathjax -->
-  
-  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
-  <!-- disqus comments -->
- 
-  <div id="disqus_thread"></div>
-  <script>
-      /**
-       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-       *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-       */
-      /*
-      var disqus_config = function () {
-          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-      };
-      */
-      (function() {  // DON'T EDIT BELOW THIS LINE
-          var d = document, s = d.createElement('script');
-          
-          s.src = '//greydanus-blog.disqus.com/embed.js';
-          
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-      })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  
-
-
-  
-</div>
-      </div>
-    </div>
-
-    <footer class="site-footer">
-
-  <div class="wrap">
-
-    <!-- <h2 class="footer-heading">Natural Intelligence</h2> -->
-
-    <div class="footer-col-1 column">
-      <ul>
-        <li>Natural Intelligence</li>
-        <!-- <li><a href="mailto:greydanus.17(at)gmail.com">greydanus.17(at)gmail.com</a></li> -->
-      </ul>
-    </div>
-
-    <div class="footer-col-2 column">
-      <ul>
-        <li>
-          <a href="https://github.com/greydanus">
-            <span class="icon github">
-              <svg version="1.1" class="github-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-                <path fill-rule="evenodd" clip-rule="evenodd" fill="#C2C2C2" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761
-                c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32
-                c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472
-                c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037
-                C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65
-                c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261
-                c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082
-                c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129
-                c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/>
-              </svg>
-            </span>
-            <span class="username">greydanus</span>
-          </a>
-        </li>
-        <li>
-          <a href="https://twitter.com/samgreydanus">
-            <span class="icon twitter">
-              <svg version="1.1" class="twitter-icon-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                 viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-                <path fill="#C2C2C2" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809
-                c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27
-                c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767
-                c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206
-                C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271
-                c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469
-                c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/>
-              </svg>
-            </span>
-            <span class="username">samgreydanus</span>
-          </a>
-        </li>
-        <li>
-          <a href="../../../../feed.xml">
-            <span class="icon rss">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="#C2C2C2" d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/></svg>
-            </span>
-            <span class="username">RSS</span>
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div class="footer-col-3 column">
-      <p class="text">A science blog by Sam Greydanus</p>
-    </div>
-
-  </div>
-
-</footer>
-
-
-    </body>
-</html>
+:ET
