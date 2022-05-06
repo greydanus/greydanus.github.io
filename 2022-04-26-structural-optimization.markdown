@@ -33,8 +33,33 @@ pre {
 }
 </style>
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <img src="/assets/structural-optimization/hero.png">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="hero_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/mbb.png">
+      <source src="/assets/structural-optimization/mbb.mp4" type="video/mp4">
+    </video>
+    <button class="playbutton" id="hero_video_button" onclick="playPauseHero()">Play</button>
+  </div>
+  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:75%">We design an MBB beam.</div>
+</div>
+
+<script> 
+function playPauseHero() { 
+  var video = document.getElementById("hero_video"); 
+  var button = document.getElementById("hero_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
+
+<div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
+  <a href="" id="linkbutton" target="_blank">PDF format</a>
+  <a href="https://bit.ly/3KOC0u0" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+  <a href="" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
 In modern cities, the least expensive structural designs tend towards blocky, planar, and inorganic shapes. That is why we see warehouses and department stores built this way. If one is able to spare the cost, then the next best thing is to add some triangles. A pitched roof, perhaps with some dormers, makes a residential house far more inviting. Meanwhile, the most aesthetic residential houses, perhaps in craftsman or Victorian styles, have a great deal of ornamentation, sometimes curved, and sometimes evocative of the surrounding landscape. Buildings like churches, museums, and stadiums take these ideas even further and use organic-looking arrangements of arches, spires, and scaffolds to uplift the passerby.
@@ -432,14 +457,14 @@ plt.imshow(np.concatenate([x[:,::-1],x], axis=1)) ; plt.show()
 ```
 <pre class='outputarea'>
 Optimizing a problem with 4212 nodes
-step 10, loss 1.28e+03, t=1.73s
-step 20, loss 5.38e+02, t=3.51s
-step 30, loss 4.17e+02, t=5.86s
-step 40, loss 3.67e+02, t=8.71s
-step 50, loss 3.61e+02, t=11.57s
-step 60, loss 3.58e+02, t=13.97s
-step 70, loss 3.55e+02, t=15.13s
-step 80, loss 3.44e+02, t=16.30s
+step 10, loss 1.28e+03, t=1.31s
+step 20, loss 5.38e+02, t=2.51s
+step 30, loss 4.17e+02, t=3.92s
+step 40, loss 3.67e+02, t=5.36s
+step 50, loss 3.61e+02, t=6.84s
+step 60, loss 3.58e+02, t=8.30s
+step 70, loss 3.55e+02, t=9.67s
+step 80, loss 3.44e+02, t=10.79s
 
 Final design space:
 <img src="/assets/structural-optimization/mbb1.png" align='left'>
@@ -453,7 +478,7 @@ Final MBB beam design:
 </pre>
 
 
-## Caching arrays for a 2x speedup
+<!-- ## Caching arrays for a 2x speedup
 
 Caching is a separate subject, so we avoided any discussion of it in the main tutorial. But we should mention that adding LRU caching for NumPy arrays speeds thing up by around 2x.
 
@@ -512,15 +537,15 @@ losses, x, frames = fast_stopt(args=args, verbose=True)
 <pre class='outputarea'>
 Optimizing the same structure, this time with caching...
 Optimizing a problem with 4212 nodes
-step 10, loss 1.28e+03, t=1.38s
-step 20, loss 5.38e+02, t=2.10s
-step 30, loss 4.17e+02, t=2.81s
-step 40, loss 3.67e+02, t=3.50s
-step 50, loss 3.61e+02, t=4.17s
-step 60, loss 3.58e+02, t=4.83s
-step 70, loss 3.55e+02, t=5.51s
-step 80, loss 3.44e+02, t=6.18s
-</pre>
+step 10, loss 1.28e+03, t=0.77s
+step 20, loss 5.38e+02, t=1.50s
+step 30, loss 4.17e+02, t=2.19s
+step 40, loss 3.67e+02, t=2.86s
+step 50, loss 3.61e+02, t=3.53s
+step 60, loss 3.58e+02, t=4.18s
+step 70, loss 3.55e+02, t=4.84s
+step 80, loss 3.44e+02, t=5.62s
+</pre> -->
 
 ## Optimizing a gazebo roof support
 This is a slightly more challenging and interesting task. The problem setup was taken from a real-world gazebo rafter design problem.
@@ -550,24 +575,42 @@ def eves(width=200, height=100, density=0.15, theta=-0.349):
 # run the simulation and visualize the result
 args = get_args(*eves())
 losses, x, frames = fast_stopt(args=args, verbose=True)
-plt.figure(dpi=120) ; args.print_every = 10
-plt.imshow(np.concatenate([x[:,::-1],x], axis=1)) ; plt.show()
 ```
 <pre class='outputarea'>
-Optimizing a problem with 40602 nodes
-step 10, loss 9.07e+01, t=19.03s
-step 20, loss 7.93e+00, t=46.51s
-step 30, loss 3.24e+00, t=65.11s
-step 40, loss 2.83e+00, t=83.62s
-step 50, loss 2.74e+00, t=103.63s
-step 60, loss 2.72e+00, t=123.30s
-step 70, loss 2.71e+00, t=145.45s
-step 80, loss 2.70e+00, t=164.12s
+Optimizing a problem with 66306 nodes
+step 10, loss 1.01e+02, t=34.68s
+step 20, loss 7.87e+00, t=69.54s
+step 30, loss 3.05e+00, t=104.69s
+step 40, loss 2.68e+00, t=138.80s
+step 50, loss 2.53e+00, t=173.08s
+step 60, loss 2.48e+00, t=206.53s
+step 70, loss 2.47e+00, t=240.59s
+step 80, loss 2.47e+00, t=278.73s
+step 90, loss 2.46e+00, t=312.37s
+step 100, loss 2.46e+00, t=347.35s
 </pre>
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
-  <img src="/assets/structural-optimization/eves.png">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:70%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="eves_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/eves.png">
+      <source src="/assets/structural-optimization/eves.mp4" type="video/mp4">
+    </video>
+    <button class="playbutton" id="eves_video_button" onclick="playPauseEves()">Play</button>
+  </div>
 </div>
+
+<script> 
+function playPauseEves() { 
+  var video = document.getElementById("eves_video"); 
+  var button = document.getElementById("eves_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
 
 ##  A few other designs
 
@@ -588,24 +631,40 @@ def causeway_bridge(width=128, height=128, density=0.08, deck_level=0.2):
 args = get_args(*causeway_bridge())
 args.opt_steps = 160 ; args.print_every = 20
 losses, x, frames = fast_stopt(args=args, verbose=True)
-plt.figure(dpi=120)
-plt.imshow(np.concatenate([x[:,::-1],x]*2, axis=1)) ; plt.show()
 ```
 <pre class='outputarea'>
 Optimizing a problem with 33282 nodes
-step 20, loss 6.45e+02, t=34.22s
-step 40, loss 6.99e+01, t=67.26s
-step 60, loss 6.22e+01, t=99.40s
-step 80, loss 6.07e+01, t=131.37s
-step 100, loss 6.00e+01, t=164.62s
-step 120, loss 5.92e+01, t=197.78s
-step 140, loss 5.87e+01, t=231.54s
-step 160, loss 5.83e+01, t=264.51s
+step 20, loss 6.45e+02, t=32.45s
+step 40, loss 6.99e+01, t=66.31s
+step 60, loss 6.22e+01, t=96.67s
+step 80, loss 6.08e+01, t=127.47s
+step 100, loss 6.01e+01, t=158.28s
+step 120, loss 5.97e+01, t=188.59s
+step 140, loss 5.90e+01, t=222.50s
+step 160, loss 5.84e+01, t=253.61s
 </pre>
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:70%">
-  <img src="/assets/structural-optimization/causeway_bridge.png">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:70%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="causeway_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/causeway.png">
+      <source src="/assets/structural-optimization/causeway.mp4" type="video/mp4">
+    </video>
+    <button class="playbutton" id="causeway_video_button" onclick="playPauseCauseway()">Play</button>
+  </div>
 </div>
+
+<script> 
+function playPauseCauseway() { 
+  var video = document.getElementById("causeway_video"); 
+  var button = document.getElementById("causeway_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
 
 ```python
 def staggered_points(width=64, height=256, density=0.3, interval=16, break_symmetry=False):
@@ -626,24 +685,40 @@ def staggered_points(width=64, height=256, density=0.3, interval=16, break_symme
 # run the simulation and visualize the result
 args = get_args(*staggered_points())
 losses, x, frames = fast_stopt(args=args, verbose=True)
-plt.figure(dpi=120)
-plt.imshow(np.concatenate([x[:,::-1],x]*2, axis=1)) ; plt.show()
 ```
 <pre class='outputarea'>
 Optimizing a problem with 33410 nodes
-step 10, loss 1.91e+02, t=14.44s
-step 20, loss 1.43e+02, t=28.38s
-step 30, loss 6.96e+01, t=42.38s
-step 40, loss 6.48e+01, t=56.55s
-step 50, loss 4.44e+01, t=70.57s
-step 60, loss 3.95e+01, t=84.68s
-step 70, loss 3.66e+01, t=99.58s
-step 80, loss 3.58e+01, t=113.55s
+step 10, loss 1.91e+02, t=13.35s
+step 20, loss 1.43e+02, t=26.34s
+step 30, loss 6.96e+01, t=39.41s
+step 40, loss 6.46e+01, t=52.50s
+step 50, loss 4.44e+01, t=65.47s
+step 60, loss 3.97e+01, t=78.36s
+step 70, loss 3.76e+01, t=91.24s
+step 80, loss 3.58e+01, t=104.05s
 </pre>
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:40%">
-  <img src="/assets/structural-optimization/staggered_points.png">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:40%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="points_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/points.png">
+      <source src="/assets/structural-optimization/points.mp4" type="video/mp4">
+    </video>
+    <button class="playbutton" id="points_video_button" onclick="playPausePoints()">Play</button>
+  </div>
 </div>
+
+<script> 
+function playPausePoints() { 
+  var video = document.getElementById("points_video"); 
+  var button = document.getElementById("points_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
 
 ```python
 def staircase(width=256, height=256, density=0.15, num_stories=3):
@@ -668,25 +743,42 @@ def staircase(width=256, height=256, density=0.15, num_stories=3):
 args = get_args(*staircase())
 args.opt_steps = 100
 losses, x, frames = fast_stopt(args=args, verbose=True)
-plt.figure(dpi=120)
-plt.imshow(x) ; plt.show()
 ```
 <pre class='outputarea'>
 Optimizing a problem with 132098 nodes
-step 10, loss 9.65e+01, t=103.76s
-step 20, loss 3.04e+01, t=209.46s
-step 30, loss 7.37e+00, t=310.12s
-step 40, loss 4.38e+00, t=410.57s
-step 50, loss 3.98e+00, t=516.39s
-step 60, loss 3.88e+00, t=620.23s
-step 70, loss 3.86e+00, t=724.45s
-step 80, loss 3.83e+00, t=827.98s
-step 90, loss 3.82e+00, t=933.85s
-step 100, loss 3.80e+00, t=1033.26s
+step 10, loss 9.65e+01, t=98.39s
+step 20, loss 3.04e+01, t=197.26s
+step 30, loss 7.37e+00, t=294.96s
+step 40, loss 4.38e+00, t=390.48s
+step 50, loss 3.98e+00, t=483.45s
+step 60, loss 3.88e+00, t=575.68s
+step 70, loss 3.86e+00, t=668.17s
+step 80, loss 3.83e+00, t=758.19s
+step 90, loss 3.82e+00, t=847.92s
+step 100, loss 3.81e+00, t=939.67s
 </pre>
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:40%">
-  <img src="/assets/structural-optimization/staircase.png">
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="staircase_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/staircase.png">
+      <source src="/assets/structural-optimization/staircase.mp4" type="video/mp4">
+    </video>
+    <button class="playbutton" id="staircase_video_button" onclick="playPauseStaircase()">Play</button>
+  </div>
 </div>
+
+<script> 
+function playPauseStaircase() { 
+  var video = document.getElementById("staircase_video"); 
+  var button = document.getElementById("staircase_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
 
 ```python
 def multistory_building(width=128, height=512, density=0.2, interval=64):
@@ -703,33 +795,49 @@ def multistory_building(width=128, height=512, density=0.2, interval=64):
 args = get_args(*multistory_building())
 args.opt_steps = 160 ; args.print_every = 10
 losses, x, frames = fast_stopt(args=args, verbose=True)
-plt.figure(dpi=120)
-plt.imshow(np.concatenate([x[:,::-1],x]*3, axis=1)) ; plt.show()
 ```
 <pre class='outputarea'>
 Optimizing a problem with 132354 nodes
-step 10, loss 1.28e+04, t=77.93s
-step 20, loss 8.77e+03, t=155.88s
-step 30, loss 7.23e+03, t=233.90s
-step 40, loss 1.74e+03, t=313.91s
-step 50, loss 9.65e+02, t=391.12s
-step 60, loss 8.41e+02, t=464.78s
-step 70, loss 8.09e+02, t=537.75s
-step 80, loss 7.96e+02, t=611.75s
-step 90, loss 7.92e+02, t=684.93s
-step 100, loss 7.89e+02, t=757.49s
-step 110, loss 7.86e+02, t=828.19s
-step 120, loss 8.22e+02, t=898.78s
-step 130, loss 8.96e+02, t=970.34s
-step 140, loss 7.84e+02, t=1041.95s
-step 150, loss 7.79e+02, t=1113.07s
-step 160, loss 7.78e+02, t=1186.59s
+step 10, loss 1.28e+04, t=72.03s
+step 20, loss 8.77e+03, t=144.31s
+step 30, loss 7.23e+03, t=215.94s
+step 40, loss 1.74e+03, t=289.13s
+step 50, loss 9.65e+02, t=362.98s
+step 60, loss 8.40e+02, t=434.95s
+step 70, loss 8.06e+02, t=506.56s
+step 80, loss 7.97e+02, t=577.98s
+step 90, loss 7.89e+02, t=648.11s
+step 100, loss 7.87e+02, t=718.23s
+step 110, loss 7.85e+02, t=787.93s
+step 120, loss 7.83e+02, t=857.21s
+step 130, loss 7.82e+02, t=927.52s
+step 140, loss 7.81e+02, t=996.80s
+step 150, loss 7.79e+02, t=1066.46s
+step 160, loss 7.77e+02, t=1135.57s
 </pre>
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%">
-  <img src="/assets/structural-optimization/multistory_building.png">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="building_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/building.png">
+      <source src="/assets/structural-optimization/building.mp4" type="video/mp4">
+    </video>
+    <button class="playbutton" id="building_video_button" onclick="playPauseBuilding()">Play</button>
+  </div>
 </div>
 
-There are many, many more structures in [this supplement](https://arxiv.org/src/1909.04240v2/anc/all-designs.pdf) from Hoyer et al. 2019. Their problem setups are all listed [here](https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/problems.py).
+<script> 
+function playPauseBuilding() { 
+  var video = document.getElementById("building_video"); 
+  var button = document.getElementById("building_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
+
+There are many, many more structures in [this supplement](https://arxiv.org/src/1909.04240v2/anc/all-designs.pdf) from Hoyer et al. 2019. The problem setups are all listed [here](https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/problems.py).
 
 ## Closing thoughts 🌆
 
