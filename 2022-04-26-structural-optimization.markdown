@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "A Simple Introduction to Structural Optimization"
-excerpt: "Stuctural optimization uses the physics of elastic materials to design trusses, bridges, and buildings. Let's code it up, from scratch, in 180 lines."
+excerpt: "Structural optimization uses the physics of elastic materials to design trusses, bridges, and buildings. Let's code it up, from scratch, in 180 lines."
 date:   2022-04-26 11:00:00
 mathjax: true
 author: Sam Greydanus
@@ -35,8 +35,8 @@ pre {
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
-    <video id="hero_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/mbb.png">
-      <source src="/assets/structural-optimization/mbb.mp4" type="video/mp4">
+    <video id="hero_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/causeway.png">
+      <source src="/assets/structural-optimization/causeway.mp4" type="video/mp4">
     </video>
     <button class="playbutton" id="hero_video_button" onclick="playPauseHero()">Play</button>
   </div>
@@ -62,9 +62,19 @@ function playPauseHero() {
   <a href="" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
-In modern cities, the least expensive structural designs tend towards blocky, planar, and inorganic shapes. That is why we see warehouses and department stores built this way. If one is able to spare the cost, then the next best thing is to add some triangles. A pitched roof, perhaps with some dormers, makes a residential house far more inviting. Meanwhile, the most aesthetic residential houses, perhaps in craftsman or Victorian styles, have a great deal of ornamentation, sometimes curved, and sometimes evocative of the surrounding landscape. Buildings like churches, museums, and stadiums take these ideas even further and use organic-looking arrangements of arches, spires, and scaffolds to uplift the passerby.
+<!-- In modern cities, the least expensive structural designs tend towards blocky, planar, and inorganic shapes. That is why we see warehouses and department stores built this way. If one is able to spare the cost, then the next best thing is to add some triangles. A pitched roof, perhaps with some dormers, makes a residential house far more inviting. Meanwhile, the most aesthetic residential houses, perhaps in craftsman or Victorian styles, have a great deal of ornamentation, sometimes curved, and sometimes evocative of the surrounding landscape. Buildings like churches, museums, and stadiums take these ideas even further and use organic-looking arrangements of arches, spires, and scaffolds to uplift the passerby.
 
-**Form and function.** In some ways, this tradeoff – the tradeoff between form (aesthetics) and function (which includes cost and reliability) – is as old as time. But in other ways, it has become sharper in the modern era as large-scale manufacturing and construction techniques have been optimized to save costs. This has led to a mass-production mentality which in turn has yielded structures with excessive uniformity. A Walmart in one city looks a lot like a Walmart in the next.
+**Form and function.**  -->
+
+In modern cities, the least expensive structural designs tend to have blocky and inorganic shapes. Buildings such as warehouses and shopping malls follow these patterns. In contrast, buildings which are meant to have spiritual or aesthetic appeal -- buildings like churches, museums, and sports stadiums -- tend to have more organic-looking features like arches, spires, and scaffolds.
+
+Although the tradeoff between aesthetic appeal and cost/functionality is as old as time, it has grown sharper in the modern era. Large-scale manufacturing and construction techniques are optimized for cost savings. <!-- The best way to do this is to adopt a mass-production mentality which, in turn, yields structures with excessive uniformity. --> A Walmart in one city looks a lot like a Walmart in the next.
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; text-align:center; width:100%" >
+    <img src="/assets/structural-optimization/reno.png" style="width:49%; min-width:350px">
+    <img src="/assets/structural-optimization/amsterdam.png" style="width:49%; min-width:350px">
+  <div class="thecap" style="text-align:left;"> Google Earth snapshots of the city centers of Reno and Amsterdam. The first, of Reno, is dominated by large rectlinear buildings, roads, and parking lots. The second, of Amsterdam, features a wider variety of shapes and appears more accessible for foot and bicycle traffic.</div>
+</div>
 
 Yet the use of modern technology is not _intrinsically limited_ to enabling mass production and enforcing uniformity. Certain technological tools can actually help to reduce the uniformity of the manmade environment and make it more inviting to the thoughtful pedestrian. One such tool is structural optimization.
 
