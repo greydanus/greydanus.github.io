@@ -1,8 +1,8 @@
 ---
 layout: post
 comments: true
-title:  "A Simple Introduction to Structural Optimization"
-excerpt: "Structural optimization uses the physics of elastic materials to design trusses, bridges, and buildings. Let's code it up, from scratch, in 180 lines."
+title:  "A Tutorial on Structural Optimization"
+excerpt: "Structural optimization lets us design trusses, bridges, and buildings starting from the physics of elastic materials. Let's code it up, from scratch, in 180 lines."
 date:   2022-04-26 11:00:00
 mathjax: true
 author: Sam Greydanus
@@ -15,14 +15,14 @@ thumbnail: /assets/structural-optimization/thumbnail.png
 }
 p {
     font-family: sans-serif;
-    font-size: 17px;
+    font-size: 16.75px;
     font-weight: 300;
     overflow-wrap: break-word; /* allow wrapping of very very long strings, like txids */
 }
 .post pre,
 .post code {
     background-color: #fafafa;
-    font-size: 13px; /* make code smaller for this post... */
+    font-size: 14px; /* make code smaller for this post... */
 }
 pre {
  white-space: pre-wrap;       /* css-3 */
@@ -40,7 +40,7 @@ pre {
     </video>
     <button class="playbutton" id="hero_video_button" onclick="playPauseHero()">Play</button>
   </div>
-  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:75%">We design an MBB beam.</div>
+  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%"><b>Causeway bridge.</b> When you play the video, you'll notice that initially the matter is evenly distributed over the design space. From there, we iteratively move it around so as to create a structure that optimally supports a set of forces and fixed points (not shown). The result is a causeway bridge design.</div>
 </div>
 
 <script> 
@@ -62,29 +62,25 @@ function playPauseHero() {
   <a href="" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
-<!-- In modern cities, the least expensive structural designs tend towards blocky, planar, and inorganic shapes. That is why we see warehouses and department stores built this way. If one is able to spare the cost, then the next best thing is to add some triangles. A pitched roof, perhaps with some dormers, makes a residential house far more inviting. Meanwhile, the most aesthetic residential houses, perhaps in craftsman or Victorian styles, have a great deal of ornamentation, sometimes curved, and sometimes evocative of the surrounding landscape. Buildings like churches, museums, and stadiums take these ideas even further and use organic-looking arrangements of arches, spires, and scaffolds to uplift the passerby.
+<!-- In modern cities, the least expensive structural designs tend to have blocky and inorganic shapes. Buildings such as warehouses and shopping malls follow these patterns. In contrast, buildings which are meant to have spiritual or aesthetic appeal -- buildings like churches, museums, and sports stadiums -- tend to have more organic-looking features like arches, spires, and scaffolds.
 
-**Form and function.**  -->
-
-In modern cities, the least expensive structural designs tend to have blocky and inorganic shapes. Buildings such as warehouses and shopping malls follow these patterns. In contrast, buildings which are meant to have spiritual or aesthetic appeal -- buildings like churches, museums, and sports stadiums -- tend to have more organic-looking features like arches, spires, and scaffolds.
-
-Although the tradeoff between aesthetic appeal and cost/functionality is as old as time, it has grown sharper in the modern era. Large-scale manufacturing and construction techniques are optimized for cost savings. <!-- The best way to do this is to adopt a mass-production mentality which, in turn, yields structures with excessive uniformity. --> A Walmart in one city looks a lot like a Walmart in the next.
+Although the tradeoff between cost and aesthetic appeal is as old as time, it has grown sharper in the modern era. Thanks to large-scale, mass-production building techniques, a Walmart in one city now looks exactly like a Walmart in the next.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; text-align:center; width:100%" >
     <img src="/assets/structural-optimization/reno.png" style="width:49%; min-width:350px">
     <img src="/assets/structural-optimization/amsterdam.png" style="width:49%; min-width:350px">
-  <div class="thecap" style="text-align:left;"> Google Earth snapshots of the city centers of Reno and Amsterdam. The first, of Reno, is dominated by large rectlinear buildings, roads, and parking lots. The second, of Amsterdam, features a wider variety of shapes and appears more accessible for foot and bicycle traffic.</div>
+  <div class="thecap" style="text-align:left;"> Google Earth snapshots of the city centers of Reno and Amsterdam. The first, of Reno, is dominated by large rectlinear buildings, roads, and parking lots. The second, of Amsterdam, features a wider variety of shapes and textures.</div>
 </div>
 
-Yet the use of modern technology is not _intrinsically limited_ to enabling mass production and enforcing uniformity. Certain technological tools can actually help to reduce the uniformity of the manmade environment and make it more inviting to the thoughtful pedestrian. One such tool is structural optimization.
+Even so, modern technology is not _intrinsically limited_ to enabling mass production and enforcing uniformity. Certain technological tools can actually help to reduce the uniformity of the manmade environment and make it more inviting to the thoughtful pedestrian. One such tool is structural optimization.
 
 **Structural optimization.** Structural optimization permits us to express the constraints of structural design problems in general terms and then find organic-looking solutions to those problems in an open-ended manner. Just as no two trees are the same, no two structural optimization designs are either.
 
 There are a number of companies that provide structural optimization services, but they do not open-source their code. Indeed, their code is often complex and highly technical. Academic researchers have produced a few [high-quality tutorials](http://www.topopt.mek.dtu.dk/Apps-and-software/Efficient-topology-optimization-in-MATLAB) on the topic, but these tutorials are now a few decades old. Most of them, although well written, are aimed at readers with substantial domain knowledge. They obscure the fact that structural optimization is really quite simple, elegant, and easy to implement.
 
-With that in mind, let's write our own structural optimization code, from scratch, in 180 lines.
+With that in mind, let's write our own structural optimization code, from scratch, in 180 lines. -->
 
-```python
+<!-- ```python
 import time
 import numpy as np                                                # for dense matrix ops
 import matplotlib.pyplot as plt                                   # for plotting
@@ -102,10 +98,13 @@ Collecting nlopt
 Requirement already satisfied: numpy>=1.14 in /usr/local/lib/python3.7/dist-packages (from nlopt) (1.21.6)
 Installing collected packages: nlopt
 Successfully installed nlopt-2.7.1
-</pre>
+</pre> -->
+
+Structural optimization is an interesting technique. And as 3D printing and custom manufacturing techniques improve, it is becoming increasingly useful. But [existing tutorials](http://www.topopt.mek.dtu.dk/Apps-and-software/Efficient-topology-optimization-in-MATLAB), although well written, are aimed at readers with substantial background knowledge. They obscure the fact that structural optimization is really quite simple, elegant, and easy to implement.
+
+With that in mind, let's write our own structural optimization code, from scratch, in 180 lines.
 
 ## Problem setup
-
 The goal of structural optimization is to place material in a design space so that it rests on some fixed points or "normals" and resists a set of applied forces or _loads_ as efficiently as possible. To see how we might set this up, let's start with a beam design problem from [Andreassen et al (2010)](https://www.topopt.mek.dtu.dk/-/media/subsites/topopt/apps/dokumenter-og-filer-til-apps/topopt88.pdf?la=da&hash=E80FAB2808804A29FFB181CA05D2EEFECAA86686):
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%; min-width:300px;">
@@ -114,7 +113,7 @@ The goal of structural optimization is to place material in a design space so th
 
 The large gray rectangle here represents the design space. We are going to enforce symmetry by optimizing half of the beam and then mirroring the result around the left wall. This means that the center of the beam is actually on the left side of the diagram. This is where the load force, denoted by the downwards-pointing arrow, is being applied. There are horizontally fixed points here as well. They represent forces transmitted to this half of the beam from its other half. Meanwhile, the vertically fixed point at the bottom right corner of the design space corresponds to a normal force from some external support, perhaps the top of a wall.
 
-**Finite elements.** Although the physics of elastic materials is continuous, our computer can only work with discrete approximations. This means that we have to cut the design space up into a discrete number of regions or _finite elements_ which, when allowed to interact, reproduce the behavior of an elastic solid as realistically as possible. We can link their boundaries together with a set of nodes and allow these nodes to interact with one another as though connected by springs. This way, whenever a force is applied to one node, it transmits a fraction of that force on to all the other nodes in the structure, causing each one to move a small amount and, in so doing, deform the finite elements. As this happens, the entire structure deforms as though it were an elastic solid.
+**Finite elements.** Although the physics of elastic materials is continuous, our computer can only work with discrete approximations. This means that we have to cut the design space up into a discrete number of regions or _finite elements_ which, when allowed to interact, reproduce the behavior of an elastic solid as realistically as possible. We can link their boundaries together with a set of nodes and allow these nodes to interact with one another as though connected by springs. This way, whenever a force is applied to one node, it transmits a fraction of that force on to all the other nodes in the structure, causing each to move a small amount and, in doing so, deform the finite elements. As this happens, the entire structure deforms as though it were an elastic solid.
 
 There are many ways to choose the arrangement of these finite elements. The simplest one is to make them square and organize them on a rectangular grid.
 
@@ -124,9 +123,9 @@ There are many ways to choose the arrangement of these finite elements. The simp
 
 In the diagram above, there are 12 elements with four nodes per element and two degrees of freedom (DOFs) per node. The first is horizontal and the second is vertical. The numbering scheme proceeds columnwise from left to right so that the horizontal and vertical displacements of node \\(n\\) are given by DOFs \\(2n-1\\) and \\(2n\\) respectively. As the authors point out, this grid structure is useful because it can be exploited "...in order to reduce the computational effort in the optimization loop..." It also simplifies the code.
 
-**Python representations.** Given this problem setup, every DOF in our design space can either have a force applied to it or be fixed by a normal. For a design space that is \\(y\\) units high and \\(x\\) units wide, we can represent these parts of the problem setup with NumPy arrays called `forces` and `normals`, each of shape \\((y+1,x+1,2)\\). Here the first two axes index over all the nodes in the design space and the third axis indexes over the two DOFs available to each node. Starting with the code below – and continuing throughout the rest of this tutorial – we are going to flatten these arrays to one dimension.
+**Python representations.** Given this problem setup, every DOF in our design space can either have a force applied to it or be fixed by a normal force. For a design space that is \\(y\\) units high and \\(x\\) units wide, we can represent these parts of the problem setup with NumPy arrays called `forces` and `normals`, each of shape \\((y+1,x+1,2)\\). Here the first two axes index over all the nodes in the design space and the third axis indexes over the two DOFs available to each node. Starting with the code below – and continuing throughout the rest of this tutorial – we are going to flatten these arrays to one dimension.
 
-There are a few other important details. The `mask` variable can be either a scalar of value 1 (no mask) or an array of shape \\((x,y)\\). As a default, we will use no mask. Then there are all the material constants, constraints, filter widths, and so forth to consider. For these, we use the values reported by Andreassen et al. (2010). Finally, we have the `mbb_beam` function which sets up the forces and normals particular to the MBB beam design constraints. This function can easily be swapped out if we wish to design a structure with different constraints.
+There are a few other important details. The `mask` variable can be either a scalar of value 1 (no mask) or an array of shape \\((x,y)\\). As a default, we will use no mask. Then there are all the material constants, constraints, filter widths, and so forth to consider. For these, we use the values reported by [Andreassen et al. (2010)](https://www.topopt.mek.dtu.dk/-/media/subsites/topopt/apps/dokumenter-og-filer-til-apps/topopt88.pdf?la=da&hash=E80FAB2808804A29FFB181CA05D2EEFECAA86686). Finally, we have the `mbb_beam` function which sets up the forces and normals particular to the MBB beam design constraints. This function can easily be swapped out if we wish to design a structure with different constraints.
 
 ```python
 class ObjectView(object):
@@ -159,13 +158,18 @@ def mbb_beam(width=80, height=25, density=0.4, y=1, x=0):  # textbook beam examp
   return normals, forces, density
 ```
 
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:300px;">
+  <img src="/assets/structural-optimization/setup.png">
+    <div style="text-align:center; display:block; margin-left: auto; margin-right: auto; width:75%">Visualizing the normals and forces in the MBB beam setup. Here the rectangle represents the design area and the colored pixels represent matrix entries (blue = -1, green = 0, and yellow = 1).</div>
+</div>
+
 **The density method.** Now that we have parameterized the design space, it is time to parameterize the material that moves around on it. At a high level, each finite element is going to have a certain density of material, given by some number between 0 and 1. We will use this density to determine the element stiffness coefficient \\(E_e\\), also called Young's modulus. In the nodes-connected-by-springs analogy, this coefficient would control all the spring constants.
 
 Let's discuss how to choose the mapping between finite element density \\(x_e\\) and Young's modulus in more detail. First of all, we'd like to avoid having any elements with zero stiffness. When this happens, they stop transmitting forces to their neighbors before optimization is complete and we are liable to end up with suboptimal solutions. We can prevent this by giving each finite element a baseline stiffness, \\(E_{min}\\), regardless of whether it has any material density.
 
 We'd also like black-and-white final solutions. In other words, although our design space may start out with material densities of 0.5, by the end of optimization we'd like all of the grid cells to have densities very close to either 0 or 1. We can ensure this happens by raising our densities to a power \\(p\\) greater than one (typically \\(p=3\\)) so as to make our structure's stiffness more sensitive to small changes in density.
 
-Putting these ideas together, we obtain the "modified SIMP" equation from Andreasson et al. (2010):
+Putting these ideas together, we obtain the "modified SIMP" equation from [Andreasson et al. (2010)](https://www.topopt.mek.dtu.dk/-/media/subsites/topopt/apps/dokumenter-og-filer-til-apps/topopt88.pdf?la=da&hash=E80FAB2808804A29FFB181CA05D2EEFECAA86686):
 
 <span id="longEqnWithSmallScript_A" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
@@ -179,9 +183,9 @@ $$
 $$E_e(x_e)=E_{min} + x^p_e(E_0-E_{min}), \quad \quad x_e \in [0,1]$$
 </span>
 
-Here \\(E_0\\) is the stiffness of the material. For a comparison between modified SIMP and other approaches, see Sigmund (2007).
+Here \\(E_0\\) is the stiffness of the material. For a comparison between modified SIMP and other approaches, see [Sigmund (2007)](https://www.sciencedirect.com/science/article/abs/pii/S0045782506003252).
 
-**Filtering.** Finally, in order to avoid grid-level pathologies (especially scenarios where a grid element with full density ends up next to a grid element with zero density and a discontinuity occurs), we are going to use a 2D Gaussian filter[^fn1] to smooth the grid densities. This technique, called "filtering," shows up in almost all physics simulations where continuous fields have to be discretized.
+**Filtering.** Finally, in order to avoid grid-level pathologies (especially scenarios where a grid element with full density ends up next to a grid element with zero density and a discontinuity occurs), we are going to use a 2D Gaussian filter[^fn1] to smooth the grid densities. This technique, called "[filtering](https://en.wikipedia.org/wiki/Filter_(large_eddy_simulation))," shows up in almost all physics simulations where continuous fields have to be discretized.
 
 ```python
 def young_modulus(x, e_0, e_min, p=3):
@@ -199,18 +203,9 @@ At this point, we have constructed a finite element parameterization of an elast
 
 ## The objective function
 
-At a high level, the best structure is the one that minimizes the elastic potential energy or _compliance_ of the 2D grid of springs. We can express this idea mathematically as follows:
+At a high level, the best structure is the one that minimizes the elastic potential energy or [_compliance_](https://en.wikipedia.org/wiki/Topology_optimization#Structural_compliance) of the 2D grid of springs. We can express this idea mathematically as follows:
 
-Here \\(c\\) is the compliance, \\(\mathbf{x}\\) is a vector containing the material densities of the elements, \\(\mathbf{K}\\) is the global stiffness matrix, \\(\mathbf{U}\\) is a vector containing the displacements of the nodes, and \\(E_e\\) is Young's modulus. The external forces or "loads" are given by the vector \\(\mathbf{F}\\). We can write the core part of this objective, the part that says \\(c(\mathbf{x})=\mathbf{U}^T\mathbf{K}\mathbf{U}\\), as a high-level objective function that calls a series of subroutines.
-
-<!-- $$
-\begin{align}
-\scriptstyle \underset{\mathbf{x}}{\textrm{min}}: & \quad \scriptstyle c(\mathbf{x}) ~~=~~ \mathbf{U}^T\mathbf{K}\mathbf{U} ~~=~~ \sum_{e=1}^NE_e(x_e)\mathbf{u}_e^T\mathbf{k}_0\mathbf{u}_e \qquad \textrm{Potential energy (compliance) of a 2D grid of springs} \\
-\scriptstyle \textrm{subject to}: & \quad \scriptstyle V(\mathbf{x})/V_0 = f \qquad \quad ~ \textrm{A fixed quantity of material} \\
-\scriptstyle & \quad \scriptstyle 0 \leq \mathbf{x} \leq 1 \qquad \qquad \textrm{Densities that remain between 0 and 1} \\
-\scriptstyle & \quad \scriptstyle \mathbf{KU=F}  \qquad \qquad \textrm{Hooke's law for a 2D grid of springs} \\
-\end{align}
-$$ -->
+Here \\(c\\) is the compliance, \\(\mathbf{x}\\) is a vector containing the material densities of the elements, \\(\mathbf{K}\\) is the global stiffness matrix, \\(\mathbf{U}\\) is a vector containing the displacements of the nodes, and \\(E_e\\) is Young's modulus. The external forces or "loads" are given by the vector \\(\mathbf{F}\\).
 
 <span id="longEqnWithSmallScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
@@ -233,6 +228,8 @@ $$
 $$
 </span>
 
+We can write the core part of this objective, the part that says \\(c(\mathbf{x})=\mathbf{U}^T\mathbf{K}\mathbf{U}\\), as a high-level objective function that calls a series of subroutines.
+
 
 ```python
 def objective(x, args, volume_contraint=False, use_filter=True):
@@ -253,21 +250,8 @@ $$
 \end{align}
 $$
 
-If we want to add filtering back in, the notation becomes a bit more complicated. But we're not going to do that here because, actually, we don't need to calculate these sensitivities by hand. There is an elegant little library called [Autograd](https://github.com/HIPS/autograd) which can do this for us using a process called _automatic differentiation._ The basic syntax looks like this:
-```
-import autograd.numpy as anp   # Thinly-wrapped version of Numpy
-from autograd import grad
+If we want to add filtering back in, the notation becomes a bit more complicated. But we're not going to do that here because, actually, we don't need to calculate these sensitivities by hand. There is an elegant little library called [Autograd](https://github.com/HIPS/autograd) which can do this for us using a process called [_automatic differentiation_](https://en.wikipedia.org/wiki/Automatic_differentiation).
 
-def dot_product(u, v):
-  return anp.dot(u, v)
-
-grad_dot_product = grad(dot_product)  # obtain the gradient function by way of Autograd
-
-u = anp.asarray([2,2,2.])
-v = anp.asarray([1,2,3.])
-print( "Gradient w.r.t. u is: ", grad_dot_product(u,v))
->>> Gradient w.r.t. u is:  [1. 2. 3.]
-```
 **Custom gradients.** There are a few cases where we need to operate on NumPy arrays with functions from other libraries. In these cases, we need to define a custom gradient function so that Autograd knows how to differentiate through them. For example, in the code we have already written, the `gaussian_filter` function comes from the `scipy` library. Here's how we can wrap that function to make it work properly with Autograd:
 
 ```python
@@ -290,7 +274,7 @@ In between \\(\mathbf{x}\\) and \\(c(\mathbf{x})\\), there are a series of physi
 
 From this you should be able to see why compliance is the potential energy of the entire structure: it's just a sum over the potential energies of all the finite elements. You should note that each term in the sum is getting scaled by a factor of \\(E_e(x_e)\\). This is happening because the stiffness matrix varies with Young's modulus, and we have made Young's modulus dependent on the local material density.
 
-**Material constants.** You'll notice that two material constants appear in the element stiffness matrix. The first is Young's modulus which measures the stiffness of a material. Intuitively, it is the distortion per unit of force ("How hard do you need to pull a rubber band to stretch it one inch?"). A more technical definition is _the ratio of tensile stress to tensile strain_. The Poisson coefficient, meanwhile, measures the amount of contraction in the direction perpendicular to a region of stretching, due to that stretching ("How much thinner does the rubber band get when you stretch it one inch?"). A technical definition is _the ratio between the lateral contraction per unit length and the longitudinal extension also per unit length._ Both of these coefficients come into play when we construct the element stiffness matrix.
+**Material constants.** You'll notice that two material constants appear in the element stiffness matrix. The first is [Young's modulus](https://en.wikipedia.org/wiki/Young%27s_modulus) which measures the stiffness of a material. Intuitively, it is the distortion per unit of force ("How hard do you need to pull a rubber band to stretch it one inch?"). A more technical definition is _the ratio of tensile stress to tensile strain_. The [Poisson coefficient](https://en.wikipedia.org/wiki/Poisson%27s_ratio), meanwhile, measures the amount of contraction in the direction perpendicular to a region of stretching, due to that stretching ("How much thinner does the rubber band get when you stretch it one inch?"). A technical definition is _the ratio between the lateral contraction per unit length and the longitudinal extension also per unit length._ Both of these coefficients come into play when we construct the element stiffness matrix.
 
 ```python
 def compliance(x_phys, u, ke, *, penal=3, e_min=1e-9, e_0=1):
@@ -364,7 +348,9 @@ def displace(x_phys, ke, forces, freedofs, fixdofs, *, penal=3, e_min=1e-9, e_0=
   return u_values[index_map]
 ```
 
-**Sparse matrix helper functions.** You may notice that the `displace` function uses a helper function, `_get_dof_indices`, to update \\(\mathbf{K}\\)'s indices. The point here is to keep only the degrees of freedom that were actually free in the problem setup (the `freedofs`). To do this, we need to remove the degrees of freedom where normal forces were introduced (the `fixdofs`). 
+## Sparse matrix helper functions
+
+You may notice that the `displace` function uses a helper function, `_get_dof_indices`, to update \\(\mathbf{K}\\)'s indices. The point here is to keep only the degrees of freedom that were actually free in the problem setup (the `freedofs`). To do this, we need to remove the degrees of freedom where normal forces were introduced (the `fixdofs`). 
 
 The second function is the `inverse_permutation` function. It is a [mathematical operation](https://mathworld.wolfram.com/InversePermutation.html) that gives us the indices needed to undo a permutation. For example, if `ixs` is a list of indices that permutes the list `A`, then this function gives us a second list of indices `inv_ixs` such that `A[ixs][inv_ixs] = A`.
 
@@ -414,9 +400,9 @@ autograd.extend.defvjp(solve_coo, grad_solve_coo_entries,
 And with that, we are done with the physics! Now we are ready to set up the optimization itself.
 
 ## Optimization
-To do this, we'll use the Method of Moving Asymptotes (MMA). Originally described by Svanberg (1987) and refined in [Svanberg (2002)](https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.146.5196&rep=rep1&type=pdf), MMA is a good fit for structural optimization problems because it accepts nonlinear inequality constraints and scales to large parameter spaces. In the code below, we rewrite the mass conservation constraint as a mass _threshold_ constraint so that it looks like an inequality. Then we set the density constraint by giving upper and lower bounds on the parameter space. Finally, we use Autograd to obtain gradients with respect to the objective and pass them to the solver. The NLopt package makes this process pretty straightforward. Also, its [documentation](https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/#mma-method-of-moving-asymptotes-and-ccsa) gives some good practical advice on how to think about MMA.
+To do this, we'll use the Method of Moving Asymptotes (MMA). Originally described by [Svanberg (1987)](https://scholar.google.com/scholar?q=the+method+of+moving+asymptotes%E2%80%94a+new+method) and refined in [Svanberg (2002)](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C38&q=A+class+of+globally+convergent+optimization+methods), MMA is a good fit for structural optimization problems because it accepts nonlinear inequality constraints and scales to large parameter spaces. In the code below, we rewrite the mass conservation constraint as a mass _threshold_ constraint so that it looks like an inequality. Then we set the density constraint by giving upper and lower bounds on the parameter space. Finally, we use Autograd to obtain gradients with respect to the objective and pass them to the solver. The [NLopt package](https://nlopt.readthedocs.io/en/latest/) makes this process pretty straightforward. Also, its [documentation](https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/#mma-method-of-moving-asymptotes-and-ccsa) gives some good practical advice on how to think about MMA.
 
-Other optimization approaches we tried included optimality criteria (by Andreasson et al. 2010), plain gradient descent, LBFGS, and the Adam optimizer. Consistent with the findings of [this paper](https://arxiv.org/abs/1909.04240), MMA outperformed all these approaches.
+Other optimization approaches we tried included the optimality criteria (by [Andreasson et al. 2010](https://www.topopt.mek.dtu.dk/-/media/subsites/topopt/apps/dokumenter-og-filer-til-apps/topopt88.pdf?la=da&hash=E80FAB2808804A29FFB181CA05D2EEFECAA86686)), plain gradient descent, [L-BFGS](https://en.wikipedia.org/wiki/Limited-memory_BFGS), and the [Adam optimizer](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C38&q=adam+optimizer+kingma&oq=adam+optimizer+). Consistent with the findings of [this paper](https://arxiv.org/abs/1909.04240), MMA outperformed all these approaches.
 
 ```python
 def fast_stopt(args, x=None, verbose=True):
@@ -486,76 +472,6 @@ Final design space:
 Final MBB beam design:
 <img src="/assets/structural-optimization/mbb2.png" align='left'>
 </pre>
-
-
-<!-- ## Caching arrays for a 2x speedup
-
-Caching is a separate subject, so we avoided any discussion of it in the main tutorial. But we should mention that adding LRU caching for NumPy arrays speeds thing up by around 2x.
-
-```python
-import functools
-
-class _WrappedArray:
-  """Hashable wrapper for NumPy arrays."""
-  def __init__(self, value):
-    self.value = value
-
-  def __eq__(self, other):
-    return np.array_equal(self.value, other.value)
-
-  def __hash__(self):
-    # Collisions (there won't be many) mean __eq__ is checked: https://bit.ly/3EazdK3
-    return hash(repr(self.value.ravel()))
-
-def ndarray_safe_lru_cache(maxsize=128):
-  """An ndarray compatible version of functools.lru_cache."""
-  def decorator(func):
-    @functools.lru_cache(maxsize)
-    def cached_func(*args, **kwargs):
-      args = tuple(a.value if isinstance(a, _WrappedArray) else a for a in args)
-      kwargs = {k: v.value if isinstance(v, _WrappedArray) else v for k, v in kwargs.items()}
-      return func(*args, **kwargs)
-
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-      args = tuple(_WrappedArray(a) if isinstance(a, np.ndarray) else a for a in args)
-      kwargs = {k: _WrappedArray(v) if isinstance(v, np.ndarray) else v for k, v in kwargs.items()}
-      return cached_func(*args, **kwargs)
-    return wrapper
-  return decorator
-
-@ndarray_safe_lru_cache(1)
-def _get_solver(a_entries, a_indices, size, sym_pos):
-  # a is (usu.) symmetric positive; could solve 2x faster w/sksparse.cholmod.cholesky(a).solve_A
-  a = scipy.sparse.coo_matrix((a_entries, a_indices), shape=(size,)*2).tocsc()
-  return scipy.sparse.linalg.splu(a).solve
-
-@ndarray_safe_lru_cache(1)
-def _get_dof_indices(freedofs, fixdofs, k_xlist, k_ylist):
-  index_map = inverse_permutation(
-      anp.concatenate([freedofs, fixdofs]))
-  keep = anp.isin(k_xlist, freedofs) & anp.isin(k_ylist, freedofs)
-  i = index_map[k_ylist][keep]
-  j = index_map[k_xlist][keep]
-  return index_map, keep, anp.stack([i, j])
-
-# solve the MBB beam problem again, now with caching
-args = get_args(*mbb_beam())
-print('Optimizing the same structure, this time with caching...')
-losses, x, frames = fast_stopt(args=args, verbose=True)
-```
-<pre class='outputarea'>
-Optimizing the same structure, this time with caching...
-Optimizing a problem with 4212 nodes
-step 10, loss 1.28e+03, t=0.77s
-step 20, loss 5.38e+02, t=1.50s
-step 30, loss 4.17e+02, t=2.19s
-step 40, loss 3.67e+02, t=2.86s
-step 50, loss 3.61e+02, t=3.53s
-step 60, loss 3.58e+02, t=4.18s
-step 70, loss 3.55e+02, t=4.84s
-step 80, loss 3.44e+02, t=5.62s
-</pre> -->
 
 ## Optimizing a gazebo roof support
 This is a slightly more challenging and interesting task. The problem setup was taken from a real-world gazebo rafter design problem.
@@ -847,16 +763,18 @@ function playPauseBuilding() {
 } 
 </script>
 
-There are many, many more structures in [this supplement](https://arxiv.org/src/1909.04240v2/anc/all-designs.pdf) from Hoyer et al. 2019. The problem setups are all listed [here](https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/problems.py).
+There are many, many more structures in [this supplement](https://arxiv.org/src/1909.04240v2/anc/all-designs.pdf) from [Hoyer et al. 2019](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C38&q=Neural+reparameterization+improves+structural+optimization&btnG=). The problem setups are all listed [here](https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/problems.py).
 
 ## Closing thoughts 🌆
 
-In sci-fi representations of healthy cities of the future, we often find manmade structures that are well integrated with their natural surroundings. Sometimes we even see a convergence where nature has adapted to the city and the city has adapted to nature. The more decadent cities, on the other hand, tend to define themselves in opposition to the patterns of nature. Their architecture is more blocky and inorganic. And when they do have organic-looking structures, those structures are reminiscent of the dangerous elements of nature: fangs, claws, volcanoes, and caves.
+In sci-fi representations of the healthy cities of the future, we often find manmade structures that are well integrated with their natural surroundings. Sometimes we even see a convergence where nature has adapted to the city and the city has adapted to nature. The more decadent cities, on the other hand, tend to define themselves in opposition to the patterns of nature. Their architecture is more blocky and inorganic. <!-- And when they do have organic-looking structures, those structures are reminiscent of the dangerous elements of nature: fangs, claws, volcanoes, and caves. --> Perhaps tools like structural optimization can help us build the healthy cities of the future ..... while steering clear of the decadent ones.
 
-Perhaps tools like structural optimization can help us build the healthy cities of the future – while steering clear of the decadent ones.
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:320px;">
+  <img src="/assets/structural-optimization/asgard.jpeg">
+</div>
 
 ## Footnotes
-[^fn1]: Andreasson et al. (2010) use a cone filter; we found that a Gaussian filter gave similar results and was easier to implement.
+[^fn1]: [Andreassen et al (2010)](https://www.topopt.mek.dtu.dk/-/media/subsites/topopt/apps/dokumenter-og-filer-til-apps/topopt88.pdf?la=da&hash=E80FAB2808804A29FFB181CA05D2EEFECAA86686) use a cone filter; we found that a Gaussian filter gave similar results and was easier to implement.
 [^fn2]: Deriving the specific entries of the element stiffness matrix takes quite a few steps. We won't go through all of them here, but you can walk yourself through them using [this textbook chapter](http://solidmechanics.org/text/Chapter7_2/Chapter7_2.htm).
 
 

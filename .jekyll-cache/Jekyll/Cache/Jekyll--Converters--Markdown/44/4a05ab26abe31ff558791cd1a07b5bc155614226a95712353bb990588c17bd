@@ -1,0 +1,860 @@
+I"��<style>
+.wrap {
+    max-width: 900px;
+}
+p {
+    font-family: sans-serif;
+    font-size: 16.75px;
+    font-weight: 300;
+    overflow-wrap: break-word; /* allow wrapping of very very long strings, like txids */
+}
+.post pre,
+.post code {
+    background-color: #fafafa;
+    font-size: 14px; /* make code smaller for this post... */
+}
+pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+</style>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="hero_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/causeway.png">
+      <source src="/assets/structural-optimization/causeway.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="hero_video_button" onclick="playPauseHero()">Play</button>
+  </div>
+  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">Designing a causeway bridge with structural optimization.</div>
+</div>
+
+<script> 
+function playPauseHero() { 
+  var video = document.getElementById("hero_video"); 
+  var button = document.getElementById("hero_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
+
+<div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
+  <a href="" id="linkbutton" target="_blank">PDF format</a>
+  <a href="https://bit.ly/3KOC0u0" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+  <a href="" id="linkbutton" target="_blank">Get the code</a>
+</div>
+
+<!-- In modern cities, the least expensive structural designs tend to have blocky and inorganic shapes. Buildings such as warehouses and shopping malls follow these patterns. In contrast, buildings which are meant to have spiritual or aesthetic appeal -- buildings like churches, museums, and sports stadiums -- tend to have more organic-looking features like arches, spires, and scaffolds.
+
+Although the tradeoff between cost and aesthetic appeal is as old as time, it has grown sharper in the modern era. Thanks to large-scale, mass-production building techniques, a Walmart in one city now looks exactly like a Walmart in the next.
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; text-align:center; width:100%" >
+    <img src="/assets/structural-optimization/reno.png" style="width:49%; min-width:350px">
+    <img src="/assets/structural-optimization/amsterdam.png" style="width:49%; min-width:350px">
+  <div class="thecap" style="text-align:left;"> Google Earth snapshots of the city centers of Reno and Amsterdam. The first, of Reno, is dominated by large rectlinear buildings, roads, and parking lots. The second, of Amsterdam, features a wider variety of shapes and textures.</div>
+</div>
+
+Even so, modern technology is not _intrinsically limited_ to enabling mass production and enforcing uniformity. Certain technological tools can actually help to reduce the uniformity of the manmade environment and make it more inviting to the thoughtful pedestrian. One such tool is structural optimization.
+
+**Structural optimization.** Structural optimization permits us to express the constraints of structural design problems in general terms and then find organic-looking solutions to those problems in an open-ended manner. Just as no two trees are the same, no two structural optimization designs are either.
+
+There are a number of companies that provide structural optimization services, but they do not open-source their code. Indeed, their code is often complex and highly technical. Academic researchers have produced a few [high-quality tutorials](http://www.topopt.mek.dtu.dk/Apps-and-software/Efficient-topology-optimization-in-MATLAB) on the topic, but these tutorials are now a few decades old. Most of them, although well written, are aimed at readers with substantial domain knowledge. They obscure the fact that structural optimization is really quite simple, elegant, and easy to implement.
+
+With that in mind, let's write our own structural optimization code, from scratch, in 180 lines. -->
+
+<!-- ```python
+import time
+import numpy as np                                                # for dense matrix ops
+import matplotlib.pyplot as plt                                   # for plotting
+import autograd, autograd.core, autograd.extend, autograd.tracer  # for computing adjoints
+import autograd.numpy as anp      
+import scipy, scipy.ndimage, scipy.sparse, scipy.sparse.linalg    # mostly for sparse matrix ops
+
+!pip install nlopt
+import nlopt                                                      # for optimization
+```
+<pre class='outputarea'>
+Collecting nlopt
+  Downloading nlopt-2.7.1-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (424 kB)
+     |████████████████████████████████| 424 kB 5.1 MB/s 
+Requirement already satisfied: numpy>=1.14 in /usr/local/lib/python3.7/dist-packages (from nlopt) (1.21.6)
+Installing collected packages: nlopt
+Successfully installed nlopt-2.7.1
+</pre> -->
+
+<p>Structural optimization is an interesting technique. And as 3D printing and custom manufacturing techniques improve, it is becoming increasingly useful. But <a href="http://www.topopt.mek.dtu.dk/Apps-and-software/Efficient-topology-optimization-in-MATLAB">existing tutorials</a>, although well written, are aimed at readers with substantial background knowledge. They obscure the fact that structural optimization is really quite simple, elegant, and easy to implement.</p>
+
+<p>With that in mind, let’s write our own structural optimization code, from scratch, in 180 lines.</p>
+
+<h2 id="problem-setup">Problem setup</h2>
+<p>The goal of structural optimization is to place material in a design space so that it rests on some fixed points or “normals” and resists a set of applied forces or <em>loads</em> as efficiently as possible. To see how we might set this up, let’s start with a beam design problem from <a href="https://www.topopt.mek.dtu.dk/-/media/subsites/topopt/apps/dokumenter-og-filer-til-apps/topopt88.pdf?la=da&amp;hash=E80FAB2808804A29FFB181CA05D2EEFECAA86686">Andreassen et al (2010)</a>:</p>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%; min-width:300px;">
+  <img src="/assets/structural-optimization/stopt_mbb_setup.png" />
+</div>
+
+<p>The large gray rectangle here represents the design space. We are going to enforce symmetry by optimizing half of the beam and then mirroring the result around the left wall. This means that the center of the beam is actually on the left side of the diagram. This is where the load force, denoted by the downwards-pointing arrow, is being applied. There are horizontally fixed points here as well. They represent forces transmitted to this half of the beam from its other half. Meanwhile, the vertically fixed point at the bottom right corner of the design space corresponds to a normal force from some external support, perhaps the top of a wall.</p>
+
+<p><strong>Finite elements.</strong> Although the physics of elastic materials is continuous, our computer can only work with discrete approximations. This means that we have to cut the design space up into a discrete number of regions or <em>finite elements</em> which, when allowed to interact, reproduce the behavior of an elastic solid as realistically as possible. We can link their boundaries together with a set of nodes and allow these nodes to interact with one another as though connected by springs. This way, whenever a force is applied to one node, it transmits a fraction of that force on to all the other nodes in the structure, causing each to move a small amount and, in doing so, deform the finite elements. As this happens, the entire structure deforms as though it were an elastic solid.</p>
+
+<p>There are many ways to choose the arrangement of these finite elements. The simplest one is to make them square and organize them on a rectangular grid.</p>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%; min-width:300px;">
+  <img src="/assets/structural-optimization/stopt_design_domain.png" />
+</div>
+
+<p>In the diagram above, there are 12 elements with four nodes per element and two degrees of freedom (DOFs) per node. The first is horizontal and the second is vertical. The numbering scheme proceeds columnwise from left to right so that the horizontal and vertical displacements of node \(n\) are given by DOFs \(2n-1\) and \(2n\) respectively. As the authors point out, this grid structure is useful because it can be exploited “…in order to reduce the computational effort in the optimization loop…” It also simplifies the code.</p>
+
+<p><strong>Python representations.</strong> Given this problem setup, every DOF in our design space can either have a force applied to it or be fixed by a normal force. For a design space that is \(y\) units high and \(x\) units wide, we can represent these parts of the problem setup with NumPy arrays called <code class="language-plaintext highlighter-rouge">forces</code> and <code class="language-plaintext highlighter-rouge">normals</code>, each of shape \((y+1,x+1,2)\). Here the first two axes index over all the nodes in the design space and the third axis indexes over the two DOFs available to each node. Starting with the code below – and continuing throughout the rest of this tutorial – we are going to flatten these arrays to one dimension.</p>
+
+<p>There are a few other important details. The <code class="language-plaintext highlighter-rouge">mask</code> variable can be either a scalar of value 1 (no mask) or an array of shape \((x,y)\). As a default, we will use no mask. Then there are all the material constants, constraints, filter widths, and so forth to consider. For these, we use the values reported by Andreassen et al. (2010). Finally, we have the <code class="language-plaintext highlighter-rouge">mbb_beam</code> function which sets up the forces and normals particular to the MBB beam design constraints. This function can easily be swapped out if we wish to design a structure with different constraints.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">ObjectView</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span> <span class="bp">self</span><span class="p">.</span><span class="n">__dict__</span> <span class="o">=</span> <span class="n">d</span>
+    
+<span class="k">def</span> <span class="nf">get_args</span><span class="p">(</span><span class="n">normals</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.4</span><span class="p">):</span>  <span class="c1"># Manage the problem setup parameters
+</span>  <span class="n">width</span> <span class="o">=</span> <span class="n">normals</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+  <span class="n">height</span> <span class="o">=</span> <span class="n">normals</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span>
+  <span class="n">fixdofs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">normals</span><span class="p">.</span><span class="n">ravel</span><span class="p">())</span>
+  <span class="n">alldofs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+  <span class="n">freedofs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sort</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">alldofs</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">fixdofs</span><span class="p">)))</span>
+  <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="c1"># material properties
+</span>      <span class="s">'young'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'young_min'</span><span class="p">:</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="s">'poisson'</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s">'g'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+      <span class="c1"># constraints
+</span>      <span class="s">'density'</span><span class="p">:</span> <span class="n">density</span><span class="p">,</span> <span class="s">'xmin'</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span> <span class="s">'xmax'</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+      <span class="c1"># input parameters
+</span>      <span class="s">'nelx'</span><span class="p">:</span> <span class="n">width</span><span class="p">,</span> <span class="s">'nely'</span><span class="p">:</span> <span class="n">height</span><span class="p">,</span> <span class="s">'mask'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s">'penal'</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="s">'filter_width'</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s">'freedofs'</span><span class="p">:</span> <span class="n">freedofs</span><span class="p">,</span> <span class="s">'fixdofs'</span><span class="p">:</span> <span class="n">fixdofs</span><span class="p">,</span> <span class="s">'forces'</span><span class="p">:</span> <span class="n">forces</span><span class="p">.</span><span class="n">ravel</span><span class="p">(),</span>
+      <span class="c1"># optimization parameters
+</span>      <span class="s">'opt_steps'</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="s">'print_every'</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+  <span class="k">return</span> <span class="n">ObjectView</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">mbb_beam</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>  <span class="c1"># textbook beam example
+</span>  <span class="n">normals</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">normals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">normals</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">forces</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">forces</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+  <span class="k">return</span> <span class="n">normals</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">density</span>
+</code></pre></div></div>
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:50%; min-width:300px;">
+  <img src="/assets/structural-optimization/setuppng" />
+</div>
+
+<p><strong>The density method.</strong> Now that we have parameterized the design space, it is time to parameterize the material that moves around on it. At a high level, each finite element is going to have a certain density of material, given by some number between 0 and 1. We will use this density to determine the element stiffness coefficient \(E_e\), also called Young’s modulus. In the nodes-connected-by-springs analogy, this coefficient would control all the spring constants.</p>
+
+<p>Let’s discuss how to choose the mapping between finite element density \(x_e\) and Young’s modulus in more detail. First of all, we’d like to avoid having any elements with zero stiffness. When this happens, they stop transmitting forces to their neighbors before optimization is complete and we are liable to end up with suboptimal solutions. We can prevent this by giving each finite element a baseline stiffness, \(E_{min}\), regardless of whether it has any material density.</p>
+
+<p>We’d also like black-and-white final solutions. In other words, although our design space may start out with material densities of 0.5, by the end of optimization we’d like all of the grid cells to have densities very close to either 0 or 1. We can ensure this happens by raising our densities to a power \(p\) greater than one (typically \(p=3\)) so as to make our structure’s stiffness more sensitive to small changes in density.</p>
+
+<p>Putting these ideas together, we obtain the “modified SIMP” equation from Andreasson et al. (2010):</p>
+
+<p><span id="longEqnWithSmallScript_A" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+\(\begin{align}
+E_e(x_e)=&amp;E_{min} + x^p_e(E_0-E_{min}) \\
+&amp; x_e \in [0,1]
+\end{align}\)
+</span>
+<span id="longEqnWithLargeScript_A" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+\(E_e(x_e)=E_{min} + x^p_e(E_0-E_{min}), \quad \quad x_e \in [0,1]\)
+</span></p>
+
+<p>Here \(E_0\) is the stiffness of the material. For a comparison between modified SIMP and other approaches, see Sigmund (2007).</p>
+
+<p><strong>Filtering.</strong> Finally, in order to avoid grid-level pathologies (especially scenarios where a grid element with full density ends up next to a grid element with zero density and a discontinuity occurs), we are going to use a 2D Gaussian filter<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup> to smooth the grid densities. This technique, called “filtering,” shows up in almost all physics simulations where continuous fields have to be discretized.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">young_modulus</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">e_0</span><span class="p">,</span> <span class="n">e_min</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">e_min</span> <span class="o">+</span> <span class="n">x</span> <span class="o">**</span> <span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="n">e_0</span> <span class="o">-</span> <span class="n">e_min</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">physical_density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">volume_contraint</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">use_filter</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">args</span><span class="p">.</span><span class="n">mask</span> <span class="o">*</span> <span class="n">x</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">nely</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">nelx</span><span class="p">)</span>  <span class="c1"># reshape from 1D to 2D
+</span>  <span class="k">return</span> <span class="n">gaussian_filter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">filter_width</span><span class="p">)</span> <span class="k">if</span> <span class="n">use_filter</span> <span class="k">else</span> <span class="n">x</span>  <span class="c1"># maybe filter
+</span>
+<span class="k">def</span> <span class="nf">mean_density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">volume_contraint</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">use_filter</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">anp</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">physical_density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">volume_contraint</span><span class="p">,</span> <span class="n">use_filter</span><span class="p">))</span> <span class="o">/</span> <span class="n">anp</span><span class="p">.</span><span class="n">mean</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">mask</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>At this point, we have constructed a finite element parameterization of an elastic solid. We are applying forces to this solid in some places and supporting it with fixed points in others. As it deforms, it stretches and compresses in proportion to the stiffness of its finite elements. Now the question we need to ask is: <em>what does the best structure look like under these conditions?</em></p>
+
+<h2 id="the-objective-function">The objective function</h2>
+
+<p>At a high level, the best structure is the one that minimizes the elastic potential energy or <em>compliance</em> of the 2D grid of springs. We can express this idea mathematically as follows:</p>
+
+<p>Here \(c\) is the compliance, \(\mathbf{x}\) is a vector containing the material densities of the elements, \(\mathbf{K}\) is the global stiffness matrix, \(\mathbf{U}\) is a vector containing the displacements of the nodes, and \(E_e\) is Young’s modulus. The external forces or “loads” are given by the vector \(\mathbf{F}\). We can write the core part of this objective, the part that says \(c(\mathbf{x})=\mathbf{U}^T\mathbf{K}\mathbf{U}\), as a high-level objective function that calls a series of subroutines.</p>
+
+<!-- $$
+\begin{align}
+\scriptstyle \underset{\mathbf{x}}{\textrm{min}}: & \quad \scriptstyle c(\mathbf{x}) ~~=~~ \mathbf{U}^T\mathbf{K}\mathbf{U} ~~=~~ \sum_{e=1}^NE_e(x_e)\mathbf{u}_e^T\mathbf{k}_0\mathbf{u}_e \qquad \textrm{Potential energy (compliance) of a 2D grid of springs} \\
+\scriptstyle \textrm{subject to}: & \quad \scriptstyle V(\mathbf{x})/V_0 = f \qquad \quad ~ \textrm{A fixed quantity of material} \\
+\scriptstyle & \quad \scriptstyle 0 \leq \mathbf{x} \leq 1 \qquad \qquad \textrm{Densities that remain between 0 and 1} \\
+\scriptstyle & \quad \scriptstyle \mathbf{KU=F}  \qquad \qquad \textrm{Hooke's law for a 2D grid of springs} \\
+\end{align}
+$$ -->
+
+<p><span id="longEqnWithSmallScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+\(\begin{align}
+\scriptstyle \underset{\mathbf{x}}{\textrm{min}}: &amp; \quad \scriptstyle c(\mathbf{x}) ~~=~~ \mathbf{U}^T\mathbf{K}\mathbf{U} ~~=~~ \sum_{e=1}^NE_e(x_e)\mathbf{u}_e^T\mathbf{k}_0\mathbf{u}_e \\
+\scriptstyle \textrm{subject to}: &amp; \quad \scriptstyle V(\mathbf{x})/V_0 = f \\
+\scriptstyle &amp; \quad \scriptstyle 0 \leq \mathbf{x} \leq 1 \\
+\scriptstyle &amp; \quad \scriptstyle \mathbf{KU=F} \\
+\end{align}\)
+</span>
+<span id="longEqnWithLargeScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
+\(\begin{align}
+\scriptstyle \underset{\mathbf{x}}{\textrm{min}}: &amp; \quad \scriptstyle c(\mathbf{x}) ~~=~~ \mathbf{U}^T\mathbf{K}\mathbf{U} ~~=~~ \sum_{e=1}^NE_e(x_e)\mathbf{u}_e^T\mathbf{k}_0\mathbf{u}_e \qquad \textrm{Potential energy (compliance) of a 2D grid of springs} \\
+\scriptstyle \textrm{subject to}: &amp; \quad \scriptstyle V(\mathbf{x})/V_0 = f \qquad \quad ~ \textrm{A fixed quantity of material} \\
+\scriptstyle &amp; \quad \scriptstyle 0 \leq \mathbf{x} \leq 1 \qquad \qquad \textrm{Densities that remain between 0 and 1} \\
+\scriptstyle &amp; \quad \scriptstyle \mathbf{KU=F}  \qquad \qquad \textrm{Hooke's law for a 2D grid of springs} \\
+\end{align}\)
+</span></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">objective</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">volume_contraint</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">use_filter</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+  <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">penal</span><span class="o">=</span><span class="n">args</span><span class="p">.</span><span class="n">penal</span><span class="p">,</span> <span class="n">e_min</span><span class="o">=</span><span class="n">args</span><span class="p">.</span><span class="n">young_min</span><span class="p">,</span> <span class="n">e_0</span><span class="o">=</span><span class="n">args</span><span class="p">.</span><span class="n">young</span><span class="p">)</span>
+  <span class="n">x_phys</span> <span class="o">=</span> <span class="n">physical_density</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">volume_contraint</span><span class="o">=</span><span class="n">volume_contraint</span><span class="p">,</span> <span class="n">use_filter</span><span class="o">=</span><span class="n">use_filter</span><span class="p">)</span>
+  <span class="n">ke</span>     <span class="o">=</span> <span class="n">get_stiffness_matrix</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">young</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">poisson</span><span class="p">)</span>  <span class="c1"># stiffness matrix
+</span>  <span class="n">u</span>      <span class="o">=</span> <span class="n">displace</span><span class="p">(</span><span class="n">x_phys</span><span class="p">,</span> <span class="n">ke</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">forces</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">freedofs</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">fixdofs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="n">c</span>      <span class="o">=</span> <span class="n">compliance</span><span class="p">(</span><span class="n">x_phys</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">ke</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">c</span>
+</code></pre></div></div>
+
+<h2 id="computing-sensitivities">Computing sensitivities</h2>
+<p>The objective function gives us a single number, \(c(\mathbf{x})\), which we can use to rate the quality of our structure. But the question remains: <em>how should we update \(\mathbf{x}\) so as to minimize this number?</em> To answer this question, we need to compute the gradients or <em>sensitivities</em> of \(c\) with respect to \(\mathbf{x}\). These sensitivities will give us the direction to move \(\mathbf{x}\) in order to decrease \(c\) as much as possible. Ignoring filtering for a moment and applying the chain rule to the first line of the objective function, we obtain</p>
+
+\[\begin{align}
+\frac{\partial c}{\partial x_e} &amp;= -px_e^{p-1}(E_0-E_{min})\mathbf{u}_e^T\mathbf{k}_0\mathbf{u}
+\end{align}\]
+
+<p>If we want to add filtering back in, the notation becomes a bit more complicated. But we’re not going to do that here because, actually, we don’t need to calculate these sensitivities by hand. There is an elegant little library called <a href="https://github.com/HIPS/autograd">Autograd</a> which can do this for us using a process called <em>automatic differentiation.</em></p>
+
+<p><strong>Custom gradients.</strong> There are a few cases where we need to operate on NumPy arrays with functions from other libraries. In these cases, we need to define a custom gradient function so that Autograd knows how to differentiate through them. For example, in the code we have already written, the <code class="language-plaintext highlighter-rouge">gaussian_filter</code> function comes from the <code class="language-plaintext highlighter-rouge">scipy</code> library. Here’s how we can wrap that function to make it work properly with Autograd:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">autograd</span><span class="p">.</span><span class="n">extend</span><span class="p">.</span><span class="n">primitive</span>
+<span class="k">def</span> <span class="nf">gaussian_filter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span> <span class="c1"># 2D gaussian blur/filter
+</span>  <span class="k">return</span> <span class="n">scipy</span><span class="p">.</span><span class="n">ndimage</span><span class="p">.</span><span class="n">gaussian_filter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'reflect'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_gaussian_filter_vjp</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">width</span><span class="p">):</span> <span class="c1"># gives the gradient of orig. function w.r.t. x
+</span>  <span class="k">del</span> <span class="n">ans</span><span class="p">,</span> <span class="n">x</span>  <span class="c1"># unused
+</span>  <span class="k">return</span> <span class="k">lambda</span> <span class="n">g</span><span class="p">:</span> <span class="n">gaussian_filter</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span>
+<span class="n">autograd</span><span class="p">.</span><span class="n">extend</span><span class="p">.</span><span class="n">defvjp</span><span class="p">(</span><span class="n">gaussian_filter</span><span class="p">,</span> <span class="n">_gaussian_filter_vjp</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="implementing-the-physics">Implementing the physics</h2>
+<p>In between \(\mathbf{x}\) and \(c(\mathbf{x})\), there are a series of physics functions that we still need to implement.</p>
+
+<p><strong>Compliance.</strong> At a high level, the compliance is just \(\mathbf{U}^T\mathbf{K}\mathbf{U}\). But \(\mathbf{U}\) and \(\mathbf{K}\) are very sparse so it’s much more efficient to calculate \(\sum_{e=1}^NE_e(x_e)\mathbf{u}_e^T\mathbf{k}_0\mathbf{u}_e\). That’s what we will do in the code below. It’s a little hard to follow because everything is vectorized (hence the einsums) but this does speed things up considerably compared to a <code class="language-plaintext highlighter-rouge">for</code> loop.</p>
+
+<p><strong>The element stiffness matrix.</strong> The variable \(\mathbf{k}_0\) that appears in the compliance calculation is called the element stiffness matrix. An intuitive way to think about this matrix is as a 2D analogue of the spring constant \(k\) in a simple harmonic oscillator. The reason it is a matrix (instead of a scalar or a vector) is that we need to take into account all of the various interaction terms between the corner nodes in a square finite element.<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">2</a></sup> When we represent the displacement of all these nodes with a vector \(u=[u^a_1,u^a_2,u^b_1,u^b_2,u^c_1,u^c_2,u^d_1,u^d_2]\), then it becomes easy to calculate the potential energy of the system: we just write \(PE = \frac{1}{2}u^Tk_0u\) (this is the 2D analogue to the potential energy of a 1D harmonic oscillator, which is written as \(\frac{1}{2}kx^2\)).</p>
+
+<p>From this you should be able to see why compliance is the potential energy of the entire structure: it’s just a sum over the potential energies of all the finite elements. You should note that each term in the sum is getting scaled by a factor of \(E_e(x_e)\). This is happening because the stiffness matrix varies with Young’s modulus, and we have made Young’s modulus dependent on the local material density.</p>
+
+<p><strong>Material constants.</strong> You’ll notice that two material constants appear in the element stiffness matrix. The first is Young’s modulus which measures the stiffness of a material. Intuitively, it is the distortion per unit of force (“How hard do you need to pull a rubber band to stretch it one inch?”). A more technical definition is <em>the ratio of tensile stress to tensile strain</em>. The Poisson coefficient, meanwhile, measures the amount of contraction in the direction perpendicular to a region of stretching, due to that stretching (“How much thinner does the rubber band get when you stretch it one inch?”). A technical definition is <em>the ratio between the lateral contraction per unit length and the longitudinal extension also per unit length.</em> Both of these coefficients come into play when we construct the element stiffness matrix.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">compliance</span><span class="p">(</span><span class="n">x_phys</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">ke</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">penal</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">e_min</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">e_0</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+  <span class="n">nely</span><span class="p">,</span> <span class="n">nelx</span> <span class="o">=</span> <span class="n">x_phys</span><span class="p">.</span><span class="n">shape</span>
+  <span class="n">ely</span><span class="p">,</span> <span class="n">elx</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nely</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">nelx</span><span class="p">))</span>  <span class="c1"># x, y coords for the index map
+</span>
+  <span class="n">n1</span> <span class="o">=</span> <span class="p">(</span><span class="n">nely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">elx</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ely</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># nodes
+</span>  <span class="n">n2</span> <span class="o">=</span> <span class="p">(</span><span class="n">nely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">elx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ely</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">n3</span> <span class="o">=</span> <span class="p">(</span><span class="n">nely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">elx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">n4</span> <span class="o">=</span> <span class="p">(</span><span class="n">nely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">elx</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">all_ixs</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="o">*</span><span class="n">n1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n1</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n3</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n3</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n4</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n4</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">u_selected</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">all_ixs</span><span class="p">]</span>  <span class="c1"># select from u matrix
+</span>
+  <span class="n">ke_u</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">einsum</span><span class="p">(</span><span class="s">'ij,jkl-&gt;ikl'</span><span class="p">,</span> <span class="n">ke</span><span class="p">,</span> <span class="n">u_selected</span><span class="p">)</span>  <span class="c1"># compute x^penal * U.T @ ke @ U
+</span>  <span class="n">ce</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">einsum</span><span class="p">(</span><span class="s">'ijk,ijk-&gt;jk'</span><span class="p">,</span> <span class="n">u_selected</span><span class="p">,</span> <span class="n">ke_u</span><span class="p">)</span>
+  <span class="n">C</span> <span class="o">=</span> <span class="n">young_modulus</span><span class="p">(</span><span class="n">x_phys</span><span class="p">,</span> <span class="n">e_0</span><span class="p">,</span> <span class="n">e_min</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">penal</span><span class="p">)</span> <span class="o">*</span> <span class="n">ce</span><span class="p">.</span><span class="n">T</span>
+  <span class="k">return</span> <span class="n">anp</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">C</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_stiffness_matrix</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">nu</span><span class="p">):</span>  <span class="c1"># e=young's modulus, nu=poisson coefficient
+</span>  <span class="n">k</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="o">-</span><span class="n">nu</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="o">+</span><span class="n">nu</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="o">-</span><span class="n">nu</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">nu</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span>
+                <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="o">+</span><span class="n">nu</span><span class="o">/</span><span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="o">-</span><span class="n">nu</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span> <span class="n">nu</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">8</span><span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">nu</span><span class="o">/</span><span class="mi">8</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">e</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">nu</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">anp</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">7</span><span class="p">]],</span>
+                               <span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">]],</span>
+                               <span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span>
+                               <span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">]],</span>
+                               <span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">]],</span>
+                               <span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">6</span><span class="p">]],</span>
+                               <span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">5</span><span class="p">]],</span>
+                               <span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]]])</span>
+</code></pre></div></div>
+
+<p><strong>Calculating displacements.</strong> Now we need to tackle one of the most important physics problems: calculating the displacements of the nodes. The way to do this with a 1D spring would be to solve the equation \(F=kx\) for \(x\). Here we can do the same thing, except by solving the matrix equation \(\mathbf{F=KU}\). For a system with \(N\) nodes with 2 degrees of freedom each, the matrix \(\mathbf{K}\) will have dimensions \(2N\) x \(2N\). This gives us a system of \(2N\) simultaneous linear equations for \(2N\) unknown node displacements.</p>
+
+<p><strong>A global stiffness matrix with \(N\) nodes.</strong> The number of nodes  \(N\) grows as the product of the width and height of our design space. Thus it is not unusual to have over \(10^4\) nodes in a design space. Since the size of  \(\mathbf{K}\) grows as \(N^2\), it quickly becomes too large to fit in memory. For example, using \(10^4\) nodes and the <code class="language-plaintext highlighter-rouge">np.float32</code> data format, we get a \(\mathbf{K}\) matrix that consumes 1.6 GB of RAM. Increasing its width and height by 50% increases that number to 8 GB. This is not a sustainable rate of growth!</p>
+
+<p>Luckily, since our nodes are locally-connected, most of the entries in \(\mathbf{K}\) are zero. We can save a vast amount of memory by representing it with a sparse “coordinate list” or COO format. The purpose of the <code class="language-plaintext highlighter-rouge">get_k</code> function below is to assemble just such a matrix. If you want to see all the details for how this matrix is constructed, read the “global stiffness matrices with \(N\) nodes” section of <a href="http://solidmechanics.org/text/Chapter7_2/Chapter7_2.htm">this textbook chapter</a>.</p>
+
+<p><strong>The sparse matrix solve.</strong> Having constructed \(\mathbf{K}\), all we have left to do is solve the system of equations. This is the most important part of the <code class="language-plaintext highlighter-rouge">displace</code> function. It uses Scipy’s SuperLU function (which supports COO) to solve for nodal displacements without ever instantiating a \(2N\) x \(2N\) matrix.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_k</span><span class="p">(</span><span class="n">stiffness</span><span class="p">,</span> <span class="n">ke</span><span class="p">):</span>
+  <span class="c1"># Constructs sparse stiffness matrix k (used in the displace fn)
+</span>  <span class="c1"># First, get position of the nodes of each element in the stiffness matrix
+</span>  <span class="n">nely</span><span class="p">,</span> <span class="n">nelx</span> <span class="o">=</span> <span class="n">stiffness</span><span class="p">.</span><span class="n">shape</span>
+  <span class="n">ely</span><span class="p">,</span> <span class="n">elx</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">nely</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">nelx</span><span class="p">))</span>  <span class="c1"># x, y coords
+</span>  <span class="n">ely</span><span class="p">,</span> <span class="n">elx</span> <span class="o">=</span> <span class="n">ely</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">elx</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+  <span class="n">n1</span> <span class="o">=</span> <span class="p">(</span><span class="n">nely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">elx</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ely</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">n2</span> <span class="o">=</span> <span class="p">(</span><span class="n">nely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">elx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ely</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span>
+  <span class="n">n3</span> <span class="o">=</span> <span class="p">(</span><span class="n">nely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">elx</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">n4</span> <span class="o">=</span> <span class="p">(</span><span class="n">nely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">elx</span><span class="o">+</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">ely</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">edof</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="o">*</span><span class="n">n1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n1</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n2</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n2</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n3</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n3</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n4</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">n4</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span>
+  <span class="n">edof</span> <span class="o">=</span> <span class="n">edof</span><span class="p">.</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="n">x_list</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">edof</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>  <span class="c1"># flat list pointer of each node in an element
+</span>  <span class="n">y_list</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">tile</span><span class="p">(</span><span class="n">edof</span><span class="p">,</span> <span class="mi">8</span><span class="p">).</span><span class="n">flatten</span><span class="p">()</span>  <span class="c1"># flat list pointer of each node in elem
+</span>
+  <span class="c1"># make the global stiffness matrix K
+</span>  <span class="n">kd</span> <span class="o">=</span> <span class="n">stiffness</span><span class="p">.</span><span class="n">T</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">nelx</span><span class="o">*</span><span class="n">nely</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">value_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">kd</span> <span class="o">*</span> <span class="n">anp</span><span class="p">.</span><span class="n">tile</span><span class="p">(</span><span class="n">ke</span><span class="p">,</span> <span class="n">kd</span><span class="p">.</span><span class="n">shape</span><span class="p">)).</span><span class="n">flatten</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">value_list</span><span class="p">,</span> <span class="n">y_list</span><span class="p">,</span> <span class="n">x_list</span>
+
+<span class="k">def</span> <span class="nf">displace</span><span class="p">(</span><span class="n">x_phys</span><span class="p">,</span> <span class="n">ke</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">freedofs</span><span class="p">,</span> <span class="n">fixdofs</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">penal</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">e_min</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">,</span> <span class="n">e_0</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+  <span class="c1"># Displaces the load x using finite element techniques (solve_coo=most of runtime)
+</span>  <span class="n">stiffness</span> <span class="o">=</span> <span class="n">young_modulus</span><span class="p">(</span><span class="n">x_phys</span><span class="p">,</span> <span class="n">e_0</span><span class="p">,</span> <span class="n">e_min</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">penal</span><span class="p">)</span>
+  <span class="n">k_entries</span><span class="p">,</span> <span class="n">k_ylist</span><span class="p">,</span> <span class="n">k_xlist</span> <span class="o">=</span> <span class="n">get_k</span><span class="p">(</span><span class="n">stiffness</span><span class="p">,</span> <span class="n">ke</span><span class="p">)</span>
+
+  <span class="n">index_map</span><span class="p">,</span> <span class="n">keep</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">_get_dof_indices</span><span class="p">(</span><span class="n">freedofs</span><span class="p">,</span> <span class="n">fixdofs</span><span class="p">,</span> <span class="n">k_ylist</span><span class="p">,</span> <span class="n">k_xlist</span><span class="p">)</span>
+  
+  <span class="n">u_nonzero</span> <span class="o">=</span> <span class="n">solve_coo</span><span class="p">(</span><span class="n">k_entries</span><span class="p">[</span><span class="n">keep</span><span class="p">],</span> <span class="n">indices</span><span class="p">,</span> <span class="n">forces</span><span class="p">[</span><span class="n">freedofs</span><span class="p">],</span> <span class="n">sym_pos</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+  <span class="n">u_values</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">u_nonzero</span><span class="p">,</span> <span class="n">anp</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fixdofs</span><span class="p">))])</span>
+  <span class="k">return</span> <span class="n">u_values</span><span class="p">[</span><span class="n">index_map</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h2 id="sparse-matrix-helper-functions">Sparse matrix helper functions</h2>
+
+<p>You may notice that the <code class="language-plaintext highlighter-rouge">displace</code> function uses a helper function, <code class="language-plaintext highlighter-rouge">_get_dof_indices</code>, to update \(\mathbf{K}\)’s indices. The point here is to keep only the degrees of freedom that were actually free in the problem setup (the <code class="language-plaintext highlighter-rouge">freedofs</code>). To do this, we need to remove the degrees of freedom where normal forces were introduced (the <code class="language-plaintext highlighter-rouge">fixdofs</code>).</p>
+
+<p>The second function is the <code class="language-plaintext highlighter-rouge">inverse_permutation</code> function. It is a <a href="https://mathworld.wolfram.com/InversePermutation.html">mathematical operation</a> that gives us the indices needed to undo a permutation. For example, if <code class="language-plaintext highlighter-rouge">ixs</code> is a list of indices that permutes the list <code class="language-plaintext highlighter-rouge">A</code>, then this function gives us a second list of indices <code class="language-plaintext highlighter-rouge">inv_ixs</code> such that <code class="language-plaintext highlighter-rouge">A[ixs][inv_ixs] = A</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">_get_dof_indices</span><span class="p">(</span><span class="n">freedofs</span><span class="p">,</span> <span class="n">fixdofs</span><span class="p">,</span> <span class="n">k_xlist</span><span class="p">,</span> <span class="n">k_ylist</span><span class="p">):</span>
+  <span class="n">index_map</span> <span class="o">=</span> <span class="n">inverse_permutation</span><span class="p">(</span><span class="n">anp</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">freedofs</span><span class="p">,</span> <span class="n">fixdofs</span><span class="p">]))</span>
+  <span class="n">keep</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">isin</span><span class="p">(</span><span class="n">k_xlist</span><span class="p">,</span> <span class="n">freedofs</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">anp</span><span class="p">.</span><span class="n">isin</span><span class="p">(</span><span class="n">k_ylist</span><span class="p">,</span> <span class="n">freedofs</span><span class="p">)</span>
+  <span class="c1"># Now we index an indexing array that is being indexed by the indices of k
+</span>  <span class="n">i</span> <span class="o">=</span> <span class="n">index_map</span><span class="p">[</span><span class="n">k_ylist</span><span class="p">][</span><span class="n">keep</span><span class="p">]</span>
+  <span class="n">j</span> <span class="o">=</span> <span class="n">index_map</span><span class="p">[</span><span class="n">k_xlist</span><span class="p">][</span><span class="n">keep</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">index_map</span><span class="p">,</span> <span class="n">keep</span><span class="p">,</span> <span class="n">anp</span><span class="p">.</span><span class="n">stack</span><span class="p">([</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">inverse_permutation</span><span class="p">(</span><span class="n">indices</span><span class="p">):</span>  <span class="c1"># reverses an index operation
+</span>  <span class="n">inverse_perm</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">anp</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+  <span class="n">inverse_perm</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">anp</span><span class="p">.</span><span class="n">int64</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">inverse_perm</span>
+</code></pre></div></div>
+
+<p><strong>Custom gradients for a sparse matrix solve.</strong> Our sparse solve, like our 2D Gaussian filter, comes from the Scipy library and is not supported by Autograd. So we need to tell Autograd how to differentiate through it. To do this, we’ll copy a few lines of code from <a href="https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/autograd_lib.py#L188">this Google Research repo</a>.</p>
+
+<p>These lines are similar to <a href="https://github.com/HIPS/autograd/blob/96a03f44da43cd7044c61ac945c483955deba957/autograd/numpy/linalg.py#L40">Autograd’s implementation</a> of the gradient of a matrix solve. The main difference is that whereas the Autograd version is written for dense matrices, this version is written for sparse matrices. The underlying mathematical idea is the same either way; see “<a href="https://people.maths.ox.ac.uk/gilesm/files/NA-08-01.pdf">An extended collection of matrix derivative results for forward and reverse mode algorithmic differentiation</a>” by Mike Giles for the relevant formulas.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">_get_solver</span><span class="p">(</span><span class="n">a_entries</span><span class="p">,</span> <span class="n">a_indices</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">sym_pos</span><span class="p">):</span>
+  <span class="c1"># a is (usu.) symmetric positive; could solve 2x faster w/sksparse.cholmod.cholesky(a).solve_A
+</span>  <span class="n">a</span> <span class="o">=</span> <span class="n">scipy</span><span class="p">.</span><span class="n">sparse</span><span class="p">.</span><span class="n">coo_matrix</span><span class="p">((</span><span class="n">a_entries</span><span class="p">,</span> <span class="n">a_indices</span><span class="p">),</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">size</span><span class="p">,)</span><span class="o">*</span><span class="mi">2</span><span class="p">).</span><span class="n">tocsc</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">scipy</span><span class="p">.</span><span class="n">sparse</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">splu</span><span class="p">(</span><span class="n">a</span><span class="p">).</span><span class="n">solve</span>
+
+<span class="o">@</span><span class="n">autograd</span><span class="p">.</span><span class="n">primitive</span>
+<span class="k">def</span> <span class="nf">solve_coo</span><span class="p">(</span><span class="n">a_entries</span><span class="p">,</span> <span class="n">a_indices</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">sym_pos</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+  <span class="n">solver</span> <span class="o">=</span> <span class="n">_get_solver</span><span class="p">(</span><span class="n">a_entries</span><span class="p">,</span> <span class="n">a_indices</span><span class="p">,</span> <span class="n">b</span><span class="p">.</span><span class="n">size</span><span class="p">,</span> <span class="n">sym_pos</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">solver</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">grad_solve_coo_entries</span><span class="p">(</span><span class="n">ans</span><span class="p">,</span> <span class="n">a_entries</span><span class="p">,</span> <span class="n">a_indices</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">sym_pos</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+  <span class="k">def</span> <span class="nf">jvp</span><span class="p">(</span><span class="n">grad_ans</span><span class="p">):</span>
+    <span class="n">lambda_</span> <span class="o">=</span> <span class="n">solve_coo</span><span class="p">(</span><span class="n">a_entries</span><span class="p">,</span> <span class="n">a_indices</span> <span class="k">if</span> <span class="n">sym_pos</span> <span class="k">else</span> <span class="n">a_indices</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                        <span class="n">grad_ans</span><span class="p">,</span> <span class="n">sym_pos</span><span class="p">)</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="o">=</span> <span class="n">a_indices</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">lambda_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">ans</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+  <span class="k">return</span> <span class="n">jvp</span>
+
+<span class="n">autograd</span><span class="p">.</span><span class="n">extend</span><span class="p">.</span><span class="n">defvjp</span><span class="p">(</span><span class="n">solve_coo</span><span class="p">,</span> <span class="n">grad_solve_coo_entries</span><span class="p">,</span>
+                       <span class="k">lambda</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="s">'err: gradient undefined'</span><span class="p">),</span>
+                       <span class="k">lambda</span><span class="p">:</span> <span class="k">print</span><span class="p">(</span><span class="s">'err: gradient not implemented'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>And with that, we are done with the physics! Now we are ready to set up the optimization itself.</p>
+
+<h2 id="optimization">Optimization</h2>
+<p>To do this, we’ll use the Method of Moving Asymptotes (MMA). Originally described by Svanberg (1987) and refined in <a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.146.5196&amp;rep=rep1&amp;type=pdf">Svanberg (2002)</a>, MMA is a good fit for structural optimization problems because it accepts nonlinear inequality constraints and scales to large parameter spaces. In the code below, we rewrite the mass conservation constraint as a mass <em>threshold</em> constraint so that it looks like an inequality. Then we set the density constraint by giving upper and lower bounds on the parameter space. Finally, we use Autograd to obtain gradients with respect to the objective and pass them to the solver. The NLopt package makes this process pretty straightforward. Also, its <a href="https://nlopt.readthedocs.io/en/latest/NLopt_Algorithms/#mma-method-of-moving-asymptotes-and-ccsa">documentation</a> gives some good practical advice on how to think about MMA.</p>
+
+<p>Other optimization approaches we tried included optimality criteria (by Andreasson et al. 2010), plain gradient descent, LBFGS, and the Adam optimizer. Consistent with the findings of <a href="https://arxiv.org/abs/1909.04240">this paper</a>, MMA outperformed all these approaches.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">anp</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="n">args</span><span class="p">.</span><span class="n">nely</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">nelx</span><span class="p">))</span> <span class="o">*</span> <span class="n">args</span><span class="p">.</span><span class="n">density</span>  <span class="c1"># init mass
+</span>
+  <span class="n">reshape</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">nely</span><span class="p">,</span> <span class="n">args</span><span class="p">.</span><span class="n">nelx</span><span class="p">)</span>
+  <span class="n">objective_fn</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">objective</span><span class="p">(</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">args</span><span class="p">)</span> <span class="c1"># don't enforce mass constraint here
+</span>  <span class="n">constraint</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">params</span><span class="p">:</span> <span class="n">mean_density</span><span class="p">(</span><span class="n">reshape</span><span class="p">(</span><span class="n">params</span><span class="p">),</span> <span class="n">args</span><span class="p">)</span> <span class="o">-</span> <span class="n">args</span><span class="p">.</span><span class="n">density</span>
+
+  <span class="k">def</span> <span class="nf">wrap_autograd_func</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">losses</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">grad</span><span class="p">):</span>
+      <span class="k">if</span> <span class="n">grad</span><span class="p">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">value</span><span class="p">,</span> <span class="n">grad</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">autograd</span><span class="p">.</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">func</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">losses</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">losses</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">frames</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">frames</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="p">).</span><span class="n">copy</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">verbose</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span> <span class="o">%</span> <span class="n">args</span><span class="p">.</span><span class="n">print_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+          <span class="k">print</span><span class="p">(</span><span class="s">'step {}, loss {:.2e}, t={:.2f}s'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">frames</span><span class="p">),</span> <span class="n">value</span><span class="p">,</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span><span class="o">-</span><span class="n">dt</span><span class="p">))</span>
+      <span class="k">return</span> <span class="n">value</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+
+  <span class="n">losses</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span> <span class="p">;</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
+  <span class="k">print</span><span class="p">(</span><span class="s">'Optimizing a problem with {} nodes'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">forces</span><span class="p">)))</span>
+  <span class="n">opt</span> <span class="o">=</span> <span class="n">nlopt</span><span class="p">.</span><span class="n">opt</span><span class="p">(</span><span class="n">nlopt</span><span class="p">.</span><span class="n">LD_MMA</span><span class="p">,</span> <span class="n">x</span><span class="p">.</span><span class="n">size</span><span class="p">)</span>
+  <span class="n">opt</span><span class="p">.</span><span class="n">set_lower_bounds</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span> <span class="p">;</span> <span class="n">opt</span><span class="p">.</span><span class="n">set_upper_bounds</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+  <span class="n">opt</span><span class="p">.</span><span class="n">set_min_objective</span><span class="p">(</span><span class="n">wrap_autograd_func</span><span class="p">(</span><span class="n">objective_fn</span><span class="p">,</span> <span class="n">losses</span><span class="p">,</span> <span class="n">frames</span><span class="p">))</span>
+  <span class="n">opt</span><span class="p">.</span><span class="n">add_inequality_constraint</span><span class="p">(</span><span class="n">wrap_autograd_func</span><span class="p">(</span><span class="n">constraint</span><span class="p">),</span> <span class="mf">1e-8</span><span class="p">)</span>
+  <span class="n">opt</span><span class="p">.</span><span class="n">set_maxeval</span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">opt_steps</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">opt</span><span class="p">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">flatten</span><span class="p">())</span>
+  <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">losses</span><span class="p">),</span> <span class="n">reshape</span><span class="p">(</span><span class="n">frames</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="we-are-finally-ready-to-optimize-our-mbb-beam-">We are finally ready to optimize our MBB beam 🤞</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="c1"># run the simulation and visualize the result
+</span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">mbb_beam</span><span class="p">())</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span> <span class="p">;</span> <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">Final design space:'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span> <span class="p">;</span> <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">Final MBB beam design:'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">[:,::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span> <span class="p">;</span> <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+<pre class="outputarea">
+Optimizing a problem with 4212 nodes
+step 10, loss 1.28e+03, t=1.31s
+step 20, loss 5.38e+02, t=2.51s
+step 30, loss 4.17e+02, t=3.92s
+step 40, loss 3.67e+02, t=5.36s
+step 50, loss 3.61e+02, t=6.84s
+step 60, loss 3.58e+02, t=8.30s
+step 70, loss 3.55e+02, t=9.67s
+step 80, loss 3.44e+02, t=10.79s
+
+Final design space:
+<img src="/assets/structural-optimization/mbb1.png" align="left" />
+
+
+
+
+
+Final MBB beam design:
+<img src="/assets/structural-optimization/mbb2.png" align="left" />
+</pre>
+
+<!-- ## Caching arrays for a 2x speedup
+
+Caching is a separate subject, so we avoided any discussion of it in the main tutorial. But we should mention that adding LRU caching for NumPy arrays speeds thing up by around 2x.
+
+```python
+import functools
+
+class _WrappedArray:
+  """Hashable wrapper for NumPy arrays."""
+  def __init__(self, value):
+    self.value = value
+
+  def __eq__(self, other):
+    return np.array_equal(self.value, other.value)
+
+  def __hash__(self):
+    # Collisions (there won't be many) mean __eq__ is checked: https://bit.ly/3EazdK3
+    return hash(repr(self.value.ravel()))
+
+def ndarray_safe_lru_cache(maxsize=128):
+  """An ndarray compatible version of functools.lru_cache."""
+  def decorator(func):
+    @functools.lru_cache(maxsize)
+    def cached_func(*args, **kwargs):
+      args = tuple(a.value if isinstance(a, _WrappedArray) else a for a in args)
+      kwargs = {k: v.value if isinstance(v, _WrappedArray) else v for k, v in kwargs.items()}
+      return func(*args, **kwargs)
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+      args = tuple(_WrappedArray(a) if isinstance(a, np.ndarray) else a for a in args)
+      kwargs = {k: _WrappedArray(v) if isinstance(v, np.ndarray) else v for k, v in kwargs.items()}
+      return cached_func(*args, **kwargs)
+    return wrapper
+  return decorator
+
+@ndarray_safe_lru_cache(1)
+def _get_solver(a_entries, a_indices, size, sym_pos):
+  # a is (usu.) symmetric positive; could solve 2x faster w/sksparse.cholmod.cholesky(a).solve_A
+  a = scipy.sparse.coo_matrix((a_entries, a_indices), shape=(size,)*2).tocsc()
+  return scipy.sparse.linalg.splu(a).solve
+
+@ndarray_safe_lru_cache(1)
+def _get_dof_indices(freedofs, fixdofs, k_xlist, k_ylist):
+  index_map = inverse_permutation(
+      anp.concatenate([freedofs, fixdofs]))
+  keep = anp.isin(k_xlist, freedofs) & anp.isin(k_ylist, freedofs)
+  i = index_map[k_ylist][keep]
+  j = index_map[k_xlist][keep]
+  return index_map, keep, anp.stack([i, j])
+
+# solve the MBB beam problem again, now with caching
+args = get_args(*mbb_beam())
+print('Optimizing the same structure, this time with caching...')
+losses, x, frames = fast_stopt(args=args, verbose=True)
+```
+<pre class='outputarea'>
+Optimizing the same structure, this time with caching...
+Optimizing a problem with 4212 nodes
+step 10, loss 1.28e+03, t=0.77s
+step 20, loss 5.38e+02, t=1.50s
+step 30, loss 4.17e+02, t=2.19s
+step 40, loss 3.67e+02, t=2.86s
+step 50, loss 3.61e+02, t=3.53s
+step 60, loss 3.58e+02, t=4.18s
+step 70, loss 3.55e+02, t=4.84s
+step 80, loss 3.44e+02, t=5.62s
+</pre> -->
+
+<h2 id="optimizing-a-gazebo-roof-support">Optimizing a gazebo roof support</h2>
+<p>This is a slightly more challenging and interesting task. The problem setup was taken from a real-world gazebo rafter design problem.
+Dimensions: 16’ wide by 4’ high; 2:1 roof pitch
+Fixed points: Horizontal beam across bottom of region (fix x and y), Vertical center beam (fix x and y)
+Forces:
+Dead load: 12-17 psf, live load: 25psf, snow load: 10psf, wind load (down): 10psf, wind load (up): 4psf
+Net angle of forces: Sum vertical forces: 15 (-4 wind) -&gt; use 15, Sum perpendicular (to roof) forces: 25 + 10 -&gt; 35
+This implies 30% of force is directed vertically &amp; 70% of force is directed perpendicular to roof
+Angle of net force is approximately 20 degrees (0.349 radians)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">eves</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">theta</span><span class="o">=-</span><span class="mf">0.349</span><span class="p">):</span>
+  <span class="c1"># theta is the angle (rad) between vertical and the net force on the roof
+</span>  <span class="n">x_ix</span><span class="p">,</span> <span class="n">y_ix</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+  <span class="n">normals</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">normals</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">forces</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">start_coords</span><span class="p">,</span> <span class="n">stop_coords</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+
+  <span class="kn">import</span> <span class="nn">skimage.draw</span>
+  <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">skimage</span><span class="p">.</span><span class="n">draw</span><span class="p">.</span><span class="n">line_aa</span><span class="p">(</span><span class="o">*</span><span class="n">start_coords</span><span class="p">,</span> <span class="o">*</span><span class="n">stop_coords</span><span class="p">)</span>
+  <span class="n">forces</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">x_ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">forces</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">],</span> <span class="o">-</span><span class="n">value</span> <span class="o">/</span> <span class="n">width</span><span class="p">)</span>
+  <span class="n">forces</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">forces</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">],</span> <span class="o">-</span><span class="n">value</span> <span class="o">/</span> <span class="n">width</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">normals</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">density</span>
+
+<span class="c1"># run the simulation and visualize the result
+</span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">eves</span><span class="p">())</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+<pre class="outputarea">
+Optimizing a problem with 66306 nodes
+step 10, loss 1.01e+02, t=34.68s
+step 20, loss 7.87e+00, t=69.54s
+step 30, loss 3.05e+00, t=104.69s
+step 40, loss 2.68e+00, t=138.80s
+step 50, loss 2.53e+00, t=173.08s
+step 60, loss 2.48e+00, t=206.53s
+step 70, loss 2.47e+00, t=240.59s
+step 80, loss 2.47e+00, t=278.73s
+step 90, loss 2.46e+00, t=312.37s
+step 100, loss 2.46e+00, t=347.35s
+</pre>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:70%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="eves_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/eves.png">
+      <source src="/assets/structural-optimization/eves.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="eves_video_button" onclick="playPauseEves()">Play</button>
+  </div>
+</div>
+
+<script> 
+function playPauseEves() { 
+  var video = document.getElementById("eves_video"); 
+  var button = document.getElementById("eves_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
+
+<h2 id="a-few-other-designs">A few other designs</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">causeway_bridge</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.08</span><span class="p">,</span> <span class="n">deck_level</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+  <span class="s">"""A bridge supported by columns at a regular interval."""</span>
+  <span class="n">x_ix</span><span class="p">,</span> <span class="n">y_ix</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+  <span class="n">normals</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">normals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">normals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="n">x_ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">normals</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="n">x_ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">forces</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">forces</span><span class="p">[:,</span> <span class="nb">round</span><span class="p">(</span><span class="n">height</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">deck_level</span><span class="p">)),</span> <span class="n">y_ix</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="n">width</span>
+  <span class="k">return</span> <span class="n">normals</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">density</span>
+
+<span class="c1"># run the simulation and visualize the result
+</span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">causeway_bridge</span><span class="p">())</span>
+<span class="n">args</span><span class="p">.</span><span class="n">opt_steps</span> <span class="o">=</span> <span class="mi">160</span> <span class="p">;</span> <span class="n">args</span><span class="p">.</span><span class="n">print_every</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+<pre class="outputarea">
+Optimizing a problem with 33282 nodes
+step 20, loss 6.45e+02, t=32.45s
+step 40, loss 6.99e+01, t=66.31s
+step 60, loss 6.22e+01, t=96.67s
+step 80, loss 6.08e+01, t=127.47s
+step 100, loss 6.01e+01, t=158.28s
+step 120, loss 5.97e+01, t=188.59s
+step 140, loss 5.90e+01, t=222.50s
+step 160, loss 5.84e+01, t=253.61s
+</pre>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:70%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="causeway_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/causeway.png">
+      <source src="/assets/structural-optimization/causeway.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="causeway_video_button" onclick="playPauseCauseway()">Play</button>
+  </div>
+</div>
+
+<script> 
+function playPauseCauseway() { 
+  var video = document.getElementById("causeway_video"); 
+  var button = document.getElementById("causeway_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">staggered_points</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">break_symmetry</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+  <span class="s">"""A staggered grid of points with downward forces, supported from below."""</span>
+  <span class="n">x_ix</span><span class="p">,</span> <span class="n">y_ix</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+  <span class="n">normals</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">normals</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">normals</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:,</span> <span class="n">x_ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">normals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="n">x_ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">forces</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">f</span> <span class="o">=</span> <span class="n">interval</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">width</span> <span class="o">*</span> <span class="n">height</span><span class="p">)</span>
+  <span class="c1"># intentionally break horizontal symmetry?
+</span>  <span class="n">forces</span><span class="p">[</span><span class="n">interval</span><span class="o">//</span><span class="mi">2</span><span class="o">+</span><span class="nb">int</span><span class="p">(</span><span class="n">break_symmetry</span><span class="p">)::</span><span class="n">interval</span><span class="p">,</span> <span class="p">::</span><span class="n">interval</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">f</span>
+  <span class="n">forces</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">break_symmetry</span><span class="p">)::</span><span class="n">interval</span><span class="p">,</span> <span class="n">interval</span><span class="o">//</span><span class="mi">2</span><span class="p">::</span><span class="n">interval</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">f</span>
+  <span class="k">return</span> <span class="n">normals</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">density</span>
+
+<span class="c1"># run the simulation and visualize the result
+</span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">staggered_points</span><span class="p">())</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+<pre class="outputarea">
+Optimizing a problem with 33410 nodes
+step 10, loss 1.91e+02, t=13.35s
+step 20, loss 1.43e+02, t=26.34s
+step 30, loss 6.96e+01, t=39.41s
+step 40, loss 6.46e+01, t=52.50s
+step 50, loss 4.44e+01, t=65.47s
+step 60, loss 3.97e+01, t=78.36s
+step 70, loss 3.76e+01, t=91.24s
+step 80, loss 3.58e+01, t=104.05s
+</pre>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:40%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="points_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/points.png">
+      <source src="/assets/structural-optimization/points.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="points_video_button" onclick="playPausePoints()">Play</button>
+  </div>
+</div>
+
+<script> 
+function playPausePoints() { 
+  var video = document.getElementById("points_video"); 
+  var button = document.getElementById("points_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">staircase</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">256</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">num_stories</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+  <span class="s">"""A ramp that zig-zags upward, supported from the ground."""</span>
+  <span class="n">x_ix</span><span class="p">,</span> <span class="n">y_ix</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+  <span class="n">normals</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">normals</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="kn">import</span> <span class="nn">skimage.draw</span>
+  <span class="n">forces</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="k">for</span> <span class="n">story</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_stories</span><span class="p">):</span>
+    <span class="n">parity</span> <span class="o">=</span> <span class="n">story</span> <span class="o">%</span> <span class="mi">2</span>
+    <span class="n">start_coordinates</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">story</span> <span class="o">+</span> <span class="n">parity</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">//</span> <span class="n">num_stories</span><span class="p">)</span>
+    <span class="n">stop_coordiates</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="p">(</span><span class="n">story</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">parity</span><span class="p">)</span> <span class="o">*</span> <span class="n">height</span> <span class="o">//</span> <span class="n">num_stories</span><span class="p">)</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">skimage</span><span class="p">.</span><span class="n">draw</span><span class="p">.</span><span class="n">line_aa</span><span class="p">(</span><span class="o">*</span><span class="n">start_coordinates</span><span class="p">,</span> <span class="o">*</span><span class="n">stop_coordiates</span><span class="p">)</span>
+    <span class="n">forces</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">minimum</span><span class="p">(</span>
+        <span class="n">forces</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">],</span> <span class="o">-</span><span class="n">value</span> <span class="o">/</span> <span class="p">(</span><span class="n">width</span> <span class="o">*</span> <span class="n">num_stories</span><span class="p">)</span>
+    <span class="p">)</span>
+  <span class="k">return</span> <span class="n">normals</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">density</span>
+
+<span class="c1"># run the simulation and visualize the result
+</span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">staircase</span><span class="p">())</span>
+<span class="n">args</span><span class="p">.</span><span class="n">opt_steps</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+<pre class="outputarea">
+Optimizing a problem with 132098 nodes
+step 10, loss 9.65e+01, t=98.39s
+step 20, loss 3.04e+01, t=197.26s
+step 30, loss 7.37e+00, t=294.96s
+step 40, loss 4.38e+00, t=390.48s
+step 50, loss 3.98e+00, t=483.45s
+step 60, loss 3.88e+00, t=575.68s
+step 70, loss 3.86e+00, t=668.17s
+step 80, loss 3.83e+00, t=758.19s
+step 90, loss 3.82e+00, t=847.92s
+step 100, loss 3.81e+00, t=939.67s
+</pre>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="staircase_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/staircase.png">
+      <source src="/assets/structural-optimization/staircase.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="staircase_video_button" onclick="playPauseStaircase()">Play</button>
+  </div>
+</div>
+
+<script> 
+function playPauseStaircase() { 
+  var video = document.getElementById("staircase_video"); 
+  var button = document.getElementById("staircase_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">multistory_building</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
+  <span class="n">x_ix</span><span class="p">,</span> <span class="n">y_ix</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+  <span class="n">normals</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">normals</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="n">normals</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="n">x_ix</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+  <span class="n">forces</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">width</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+  <span class="n">forces</span><span class="p">[:,</span> <span class="p">::</span><span class="n">interval</span><span class="p">,</span> <span class="n">y_ix</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span> <span class="n">width</span>
+  <span class="k">return</span> <span class="n">normals</span><span class="p">,</span> <span class="n">forces</span><span class="p">,</span> <span class="n">density</span>
+
+<span class="c1"># run the simulation and visualize the result
+</span><span class="n">args</span> <span class="o">=</span> <span class="n">get_args</span><span class="p">(</span><span class="o">*</span><span class="n">multistory_building</span><span class="p">())</span>
+<span class="n">args</span><span class="p">.</span><span class="n">opt_steps</span> <span class="o">=</span> <span class="mi">160</span> <span class="p">;</span> <span class="n">args</span><span class="p">.</span><span class="n">print_every</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">losses</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">frames</span> <span class="o">=</span> <span class="n">fast_stopt</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+<pre class="outputarea">
+Optimizing a problem with 132354 nodes
+step 10, loss 1.28e+04, t=72.03s
+step 20, loss 8.77e+03, t=144.31s
+step 30, loss 7.23e+03, t=215.94s
+step 40, loss 1.74e+03, t=289.13s
+step 50, loss 9.65e+02, t=362.98s
+step 60, loss 8.40e+02, t=434.95s
+step 70, loss 8.06e+02, t=506.56s
+step 80, loss 7.97e+02, t=577.98s
+step 90, loss 7.89e+02, t=648.11s
+step 100, loss 7.87e+02, t=718.23s
+step 110, loss 7.85e+02, t=787.93s
+step 120, loss 7.83e+02, t=857.21s
+step 130, loss 7.82e+02, t=927.52s
+step 140, loss 7.81e+02, t=996.80s
+step 150, loss 7.79e+02, t=1066.46s
+step 160, loss 7.77e+02, t=1135.57s
+</pre>
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="building_video" style="width:100%;min-width:250px;" poster="/assets/structural-optimization/building.png">
+      <source src="/assets/structural-optimization/building.mp4" type="video/mp4" />
+    </video>
+    <button class="playbutton" id="building_video_button" onclick="playPauseBuilding()">Play</button>
+  </div>
+</div>
+
+<script> 
+function playPauseBuilding() { 
+  var video = document.getElementById("building_video"); 
+  var button = document.getElementById("building_video_button");
+  if (video.paused) {
+    video.play();
+    button.textContent = "Pause";}
+  else {
+    video.pause(); 
+  button.textContent = "Play";}
+} 
+</script>
+
+<p>There are many, many more structures in <a href="https://arxiv.org/src/1909.04240v2/anc/all-designs.pdf">this supplement</a> from Hoyer et al. 2019. The problem setups are all listed <a href="https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/problems.py">here</a>.</p>
+
+<h2 id="closing-thoughts-">Closing thoughts 🌆</h2>
+
+<p>In sci-fi representations of healthy cities of the future, we often find manmade structures that are well integrated with their natural surroundings. Sometimes we even see a convergence where nature has adapted to the city and the city has adapted to nature. The more decadent cities, on the other hand, tend to define themselves in opposition to the patterns of nature. Their architecture is more blocky and inorganic. <!-- And when they do have organic-looking structures, those structures are reminiscent of the dangerous elements of nature: fangs, claws, volcanoes, and caves. --> Perhaps tools like structural optimization can help us build the healthy cities of the future – while steering clear of the decadent ones.</p>
+
+<h2 id="footnotes">Footnotes</h2>
+
+<script>
+    function getBrowserSize(){
+       var w, h;
+
+         if(typeof window.innerWidth != 'undefined')
+         {
+          w = window.innerWidth; //other browsers
+          h = window.innerHeight;
+         } 
+         else if(typeof document.documentElement != 'undefined' && typeof      document.documentElement.clientWidth != 'undefined' && document.documentElement.clientWidth != 0) 
+         {
+          w =  document.documentElement.clientWidth; //IE
+          h = document.documentElement.clientHeight;
+         }
+         else{
+          w = document.body.clientWidth; //IE
+          h = document.body.clientHeight;
+         }
+       return {'width':w, 'height': h};
+}
+
+if(parseInt(getBrowserSize().width) < 800){
+ document.getElementById("longEqnWithLargeScript_A").style.display = "none";
+}
+if(parseInt(getBrowserSize().width) > 800){
+ document.getElementById("longEqnWithSmallScript_A").style.display = "none";
+}
+
+if(parseInt(getBrowserSize().width) < 800){
+ document.getElementById("longEqnWithLargeScript_B").style.display = "none";
+}
+if(parseInt(getBrowserSize().width) > 800){
+ document.getElementById("longEqnWithSmallScript_B").style.display = "none";
+}
+</script>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:fn1" role="doc-endnote">
+      <p>Andreasson et al. (2010) use a cone filter; we found that a Gaussian filter gave similar results and was easier to implement. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:fn2" role="doc-endnote">
+      <p>Deriving the specific entries of the element stiffness matrix takes quite a few steps. We won’t go through all of them here, but you can walk yourself through them using <a href="http://solidmechanics.org/text/Chapter7_2/Chapter7_2.htm">this textbook chapter</a>. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET
