@@ -3,7 +3,7 @@ layout: post
 comments: true
 title:  "A Tutorial on Structural Optimization"
 excerpt: "Structural optimization lets us design trusses, bridges, and buildings starting from the physics of elastic materials. Let's code it up, from scratch, in 180 lines."
-date:   2022-04-26 11:00:00
+date:   2022-05-08 11:00:00
 mathjax: true
 author: Sam Greydanus
 thumbnail: /assets/structural-optimization/thumbnail.png
@@ -205,8 +205,6 @@ At this point, we have constructed a finite element parameterization of an elast
 
 At a high level, the best structure is the one that minimizes the elastic potential energy or [_compliance_](https://en.wikipedia.org/wiki/Topology_optimization#Structural_compliance) of the 2D grid of springs. We can express this idea mathematically as follows:
 
-Here \\(c\\) is the compliance, \\(\mathbf{x}\\) is a vector containing the material densities of the elements, \\(\mathbf{K}\\) is the global stiffness matrix, \\(\mathbf{U}\\) is a vector containing the displacements of the nodes, and \\(E_e\\) is Young's modulus. The external forces or "loads" are given by the vector \\(\mathbf{F}\\).
-
 <span id="longEqnWithSmallScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 $$
 \begin{align}
@@ -227,6 +225,8 @@ $$
 \end{align}
 $$
 </span>
+
+Here \\(c\\) is the compliance, \\(\mathbf{x}\\) is a vector containing the material densities of the elements, \\(\mathbf{K}\\) is the global stiffness matrix, \\(\mathbf{U}\\) is a vector containing the displacements of the nodes, and \\(E_e\\) is Young's modulus. The external forces or "loads" are given by the vector \\(\mathbf{F}\\).
 
 We can write the core part of this objective, the part that says \\(c(\mathbf{x})=\mathbf{U}^T\mathbf{K}\mathbf{U}\\), as a high-level objective function that calls a series of subroutines.
 
@@ -473,15 +473,10 @@ Final MBB beam design:
 <img src="/assets/structural-optimization/mbb2.png" align='left'>
 </pre>
 
-## Optimizing a gazebo roof support
-This is a slightly more challenging and interesting task. The problem setup was taken from a real-world gazebo rafter design problem.
-Dimensions: 16' wide by 4' high; 2:1 roof pitch
-Fixed points: Horizontal beam across bottom of region (fix x and y), Vertical center beam (fix x and y)
-Forces:
-Dead load: 12-17 psf, live load: 25psf, snow load: 10psf, wind load (down): 10psf, wind load (up): 4psf
-Net angle of forces: Sum vertical forces: 15 (-4 wind) -> use 15, Sum perpendicular (to roof) forces: 25 + 10 -> 35
-This implies 30% of force is directed vertically & 70% of force is directed perpendicular to roof
-Angle of net force is approximately 20 degrees (0.349 radians)
+## Optimizing the eves of a gazebo roof
+Let's turn to a slightly more challenging and interesting task. This is a design problem that came up recently at the engineering firm where I work. It consists of a gazebo roof that is 16' wide and 4' high (with a 2:1 pitch). The fixed points include the bottom region, where a large beam runs as well as a vertical center beam.
+
+The dead load for the structure is 12-17 pounds per square foot (psf), the live load is 25 psf, snow load is 10 psf, wind load ranges from 10 psf downward to 4 psf upwards. Combining the vertical and horizontal forces with one another and estimating the worst-case net force on the roof, we obtain a vector with a magnitude that is 20 degrees (0.349 radians) off of the vertical. Putting all this together, we have a structural optimization problem which can be solved to obtain a support strucure for the roof.
 
 ```python
 def eves(width=200, height=100, density=0.15, theta=-0.349):
@@ -771,6 +766,7 @@ In sci-fi representations of the healthy cities of the future, we often find man
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:320px;">
   <img src="/assets/structural-optimization/asgard.jpeg">
+  <div style="text-align:center; display:block; margin-left: auto; margin-right: auto; width:100%">The city of Asgard from <i>Thor</i></div>
 </div>
 
 ## Footnotes
