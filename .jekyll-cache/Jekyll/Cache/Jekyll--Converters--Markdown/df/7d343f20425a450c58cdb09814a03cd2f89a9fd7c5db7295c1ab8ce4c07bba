@@ -1,4 +1,4 @@
-I"��<style>
+I"�<style>
 .wrap {
     max-width: 900px;
 }
@@ -47,8 +47,8 @@ function playPauseHero() {
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
   <a href="" id="linkbutton" target="_blank">PDF format</a>
-  <a href="https://bit.ly/3KOC0u0" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
-  <a href="" id="linkbutton" target="_blank">Get the code</a>
+  <a href="https://bit.ly/394DUcL" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+  <a href="https://github.com/greydanus/structural_optimization" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
 <!-- In modern cities, the least expensive structural designs tend to have blocky and inorganic shapes. Buildings such as warehouses and shopping malls follow these patterns. In contrast, buildings which are meant to have spiritual or aesthetic appeal -- buildings like churches, museums, and sports stadiums -- tend to have more organic-looking features like arches, spires, and scaffolds.
@@ -148,7 +148,7 @@ Successfully installed nlopt-2.7.1
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:300px;">
   <img src="/assets/structural-optimization/setup.png" />
-    <div style="text-align:center; display:block; margin-left: auto; margin-right: auto; width:75%">Visualizing the normals and forces in the MBB beam setup. Here the rectangle represents the design area and the colored pixels (blue = -1, green = 0, yellow = 1) represent matrix entries.</div>
+    <div style="text-align:center; display:block; margin-left: auto; margin-right: auto; width:75%">Visualizing the normals and forces in the MBB beam setup. Here the rectangle represents the design area and the colored pixels represent matrix entries (blue = -1, green = 0, and yellow = 1).</div>
 </div>
 
 <p><strong>The density method.</strong> Now that we have parameterized the design space, it is time to parameterize the material that moves around on it. At a high level, each finite element is going to have a certain density of material, given by some number between 0 and 1. We will use this density to determine the element stiffness coefficient \(E_e\), also called Young’s modulus. In the nodes-connected-by-springs analogy, this coefficient would control all the spring constants.</p>
@@ -190,8 +190,6 @@ E_e(x_e)=&amp;E_{min} + x^p_e(E_0-E_{min}) \\
 
 <p>At a high level, the best structure is the one that minimizes the elastic potential energy or <a href="https://en.wikipedia.org/wiki/Topology_optimization#Structural_compliance"><em>compliance</em></a> of the 2D grid of springs. We can express this idea mathematically as follows:</p>
 
-<p>Here \(c\) is the compliance, \(\mathbf{x}\) is a vector containing the material densities of the elements, \(\mathbf{K}\) is the global stiffness matrix, \(\mathbf{U}\) is a vector containing the displacements of the nodes, and \(E_e\) is Young’s modulus. The external forces or “loads” are given by the vector \(\mathbf{F}\).</p>
-
 <p><span id="longEqnWithSmallScript_B" style="display:block; margin-left:auto;margin-right:auto;text-align:center;">
 \(\begin{align}
 \scriptstyle \underset{\mathbf{x}}{\textrm{min}}: &amp; \quad \scriptstyle c(\mathbf{x}) ~~=~~ \mathbf{U}^T\mathbf{K}\mathbf{U} ~~=~~ \sum_{e=1}^NE_e(x_e)\mathbf{u}_e^T\mathbf{k}_0\mathbf{u}_e \\
@@ -208,6 +206,8 @@ E_e(x_e)=&amp;E_{min} + x^p_e(E_0-E_{min}) \\
 \scriptstyle &amp; \quad \scriptstyle \mathbf{KU=F}  \qquad \qquad \textrm{Hooke's law for a 2D grid of springs} \\
 \end{align}\)
 </span></p>
+
+<p>Here \(c\) is the compliance, \(\mathbf{x}\) is a vector containing the material densities of the elements, \(\mathbf{K}\) is the global stiffness matrix, \(\mathbf{U}\) is a vector containing the displacements of the nodes, and \(E_e\) is Young’s modulus. The external forces or “loads” are given by the vector \(\mathbf{F}\).</p>
 
 <p>We can write the core part of this objective, the part that says \(c(\mathbf{x})=\mathbf{U}^T\mathbf{K}\mathbf{U}\), as a high-level objective function that calls a series of subroutines.</p>
 
@@ -443,15 +443,10 @@ Final MBB beam design:
 <img src="/assets/structural-optimization/mbb2.png" align="left" />
 </pre>
 
-<h2 id="optimizing-a-gazebo-roof-support">Optimizing a gazebo roof support</h2>
-<p>This is a slightly more challenging and interesting task. The problem setup was taken from a real-world gazebo rafter design problem.
-Dimensions: 16’ wide by 4’ high; 2:1 roof pitch
-Fixed points: Horizontal beam across bottom of region (fix x and y), Vertical center beam (fix x and y)
-Forces:
-Dead load: 12-17 psf, live load: 25psf, snow load: 10psf, wind load (down): 10psf, wind load (up): 4psf
-Net angle of forces: Sum vertical forces: 15 (-4 wind) -&gt; use 15, Sum perpendicular (to roof) forces: 25 + 10 -&gt; 35
-This implies 30% of force is directed vertically &amp; 70% of force is directed perpendicular to roof
-Angle of net force is approximately 20 degrees (0.349 radians)</p>
+<h2 id="optimizing-the-eves-of-a-gazebo-roof">Optimizing the eves of a gazebo roof</h2>
+<p>Let’s turn to a slightly more challenging and interesting task. This is a design problem that came up recently at the engineering firm where I work. It consists of a gazebo roof that is 16’ wide and 4’ high (with a 2:1 pitch). The fixed points include the bottom region, where a large beam runs as well as a vertical center beam.</p>
+
+<p>The dead load for the structure is 12-17 pounds per square foot (psf), the live load is 25 psf, snow load is 10 psf, wind load ranges from 10 psf downward to 4 psf upwards. Combining the vertical and horizontal forces with one another and estimating the worst-case net force on the roof, we obtain a vector with a magnitude that is 20 degrees (0.349 radians) off of the vertical. Putting all this together, we have a structural optimization problem which can be solved to obtain a support strucure for the roof.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">eves</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="mf">0.15</span><span class="p">,</span> <span class="n">theta</span><span class="o">=-</span><span class="mf">0.349</span><span class="p">):</span>
   <span class="c1"># theta is the angle (rad) between vertical and the net force on the roof
@@ -736,6 +731,7 @@ function playPauseBuilding() {
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:320px;">
   <img src="/assets/structural-optimization/asgard.jpeg" />
+  <div style="text-align:center; display:block; margin-left: auto; margin-right: auto; width:100%">The city of Asgard from <i>Thor</i></div>
 </div>
 
 <h2 id="footnotes">Footnotes</h2>
