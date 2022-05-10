@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-05-09T21:52:30-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A science blog by Sam Greydanus</subtitle><entry><title type="html">A Tutorial on Structural Optimization</title><link href="http://greydanus.github.io/2022/05/08/structural-optimization/" rel="alternate" type="text/html" title="A Tutorial on Structural Optimization" /><published>2022-05-08T04:00:00-07:00</published><updated>2022-05-08T04:00:00-07:00</updated><id>http://greydanus.github.io/2022/05/08/structural-optimization</id><content type="html" xml:base="http://greydanus.github.io/2022/05/08/structural-optimization/">&lt;style&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-05-10T06:20:16-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A science blog by Sam Greydanus</subtitle><entry><title type="html">A Tutorial on Structural Optimization</title><link href="http://greydanus.github.io/2022/05/08/structural-optimization/" rel="alternate" type="text/html" title="A Tutorial on Structural Optimization" /><published>2022-05-08T04:00:00-07:00</published><updated>2022-05-08T04:00:00-07:00</updated><id>http://greydanus.github.io/2022/05/08/structural-optimization</id><content type="html" xml:base="http://greydanus.github.io/2022/05/08/structural-optimization/">&lt;style&gt;
 .wrap {
     max-width: 900px;
 }
@@ -46,7 +46,7 @@ function playPauseHero() {
 &lt;/script&gt;
 
 &lt;div style=&quot;display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;&quot;&gt;
-  &lt;a href=&quot;&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;PDF format&lt;/a&gt;
+  &lt;!-- &lt;a href=&quot;&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;PDF format&lt;/a&gt; --&gt;
   &lt;a href=&quot;https://bit.ly/394DUcL&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Run&lt;/span&gt; in browser&lt;/a&gt;
   &lt;a href=&quot;https://github.com/greydanus/structural_optimization&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Get the code&lt;/a&gt;
 &lt;/div&gt;

@@ -1,4 +1,4 @@
-I"◊‰<style>
+I"π„<style>
 .wrap {
     max-width: 900px;
 }
@@ -46,7 +46,7 @@ function playPauseHero() {
 </script>
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
-  <a href="" id="linkbutton" target="_blank">PDF format</a>
+  <!-- <a href="" id="linkbutton" target="_blank">PDF format</a> -->
   <a href="https://bit.ly/394DUcL" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
   <a href="https://github.com/greydanus/structural_optimization" id="linkbutton" target="_blank">Get the code</a>
 </div>
@@ -89,7 +89,9 @@ Installing collected packages: nlopt
 Successfully installed nlopt-2.7.1
 </pre> -->
 
-<p>Structural optimization is a useful and interesting tool. Unfortunately, it can be hard for new researchers to get started on the topic because <a href="http://www.topopt.mek.dtu.dk/Apps-and-software/Efficient-topology-optimization-in-MATLAB">existing tutorials</a> assume the reader has substantial domain knowledge. They obscure the fact that structural optimization is really quite simple, elegant, and easy to implement. With that in mind, let‚Äôs write our own structural optimization code, from scratch, in 180 lines.</p>
+<p>Structural optimization is a useful and interesting tool. Unfortunately, it can be hard to get started on the topic because existing tutorials assume the reader has substantial domain knowledge. They obscure the fact that structural optimization is really quite simple, elegant, and easy to implement.</p>
+
+<p>With that in mind, let‚Äôs write our own structural optimization code, from scratch, in 180 lines.</p>
 
 <h2 id="problem-setup">Problem setup</h2>
 <p>The goal of structural optimization is to place material in a design space so that it rests on some fixed points or ‚Äúnormals‚Äù and resists a set of applied forces or <em>loads</em> as efficiently as possible. To see how we might set this up, let‚Äôs start with a beam design problem from <a href="https://www.topopt.mek.dtu.dk/-/media/subsites/topopt/apps/dokumenter-og-filer-til-apps/topopt88.pdf?la=da&amp;hash=E80FAB2808804A29FFB181CA05D2EEFECAA86686">Andreassen et al (2010)</a>:</p>
@@ -723,9 +725,9 @@ function playPauseBuilding() {
 
 <p>There are many, many more structures in <a href="https://arxiv.org/src/1909.04240v2/anc/all-designs.pdf">this supplement</a> from <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C38&amp;q=Neural+reparameterization+improves+structural+optimization&amp;btnG=">Hoyer et al. 2019</a>. The problem setups are all listed <a href="https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/problems.py">here</a>.</p>
 
-<h2 id="closing-thoughts-">Closing thoughts üåÜ</h2>
+<h2 id="discussion">Discussion</h2>
 
-<p>In sci-fi representations of the healthy cities of the future, we often find manmade structures that are well integrated with their natural surroundings. Sometimes we even see a convergence where nature has adapted to the city and the city has adapted to nature. The more decadent cities, on the other hand, tend to define themselves in opposition to the patterns of nature. Their architecture is more blocky and inorganic. <!-- And when they do have organic-looking structures, those structures are reminiscent of the dangerous elements of nature: fangs, claws, volcanoes, and caves. --> Perhaps tools like structural optimization can help us build the healthy cities of the future - steering clear of the decadent ones.</p>
+<p>In sci-fi representations of the healthy cities of the future, we often find manmade structures that are well integrated with their natural surroundings. Sometimes we even see a convergence where nature has adapted to the city and the city has adapted to nature. The more decadent cities, on the other hand, tend to define themselves in opposition to the patterns of nature. Their architecture is more blocky and inorganic. Perhaps tools like structural optimization can help us build the healthy cities of the future ‚Äì and steer clear of the decadent ones.</p>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:320px;">
   <img src="/assets/structural-optimization/asgard.jpeg" />
