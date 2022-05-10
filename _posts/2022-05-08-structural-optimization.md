@@ -100,7 +100,7 @@ Installing collected packages: nlopt
 Successfully installed nlopt-2.7.1
 </pre> -->
 
-Structural optimization is an interesting technique. And as 3D printing and custom manufacturing techniques improve, it is becoming increasingly useful. But [existing tutorials](http://www.topopt.mek.dtu.dk/Apps-and-software/Efficient-topology-optimization-in-MATLAB), although well written, are aimed at readers with substantial background knowledge. They obscure the fact that structural optimization is really quite simple, elegant, and easy to implement.
+Structural optimization is a useful and interesting tool. Unfortunately, it can be hard to get started on the topic because existing tutorials assume the reader has substantial domain knowledge. They obscure the fact that structural optimization is really quite simple, elegant, and easy to implement.
 
 With that in mind, let's write our own structural optimization code, from scratch, in 180 lines.
 
@@ -760,9 +760,9 @@ function playPauseBuilding() {
 
 There are many, many more structures in [this supplement](https://arxiv.org/src/1909.04240v2/anc/all-designs.pdf) from [Hoyer et al. 2019](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C38&q=Neural+reparameterization+improves+structural+optimization&btnG=). The problem setups are all listed [here](https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/problems.py).
 
-## Closing thoughts 🌆
+## Discussion
 
-In sci-fi representations of the healthy cities of the future, we often find manmade structures that are well integrated with their natural surroundings. Sometimes we even see a convergence where nature has adapted to the city and the city has adapted to nature. The more decadent cities, on the other hand, tend to define themselves in opposition to the patterns of nature. Their architecture is more blocky and inorganic. <!-- And when they do have organic-looking structures, those structures are reminiscent of the dangerous elements of nature: fangs, claws, volcanoes, and caves. --> Perhaps tools like structural optimization can help us build the healthy cities of the future ..... while steering clear of the decadent ones.
+In sci-fi representations of the healthy cities of the future, we often find manmade structures that are well integrated with their natural surroundings. Sometimes we even see a convergence where nature has adapted to the city and the city has adapted to nature. The more decadent cities, on the other hand, tend to define themselves in opposition to the patterns of nature. Their architecture is more blocky and inorganic. Perhaps tools like structural optimization can help us build the healthy cities of the future – and steer clear of the decadent ones.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:320px;">
   <img src="/assets/structural-optimization/asgard.jpeg">
