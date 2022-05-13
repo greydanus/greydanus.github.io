@@ -57,7 +57,7 @@ function playPauseHero() {
 </script>
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
-  <!-- <a href="" id="linkbutton" target="_blank">PDF format</a> -->
+  <a href="https://twitter.com/samgreydanus/status/1524020782053134342?cxt=HHwWjMC4ifS0tKYqAAAA" id="linkbutton" target="_blank">Twitter thread</a>
   <a href="https://bit.ly/394DUcL" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
   <a href="https://github.com/greydanus/structural_optimization" id="linkbutton" target="_blank">Get the code</a>
 </div>
