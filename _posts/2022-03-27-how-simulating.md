@@ -8,7 +8,7 @@ mathjax: true
 thumbnail: /assets/how-simulating/thumbnail.png
 ---
 
-## The Universe as a Simulation
+<!-- ## The Universe as a Simulation -->
 
 Let's imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Well, it would probably have:
 
@@ -104,7 +104,7 @@ _Then we change the experiment by measuring the second photon in the pair before
 
 To the followers of Plato, the world of the senses was akin to shadows dancing on the wall of a cave. The essential truths and realities of life were not to be found on the wall at all, but rather somewhere else in the cave in the form of real dancers and real flames. A meaningful life was to be spent seeking to understand these forms, elusive though they might be.
 
-In this post, we took part in that tradition by using our knowledge of physics simulations to propose a new interpretation of quantum mechanics. It's hard to know whether we do indeed live in a simulation. Perhaps we will never know. But at the very least, the idea serves as a good basis for thought-provoking discussion.
+In this post, we took part in that tradition by using our knowledge of physics simulations to propose a new interpretation of quantum mechanics. It's hard to know whether we do indeed live in a simulation. Perhaps we will never know. But at the very least, the idea serves as a good basis for a thought-provoking discussion.
 
 ## Footnotes
 
