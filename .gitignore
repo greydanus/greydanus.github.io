@@ -9,5 +9,6 @@
 .pytest_cache
 *.tar
 *.zip
+*.jekyll-cache*
 # *.pkl # allow pickle files
 __pycache__

@@ -8,7 +8,7 @@ mathjax: true
 thumbnail: /assets/how-simulating/thumbnail.png
 ---
 
-## The universe as a simulation
+## The Universe as a Simulation
 
 Let's imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Well, it would probably have:
 
@@ -33,7 +33,9 @@ The first thing to see is that assumptions 1 and 2 are in tension with one anoth
 
 When you write a single-threaded physics simulation, this can account for about half of the computational cost (these [fluid](https://github.com/greydanus/optimize_wing/blob/3d661cae6ca6a320981fd5fc29848e1233d891cd/simulate.py#L57) and [topology](https://github.com/google-research/neural-structural-optimization/blob/1c11b8c6ef50274802a84cf1a244735c3ed9394d/neural_structural_optimization/topo_physics.py#L236) simulations are good examples). As you parallelize your simulation more and more, you can expect the cost of enforcing conservation laws to grow higher in proportion. This is because simulating dynamics is pretty easy to do in parallel. But enforcing system-wide conservation laws requires transferring data between distant CPU cores and keeping them more or less in sync. As a result, enforcing conservation laws in this manner quickly grows to be a limiting factor on runtime. We find ourselves asking: _is there a more parallelizable approach to enforcing global conservation laws?_
 
-One option is to quantize the conserved quantity. For example, we could quantize energy and then only transfer it in the form of discrete packets.
+One option is to use a [finite volume method](https://en.wikipedia.org/wiki/Finite_volume_method) to keep track of quantities moving between grid cells rather than absolute values. If we don't care about _exactly_ enforcing a conservation law, then this may be sufficient. We should note, though, that under a finite volume scheme small rounding and integration errors will occur and over time they will cause the globally-conserved quantity to change slightly. (More speculatively, this may be a particularly serious problem if people in the simulation are liable to stumble upon this phenomenon and exploit it adversarially to create or destroy energy.)
+
+If we want to _strictly_ enforce a globally-conserved quantity in a fully parallel manner, there is a third option that we could try: we could quantize it. We could quantize energy, for example, and then only transfer it in the form of discrete packets.
 
 To see why this would be a good idea, let's use financial markets as an analogy. Financial markets are massively parallel and keeping a proper accounting of the total amount of currency in circulation is very important. So they allow currency to function as a continuous quantity on a practical level, but they quantize it at a certain scale by making small measures of value (pennies) indivisible. We could enforce conservation of energy in the same way, for the same reasons.
 
@@ -102,7 +104,7 @@ _Then we change the experiment by measuring the second photon in the pair before
 
 To the followers of Plato, the world of the senses was akin to shadows dancing on the wall of a cave. The essential truths and realities of life were not to be found on the wall at all, but rather somewhere else in the cave in the form of real dancers and real flames. A meaningful life was to be spent seeking to understand these forms, elusive though they might be.
 
-In this post, we took part in that tradition by using our knowledge of physics simulations to propose a new interpretation of quantum mechanics. It's hard to know whether we do indeed live in a simulation. Perhaps we will never know. But at the very least, it seems that exploring the idea leads to some surprising and thought-provoking conclusions.
+In this post, we took part in that tradition by using our knowledge of physics simulations to propose a new interpretation of quantum mechanics. It's hard to know whether we do indeed live in a simulation. Perhaps we will never know. But at the very least, the idea serves as a good basis for thought-provoking discussion.
 
 ## Footnotes
 
