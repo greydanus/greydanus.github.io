@@ -10,6 +10,10 @@ thumbnail: /assets/how-simulating/thumbnail.png
 
 <!-- ## The Universe as a Simulation -->
 
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:15%; min-width:200px;">
+  <img src="/assets/how-simulating/galaxy.png">
+</div>
+
 Let's imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Well, it would probably have:
 
 1. **Massive parallelism.** Taking advantage of the fact that, in physics, all interactions are local and limited by the speed of light, one could parallelize the simulation. Spatially adjacent regions would run on the same CPUs whereas spatially distant regions would run on separate CPUs.[^fn1]
