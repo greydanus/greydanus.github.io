@@ -439,7 +439,7 @@ def fast_stopt(args, x=None, verbose=True):
   return np.array(losses), reshape(frames[-1]), np.array(frames)
   ```
 
-## We are finally ready to optimize our MBB beam 🤞
+## We are finally ready to optimize our MBB beam
 
 ```python
   # run the simulation and visualize the result
