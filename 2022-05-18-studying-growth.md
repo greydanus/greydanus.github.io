@@ -74,7 +74,9 @@ function playPauseVideo3() {
 
 <!-- ## A Productive Question -->
 
-How does a single fertilized egg grow into a population of seventy trillion cells -- a population that can walk, talk, and write sonnets? This is one of the great unanswered questions of biology. We may never finish answering it -- and indeed the mere asking of it should be tempered with humility. But it's a productive question. Scientists who have asked it over the past seventy years have discovered the structure of DNA, sequenced the human genome, and made essential contributions to modern medicine. In this post, we will ask this question using a new tool called Neural Cellular Automata (NCA).
+How does a single fertilized egg grow into a population of seventy trillion cells -- a population that can walk, talk, and write sonnets? This is one of the great unanswered questions of biology. We may never finish answering it, but it's a productive question nonetheless. In asking it, scientists have discovered the structure of DNA, sequenced the human genome, and made essential contributions to modern medicine.
+
+In this post, we will explore this question with a new tool called Neural Cellular Automata (NCA).
 
 <!-- **Neural Cellular Automata.** A few years ago, scientists showed that it is possible to use neural networks to represent the rules for how simulated cells interact with one another. This allowed them to teach simulated cells to interact with one another at a local scale in order to produce complex emergent behaviors at the population level. So far, only a few papers have been written about these "Neural Cellular Automata" models. One reason is that they are a relatively new idea. Another reason is that, although they require expertise in ML to implement, their main intellectual appeal is to an audience interested in cellular morphogenesis. The intersection of people who are comfortable in both worlds is relatively small.
 
@@ -82,9 +84,9 @@ But the mechanics of cellular morphogenesis are extremely important. Indeed, NCA
 
 With all of this in mind, let's take a closer look at how NCA work and then apply them to some simple biology problems. -->
 
-## Neural Cellular Automata
+## Motivation
 
-The purpose of cellular automata (CA) is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels with each pixel representing an individual cell. Then a set of growth rules, which control how each cell responds to its neighbors, are applied repeatedly to the population. Although these growth rules are simple to write down, scientists generally choose them so as to produce complex, self-organizing behaviors. Conway's Game of Life, for example, has just three simple growth rules but can give rise to diverse structures and dynamics.
+The purpose of cellular automata (CA) _writ large_ is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels where each pixel represents a different cell. Then a set of growth rules, controlling how cells respond to their neighbors, are applied to the population in an iterative manner. Although these growth rules are simple to write down, they are choosen so as to produce complex, self-organizing behaviors. For example, Conway's Game of Life has just three simple growth rules but can give rise to diverse structures and dynamics.[^fn4]
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:49.4%; min-width:280px; display: inline-block; vertical-align: top;text-align:center;">
@@ -97,9 +99,9 @@ The purpose of cellular automata (CA) is to mimic biological growth at the cellu
   </div>
 </div>
 
-Classic versions of cellular automata like Conway's Game of Life are interesting because they produce emergent behavior starting from simple rules. But in a way, these versions of CA are _too simple_. Their cells only get to have two states, dead or alive, whereas biological cells get to have a near-infinite number of states, states which are determined by a wide variety of signaling molecules. We refer to these molecules as _morphogens_ because they work together to control growth and guide organisms toward specific final shapes or _morphologies_.
+Classic versions of cellular automata like Conway's Game of Life are interesting because they produce emergent behavior starting from simple rules. But in a way, these versions of CA are _too simple_. Their cells only get to have two states, dead or alive, whereas biological cells get to have a near-infinite number of states, states which are determined by a wide variety of signaling molecules. We refer to these molecules as _morphogens_ because they work together to control growth and guide organisms towards specific final shapes or _morphologies_.
 
-**A more flexible framework.** Based on this observation, we should move away from cells that are only dead or alive. Rather, we should allow cells to exist in a variety of states, with each state defined by a list of continuous variables. Growth rules should operate on combinations of these variables in the same way that biological growth rules operate on combinations of different morphogens. And unlike Conway's Game of Life, the self-organizing behaviors that arise should not be arbitrary. Rather, they should involve convergence to _specific_ large-scale morphologies like those that occur in biology. Much more complex growth rules are required to make this happen.
+**Neural CA.** Based on this observation, we should move away from cells that are only dead or alive. Rather, we should allow cells to exist in a variety of states, with each state defined by a list of continuous variables. Growth rules should operate on combinations of these variables in the same way that biological growth rules operate on combinations of different morphogens. And unlike Conway's Game of Life, the self-organizing behaviors that arise should not be arbitrary or chaotic. Rather, they should involve stable convergence to _specific_ large-scale morphologies like those that occur in biology. Much more complex growth rules are needed for this to occur.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/comparison.jpg">
@@ -110,7 +112,7 @@ The diagram above shows how NCA take a step in the right direction. Unlike regul
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/nca_schema.jpg">
   <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
-  A detailed schema showing how a neural network can be used to parameterize the growth rules of a population of cells. You can find the specific implementation details in the <a href="https://distill.pub/2020/growing-ca/">original NCA article</a>.
+  A detailed schema showing how a neural network can be used to parameterize the growth rules of a population of cells. The <a href="https://distill.pub/2020/growing-ca/">original NCA article</a> uses this diagram to introduce the model and describe how it is trained.
   </div>
 </div>
 
@@ -120,7 +122,7 @@ The diagram above shows how NCA take a step in the right direction. Unlike regul
 
 The authors of the original paper released a Colab notebook that showed how to implement NCA in TensorFlow. Starting from this notebook, we reimplemented everything in PyTorch and boiled it down to a minimalist, 150-line implementation. Our goal was to make the NCA model as simple as possible so that we could hack and modify it without getting overwhelmed by implementation details.
 
-Having implemented our own NCA model, the next step was to scale it to determine the maximum size and complexity of the "organisms" it could produce. We found that the population size was going to be limited by the amount of RAM available on the Google Colab GPUs. We maxed things out with a population of about 7500 cells running for about 100 updates. For context, the original paper used a population of 1600 cells running for 86 updates.
+Having implemented our own NCA model, the next step was to scale it to determine the maximum size and complexity of the "organisms" it could produce. We found that the population size was going to be limited by the amount of RAM available on Google Colab GPUs. We maxed things out with a population of about 7500 cells running for about 100 updates. For context, the original paper used a population of 1600 cells running for 86 updates.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/bloopers.jpg">
@@ -129,7 +131,7 @@ Having implemented our own NCA model, the next step was to scale it to determine
   </div>
 </div>
 
-Working in this scaled up regime, we trained our NCA to grow a number of different flowers, eventually settling on a rose, a marigold, and a crocus. Some of the early results were a bit mangled and blurry (above), but before long we were able to grow a pleasant little garden.
+Working in this scaled up regime, we trained our NCA to grow a number of different flowers. Some of the early results were a bit mangled and blurry. Many were biased towards radial symmetry and required extra training in order to reveal symmetric features such as individual petals. But soon, after a few hyperparameter fixes, our NCA was able to grow some "HD" 64x64 flowers:
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:65%">
   <img src="/assets/studying-growth/garden.jpg">
@@ -138,7 +140,7 @@ Working in this scaled up regime, we trained our NCA to grow a number of differe
   </div>
 </div>
 
-Having implemented the original model and gotten a feeling for how it trained, we were ready to study some basic patterns of biological growth.
+Having implemented NCA and gained some intuition for how it trains, we were ready to turn our attention to patterns of biological growth.
 
 
 ## Patterns of biological growth
@@ -149,28 +151,36 @@ _A eucalyptus native to Uganda has been known to grow 45 feet in two years, wher
 
 _The animal kingdom, too, has its champions of growth. The blue whale, which cruises the oceans from the North to the South Pole, begins life as a barely visible egg weighing only a fraction of an ounce. At birth, it weighs from two to three tons. When it is weaned, at about seven months, it is 52 feet long and weighs 23 tons, having gained an average of 200 pounds a day._
 
-Given the extraordinary diversity of life forms on our planet, one of the biggest surprises might actually be how much they have in common. For the most part they have the same genetic materials, signaling pathways, enzymes, and metabolic pathways. Their cells have the same life cycles. Indeed, the cellular mechanics in a gnat look pretty similar to those in a blue whale -- even though the two creatures could not be more different.
+Given the diversity of life forms on our planet, one of the biggest surprises might actually be how much they have in common. For the most part they have the same genetic materials, signaling mechanisms, and metabolic pathways. Their cells have the same life cycles. Indeed, the cellular mechanics in a gnat look pretty similar to those in a blue whale...even though the creatures themselves could not be more different.
 
 ### [1. Gnomonic growth](https://colab.research.google.com/drive/1DUFL5glyej725r8VAYDZIFrWvpR6a6-0)
 
-One shared pattern of growth is called _gnomonic growth_. This pattern tends to occur whenever an organism needs to grow in size but its body shape is defined by a rigid structure. You can see this in clams, for example. Their shells are rigid and cannot be deformed. And yet they need to grow their shells as the rest of them grows. Clams solve this problem by incrementally adding long crescent-shaped lips to the edges of their shells. Each new lip is just a little larger than the one that came before it. These lips, or _gnomons_ as they are called, permit organisms to increase in size without changing form. Gnomons are a pattern of growth that also appears in shells, horns, tusks, and tree trunks.
+One shared pattern of growth is called _gnomonic growth_. This pattern tends to occur whenever an organism needs to grow but part of its body is defined by a rigid structure. You can see this in clams, for example. Their shells are rigid and cannot be deformed. And yet they need to grow their shells as the rest of them grows. Clams solve this problem by incrementally adding long crescent-shaped lips to the edges of their shells. Each new lip is just a little larger than the one that came before it. These lips, or _gnomons_ as they are called, permit organisms to increase in size without changing form. Gnomons also appear in horns, tusks, and tree trunks.
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:300px">
+  <img src="/assets/studying-growth/gnomons.jpeg">
+</div>
 
 One of the most famous products of gnomonic growth is the nautilus shell. In this shell, the gnomons grow with such regularity that its overall shape can be modeled with a simple Fibonacci sequence. The elegance and simplicity of the pattern makes it an interesting testbed for NCA.
 
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:300px">
+  <img src="/assets/studying-growth/nautilus_photo.jpeg">
+</div>
 
-To set up this problem, we split the shell into three regions: frozen, mature, and growing. These regions are shown in cyan, black and magenta respectively in the figure above. The cells in the frozen region are, as the name would suggest, frozen. Alive cells along their edges can observe their states and those states never change. The mature cells, meanwhile, begin the simulation in the exact shape of the black region shown. They can grow and change however they wish during the simulation. But at the end of the simulation, the loss function encourages them to look just the way they did at the beginning. The growing region, meanwhile, begins the simulation without any living cells. Cells from the mature region need to grow outwards into this area and arrange themselves in the proper shape before the simulation ends.
 
+To set up this problem, we split the shell into three regions: frozen, mature, and growing. These regions are shown in cyan, black and magenta respectively:
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/nautilus_train.png">
 </div>
+The cells in the frozen region are, as the name would suggest, frozen. Both their RGBA and hidden channels are fixed throughout training. The cells in the mature region are similar; the only difference is that their hidden channels are allowed to change. The growing region, meanwhile, begins the simulation without any living cells. Cells from the mature region need to grow outwards into this area and arrange themselves properly before the simulation ends.
 
-Part of the objective in this "gnomonic growth" problem is to learn a growth rule that is scale and rotation invariant. We can accomplish this by rotating and scaling the nautilus template as shown in the six examples above. By training on all of these examples at once, we are able to obtain a model that grows properly at any scale or orientation. Once our model learns this, it is able to grow long sequences of gnomons without much interference. Shown below, for example, we add eight new compartments and quadruple the shell's size with minimal interference.[^fn3]
+Part of the objective in this "gnomonic growth" problem is to learn a growth rule that is scale and rotation invariant. We can accomplish this by rotating and scaling the nautilus template as shown in the six examples above. By training on all of these examples at once, we are able to obtain a model that grows properly at any scale or orientation. Once it learns to do this, it can grow multiple gnomons, one after the other, without much interference. Below, for example, we add eight new compartments and quadruple the shell's size by letting the NCA run for eight growth cycles.[^fn3]
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/nautilus_bw.png">
 </div>
 
-One of the things that makes this growth pattern interesting is that the NCA cells have to reach a global consensus as to what the scale and rotation of the mature region is. Only by agreeing on this are they able to construct a properly-sized addition. And yet, we noticed that expansion into the growth region began in the first simulation step. This suggests that cells in the mature region try to come to a distributed consensus _even as_ new cells are expanding into the growth region. Once cells in the mature region know the proper scale and rotation of the gnomon, they transmit this information to the growing region so that it can make small adjustments to its borders. If you look closely, you can see these adjustments happening in the video below.
+One of the things that makes this growth pattern interesting is that the NCA cells have to reach a global consensus as to what the scale and rotation of the mature region is. Only by agreeing on this are they able to construct a properly-sized addition. And yet in practice, we see that expansion into the growth region begins from the first simulation step. This suggests that cells in the mature region try to come to a distributed consensus as to the target shape _even as_ new cells are already beginning to grow that shape. Once cells in the mature region know the proper scale and rotation of the gnomon, they transmit this information to the growing region so that it can make small adjustments to its borders. If you look closely, you can see these adjustments happening in the video below.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
@@ -195,29 +205,29 @@ function playPauseNaut() {
 } 
 </script>
 
-This process of _reaching a consensus in a decentralized and asynchronous manner_ is a common problem in biology. In fact, we already touched on it in our [Self-classifying MNIST Digits](/2020/08/27/selforg-mnist/) post. It's also important in human organizations: from new cities agreeing on development codes, to democratic institutions agreeing on legislation. to the stock market agreeing on how to value companies. It is not always a low-entropy process.
+This process of _reaching a consensus in a decentralized and asynchronous manner_ is a common problem for biological cells. In fact, we already touched on it in our [Self-classifying MNIST Digits](/2020/08/27/selforg-mnist/) post. It's also important in human organizations: from new cities agreeing on development codes, to democratic institutions agreeing on legislation, to the stock market agreeing on how to value companies. It is not always a low-entropy process.
 
-Indeed, sometimes even cells have to resort to other means of reaching a consensus.
+Indeed, sometimes even cells have to resort to other means of reaching consensus.
 
 
 ### [2. Embryonic induction](https://colab.research.google.com/drive/1fbakmrgkk1y-ZXamH1mKbN1tvkogNrWq)
 
-The alternative to a fully decentralized consensus mechanism is cellular induction. This happens when one small group of cells in an embryo tell the rest how to grow. The first group of cells is called the inducing tissue and the second is called the respondoing tissue. Induction controls the growth of many tissues and organs including the eye lens and the heart.
+The alternative to a fully decentralized consensus mechanism is cellular induction. This happens when one small group of cells (usually in an embryo) tells the rest how to grow. The first group of cells is called the inducing tissue and the second is called the responding tissue. Induction controls the growth of many tissues and organs including the eye and the heart.
 
-In this section, we will grow an image of a newt and then graft part of its eye tissue onto its belly. After doing this, we will watch to see whether those cells are able to induce growth of the rest of the eye lens in that region. We've chosen this peculiar experiment as homage to [Hans Spemann](https://en.wikipedia.org/wiki/Hans_Spemann),[^fn2] who won a Nobel Prize in 1935 for doing the same thing with real newts.
+In this section, we will grow an image of a newt and then graft part of its eye tissue onto its belly. After doing this, we will watch to see whether those cells are able to induce growth in the rest of the eye in that region. We've chosen this particular experiment as an homage to [Hans Spemann](https://en.wikipedia.org/wiki/Hans_Spemann),[^fn2] who won the Nobel Prize for Medicine in 1935 for doing similar experiments on real newts which led to his "discovery of the organizer effect in embryonic development."[^fn5] Spemann's major insight was that "at every stage of embryonic development, structures already present act as organizers, inducing the emergence of whatever structures are next on the timetable."[^fn7]
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:75%; min-width:320px">
   <img src="/assets/studying-growth/newt_timeline_tall.png">
   <div class="thecap"  style="text-align:center; display:block; margin-left: auto; margin-right: auto; width:100%">
-  Reproducing embryonic induction in a picture of a newt.
+    Reproducing Hans Spemann's newt experiment with NCA.
   </div>
 </div>
 
-Some more text
+If you look closely at the video below, you will see that after the upper portion of the eye (light-colored cells) is grafted onto the stomach, mature stomach cells immediately below the patch are induced to grow into the lower portion of the eye (black cells). In this context, the grafted eye cells are the inducing tissue and the stomach cells are the responding tissue.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
-    <video id="newt_video" style="width:100%;min-width:250px;" poster="/assets/studying-growth/newt.jpg">
+  <div style="width:300px; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
+    <video id="newt_video" style="width:100%;min-width:250px;" controls poster="/assets/studying-growth/newt.jpg">
       <source src="/assets/studying-growth/newt.mp4" type="video/mp4">
     </video>
     <button class="playbutton" id="newt_video_button" onclick="playPauseNewt()">Play</button>
@@ -238,14 +248,27 @@ function playPauseNewt() {
 } 
 </script>
 
+Cellular induction offers a simple explanation for how many growth rules are implemented: by and large, as <code>if-then</code> statements. For example, _"If I am growing below some light-colored eye tissue, then I should be black-colored eye tissue."_ Early in embryonic development, these if-then statements are very general: _"If I am on the outside layer of the embryo, then I am going to be an ectoderm cell. Else, if I am on the inside layer of the embryo, then I am going to be a mesoderm cell. Else, if I am in the center of the embryo, then I am going to be an endoderm cell."_
+
+As development progresses, these branching milestones occur dozens of times, each time causing a group of cells to become more specialized. Towards the end of development, the branching rules might read, _"If I am an ectoderm cell and if I am a nervous system cell and if I am an eye cell and if I am distal to the optic nerve then I am going to be part of the corneal epithelium."_
+
+While this sounds complex, it's actually the simplest and most robust way to construct a multicellular organism. Each of these branching statements determines how morphogenesis unfolds at a different hierarchy of complexity. Unlike a printer, which has to place every dot of ink on a page with perfect precision, a growing embryo doesn't need to know the final coordinates of every mature adult cell. Moreover, it can withstand plenty of noise and perturbations at each stage of development and still produce an intricate, well-formed organism in the end.[^fn6] Intuitively, this is possible because during each stage of growth, clusters of cells naturally converge to target "attractor" states in spite of perturbations. Errors get corrected before the next stage of growth begins. And in the next stage, new attractor states perform error-correction as well. In this way, embryonic induction allows nature to construct multicellular organisms with great reliability -- even in a world full of noise and change.
+
+
 
 ### [3. Apoptosis](https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww)
+
+**Death to form the living.** One of the most dramatic <code>if-then</code> statements in morphogenesis is _"If I am in X state, then I must die."_ This gives rise to what biologists call _apoptosis_, or programmed cell death. This process is most common when an organism needs to undergo a major change in form: for example a tadpole losing its tail as it grows into a frog, or a stubby projection being sculpted into the shape of a chicken leg.
+
+<!-- This process is highly choreographed. For example, in the tail of a tadpole, each cell contains a sort of "suicide capsule" full of particular enzymes. When this capsule is broken at the appointed time, the enzymes are released to destroy the cell from the inside. -->
+
+One of the best examples of apoptosis in the human body is [_bone remodeling_](https://en.wikipedia.org/wiki/Bone_resorption). This is the process by which bones grow, change shape, and even regrow after a fracture. It's also a process by which the body manages the supply of important minerals and nutrients such as calcium. In the first year of life, especially, bone resorption proceeds at a rapid pace. By the end of the year, almost 100% of the skeleton has been absorbed and replaced. Even in adults, about 10% of the skeleton is replaced per year.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
   <img src="/assets/studying-growth/grow_bone.png">
 </div>
 
-In this experiment we simulate bone growth. Bone growth is interesting because it uses apoptosis (programmed cell death) in order to produce a hollow area in the center of the bone. We see something analogous happen in our model, with a circular tan frontier that gradually expands outwards until it reaches the size of the target image.
+In this experiment, we trained an NCA model to grow into the shape of a slice of human bone (above). Since the bone starts its growth in the center of the image but the center of the target image is empty, the NCA naturally learns a growth pattern that resembles apoptosis. Early in development, a small tan circle forms. The outside edge of this circle expands rapidly outward in a pattern of "bone growth" that would be carried out by [osteoblasts](https://en.wikipedia.org/wiki/Osteoblast) in nature. Meanwhile, the inside edge of the circle deteriorates at the same rate in a pattern of "bone resorption" associated with [osteoclasts](https://en.wikipedia.org/wiki/Osteoclast).
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
@@ -254,7 +277,6 @@ In this experiment we simulate bone growth. Bone growth is interesting because i
     </video>
     <button class="playbutton" id="bone_video_button" onclick="playPauseBone()">Play</button>
   </div>
-  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:75%">We grow a bone.</div>
 </div>
 
 <script> 
@@ -270,9 +292,17 @@ function playPauseBone() {
 } 
 </script>
 
+We should note that the cells in this particular NCA don't exactly _die_. They simply turn white. We experimented with growing images with alpha values below 0.1 in the interior (in the NCA model, this indicates a dead cell) and we believe that this is possible. However, owing to time constraints, we decided to present this result and leave the extension "as an exercise for the reader."
+
 ### [4. Speciation](https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-)
 
-Train a neural CA that can grow from a seed pixel into one of three different flowers depending on initial value of the seed. From a dynamical systems perspective, we are training a model that has three different basins of attraction, one for each flower. The initial seed determines which basin the system ultimately converges to. The initial seed vs. the shared attractor dynamics are analogous to the DNA of a specific flower vs. the shared cellular dynamics across related flower species.
+Earlier we remarked on the fact that gnats and blue whales have more in common, at least in terms of cellular mechanics, than one would guess. They share many of the same cell structures, protiens, and even stages of development like [gastrulation](https://en.wikipedia.org/wiki/Gastrulation). This points to the fact that many different organisms share the same cellular infrastructure. In more closely related species, this observation is even more apt. For example, the three flowers we grew at the beginning of the article -- the rose, marigold, and crocus -- are all [angiosperms](https://en.wikipedia.org/wiki/Flowering_plant) and have shared structures like the [xylem](https://en.wikipedia.org/wiki/Xylem) and [phloem](https://en.wikipedia.org/wiki/Phloem).
+
+Indeed, one of the biggest differences between these flowers is their genetic code. Making an analogy to computers, you might say that they have the same hardware (cell mechanics), but different software (DNA).
+
+Our final experiment uses NCA to explore this idea. We run the same cellular dynamics (NCA neural network weights) across several flowers while varying the genetic information (initial state of the seed cell).
+
+Our training objective involved three separate targets: the rose, the marigold, and the crocus, each with its own trainable "seed state." Early in training, our model produced blurry flower-like images with various mixtures of red, yellow, and purple. But as training progressed, these images diverged from one another into clean reproductions of the three target images. If you watch the video below closely, you can still see shared colors and shapes in the "embryonic" versions of the flowers. For example, the developing crocus has both red and purple petals during the first 10-20 steps of development.
 
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
@@ -298,23 +328,24 @@ function playPauseSeeds() {
 } 
 </script>
 
+From a dynamical systems perspective, we have trained a model that has three different basins of attraction, one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final images and then use its seed vectors to construct a "tree of life" for the various organisms, showing how closely related various organisms are, and at what time in training they split from a common ancestor.
 
-## Closing thoughts / Why are these models significant?
 
-**Applications**
-* Art
-* Studying developmental diseases
-* Tackling cancer
-* Virtual worlds with visual programming languages
-* Physics simulations
+## Final remarks
 
-Romantic and beautiful introduction; channel Phil Anderson & More is different; talk about _simplicity_. Close by saying that we need to analyze how exactly these models work; how the self-organization occurs mechanistically. There is a counterintuitive possibility that in order to explore the limits of how large we can scale neural networks, we may need to explore the limits of how small we can scale them first. Scaling models and datasets downward in a way that preserves the nuances of their behaviors at scale will allow researchers to iterate quickly on fundamental and creative ideas.
+The main purpose of this post was fun and personal interest. However, there are a number of ways that NCA can contribute to civilization. The prospect of isolating the top one hundred signaling molecules used in natural morphogenesis, tracking their concentrations during growth in various tissues, and then training an NCA to reproduce the same growth patterns with the same morphogens is particularly exciting. This would allow us to obtain a complex model of biological morphogenesis with some degree of predictive power. A model with sufficient predictive power could help us "solve for" the optimal cocktail of signaling molecules needed to speed up, slow down, or otherwise modify cell growth. Such a model could be used to adversarially slow down the growth of cancerous cells in a patient with cancer or artificially accelerate the growth of bones in a patient with osteoporosis.
 
-### Footnotes
+One of the themes of this post is that _patterns of growth are surprisingly similar_ across organisms. This hints at the fact that there are principles of growth that transcend biology -- and these principles can actually be studied in a computational substrate in a way that gives useful insights about the original biological systems. We hope that this work will serve as a building block for other efforts in this direction and, in the long term, increase our understanding and appreciation of the miracle of growth.
+
+## Footnotes
 [^fn0]: In this post, we will use "growth rules" to refer to the rules governing how each cell interacts with its neighbors.
 [^fn1]: Trunk, Gerard V. "[A problem of dimensionality: A simple example](https://ieeexplore.ieee.org/document/4766926)." IEEE Transactions on pattern analysis and machine intelligence 3 (1979): 306-307.
 [^fn2]: And his student Hilde
 [^fn3]: Out only interference is to convert growin regions to mature regions and mature regions to frozen regions every 160 steps. This causes the system to move on to the next unit of growth.
+[^fn4]: In fact, Conway's Game of Life is Turing Complete; it can be used to simulate computations of arbitrary complexity. It can even be used to [simulate itself](https://twitter.com/AlanZucconi/status/1315967202797981696).
+[^fn5]: "[The Organizer-Effect in Embryonic Development](https://www.nobelprize.org/prizes/medicine/1935/spemann/lecture/)," Hans Spemann, Nobel Lecture, December 12, 1935
+[^fn6]: There's probably an analogy to be made to fourier analysis where the spatial modes are reconstructed in order of their principal components. Like decompressing a .JPEG file.
+[^fn7]: _Growth_, p38.
 
 <!-- _Now two organisms are exactly alike. Each grows and develops in a unique fashion within the limits that its environment permits. Every species, however, has its own way of growing, and each has its own rate of growth. The range of variations is overwhelming. In as little as three months, for example, one of the grasses native to tropical Ceylon, a bamboo, may shoot up to a height of 120 feet, as tall as a 12-story building, by growing at an average rate of 16 inches a day. A eucalyptus native to Uganda has been known to grow 45 feet in two years, whereas dwarf ivy generally grows one inch a year. The majestic sequoia of California, which starts out as a seed weighing only one three-thousandth of an ounce, may end up 270 feet tall, with a base diameter of 40 feet and a weight estimated at 6,200 tons. It takes more than 1,000 years for the sequoia to achieve the feat of multiplying 600 billion times in mass._
 
