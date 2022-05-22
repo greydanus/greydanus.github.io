@@ -86,7 +86,7 @@ With all of this in mind, let's take a closer look at how NCA work and then appl
 
 ## Motivation
 
-The purpose of cellular automata (CA) _writ large_ is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels where each pixel represents a different cell. Then a set of growth rules, controlling how cells respond to their neighbors, are applied to the population in an iterative manner. Although these growth rules are simple to write down, they are choosen so as to produce complex, self-organizing behaviors. For example, Conway's Game of Life has just three simple growth rules but can give rise to diverse structures and dynamics.[^fn4]
+The purpose of cellular automata (CA) _writ large_ is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels where each pixel represents a different cell. Then a set of growth rules, controlling how cells respond to their neighbors, are applied to the population in an iterative manner. Although these growth rules are simple to write down, they are choosen so as to produce complex self-organizing behaviors. For example, Conway's Game of Life has just three simple growth rules that give rise to a diverse range of structures.[^fn4]
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:49.4%; min-width:280px; display: inline-block; vertical-align: top;text-align:center;">
@@ -101,7 +101,7 @@ The purpose of cellular automata (CA) _writ large_ is to mimic biological growth
 
 Classic versions of cellular automata like Conway's Game of Life are interesting because they produce emergent behavior starting from simple rules. But in a way, these versions of CA are _too simple_. Their cells only get to have two states, dead or alive, whereas biological cells get to have a near-infinite number of states, states which are determined by a wide variety of signaling molecules. We refer to these molecules as _morphogens_ because they work together to control growth and guide organisms towards specific final shapes or _morphologies_.
 
-**Neural CA.** Based on this observation, we should move away from cells that are only dead or alive. Rather, we should allow cells to exist in a variety of states, with each state defined by a list of continuous variables. Growth rules should operate on combinations of these variables in the same way that biological growth rules operate on combinations of different morphogens. And unlike Conway's Game of Life, the self-organizing behaviors that arise should not be arbitrary or chaotic. Rather, they should involve stable convergence to _specific_ large-scale morphologies like those that occur in biology. Much more complex growth rules are needed for this to occur.
+**Neural CA.** Based on this observation, we should move away from CA with cells that are only dead or alive. Instead, we should permit their cells to exist in a variety of states with each state defined by a list of continuous variables. Growth rules should operate on combinations of these variables in the same way that biological growth rules operate on combinations of different morphogens. And unlike Conway's Game of Life, the self-organizing behaviors that arise should not be arbitrary or chaotic. Rather, they should involve stable convergence to _specific_ large-scale morphologies like those that occur in biology. Much more complex growth rules are needed for this to occur.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/comparison.jpg">
@@ -131,7 +131,7 @@ Having implemented our own NCA model, the next step was to scale it to determine
   </div>
 </div>
 
-Working in this scaled up regime, we trained our NCA to grow a number of different flowers. Some of the early results were a bit mangled and blurry. Many were biased towards radial symmetry and required extra training in order to reveal symmetric features such as individual petals. But soon, after a few hyperparameter fixes, our NCA was able to grow some "HD" 64x64 flowers:
+Working in this scaled-up regime, we trained our NCA to grow a number of different flowers. Some of the early results were a bit mangled and blurry. Many were biased towards radial symmetry and required extra training in order to reveal symmetric features such as individual petals. But soon, after a few hyperparameter fixes, our NCA was able to grow some "HD" 64x64 flowers:
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:65%">
   <img src="/assets/studying-growth/garden.jpg">
@@ -140,7 +140,7 @@ Working in this scaled up regime, we trained our NCA to grow a number of differe
   </div>
 </div>
 
-Having implemented NCA and gained some intuition for how it trains, we were ready to turn our attention to patterns of biological growth.
+Having implemented the NCA model and gained some intuition for how it trained, we were ready to use it to investigate patterns of biological growth.
 
 
 ## Patterns of biological growth
@@ -155,7 +155,7 @@ Given the diversity of life forms on our planet, one of the biggest surprises mi
 
 ### [1. Gnomonic growth](https://colab.research.google.com/drive/1DUFL5glyej725r8VAYDZIFrWvpR6a6-0)
 
-One shared pattern of growth is called _gnomonic growth_. This pattern tends to occur whenever an organism needs to grow but part of its body is defined by a rigid structure. You can see this in clams, for example. Their shells are rigid and cannot be deformed. And yet they need to grow their shells as the rest of them grows. Clams solve this problem by incrementally adding long crescent-shaped lips to the edges of their shells. Each new lip is just a little larger than the one that came before it. These lips, or _gnomons_ as they are called, permit organisms to increase in size without changing form. Gnomons also appear in horns, tusks, and tree trunks.
+One shared pattern of growth is called _gnomonic growth_. This pattern tends to occur when an organism needs to increase in size and part of its body is defined by a rigid structure. You can see this in clams, for example. Their shells are rigid and cannot be deformed. And yet they need to grow their shells as the rest of them grows. Clams solve this problem by incrementally adding long crescent-shaped lips to the edges of their shells. Each new lip is just a little larger than the one that came before it. These lips, or _gnomons_ as they are called, permit organisms to increase in size without changing form. Gnomons also appear in horns, tusks, and tree trunks.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width:300px">
   <img src="/assets/studying-growth/gnomons.jpeg">
@@ -207,14 +207,14 @@ function playPauseNaut() {
 
 This process of _reaching a consensus in a decentralized and asynchronous manner_ is a common problem for biological cells. In fact, we already touched on it in our [Self-classifying MNIST Digits](/2020/08/27/selforg-mnist/) post. It's also important in human organizations: from new cities agreeing on development codes, to democratic institutions agreeing on legislation, to the stock market agreeing on how to value companies. It is not always a low-entropy process.
 
-Indeed, sometimes even cells have to resort to other means of reaching consensus.
+Indeed, sometimes groups of cells have to resort to other means of reaching consensus.
 
 
 ### [2. Embryonic induction](https://colab.research.google.com/drive/1fbakmrgkk1y-ZXamH1mKbN1tvkogNrWq)
 
 The alternative to a fully decentralized consensus mechanism is cellular induction. This happens when one small group of cells (usually in an embryo) tells the rest how to grow. The first group of cells is called the inducing tissue and the second is called the responding tissue. Induction controls the growth of many tissues and organs including the eye and the heart.
 
-In this section, we will grow an image of a newt and then graft part of its eye tissue onto its belly. After doing this, we will watch to see whether those cells are able to induce growth in the rest of the eye in that region. We've chosen this particular experiment as an homage to [Hans Spemann](https://en.wikipedia.org/wiki/Hans_Spemann),[^fn2] who won the Nobel Prize for Medicine in 1935 for doing similar experiments on real newts which led to his "discovery of the organizer effect in embryonic development."[^fn5] Spemann's major insight was that "at every stage of embryonic development, structures already present act as organizers, inducing the emergence of whatever structures are next on the timetable."[^fn7]
+In this section, we will grow an image of a newt and then graft part of its eye tissue onto its belly. After doing this, we will watch to see whether those cells are able to induce growth in the rest of the eye in that region. We've chosen this particular experiment as an homage to [Hans Spemann](https://en.wikipedia.org/wiki/Hans_Spemann),[^fn2] who won the Nobel Prize for Medicine in 1935 for using a similar experiments on real newts to discover "the organizer effect in embryonic development."[^fn5] Spemann's major insight was that "at every stage of embryonic development, structures already present act as organizers, inducing the emergence of whatever structures are next on the timetable."[^fn7]
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:75%; min-width:320px">
   <img src="/assets/studying-growth/newt_timeline_tall.png">
@@ -223,7 +223,9 @@ In this section, we will grow an image of a newt and then graft part of its eye 
   </div>
 </div>
 
-If you look closely at the video below, you will see that after the upper portion of the eye (light-colored cells) is grafted onto the stomach, mature stomach cells immediately below the patch are induced to grow into the lower portion of the eye (black cells). In this context, the grafted eye cells are the inducing tissue and the stomach cells are the responding tissue.
+To reproduce this effect, we first trained an NCA to grow a picture of a newt. Once the growth phase was complete, we grafted a patch of cells from its head onto its stomach. This patch of cells included the upper, light-colored portion of the newt's eye but not the dark-colored, lower portion. Once we had grafted this patch of cells onto the newt's belly, we froze their states and allowed the rest of the cells to undergo updates as usual. Within 25 steps, the stomach cells below the grafted patch had regrown into a dark-colored strip to complete the eye shape.
+
+This is an interesting result because Hans Spemann's experiment involved the same procedure and produced the same results: the eye cells induced the belly cells to complete the growth of the eye.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:300px; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
@@ -248,27 +250,29 @@ function playPauseNewt() {
 } 
 </script>
 
-Cellular induction offers a simple explanation for how many growth rules are implemented: by and large, as <code>if-then</code> statements. For example, _"If I am growing below some light-colored eye tissue, then I should be black-colored eye tissue."_ Early in embryonic development, these if-then statements are very general: _"If I am on the outside layer of the embryo, then I am going to be an ectoderm cell. Else, if I am on the inside layer of the embryo, then I am going to be a mesoderm cell. Else, if I am in the center of the embryo, then I am going to be an endoderm cell."_
+Cellular induction offers a simple explanation for how many growth rules are implemented: by and large, they are implemented as <code>if-then</code> statements. For example, _"If I am growing below some light-colored eye tissue, then I should be black-colored eye tissue."_ Early in embryonic development, these if-then statements are very general: _"If I am on the outside layer of the embryo, then I am going to be an ectoderm cell. Else, if I am on the inside layer of the embryo, then I am going to be a mesoderm cell. Else, if I am in the center of the embryo, then I am going to be an endoderm cell."_
 
 As development progresses, these branching milestones occur dozens of times, each time causing a group of cells to become more specialized. Towards the end of development, the branching rules might read, _"If I am an ectoderm cell and if I am a nervous system cell and if I am an eye cell and if I am distal to the optic nerve then I am going to be part of the corneal epithelium."_
 
-While this sounds complex, it's actually the simplest and most robust way to construct a multicellular organism. Each of these branching statements determines how morphogenesis unfolds at a different hierarchy of complexity. Unlike a printer, which has to place every dot of ink on a page with perfect precision, a growing embryo doesn't need to know the final coordinates of every mature adult cell. Moreover, it can withstand plenty of noise and perturbations at each stage of development and still produce an intricate, well-formed organism in the end.[^fn6] Intuitively, this is possible because during each stage of growth, clusters of cells naturally converge to target "attractor" states in spite of perturbations. Errors get corrected before the next stage of growth begins. And in the next stage, new attractor states perform error-correction as well. In this way, embryonic induction allows nature to construct multicellular organisms with great reliability -- even in a world full of noise and change.
+While this sounds complex, it's actually the simplest and most robust way to construct a multicellular organism. Each of these branching statements determines how morphogenesis unfolds at a different hierarchy of complexity. Unlike a printer, which has to place every dot of ink on a page with perfect precision, a growing embryo doesn't need to know the final coordinates of every mature adult cell. Moreover, it can withstand plenty of noise and perturbations at each stage of development and still produce an intricate, well-formed organism in the end.[^fn6] Intuitively, this is possible because during each stage of growth, clusters of cells naturally converge to target "attractor" states in spite of perturbations. Errors get corrected before the next stage of growth begins. And in the next stage, new attractor states perform error-correction as well. In this way, embryonic induction allows nature to construct multicellular organisms with great reliability, even in a world full of noise and change.
 
 
 
 ### [3. Apoptosis](https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww)
 
-**Death to form the living.** One of the most dramatic <code>if-then</code> statements in morphogenesis is _"If I am in X state, then I must die."_ This gives rise to what biologists call _apoptosis_, or programmed cell death. This process is most common when an organism needs to undergo a major change in form: for example a tadpole losing its tail as it grows into a frog, or a stubby projection being sculpted into the shape of a chicken leg.
+**Death to form the living.** One of the most dramatic <code>if-then</code> statements is _"If I am in state <code>x</code>, then I must die."_ This gives rise to what biologists call _apoptosis_, or programmed cell death. This process is most common when an organism needs to undergo a major change in form: for example a tadpole losing its tail as it grows into a frog, or a stubby projection being sculpted into the shape of a chicken leg.
 
 <!-- This process is highly choreographed. For example, in the tail of a tadpole, each cell contains a sort of "suicide capsule" full of particular enzymes. When this capsule is broken at the appointed time, the enzymes are released to destroy the cell from the inside. -->
 
-One of the best examples of apoptosis in the human body is [_bone remodeling_](https://en.wikipedia.org/wiki/Bone_resorption). This is the process by which bones grow, change shape, and even regrow after a fracture. It's also a process by which the body manages the supply of important minerals and nutrients such as calcium. In the first year of life, especially, bone resorption proceeds at a rapid pace. By the end of the year, almost 100% of the skeleton has been absorbed and replaced. Even in adults, about 10% of the skeleton is replaced per year.
+One of the best examples of apoptosis in the human body is [_bone remodeling_](https://en.wikipedia.org/wiki/Bone_resorption). This is the process by which bones grow, change shape, and even regrow after a fracture. It's also a process by which the body manages the supply of important minerals and nutrients such as calcium. In the first year of life, bone resorption proceeds at an especially rapid pace. By the end of that year, almost 100% of the skeleton has been absorbed and replaced.
+
+Even in adults, though, about 10% of the skeleton is replaced each year.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
   <img src="/assets/studying-growth/grow_bone.png">
 </div>
 
-In this experiment, we trained an NCA model to grow into the shape of a slice of human bone (above). Since the bone starts its growth in the center of the image but the center of the target image is empty, the NCA naturally learns a growth pattern that resembles apoptosis. Early in development, a small tan circle forms. The outside edge of this circle expands rapidly outward in a pattern of "bone growth" that would be carried out by [osteoblasts](https://en.wikipedia.org/wiki/Osteoblast) in nature. Meanwhile, the inside edge of the circle deteriorates at the same rate in a pattern of "bone resorption" associated with [osteoclasts](https://en.wikipedia.org/wiki/Osteoclast).
+In this experiment, we trained an NCA model to grow into the shape of a slice of human bone. Since the bone starts its growth in the center of the image, but the center of the target image is empty, the NCA naturally learns a growth pattern that resembles apoptosis. Early in development, a small tan circle forms. The outside edge of this circle expands rapidly outward in a pattern of "bone growth" that would be carried out by [osteoblasts](https://en.wikipedia.org/wiki/Osteoblast) in nature. Meanwhile, the inside edge of the circle deteriorates at the same rate in a pattern of "bone resorption" associated with [osteoclasts](https://en.wikipedia.org/wiki/Osteoclast) in nature.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
@@ -292,17 +296,17 @@ function playPauseBone() {
 } 
 </script>
 
-We should note that the cells in this particular NCA don't exactly _die_. They simply turn white. We experimented with growing images with alpha values below 0.1 in the interior (in the NCA model, this indicates a dead cell) and we believe that this is possible. However, owing to time constraints, we decided to present this result and leave the extension "as an exercise for the reader."
+We should note that the cells in this particular NCA don't exactly _die_. They simply turn white. We experimented with growing images with alpha values below 0.1 in the interior[^fn6] and obtained some mediocre, early-stage results. Owing to time constraints, we decided to present this RGB result and leave the RGBA extension "as an exercise for the reader."
 
 ### [4. Speciation](https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-)
 
-Earlier we remarked on the fact that gnats and blue whales have more in common, at least in terms of cellular mechanics, than one would guess. They share many of the same cell structures, protiens, and even stages of development like [gastrulation](https://en.wikipedia.org/wiki/Gastrulation). This points to the fact that many different organisms share the same cellular infrastructure. In more closely related species, this observation is even more apt. For example, the three flowers we grew at the beginning of the article -- the rose, marigold, and crocus -- are all [angiosperms](https://en.wikipedia.org/wiki/Flowering_plant) and have shared structures like the [xylem](https://en.wikipedia.org/wiki/Xylem) and [phloem](https://en.wikipedia.org/wiki/Phloem).
+We have remarked that gnats and blue whales have more in common, at least in terms of cellular mechanics, than one would guess. They share many of the same cell structures, protiens, and even stages of development like [gastrulation](https://en.wikipedia.org/wiki/Gastrulation). This points to the fact that many different organisms share the same cellular infrastructure. In more closely related species, this observation is even more apt. For example, the three flowers we grew at the beginning of the article -- the rose, the marigold, and the crocus -- are all [angiosperms](https://en.wikipedia.org/wiki/Flowering_plant) and thus share structures like the [xylem](https://en.wikipedia.org/wiki/Xylem) and [phloem](https://en.wikipedia.org/wiki/Phloem).
 
-Indeed, one of the biggest differences between these flowers is their genetic code. Making an analogy to computers, you might say that they have the same hardware (cell mechanics), but different software (DNA).
+Indeed, one of the biggest differences between these flowers is their genetic code. Making an analogy to computers, you might say that they have the same hardware (cell mechanics), but different software (DNA). Our final experiment uses NCA to explore this idea. We run the same cellular dynamics (NCA neural network weights) across several flowers while varying the genetic information (initial state of the seed cell).
 
-Our final experiment uses NCA to explore this idea. We run the same cellular dynamics (NCA neural network weights) across several flowers while varying the genetic information (initial state of the seed cell).
+Our training objective involved three separate targets: the rose, the marigold, and the crocus, each with its own trainable "seed state." Early in training, our model produced blurry flower-like images with various mixtures of red, yellow, and purple. As training progressed, these images diverged from one another and began to resemble the three target images.
 
-Our training objective involved three separate targets: the rose, the marigold, and the crocus, each with its own trainable "seed state." Early in training, our model produced blurry flower-like images with various mixtures of red, yellow, and purple. But as training progressed, these images diverged from one another into clean reproductions of the three target images. If you watch the video below closely, you can still see shared colors and shapes in the "embryonic" versions of the flowers. For example, the developing crocus has both red and purple petals during the first 10-20 steps of development.
+Even though the final shapes diverge, you can still see shared features in the "embryonic" versions of the flowers. If you watch the video below, you can see that the three "embryos" all start out with red, yellow, and purple coloration. The developing crocus, in particular, has both red and purple petals during growth steps 10-20.
 
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
@@ -328,14 +332,14 @@ function playPauseSeeds() {
 } 
 </script>
 
-From a dynamical systems perspective, we have trained a model that has three different basins of attraction, one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final images and then use its seed vectors to construct a "tree of life" for the various organisms, showing how closely related various organisms are, and at what time in training they split from a common ancestor.
+From a dynamical systems perspective, this NCA model has three different [_basins of attraction_](http://www.scholarpedia.org/article/Basin_of_attraction), one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final organisms. Then we could use its "DNA" vectors to construct a "tree of life," showing how closely related various organisms are[^fn9] and at what point in training they split from a common ancestor.
 
 
 ## Final remarks
 
-The main purpose of this post was fun and personal interest. However, there are a number of ways that NCA can contribute to civilization. The prospect of isolating the top one hundred signaling molecules used in natural morphogenesis, tracking their concentrations during growth in various tissues, and then training an NCA to reproduce the same growth patterns with the same morphogens is particularly exciting. This would allow us to obtain a complex model of biological morphogenesis with some degree of predictive power. A model with sufficient predictive power could help us "solve for" the optimal cocktail of signaling molecules needed to speed up, slow down, or otherwise modify cell growth. Such a model could be used to adversarially slow down the growth of cancerous cells in a patient with cancer or artificially accelerate the growth of bones in a patient with osteoporosis.
+The main purpose of this post was fun and personal interest. However, there are a number of ways that NCA can contribute to civilization in the long term. The prospect of isolating the top one hundred signaling molecules used in natural morphogenesis, tracking their concentrations during growth in various tissues, and then training an NCA to reproduce the same growth patterns with the same morphogens is particularly exciting. This would allow us to obtain a complex model of biological morphogenesis with some degree of predictive power. A model with sufficient predictive power could help us "solve for" the optimal cocktail of signaling molecules needed to speed up, slow down, or otherwise modify cell growth. Such a model could be used to adversarially slow down the growth of cancerous cells in a patient with cancer or artificially accelerate the growth of bones in a patient with osteoporosis.
 
-One of the themes of this post is that _patterns of growth are surprisingly similar_ across organisms. This hints at the fact that there are principles of growth that transcend biology -- and these principles can actually be studied in a computational substrate in a way that gives useful insights about the original biological systems. We hope that this work will serve as a building block for other efforts in this direction and, in the long term, increase our understanding and appreciation of the miracle of growth.
+One of the themes of this post is that _patterns of growth are surprisingly similar_ across organisms. This hints at the fact that there are principles of growth that transcend biology -- and these principles can actually be studied in a computational substrate in a way that gives useful insights about the original biological systems. We hope that this work will serve as a building block for future steps in this direction and, in the long term, increase our understanding and appreciation for the miracle of growth _in universum_.
 
 ## Footnotes
 [^fn0]: In this post, we will use "growth rules" to refer to the rules governing how each cell interacts with its neighbors.
@@ -346,6 +350,8 @@ One of the themes of this post is that _patterns of growth are surprisingly simi
 [^fn5]: "[The Organizer-Effect in Embryonic Development](https://www.nobelprize.org/prizes/medicine/1935/spemann/lecture/)," Hans Spemann, Nobel Lecture, December 12, 1935
 [^fn6]: There's probably an analogy to be made to fourier analysis where the spatial modes are reconstructed in order of their principal components. Like decompressing a .JPEG file.
 [^fn7]: _Growth_, p38.
+[^fn8]: In the NCA model, an alpha value below 0.1 indicates a dead cell.
+[^fn9]: These "organisms" are actually _images of organisms_ in this context.
 
 <!-- _Now two organisms are exactly alike. Each grows and develops in a unique fashion within the limits that its environment permits. Every species, however, has its own way of growing, and each has its own rate of growth. The range of variations is overwhelming. In as little as three months, for example, one of the grasses native to tropical Ceylon, a bamboo, may shoot up to a height of 120 feet, as tall as a 12-story building, by growing at an average rate of 16 inches a day. A eucalyptus native to Uganda has been known to grow 45 feet in two years, whereas dwarf ivy generally grows one inch a year. The majestic sequoia of California, which starts out as a seed weighing only one three-thousandth of an ounce, may end up 270 feet tall, with a base diameter of 40 feet and a weight estimated at 6,200 tons. It takes more than 1,000 years for the sequoia to achieve the feat of multiplying 600 billion times in mass._
 
