@@ -127,7 +127,7 @@
     </video>
     <button class="playbutton" id="video3_button" onclick="playPauseVideo3()">Play</button>
   </div>
-  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:95%"><b>Growing flowers.</b> Each pixel in the images above represents a cell. By exchanging signals with their neighbors, these cells coordinate their behavior and assemble themselves in the shapes of the three flowers shown.</div>
+  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:95%"><b>Growing flowers.</b> The pixels in the images above represent cells. By exchanging signals with their neighbors, these cells coordinate their behavior and assemble themselves in the shapes of the three flowers shown.</div>
 </div>
 
 <script> 
@@ -210,7 +210,7 @@ With all of this in mind, let's take a closer look at how NCA work and then appl
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/nca_schema.jpg" />
   <div class="thecap" style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
-  A detailed schema showing how a neural network can be used to parameterize the growth rules of a population of cells. The <a href="https://distill.pub/2020/growing-ca/">original NCA article</a> uses this diagram to introduce the model and describe how it is trained.
+  <b>NCA diagram.</b> The diagram above how a neural network can be used to parameterize the growth rules of a cellular autiomata. The <a href="https://distill.pub/2020/growing-ca/">original NCA article</a> uses this diagram to introduce the model and its training procedure.
   </div>
 </div>
 
@@ -353,7 +353,7 @@ function playPauseNewt() {
   <a href="https://colab.research.google.com/drive/1fbakmrgkk1y-ZXamH1mKbN1tvkogNrWq" id="linkbutton" target="_blank"><span class="colab-span">Embryonic</span> induction</a>
 </div>
 
-<p>Cellular induction offers a simple explanation for how many growth rules are implemented: by and large, they are implemented as <code>if-then</code> statements. For example, <em>“If I am growing below some light-colored eye tissue, then I should be black-colored eye tissue.”</em> Early in embryonic development, these if-then statements are very general: <em>“If I am on the outside layer of the embryo, then I am going to be an ectoderm cell. Else, if I am on the inside layer of the embryo, then I am going to be a mesoderm cell. Else, if I am in the center of the embryo, then I am going to be an endoderm cell.”</em></p>
+<p>Cellular induction offers a simple explanation for how many growth rules are implemented: by and large, they are implemented as <code>if-then</code> statements. For example, <em>“If I am growing below some light-colored eye tissue, then I should be black-colored eye tissue.”</em> Early in embryonic development, these <code>if-then</code> statements are very general: <em>“If I am on the outside layer of the embryo, then I am going to be an ectoderm cell. Else, if I am on the inside layer of the embryo, then I am going to be a mesoderm cell. Else, if I am in the center of the embryo, then I am going to be an endoderm cell.”</em></p>
 
 <p>As development progresses, these branching milestones occur dozens of times, each time causing a group of cells to become more specialized. Towards the end of development, the branching rules might read, <em>“If I am an ectoderm cell and if I am a nervous system cell and if I am an eye cell and if I am distal to the optic nerve then I am going to be part of the corneal epithelium.”</em></p>
 
@@ -414,9 +414,9 @@ function playPauseBone() {
 
 <p>We have remarked that gnats and blue whales have more in common, at least in terms of cellular mechanics, than one would guess. They share many of the same cell structures, protiens, and even stages of development like <a href="https://en.wikipedia.org/wiki/Gastrulation">gastrulation</a>. This points to the fact that many different organisms share the same cellular infrastructure. In more closely-related species, this observation is even more apt. For example, the three flowers we grew at the beginning of the article – the rose, the marigold, and the crocus – are all <a href="https://en.wikipedia.org/wiki/Flowering_plant">angiosperms</a> and thus share structures like the <a href="https://en.wikipedia.org/wiki/Xylem">xylem</a> and <a href="https://en.wikipedia.org/wiki/Phloem">phloem</a>.</p>
 
-<p>Indeed, one of the biggest differences between these flowers is their genetic code. Making an analogy to computers, you might say that they have the same hardware (cell mechanics), but different software (DNA). Our final experiment uses NCA to explore this idea. We run the same cellular dynamics (NCA neural network weights) across several flowers while varying the genetic information (initial state of the seed cell).</p>
+<p>Indeed, one of the biggest differences between these flowers is their genetic code. Making an analogy to computers, you might say that they have the same hardware (cell mechanics), but different software (DNA).</p>
 
-<p>Our training objective involved three separate targets: the rose, the marigold, and the crocus, each with its own trainable “seed state.” Early in training, our model produced blurry flower-like images with various mixtures of red, yellow, and purple. As training progressed, these images diverged from one another and began to resemble the three target images.</p>
+<p>Our final experiment uses NCA to explore this idea. We run the same cellular dynamics (NCA neural network weights) across several flowers while varying the genetic information (initial state of the seed cell). Our training objective involved three separate targets: the rose, the marigold, and the crocus, each with its own trainable “seed state.” Early in training, our model produced blurry flower-like images with various mixtures of red, yellow, and purple. As training progressed, these images diverged from one another and began to resemble the three target images.</p>
 
 <p>Even though the final shapes diverge, you can still see shared features in the “embryonic” versions of the flowers. If you watch the video below, you can see that the three “embryos” all start out with red, yellow, and purple coloration. The developing crocus, in particular, has both red and purple petals during growth steps 10-20.</p>
 
@@ -446,11 +446,11 @@ function playPauseSeeds() {
   <a href="https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-" id="linkbutton" target="_blank"><span class="colab-span">Speciation</span> with NCA</a>
 </div>
 
-<p>From a dynamical systems perspective, this NCA model has three different <a href="http://www.scholarpedia.org/article/Basin_of_attraction"><em>basins of attraction</em></a>, one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final organisms. Then we could use its “DNA” vectors to construct a “tree of life,” showing how closely related various organisms are<sup id="fnref:fn9" role="doc-noteref"><a href="#fn:fn9" class="footnote">7</a></sup> and at what point in training they split from a common ancestor.</p>
+<p>From a dynamical systems perspective, this NCA model has three different <a href="http://www.scholarpedia.org/article/Basin_of_attraction"><em>basins of attraction</em></a>, one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final organisms. Then we could use its “DNA” vectors to construct a “tree of life,” showing how closely-related various organisms are<sup id="fnref:fn9" role="doc-noteref"><a href="#fn:fn9" class="footnote">7</a></sup> and at what point in training they split from a common ancestor.</p>
 
 <h2 id="final-remarks">Final remarks</h2>
 
-<p>The main purposes of this post was personal interest. However, there are a number of ways that NCA can contribute to civilization in the long term. The prospect of isolating the top one hundred signaling molecules used in natural morphogenesis, tracking their concentrations during growth in various tissues, and then training an NCA to reproduce the same growth patterns with the same morphogens is particularly exciting. This would allow us to obtain a complex model of biological morphogenesis with some degree of predictive power. Such a model could help us “solve for” the optimal cocktail of signaling molecules needed to speed up, slow down, or otherwise modify cell growth. It could even be used to adversarially slow down the growth of cancerous cells in a patient with cancer or artificially accelerate the growth of bone cells in a patient with osteoporosis.</p>
+<p>There are a number of ways that NCA can contribute to civilization. The prospect of isolating the top one hundred signaling molecules used in natural morphogenesis, tracking their concentrations during growth in various tissues, and then training an NCA to reproduce the same growth patterns with the same morphogens is particularly exciting. This would allow us to obtain a complex model of biological morphogenesis with some degree of predictive power. Such a model could allow us to solve for the optimal cocktail of signaling molecules needed to speed up, slow down, or otherwise modify cell growth. It could even be used to adversarially slow down the growth of cancerous cells in a patient with cancer or artificially accelerate the growth of bone cells in a patient with osteoporosis.</p>
 
 <p>One of the themes of this post is that <em>patterns of growth are surprisingly similar</em> across organisms. This hints at the fact that there are principles of growth that transcend biology. These principles can be studied in a computational substrate in a way that gives useful insights about the original biological systems. These insights, we believe, shine a new light on the everyday miracle of growth.</p>
 
