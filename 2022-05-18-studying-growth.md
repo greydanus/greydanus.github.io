@@ -29,7 +29,7 @@ thumbnail: /assets/studying-growth/thumbnail.png
     </video>
     <button class="playbutton" id="video3_button" onclick="playPauseVideo3()">Play</button>
   </div>
-  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:90%"><b>Growing flowers.</b> Each pixel in the images above represents a cell. By exchanging signals with their neighbors, these cells coordinate their behavior and assemble themselves in the shapes of the three flowers shown. We are going to use this computational model of growth, called Neural Cellular Automata, to study common patterns of biological growth.</div>
+  <div style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:95%"><b>Growing flowers.</b> Each pixel in the images above represents a cell. By exchanging signals with their neighbors, these cells coordinate their behavior and assemble themselves in the shapes of the three flowers shown.</div>
 </div>
 
 <script> 
@@ -74,7 +74,7 @@ function playPauseVideo3() {
 
 <!-- ## A Productive Question -->
 
-How does a single fertilized egg grow into a population of seventy trillion cells: a population that can walk, talk, and write sonnets? This is one of the great unanswered questions of biology. We may never finish answering it, but it's a productive question nonetheless. In asking it, scientists have discovered the structure of DNA, sequenced the human genome, and made essential contributions to modern medicine.
+How does a single fertilized egg grow into a population of seventy trillion cells: a population that can walk, talk, and write sonnets? This is one of the great unanswered questions of biology. We may never finish answering it, but it is a productive question nonetheless. In asking it, scientists have discovered the structure of DNA, sequenced the human genome, and made essential contributions to modern medicine.
 
 In this post, we will explore this question with a new tool called Neural Cellular Automata (NCA).
 
@@ -223,15 +223,15 @@ In this section, we will grow an image of a newt and then graft part of its eye 
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:90%">
   <img src="/assets/studying-growth/newt_timeline_tall.png" style="width:75%; min-width:320px">
-  <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
+  <!-- <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
     <b>Reproducing Hans Spemann's newt experiment.</b> In the first 100 frames, we grow an image of a newt using the vanilla NCA model described in <a href="https://distill.pub/2020/growing-ca/">Mordvintsev et al. (2020)</a>. Then, in frame 150 we copy the pixels in the yellow rectangle and paste them onto the newt's belly, as shown by the yellow arrow. Note that these pixels contain the upper half of the newt's eye, but not the lower half. We freeze those cells and let the rest of the cells perform updates for another 25 steps. As you can see in frame 175, this induces the belly cells in the blue rectangle to turn black, completing the lower half of the new eye.
-  </div>
+  </div> -->
 </div>
 
-To reproduce this effect, we first trained an NCA to grow a picture of a newt. Once the growth phase was complete, we grafted a patch of cells from its head onto its stomach. This patch of cells included the upper, light-colored portion of the newt's eye but not the dark-colored, lower portion. Once we had grafted this patch of cells onto the newt's belly, we froze their states and allowed the rest of the cells to undergo updates as usual. Within 25 steps, the stomach cells below the grafted patch had regrown into a dark-colored strip to complete the eye shape.
+To reproduce this effect, we first trained an NCA to grow a picture of a newt. Once the growth phase was complete, we grafted a patch of cells from its head onto its stomach. This patch of cells included the upper, light-colored portion of the newt's eye but not the dark-colored, lower portion. Then we froze their states and allowed the rest of the cells to undergo updates as usual. Within 25 steps, the stomach cells below the grafted patch had regrown into a dark-colored strip to complete the lower half of the new eye.
 
-This is an interesting result because Hans Spemann's experiment involved the same procedure and produced the same results: the eye cells induced the belly cells to complete the growth of the eye.
-
+<!-- Hans Spemann's experiment involved the same procedure and produced the same results: he grafted eye lens cells onto the stomach of a real newt and induced the growth of a new eye.
+ -->
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:300px; min-width:250px; display: inline-block; vertical-align: top;text-align:center;">
     <video id="newt_video" style="width:100%;min-width:250px;" controls poster="/assets/studying-growth/newt.jpg">
@@ -268,20 +268,20 @@ As development progresses, these branching milestones occur dozens of times, eac
 
 ### [3. Apoptosis](https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww)
 
-**Death to form the living.** One of the most dramatic <code>if-then</code> statements is _"If I am in state <code>x</code>, then I must die."_ This gives rise to what biologists call _apoptosis_, or programmed cell death. This process is most common when an organism needs to undergo a major change in form: for example a tadpole losing its tail as it grows into a frog, or a stubby projection being sculpted into the shape of a chicken leg.
+**Death to form the living.** One of the most dramatic <code>if-then</code> statements is _"If I am in state <code>x</code>, then I must die."_ This gives rise to what biologists call _apoptosis_, or programmed cell death. Apoptosis is most common when an organism needs to undergo a major change in form: for example, a tadpole losing its tail as it grows into a frog, or a stubby projection in a chick embryo being sculpted into a leg.
 
 <!-- This process is highly choreographed. For example, in the tail of a tadpole, each cell contains a sort of "suicide capsule" full of particular enzymes. When this capsule is broken at the appointed time, the enzymes are released to destroy the cell from the inside. -->
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/apoptosis.jpg">
   <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
-  <b>Left.</b> The metamorphosis of a tadpole into a frog is a spectacular example of apoptosis. Soon after the tadpole's tail reaches full size, the frog's back legs begin to grow and the tail rapidly shrinks. In the span of a feew months, it vanishes entirely. <b>Right.</b> A blue dye that stains only dead cells is applied to a four-year-old chick embryo, revealing apoptosis in the wing and foot buds. These cells are programmed to die at an appointed time in order to shape the wings and feet of the newborn chick (see white circles). Even if these cells are moved to antoher part of the embryo, they still die at their appointed time. Photo credit: <i>Growth</i> from the LIFE Science Library.
+  <b>Left.</b> The metamorphosis of a tadpole into a frog is a spectacular example of apoptosis. Soon after the tadpole's tail reaches full size, the frog's back legs begin to grow and the tail rapidly shrinks. In the span of a few months it vanishes entirely. <b>Right.</b> A blue dye that stains only dead cells is applied to a four-year-old chick embryo, revealing apoptosis in the wing and foot buds. These cells are programmed to die at an appointed time in order to shape the wings and feet of the newborn chick (see white circles). Even if these cells are moved to another part of the embryo, they still die at the appointed time. Photo credit: <i>Growth</i> from the LIFE Science Library.
   </div>
 </div>
 
 One of the best examples of apoptosis in the human body is [_bone remodeling_](https://en.wikipedia.org/wiki/Bone_resorption). This is the process by which bones grow, change shape, and even regrow after a fracture. It's also a process by which the body manages the supply of important minerals and nutrients such as calcium. In the first year of life, bone resorption proceeds at an especially rapid pace. By the end of that year, almost 100% of the skeleton has been absorbed and replaced.
 
-Even in adults, though, about 10% of the skeleton is replaced each year.
+Even in adults, about 10% of the skeleton is replaced every year.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
   <img src="/assets/studying-growth/grow_bone.png">
@@ -315,7 +315,7 @@ function playPauseBone() {
   <a href="https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww" id="linkbutton" target="_blank"><span class="colab-span">Growing</span> a bone</a>
 </div>
 
-We should note that the cells in this particular NCA don't exactly _die_. They simply turn white. We experimented with growing images with alpha values below 0.1 in the interior[^fn8] and obtained some mediocre, early-stage results. Owing to time constraints, we decided to present this RGB result and leave the RGBA extension "as an exercise for the reader."
+<!-- We should note that the cells in this particular NCA don't exactly _die_. They simply turn white. In the future, we hope to grow images with alpha values below 0.1 in the interior.[^fn8] -->
 
 ### [4. Speciation](https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-)
 
@@ -354,12 +354,12 @@ function playPauseSeeds() {
   <a href="https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-" id="linkbutton" target="_blank"><span class="colab-span">Speciation</span> with NCA</a>
 </div>
 
-From a dynamical systems perspective, this NCA model has three different [_basins of attraction_](http://www.scholarpedia.org/article/Basin_of_attraction), one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final organisms. Then we could use its "DNA" vectors to construct a "tree of life," showing how closely-related various organisms are[^fn9] and at what point in training they split from a common ancestor.
+From a dynamical systems perspective, this NCA model has three different [_basins of attraction_](http://www.scholarpedia.org/article/Basin_of_attraction), one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final organisms. Then we could use its "DNA" vectors to construct a "tree of life," showing how closely related various organisms are[^fn9] and at what point in training they split from a common ancestor.
 
 
 ## Final remarks
 
-The main purpose of this post was fun and personal interest. However, there are a number of ways that NCA can contribute to civilization in the long term. The prospect of isolating the top one hundred signaling molecules used in natural morphogenesis, tracking their concentrations during growth in various tissues, and then training an NCA to reproduce the same growth patterns with the same morphogens is particularly exciting. This would allow us to obtain a complex model of biological morphogenesis with some degree of predictive power. A model with sufficient predictive power could help us "solve for" the optimal cocktail of signaling molecules needed to speed up, slow down, or otherwise modify cell growth. Such a model could be used to adversarially slow down the growth of cancerous cells in a patient with cancer or artificially accelerate the growth of bones in a patient with osteoporosis.
+The main purposes of this post was personal interest. However, there are a number of ways that NCA can contribute to civilization in the long term. The prospect of isolating the top one hundred signaling molecules used in natural morphogenesis, tracking their concentrations during growth in various tissues, and then training an NCA to reproduce the same growth patterns with the same morphogens is particularly exciting. This would allow us to obtain a complex model of biological morphogenesis with some degree of predictive power. Such a model could help us "solve for" the optimal cocktail of signaling molecules needed to speed up, slow down, or otherwise modify cell growth. It could even be used to adversarially slow down the growth of cancerous cells in a patient with cancer or artificially accelerate the growth of bone cells in a patient with osteoporosis.
 
 One of the themes of this post is that _patterns of growth are surprisingly similar_ across organisms. This hints at the fact that there are principles of growth that transcend biology. These principles can be studied in a computational substrate in a way that gives useful insights about the original biological systems. These insights, we believe, shine a new light on the everyday miracle of growth.
 
