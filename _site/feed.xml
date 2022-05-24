@@ -1,4 +1,389 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-05-23T13:28:31-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A science blog by Sam Greydanus</subtitle><entry><title type="html">A Tutorial on Structural Optimization</title><link href="http://greydanus.github.io/2022/05/08/structural-optimization/" rel="alternate" type="text/html" title="A Tutorial on Structural Optimization" /><published>2022-05-08T04:00:00-07:00</published><updated>2022-05-08T04:00:00-07:00</updated><id>http://greydanus.github.io/2022/05/08/structural-optimization</id><content type="html" xml:base="http://greydanus.github.io/2022/05/08/structural-optimization/">&lt;style&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-05-24T06:53:00-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A science blog by Sam Greydanus</subtitle><entry><title type="html">Studying Growth with Cellular Automata</title><link href="http://greydanus.github.io/2022/05/23/studying-growth/" rel="alternate" type="text/html" title="Studying Growth with Cellular Automata" /><published>2022-05-23T23:50:00-07:00</published><updated>2022-05-23T23:50:00-07:00</updated><id>http://greydanus.github.io/2022/05/23/studying-growth</id><content type="html" xml:base="http://greydanus.github.io/2022/05/23/studying-growth/">&lt;!-- &quot;We simulate the process of cell growth called morphogenesis. Then we find growth rules that generate a range of flowers and use them to grow a garden.&quot; --&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;video1&quot; style=&quot;width:100%;min-width:250px;&quot; poster=&quot;/assets/studying-growth/rose.jpg&quot;&gt;
+      &lt;source src=&quot;/assets/studying-growth/rose.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video1_button&quot; onclick=&quot;playPauseVideo1()&quot;&gt;Play&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;video2&quot; style=&quot;width:100%;min-width:250px;&quot; poster=&quot;/assets/studying-growth/marigold.jpg&quot;&gt;
+      &lt;source src=&quot;/assets/studying-growth/marigold.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video2_button&quot; onclick=&quot;playPauseVideo2()&quot;&gt;Play&lt;/button&gt;
+  &lt;/div&gt;
+   &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;&quot;&gt;
+    &lt;video id=&quot;video3&quot; style=&quot;width:100%;min-width:250px;&quot; poster=&quot;/assets/studying-growth/crocus.jpg&quot;&gt;
+      &lt;source src=&quot;/assets/studying-growth/crocus.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video3_button&quot; onclick=&quot;playPauseVideo3()&quot;&gt;Play&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:95%&quot;&gt;&lt;b&gt;Growing flowers.&lt;/b&gt; The pixels in the images above represent cells. By exchanging signals with their neighbors, these cells coordinate their behavior and assemble themselves in the shapes of the three flowers shown.&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt; 
+function playPauseVideo1() { 
+  var video = document.getElementById(&quot;video1&quot;); 
+  var button = document.getElementById(&quot;video1_button&quot;);
+  if (video.paused) {
+    video.play();
+    button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+
+function playPauseVideo2() { 
+  var video = document.getElementById(&quot;video2&quot;); 
+  var button = document.getElementById(&quot;video2_button&quot;);
+  if (video.paused) {
+    video.play();
+  button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+
+function playPauseVideo3() { 
+  var video = document.getElementById(&quot;video3&quot;); 
+  var button = document.getElementById(&quot;video3_button&quot;);
+  if (video.paused) {
+    video.play();
+  button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+&lt;/script&gt;
+
+&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
+  &lt;a href=&quot;https://colab.research.google.com/drive/1TgGN5qjjH6MrMrTcStEkdHO-giEJ4bZr&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Run&lt;/span&gt; in browser&lt;/a&gt;
+  &lt;a href=&quot;https://github.com/greydanus/studying_growth&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Get the code&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;!-- ## A Productive Question --&gt;
+
+&lt;p&gt;How does a single fertilized egg grow into a population of seventy trillion cells: a population that can walk, talk, and write sonnets? This is one of the great unanswered questions of biology. We may never finish answering it, but it is a productive question nonetheless. In asking it, scientists have discovered the structure of DNA, sequenced the human genome, and made essential contributions to modern medicine.&lt;/p&gt;
+
+&lt;p&gt;In this post, we will explore this question with a new tool called Neural Cellular Automata (NCA).&lt;/p&gt;
+
+&lt;!-- **Neural Cellular Automata.** A few years ago, scientists showed that it is possible to use neural networks to represent the rules for how simulated cells interact with one another. This allowed them to teach simulated cells to interact with one another at a local scale in order to produce complex emergent behaviors at the population level. So far, only a few papers have been written about these &quot;Neural Cellular Automata&quot; models. One reason is that they are a relatively new idea. Another reason is that, although they require expertise in ML to implement, their main intellectual appeal is to an audience interested in cellular morphogenesis. The intersection of people who are comfortable in both worlds is relatively small.
+
+But the mechanics of cellular morphogenesis are extremely important. Indeed, NCA may be the best long-term means of understanding the programming language of our bodies&apos; cells. If DNA is the source code that comes pre-installed on your computer, then cellular morphogenesis is the complex and varied means by which your computer performs its functions: booting up, decompressing files, creating pop-up windows, and so forth. In order to understand your computer as a whole, it makes a lot of sense to start by studying the mechanics of these everyday functions.
+
+With all of this in mind, let&apos;s take a closer look at how NCA work and then apply them to some simple biology problems. --&gt;
+
+&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+
+&lt;p&gt;The purpose of cellular automata (CA) &lt;em&gt;writ large&lt;/em&gt; is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels where each pixel represents a different cell. Then a set of growth rules, controlling how cells respond to their neighbors, are applied to the population in an iterative manner. Although these growth rules are simple to write down, they are choosen so as to produce complex self-organizing behaviors. For example, Conway’s Game of Life has just three simple growth rules that give rise to a diverse range of structures.&lt;sup id=&quot;fnref:fn4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn4&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:49.4%; min-width:280px; display: inline-block; vertical-align: top;text-align:center;&quot;&gt;
+    &lt;img src=&quot;/assets/studying-growth/conway_rules.jpg&quot; /&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;width:49.7%; min-width:280px; display: inline-block; vertical-align: top;text-align:center;&quot;&gt;
+    &lt;video id=&quot;video_conway&quot; controls=&quot;&quot; style=&quot;width:100%&quot;&gt;
+      &lt;source src=&quot;/assets/studying-growth/conway.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Classic versions of cellular automata like Conway’s Game of Life are interesting because they produce emergent behavior starting from simple rules. But in a way, these versions of CA are &lt;em&gt;too simple&lt;/em&gt;. Their cells only get to have two states, dead or alive, whereas biological cells get to have a near-infinite number of states, states which are determined by a wide variety of signaling molecules. We refer to these molecules as &lt;em&gt;morphogens&lt;/em&gt; because they work together to control growth and guide organisms towards specific final shapes or &lt;em&gt;morphologies&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Neural CA.&lt;/strong&gt; Based on this observation, we should move away from CA with cells that are only dead or alive. Instead, we should permit their cells to exist in a variety of states with each state defined by a list of continuous variables. Growth rules should operate on combinations of these variables in the same way that biological growth rules operate on combinations of different morphogens. And unlike Conway’s Game of Life, the self-organizing behaviors that arise should not be arbitrary or chaotic. Rather, they should involve stable convergence to &lt;em&gt;specific&lt;/em&gt; large-scale morphologies like those that occur in biology. Much more complex growth rules are needed for this to occur.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/comparison.jpg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The diagram above shows how NCA take a step in the right direction. Unlike regular cellular automata, they represent each cell state with a real-valued \(n\)-dimensional vector and then allow arbitrary growth rules to operate on that domain. They do this by &lt;em&gt;parameterizing growth rules with a neural network and then optimizing the neural network to obtain the desired pattern of growth&lt;/em&gt;. To showcase the model’s expressivity, the authors trained it to arrange a population of a 1600 cells in the shape of a lizard starting from local-only interactions between initially identical cells.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/nca_schema.jpg&quot; /&gt;
+  &lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;b&gt;NCA diagram.&lt;/b&gt; The diagram above how a neural network can be used to parameterize the growth rules of a cellular autiomata. The &lt;a href=&quot;https://distill.pub/2020/growing-ca/&quot;&gt;original NCA article&lt;/a&gt; uses this diagram to introduce the model and its training procedure.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;getting-started&quot;&gt;Getting started&lt;/h2&gt;
+
+&lt;!-- We need to start with a high-quality NCA implementation, one that is flexible enough to modify for the purposes of our experiments. The authors of the original NCA paper released a series of excellent Colab notebooks which show how to implement the model in TensorFlow. But after experimenting with their code, I decided to reimplement everything in PyTorch. I like PyTorch better and I wanted to make a minimalist implementation that would be easy to hack on in order to try out new ideas. You can find it [here](https://colab.research.google.com/drive/13wCM9OV2JR004zFvh7zPgUxrga8sU4d1). --&gt;
+
+&lt;p&gt;The authors of the original paper released a Colab notebook that showed how to implement NCA in TensorFlow. Starting from this notebook, we reimplemented everything in PyTorch and boiled it down to a minimalist, 150-line implementation. Our goal was to make the NCA model as simple as possible so that we could hack and modify it without getting overwhelmed by implementation details.&lt;/p&gt;
+
+&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
+  &lt;a href=&quot;https://colab.research.google.com/drive/13wCM9OV2JR004zFvh7zPgUxrga8sU4d1&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;NCA&lt;/span&gt; in 150 lines&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Having implemented our own NCA model, the next step was to scale it to determine the maximum size and complexity of the “organisms” it could produce. We found that the population size was going to be limited by the amount of RAM available on Google Colab GPUs. We maxed things out with a population of about 7500 cells running for about 100 updates. For context, the original paper used a population of 1600 cells running for 86 updates.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/bloopers.jpg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Working in this scaled-up regime, we trained our NCA to grow a number of different flowers. Some of the early results were a bit mangled and blurry. Many were biased towards radial symmetry and required extra training in order to reveal symmetric features such as individual petals. But soon, after a few hyperparameter fixes, our NCA was able to grow some “HD” 64x64 flowers:&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:65%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/garden.jpg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
+  &lt;a href=&quot;https://colab.research.google.com/drive/1TgGN5qjjH6MrMrTcStEkdHO-giEJ4bZr&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;HD&lt;/span&gt; flowers&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Having implemented the NCA model and gained some intuition for how it trained, we were ready to use it to investigate patterns of biological growth.&lt;/p&gt;
+
+&lt;h2 id=&quot;patterns-of-biological-growth&quot;&gt;Patterns of biological growth&lt;/h2&gt;
+
+&lt;p&gt;Biological growth is wonderfully diverse. Consider this passage from the first chapter of &lt;em&gt;Growth&lt;/em&gt; by Life Science Library:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;A eucalyptus native to Uganda has been known to grow 45 feet in two years, whereas dwarf ivy generally grows one inch a year. The majestic sequoia of California, which starts out as a seed weighing only one three-thousandth of an ounce, may end up… [with a] weight estimated at 6,200 tons. It takes more than 1,000 years for the sequoia to achieve the feat of multiplying 600 billion times in mass.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;The animal kingdom, too, has its champions of growth. The blue whale, which cruises the oceans from the North to the South Pole, begins life as a barely visible egg weighing only a fraction of an ounce. At birth, it weighs from two to three tons. When it is weaned, at about seven months, it is 52 feet long and weighs 23 tons, having gained an average of 200 pounds a day.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Given the diversity of life forms on our planet, maybe one of the biggest surprises is how much they have in common. For the most part they share the same genetic materials, signaling mechanisms, and metabolic pathways. Their cells have the same life cycles. Indeed, the cellular mechanics in a gnat look pretty similar to those in a blue whale…even though the creatures themselves could not be more different.&lt;/p&gt;
+
+&lt;h3 id=&quot;1-gnomonic-growth&quot;&gt;&lt;a href=&quot;https://colab.research.google.com/drive/1DUFL5glyej725r8VAYDZIFrWvpR6a6-0&quot;&gt;1. Gnomonic growth&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;One shared pattern of growth is called &lt;em&gt;gnomonic growth&lt;/em&gt;. This pattern tends to occur when an organism needs to increase in size and part of its body is defined by a rigid structure. You can see this in clams, for example. Their shells are rigid and cannot be deformed. And yet they need to grow their shells as the rest of them grows. Clams solve this problem by incrementally adding long crescent-shaped lips to the edges of their shells. Each new lip is just a little larger than the one that came before it. These lips, or &lt;em&gt;gnomons&lt;/em&gt; as they are called, permit organisms to increase in size without changing form. Gnomons also appear in horns, tusks, and tree trunks.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; min-width:300px&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/gnomons.jpeg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;One of the most famous products of gnomonic growth is the nautilus shell. In this shell, the gnomons grow with such regularity that the overall shape can be modeled with a simple Fibonacci sequence. The elegance and simplicity of the pattern makes it an interesting testbed for NCA.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; min-width:300px&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/nautilus_photo.jpeg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To set up this problem, we split the shell into three regions: frozen, mature, and growing. These regions are shown in cyan, black and magenta respectively:&lt;/p&gt;
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/nautilus_train.png&quot; /&gt;
+&lt;/div&gt;
+&lt;p&gt;The cells in the frozen region are, as the name would suggest, frozen. Both their RGBA and hidden channels are fixed throughout training. The cells in the mature region are similar; the only difference is that their hidden channels are allowed to change. The growing region, meanwhile, begins the simulation without any living cells. Cells from the mature region need to grow outwards into this area and arrange themselves properly before the simulation ends.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Scale and rotation invariance.&lt;/strong&gt; Part of the objective in this “gnomonic growth” problem is to learn a growth rule that is scale and rotation invariant. We can accomplish this by rotating and scaling the nautilus template as shown in the six examples above. By training on all of these examples at once, we are able to obtain a model that grows properly at any scale or orientation. Once it learns to do this, it can grow multiple gnomons, one after the other, without much interference. Below, for example, we add eight new compartments and quadruple the shell’s size by letting the NCA run for eight growth cycles.&lt;sup id=&quot;fnref:fn3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn3&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/nautilus_bw.png&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;One of the things that makes this growth pattern interesting is that the NCA cells have to reach a global consensus as to what the scale and rotation of the mature region is. Only by agreeing on this are they able to construct a properly-sized addition. And yet in practice, we see that expansion into the growth region begins from the first simulation step. This suggests that cells in the mature region try to come to a distributed consensus as to the target shape &lt;em&gt;even as&lt;/em&gt; new cells are already beginning to grow that shape. Once cells in the mature region know the proper scale and rotation of the gnomon, they transmit this information to the growing region so that it can make small adjustments to its borders. If you look closely, you can see these adjustments happening in the video below.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;naut_video&quot; style=&quot;width:100%;min-width:250px;&quot; poster=&quot;/assets/studying-growth/nautilus.png&quot;&gt;
+      &lt;source src=&quot;/assets/studying-growth/nautilus.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;naut_video_button&quot; onclick=&quot;playPauseNaut()&quot;&gt;Play&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt; 
+function playPauseNaut() { 
+  var video = document.getElementById(&quot;naut_video&quot;); 
+  var button = document.getElementById(&quot;naut_video_button&quot;);
+  if (video.paused) {
+    video.play();
+    button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+&lt;/script&gt;
+
+&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
+  &lt;a href=&quot;https://colab.research.google.com/drive/1DUFL5glyej725r8VAYDZIFrWvpR6a6-0&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Growing&lt;/span&gt; a nautilus&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This process of &lt;em&gt;reaching a consensus in a decentralized and asynchronous manner&lt;/em&gt; is a common problem for biological cells. In fact, we already touched on it in our &lt;a href=&quot;/2020/08/27/selforg-mnist/&quot;&gt;Self-classifying MNIST Digits&lt;/a&gt; post. It’s also important in human organizations: from new cities agreeing on development codes, to democratic institutions agreeing on legislation, to the stock market agreeing on how to value companies. It is not always a low-entropy process.&lt;/p&gt;
+
+&lt;p&gt;Indeed, sometimes groups of cells have to resort to other means of reaching consensus…&lt;/p&gt;
+
+&lt;h3 id=&quot;2-embryonic-induction&quot;&gt;&lt;a href=&quot;https://colab.research.google.com/drive/1fbakmrgkk1y-ZXamH1mKbN1tvkogNrWq&quot;&gt;2. Embryonic induction&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;The alternative to a fully decentralized consensus mechanism is cellular induction. This happens when one small group of cells (usually in an embryo) tells the rest how to grow. The first group of cells is called the inducing tissue and the second is called the responding tissue. Induction controls the growth of many tissues and organs including the eye and the heart.&lt;/p&gt;
+
+&lt;p&gt;In this section, we will grow an image of a newt and then graft part of its eye tissue onto its belly. After doing this, we will watch to see whether those cells are able to induce growth in the rest of the eye in that region. We’ve chosen this particular experiment as an homage to &lt;a href=&quot;https://en.wikipedia.org/wiki/Hans_Spemann&quot;&gt;Hans Spemann&lt;/a&gt;,&lt;sup id=&quot;fnref:fn2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn2&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; who won the Nobel Prize for Medicine in 1935 for using similar experiments on real newts to discover “the organizer effect in embryonic development.”&lt;sup id=&quot;fnref:fn5&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn5&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt; Spemann’s major insight was that “at every stage of embryonic development, structures already present act as organizers, inducing the emergence of whatever structures are next on the timetable.”&lt;sup id=&quot;fnref:fn7&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn7&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:90%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/newt_timeline_tall.png&quot; style=&quot;width:75%; min-width:320px&quot; /&gt;
+  &lt;!-- &lt;div class=&quot;thecap&quot;  style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+    &lt;b&gt;Reproducing Hans Spemann&apos;s newt experiment.&lt;/b&gt; In the first 100 frames, we grow an image of a newt using the vanilla NCA model described in &lt;a href=&quot;https://distill.pub/2020/growing-ca/&quot;&gt;Mordvintsev et al. (2020)&lt;/a&gt;. Then, in frame 150 we copy the pixels in the yellow rectangle and paste them onto the newt&apos;s belly, as shown by the yellow arrow. Note that these pixels contain the upper half of the newt&apos;s eye, but not the lower half. We freeze those cells and let the rest of the cells perform updates for another 25 steps. As you can see in frame 175, this induces the belly cells in the blue rectangle to turn black, completing the lower half of the new eye.
+  &lt;/div&gt; --&gt;
+&lt;/div&gt;
+
+&lt;p&gt;To reproduce this effect, we first trained an NCA to grow a picture of a newt. Once the growth phase was complete, we grafted a patch of cells from its head onto its stomach. This patch of cells included the upper, light-colored portion of the newt’s eye but not the dark-colored, lower portion. Then we froze their states and allowed the rest of the cells to undergo updates as usual. Within 25 steps, the stomach cells below the grafted patch had regrown into a dark-colored strip to complete the lower half of the new eye.&lt;/p&gt;
+
+&lt;!-- Hans Spemann&apos;s experiment involved the same procedure and produced the same results: he grafted eye lens cells onto the stomach of a real newt and induced the growth of a new eye.
+ --&gt;
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:300px; min-width:250px; display: inline-block; vertical-align: top;text-align:center;&quot;&gt;
+    &lt;video id=&quot;newt_video&quot; style=&quot;width:100%;min-width:250px;&quot; controls=&quot;&quot; poster=&quot;/assets/studying-growth/newt.jpg&quot;&gt;
+      &lt;source src=&quot;/assets/studying-growth/newt.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;newt_video_button&quot; onclick=&quot;playPauseNewt()&quot;&gt;Play&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt; 
+function playPauseNewt() { 
+  var video = document.getElementById(&quot;newt_video&quot;); 
+  var button = document.getElementById(&quot;newt_video_button&quot;);
+  if (video.paused) {
+    video.play();
+    button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+&lt;/script&gt;
+
+&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
+  &lt;a href=&quot;https://colab.research.google.com/drive/1fbakmrgkk1y-ZXamH1mKbN1tvkogNrWq&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Embryonic&lt;/span&gt; induction&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Cellular induction offers a simple explanation for how many growth rules are implemented: by and large, they are implemented as &lt;code&gt;if-then&lt;/code&gt; statements. For example, &lt;em&gt;“If I am growing below some light-colored eye tissue, then I should be black-colored eye tissue.”&lt;/em&gt; Early in embryonic development, these &lt;code&gt;if-then&lt;/code&gt; statements are very general: &lt;em&gt;“If I am on the outside layer of the embryo, then I am going to be an ectoderm cell. Else, if I am on the inside layer of the embryo, then I am going to be a mesoderm cell. Else, if I am in the center of the embryo, then I am going to be an endoderm cell.”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;As development progresses, these branching milestones occur dozens of times, each time causing a group of cells to become more specialized. Towards the end of development, the branching rules might read, &lt;em&gt;“If I am an ectoderm cell and if I am a nervous system cell and if I am an eye cell and if I am distal to the optic nerve then I am going to be part of the corneal epithelium.”&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Attractor theory of development.&lt;/strong&gt; While this sounds complex, it’s actually the simplest and most robust way to construct a multicellular organism. Each of these branching statements determines how morphogenesis unfolds at a different hierarchy of complexity. Unlike a printer, which has to place every dot of ink on a page with perfect precision, a growing embryo doesn’t need to know the final coordinates of every mature adult cell. Moreover, it can withstand plenty of noise and perturbations at each stage of development and still produce an intricate, well-formed organism in the end.&lt;sup id=&quot;fnref:fn6&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn6&quot; class=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt; Intuitively, this is possible because during each stage of growth, clusters of cells naturally converge to target “attractor” states in spite of perturbations. Errors get corrected before the next stage of growth begins. And in the next stage, new attractor states perform error-correction as well. In this way, embryonic induction allows nature to construct multicellular organisms with great reliability, even in a world full of noise and change.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-apoptosis&quot;&gt;&lt;a href=&quot;https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww&quot;&gt;3. Apoptosis&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Death to form the living.&lt;/strong&gt; One of the most dramatic &lt;code&gt;if-then&lt;/code&gt; statements is &lt;em&gt;“If I am in state &lt;code&gt;x&lt;/code&gt;, then I must die.”&lt;/em&gt; This gives rise to what biologists call &lt;em&gt;apoptosis&lt;/em&gt;, or programmed cell death. Apoptosis is most common when an organism needs to undergo a major change in form: for example, a tadpole losing its tail as it grows into a frog, or a stubby projection in a chick embryo being sculpted into a leg.&lt;/p&gt;
+
+&lt;!-- This process is highly choreographed. For example, in the tail of a tadpole, each cell contains a sort of &quot;suicide capsule&quot; full of particular enzymes. When this capsule is broken at the appointed time, the enzymes are released to destroy the cell from the inside. --&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/apoptosis.jpg&quot; /&gt;
+  &lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;b&gt;Left.&lt;/b&gt; The metamorphosis of a tadpole into a frog is a spectacular example of apoptosis. Soon after the tadpole&apos;s tail reaches full size, the frog&apos;s back legs begin to grow and the tail rapidly shrinks. In the span of a few months it vanishes entirely. &lt;b&gt;Right.&lt;/b&gt; A blue dye that stains only dead cells is applied to a four-year-old chick embryo, revealing apoptosis in the wing and foot buds. These cells are programmed to die at an appointed time in order to shape the wings and feet of the newborn chick (see white circles). Even if these cells are moved to another part of the embryo, they still die at the appointed time. Photo credit: &lt;i&gt;Growth&lt;/i&gt; from the LIFE Science Library.
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;One of the best examples of apoptosis in the human body is &lt;a href=&quot;https://en.wikipedia.org/wiki/Bone_resorption&quot;&gt;&lt;em&gt;bone remodeling&lt;/em&gt;&lt;/a&gt;. This is the process by which bones grow, change shape, and even regrow after a fracture. It’s also a process by which the body manages the supply of important minerals and nutrients such as calcium. In the first year of life, bone resorption proceeds at an especially rapid pace. By the end of that year, almost 100% of the skeleton has been absorbed and replaced.&lt;/p&gt;
+
+&lt;p&gt;Even in adults, about 10% of the skeleton is replaced every year.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:80%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/grow_bone.png&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this experiment, we trained an NCA model to grow into the shape of a slice of human bone. Since the bone starts its growth in the center of the image, but the center of the target image is empty, the NCA naturally learns a growth pattern that resembles apoptosis. Early in development, a small tan circle forms. The outside edge of this circle expands rapidly outward in a pattern of “bone growth” that would be carried out by &lt;a href=&quot;https://en.wikipedia.org/wiki/Osteoblast&quot;&gt;osteoblasts&lt;/a&gt; in nature. Meanwhile, the inside edge of the circle deteriorates at the same rate in a pattern of “bone resorption” associated with &lt;a href=&quot;https://en.wikipedia.org/wiki/Osteoclast&quot;&gt;osteoclasts&lt;/a&gt; in nature.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;bone_video&quot; style=&quot;width:100%;min-width:250px;&quot; poster=&quot;/assets/studying-growth/bone.png&quot;&gt;
+      &lt;source src=&quot;/assets/studying-growth/bone.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;bone_video_button&quot; onclick=&quot;playPauseBone()&quot;&gt;Play&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt; 
+function playPauseBone() { 
+  var video = document.getElementById(&quot;bone_video&quot;); 
+  var button = document.getElementById(&quot;bone_video_button&quot;);
+  if (video.paused) {
+    video.play();
+    button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+&lt;/script&gt;
+
+&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
+  &lt;a href=&quot;https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Growing&lt;/span&gt; a bone&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;!-- We should note that the cells in this particular NCA don&apos;t exactly _die_. They simply turn white. In the future, we hope to grow images with alpha values below 0.1 in the interior.[^fn8] --&gt;
+
+&lt;h3 id=&quot;4-speciation&quot;&gt;&lt;a href=&quot;https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-&quot;&gt;4. Speciation&lt;/a&gt;&lt;/h3&gt;
+
+&lt;p&gt;We have remarked that gnats and blue whales have more in common, at least in terms of cellular mechanics, than one would guess. They share many of the same cell structures, protiens, and even stages of development like &lt;a href=&quot;https://en.wikipedia.org/wiki/Gastrulation&quot;&gt;gastrulation&lt;/a&gt;. This points to the fact that many different organisms share the same cellular infrastructure. In more closely-related species, this observation is even more apt. For example, the three flowers we grew at the beginning of the article – the rose, the marigold, and the crocus – are all &lt;a href=&quot;https://en.wikipedia.org/wiki/Flowering_plant&quot;&gt;angiosperms&lt;/a&gt; and thus share structures like the &lt;a href=&quot;https://en.wikipedia.org/wiki/Xylem&quot;&gt;xylem&lt;/a&gt; and &lt;a href=&quot;https://en.wikipedia.org/wiki/Phloem&quot;&gt;phloem&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Indeed, one of the biggest differences between these flowers is their genetic code. Making an analogy to computers, you might say that they have the same hardware (cell mechanics), but different software (DNA).&lt;/p&gt;
+
+&lt;p&gt;Our final experiment uses NCA to explore this idea. We run the same cellular dynamics (NCA neural network weights) across several flowers while varying the genetic information (initial state of the seed cell). Our training objective involved three separate targets: the rose, the marigold, and the crocus, each with its own trainable “seed state.” Early in training, our model produced blurry flower-like images with various mixtures of red, yellow, and purple. As training progressed, these images diverged from one another and began to resemble the three target images.&lt;/p&gt;
+
+&lt;p&gt;Even though the final shapes diverge, you can still see shared features in the “embryonic” versions of the flowers. If you watch the video below, you can see that the three “embryos” all start out with red, yellow, and purple coloration. The developing crocus, in particular, has both red and purple petals during growth steps 10-20.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;seeds_video&quot; style=&quot;width:100%;min-width:250px;&quot; poster=&quot;/assets/studying-growth/seeds.png&quot;&gt;
+      &lt;source src=&quot;/assets/studying-growth/seeds.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;seeds_video_button&quot; onclick=&quot;playPauseSeeds()&quot;&gt;Play&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt; 
+function playPauseSeeds() { 
+  var video = document.getElementById(&quot;seeds_video&quot;); 
+  var button = document.getElementById(&quot;seeds_video_button&quot;);
+  if (video.paused) {
+    video.play();
+    button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+&lt;/script&gt;
+
+&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
+  &lt;a href=&quot;https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Speciation&lt;/span&gt; with NCA&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;p&gt;From a dynamical systems perspective, this NCA model has three different &lt;a href=&quot;http://www.scholarpedia.org/article/Basin_of_attraction&quot;&gt;&lt;em&gt;basins of attraction&lt;/em&gt;&lt;/a&gt;, one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final organisms. Then we could use its “DNA” vectors to construct a “tree of life,” showing how closely-related various organisms are&lt;sup id=&quot;fnref:fn9&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn9&quot; class=&quot;footnote&quot;&gt;7&lt;/a&gt;&lt;/sup&gt; and at what point in training they split from a common ancestor.&lt;/p&gt;
+
+&lt;h2 id=&quot;final-remarks&quot;&gt;Final remarks&lt;/h2&gt;
+
+&lt;p&gt;There are a number of ways that NCA can contribute to civilization. The prospect of isolating the top one hundred signaling molecules used in natural morphogenesis, tracking their concentrations during growth in various tissues, and then training an NCA to reproduce the same growth patterns with the same morphogens is particularly exciting. This would allow us to obtain a complex model of biological morphogenesis with some degree of predictive power. Such a model could allow us to solve for the optimal cocktail of signaling molecules needed to speed up, slow down, or otherwise modify cell growth. It could even be used to adversarially slow down the growth of cancerous cells in a patient with cancer or artificially accelerate the growth of bone cells in a patient with osteoporosis.&lt;/p&gt;
+
+&lt;p&gt;One of the themes of this post is that &lt;em&gt;patterns of growth are surprisingly similar&lt;/em&gt; across organisms. This hints at the fact that there are principles of growth that transcend biology. These principles can be studied in a computational substrate in a way that gives useful insights about the original biological systems. These insights, we believe, shine a new light on the everyday miracle of growth.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/studying-growth/ferns.jpeg&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+
+&lt;!-- _Now two organisms are exactly alike. Each grows and develops in a unique fashion within the limits that its environment permits. Every species, however, has its own way of growing, and each has its own rate of growth. The range of variations is overwhelming. In as little as three months, for example, one of the grasses native to tropical Ceylon, a bamboo, may shoot up to a height of 120 feet, as tall as a 12-story building, by growing at an average rate of 16 inches a day. A eucalyptus native to Uganda has been known to grow 45 feet in two years, whereas dwarf ivy generally grows one inch a year. The majestic sequoia of California, which starts out as a seed weighing only one three-thousandth of an ounce, may end up 270 feet tall, with a base diameter of 40 feet and a weight estimated at 6,200 tons. It takes more than 1,000 years for the sequoia to achieve the feat of multiplying 600 billion times in mass._
+
+_The animal kingdom, too, has its champions of growth. The blue whale, which cruises the oceans from the North to the South Pole, begins life as a barely visible egg weighing only a fraction of an ounce. At birth, it weighs from two to three tons. When it is weaned, at about seven months, it is 52 feet long and weighs 23 tons, having gained an average of 200 pounds a day. By the time it reaches maturity, in about 13 years, the blue whale is serious competition for many submarines. Then it may weight more than 85 tons and exceet 80 feet in length._ --&gt;
+
+&lt;!-- 
+Just as there is a shared but invisible structure -- based on Newtonian physics -- that underlies the motion of the planets or of a falling apple, so too there is shared structure to the growth rules of multicellular organisms. Of course, it&apos;s harder to reduce this structure to a clean set of equations than in physics. There are more exceptions and special cases. But since it reoccurs in diverse and unrelated biological organisms, there is good reason to believe that we can reproduce it in simulations of multicellular systems.
+ --&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:fn4&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;In fact, Conway’s Game of Life is Turing Complete; it can be used to simulate computations of arbitrary complexity. It can even be used to &lt;a href=&quot;https://twitter.com/AlanZucconi/status/1315967202797981696&quot;&gt;simulate itself&lt;/a&gt;. &lt;a href=&quot;#fnref:fn4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Out only interference is to convert growin regions to mature regions and mature regions to frozen regions every 160 steps. This causes the system to move on to the next unit of growth. &lt;a href=&quot;#fnref:fn3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;And his student Hilde &lt;a href=&quot;#fnref:fn2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn5&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;“&lt;a href=&quot;https://www.nobelprize.org/prizes/medicine/1935/spemann/lecture/&quot;&gt;The Organizer-Effect in Embryonic Development&lt;/a&gt;,” Hans Spemann, Nobel Lecture, December 12, 1935 &lt;a href=&quot;#fnref:fn5&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn7&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;&lt;em&gt;Growth&lt;/em&gt;, p38. &lt;a href=&quot;#fnref:fn7&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn6&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;There’s probably an analogy to be made to fourier analysis where the spatial modes are reconstructed in order of their principal components. Like decompressing a .JPEG file. &lt;a href=&quot;#fnref:fn6&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn9&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;These “organisms” are actually &lt;em&gt;images of organisms&lt;/em&gt; in this context. &lt;a href=&quot;#fnref:fn9&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">We train simulated cells to grow into organisms by communicating with their neighbors. Then we use them to study patterns of growth found in nature.</summary></entry><entry><title type="html">A Tutorial on Structural Optimization</title><link href="http://greydanus.github.io/2022/05/08/structural-optimization/" rel="alternate" type="text/html" title="A Tutorial on Structural Optimization" /><published>2022-05-08T04:00:00-07:00</published><updated>2022-05-08T04:00:00-07:00</updated><id>http://greydanus.github.io/2022/05/08/structural-optimization</id><content type="html" xml:base="http://greydanus.github.io/2022/05/08/structural-optimization/">&lt;style&gt;
 .wrap {
     max-width: 900px;
 }
@@ -2284,215 +2669,4 @@ if(parseInt(getBrowserSize().width) &gt; 600){
       &lt;p&gt;Which makes the fact that this article is about CA pretty meta. &lt;a href=&quot;#fnref:fn4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">We treat every pixel in an image as a biological cell. We train these cells to signal to one another and determine what digit they are shaping.</summary></entry><entry><title type="html">Lagrangian Neural Networks</title><link href="http://greydanus.github.io/2020/03/10/lagrangian-nns/" rel="alternate" type="text/html" title="Lagrangian Neural Networks" /><published>2020-03-10T04:00:00-07:00</published><updated>2020-03-10T04:00:00-07:00</updated><id>http://greydanus.github.io/2020/03/10/lagrangian-nns</id><content type="html" xml:base="http://greydanus.github.io/2020/03/10/lagrangian-nns/">&lt;p&gt;Accurate models of the world are built on notions of its underlying symmetries. In physics, these symmetries correspond to conservation laws, such as for energy and momentum. But neural network models struggle to learn these symmetries. To address this shortcoming, last year I introduced a class of models called Hamiltonian Neural Networks (HNNs) that can learn these invariant quantities directly from (pixel) data. In this project, some friends and I are going to introduce a complimentary class of models called Lagrangian Neural Networks (LNNs). These models are able to learn Lagrangian functions straight from data. They’re interesting because, like HNNs, they can learn exact conservation laws, but unlike HNNs they don’t require canonical coordinates.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:90%&quot;&gt;
-	&lt;img src=&quot;/assets/lagrangian-nns/overall-idea.png&quot; style=&quot;padding: 0px 0px 10px 0px;&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto; width:90%&quot;&gt;&lt;b&gt;Figure 1:&lt;/b&gt; A Lagrangian Neural Network learns the Lagrangian of a double pendulum. In this post, we introduce Lagrangian Neural Networks (LNNs). Like Hamiltonian Neural Networks, they can learn arbitrary conservation laws. In some cases they are better since they do not require canonical coordinates.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;div style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;&quot;&gt;
-	&lt;a href=&quot;https://arxiv.org/abs/2003.04630&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Read the paper&lt;/a&gt;
-	&lt;a href=&quot;https://colab.research.google.com/drive/1CSy-xfrnTX28p1difoTA8ulYw0zytJkq&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Run&lt;/span&gt; in browser&lt;/a&gt;
-	&lt;a href=&quot;https://github.com/MilesCranmer/lagrangian_nns&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Get the code&lt;/a&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;a-scientific-poem&quot;&gt;“A scientific poem”&lt;/h2&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Joseph-Louis_Lagrange&quot;&gt;Joseph-Louis&lt;/a&gt; &lt;a href=&quot;https://www.famousscientists.org/joseph-louis-lagrange/&quot;&gt;Lagrange&lt;/a&gt; must have known that life is short. He was born to a family of 11 children and only two of them survived to adulthood. Then he spent his adult years in Paris, living through the Reign of Terror and &lt;a href=&quot;https://books.google.com/books?id=_q7zCAAAQBAJ&amp;amp;pg=PR28&amp;amp;lpg=PR28&amp;amp;dq=It+took+only+a+moment+to+cause+this+head+to+fall+and+a+hundred+years+will+not+suffice+to+produce+its+like.&amp;amp;source=bl&amp;amp;ots=pP-iyGhBRq&amp;amp;sig=ACfU3U1CqtjR-wSD1Zlt3uZX6SEbUwNRqg&amp;amp;hl=en&amp;amp;sa=X&amp;amp;ved=2ahUKEwji8pma_pDoAhXXqZ4KHUl0DZcQ6AEwAHoECAgQAQ#v=onepage&amp;amp;q=It%20took%20only%20a%20moment%20to%20cause%20this%20head%20to%20fall%20and%20a%20hundred%20years%20will%20not%20suffice%20to%20produce%20its%20like.&amp;amp;f=false&quot;&gt;losing some of his closest friends to the guillotine&lt;/a&gt;. Sometimes I wonder if these hardships made him more sensitive to the world’s ephemeral beauty, and more determined to make the most of his short time here.&lt;/p&gt;
-
-&lt;p&gt;Indeed, his path into research was notable for its passion and suddenness. Until the age of 17, Lagrange was a normal youth who planned to become a lawyer and showed no particular interest in mathematics. But all of that changed when he read an inspiring memoir by Edmund Halley and decided to embark on an obsessive course of self-study in mathematics. A mere two years later he published the principle of least action.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“I will deduce the complete mechanics of solid and fluid bodies using the principle of least action.” – Joseph-Louis Lagrange, age 20&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:50%&quot;&gt;
-	&lt;img src=&quot;/assets/lagrangian-nns/lagrange.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot;&gt;A French stamp commemorating Lagrange.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Lagrange’s work was notable for its purity and beauty, especially in contrast to the chaotic and broken times that he lived through. Expressing admiration for the principle of least action, William Hamilton once called it &lt;a href=&quot;https://books.google.com/books?id=j_kJCAAAQBAJ&amp;amp;pg=PA130&amp;amp;lpg=PA130&amp;amp;dq=joseph+lagrange+beauty+of+virtual+work&amp;amp;source=bl&amp;amp;ots=771naVFjo6&amp;amp;sig=ACfU3U0L4Bj9IabO1jFh7jJK0pEgoVVfWg&amp;amp;hl=en&amp;amp;sa=X&amp;amp;ved=2ahUKEwjAppGZtY7oAhXcGTQIHfp3CncQ6AEwAHoECAwQAQ#v=onepage&amp;amp;q=joseph%20lagrange%20beauty%20of%20virtual%20work&amp;amp;f=false&quot;&gt;“a scientific poem”&lt;/a&gt;. In the following sections, I’ll introduce you to this “scientific poem” and then use it to derive Lagrangian Neural Networks.&lt;/p&gt;
-
-&lt;h2 id=&quot;the-principle-of-least-action&quot;&gt;The Principle of Least Action&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;The Action.&lt;/strong&gt; Start with any physical system that has coordinates \(x_t = (q, \dot q)\). For example, we might describe a double pendulum using the angles of its arms and their respective angular velocities. Now, one simple observation is that these coordinates must start in one state \(x_0\) and end up in another, \(x_1\). There are many paths that these coordinates might take as they pass from \(x_0\) to \(x_1\), and we can associate each of these paths with a scalar value \(S\) called “the action.” Lagrangian mechanics tells us that the action is related to kinetic and potential energy, \(T\) and \(V\), by a functional&lt;/p&gt;
-
-&lt;p&gt;\(\begin{equation}
-S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
-\label{eq:eqn1}
-\tag{1}
-\end{equation}\)
-&lt;!-- &lt;div class=&quot;thecap&quot; style=&quot;text-align:center; width:50%&quot;&gt;&lt;b&gt;Figure 3:&lt;/b&gt; Possible paths from x0 to x1, plotted in configuration space. The action is stationary (δS = 0) for small perturbations (δq) to the path that the system actually takes (red). .&lt;/div&gt; --&gt;&lt;/p&gt;
-
-&lt;p&gt;At first glance, \(S\) seems like an arbitrary combination of energies. But it has one remarkable property. It turns out that for all possible paths between \(x_0\) and \(x_1\), there is only one path that gives a stationary value of \(S\). Moreover, that path is the one that nature always takes.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:50%&quot;&gt;
-	&lt;img src=&quot;/assets/lagrangian-nns/paths.png&quot; style=&quot;width:100%&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto;&quot;&gt;&lt;b&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Lagrangian_mechanics#/media/File:Least_action_principle.svg&quot; target=&quot;_blank&quot;&gt;Figure 3:&lt;/a&gt;&lt;/b&gt; Possible paths from q0 to q1, plotted in &lt;a href=&quot;https://en.wikipedia.org/wiki/Configuration_space_(physics)&quot;&gt;configuration space&lt;/a&gt;. The action is stationary (δS = 0) for small perturbations (δq) to the path that the system actually takes (red).&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;The Euler-Lagrange equation.&lt;/strong&gt; In order to “deduce the complete mechanics of solid and fluid bodies,” all Lagrange had to do was constrain every path to be a stationary point in \(S\). The modern principle of least action looks very similar: we let \(\mathcal{L} \equiv T - V\) (this is called the Lagrangian), and then write the constraint as \( \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} = \frac{\partial \mathcal{L}}{\partial q_j}\). Physicists call this constraint equation the &lt;em&gt;Euler-Lagrange equation&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;When you first encounter it, the principle of least action can seem abstract and impractical. But it can be quite easy to apply in practice. Consider, for example, a single particle with mass \(m\), position \(q\), and potential energy \(V(q)\):&lt;/p&gt;
-
-&lt;p&gt;&lt;span id=&quot;longEqnWithSmallScript_A&quot; style=&quot;display:block; margin-left:auto;margin-right:auto;text-align:center;&quot;&gt;
-\(\begin{align}
-\scriptstyle \mathcal{L} &amp;amp; \scriptstyle ~=~ -V(q) + \frac{1}{2} m \dot q ^2 &amp;amp; \scriptstyle \text{write down the Lagrangian} \quad (2)\\
-\scriptstyle -\frac{\partial V(q)}{\partial q} &amp;amp; \scriptstyle ~=~ m \ddot q &amp;amp; \scriptstyle \text{apply Euler-Lagrange} \quad (3)\\
-\scriptstyle F &amp;amp; \scriptstyle ~=~ ma &amp;amp; \scriptstyle \text{this is Newton&apos;s second law } \quad (4)\\
-\end{align}\)
-&lt;/span&gt;
-&lt;span id=&quot;longEqnWithLargeScript_A&quot; style=&quot;display:block; margin-left:auto;margin-right:auto;text-align:center;&quot;&gt;
-\(\begin{align}
-\mathcal{L} &amp;amp; ~=~ -V(q) + \frac{1}{2} m \dot q ^2 &amp;amp; \text{write down the Lagrangian} \quad (2)\\
--\frac{\partial V(q)}{\partial q} &amp;amp; ~=~ m \ddot q &amp;amp;  \text{apply the Euler-Lagrange equation to } \mathcal{L} \quad (3)\\
- F &amp;amp; ~=~ ma &amp;amp; \text{this is Newton&apos;s second law } \quad (4)\\
-\end{align}\)
-&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Nature’s cost function.&lt;/strong&gt; As a physicist who now does machine learning, I can’t help but think of \(S\) as Nature’s cost function. After all, it is a scalar quantity for which Nature finds a stationary point, usually a minimum, in order to generate the dynamics of the entire universe. The analogy gets even more interesting at small spatial scales, where quantum wavefunctions can be interpreted as Nature’s way of exploring multiple paths that are all very close to the path of stationary action.&lt;sup id=&quot;fnref:fn1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;how-we-usually-solve-lagrangians&quot;&gt;How we usually solve Lagrangians&lt;/h2&gt;
-
-&lt;p&gt;Ever since Lagrange introduced the notion of stationary action, physicists have followed a simple formula:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Find analytic expressions for kinetic and potential energy&lt;/li&gt;
-  &lt;li&gt;Write down the Lagrangian&lt;/li&gt;
-  &lt;li&gt;Apply the Euler-Lagrange constraint&lt;/li&gt;
-  &lt;li&gt;Solve the resulting system of differential equations&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;But these analytic solutions are rather crude approximations of the real world. An alternative approach is to assume that the Lagrangian is an arbitrarily complicated function – a black box that does not permit analytical solutions. When this is the case, we must give up all hope of writing the Lagrangian out by hand. However, there is still a chance that we can parameterize it with a neural network and learn it straight from data. That is the main contribution of our recent paper.&lt;/p&gt;
-
-&lt;h2 id=&quot;how-to-learn-lagrangians&quot;&gt;How to learn Lagrangians&lt;/h2&gt;
-
-&lt;p&gt;The process of learning a Lagrangian differs from the traditional approach, but it also involves four basic steps:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Obtain data from a physical system&lt;/li&gt;
-  &lt;li&gt;Parameterize the Lagrangian with a neural network (\(\mathcal{L}\equiv \mathcal{L}_{\theta}\)).&lt;/li&gt;
-  &lt;li&gt;Apply the Euler-Lagrange constraint&lt;/li&gt;
-  &lt;li&gt;Backpropagate through the constraint to train a parametric model that approximates the true Lagrangian&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;The first two steps are fairly straightforward, and we’ll see that automatic differentiation makes the fourth pretty painless. So let’s focus on step 3: applying the Euler-Lagrange constraint. Our angle of attack will be to write down the constraint equation, treat \(\mathcal{L}\) as a differentiable blackbox function, and see whether we can still obtain dynamics:&lt;/p&gt;
-
-&lt;p&gt;&lt;span id=&quot;longEqnWithSmallScript_B&quot; style=&quot;display:block; margin-left:auto;margin-right:auto;text-align:center;&quot;&gt;
-\(\begin{align}
-&amp;amp; \scriptstyle \frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} \scriptstyle ~=~ \frac{\partial \mathcal{L}}{\partial q_j} &amp;amp; \scriptstyle \text{Euler-Lagrange } (5)\\
-&amp;amp;\scriptstyle \frac{d}{dt} \nabla_{\dot q} \mathcal{L} \scriptstyle ~=~ \nabla_{q} \mathcal{L} &amp;amp; \scriptstyle \text{vectorize } (6)\\
-&amp;amp;\scriptstyle \nabla_q \mathcal{L} \scriptstyle ~=~ (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})\ddot q + (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L}) \dot q &amp;amp; \scriptstyle \text{expand }\frac{d}{dt} \text{ }(7)\\
-&amp;amp;\scriptstyle \ddot q \scriptstyle ~=~ (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})^{-1}[\nabla_q \mathcal{L} - (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L})\dot q] &amp;amp; \scriptstyle \text{solve for } \ddot q \text{ }(8)\\
-\end{align}\)
-&lt;/span&gt;
-&lt;span id=&quot;longEqnWithLargeScript_B&quot; style=&quot;display:block; margin-left:auto;margin-right:auto;text-align:center;&quot;&gt;
-\(\begin{align}
-\frac{d}{dt} \frac{\partial \mathcal{L}}{\partial \dot q_j} &amp;amp;= \frac{\partial \mathcal{L}}{\partial q_j} &amp;amp; \text{the Euler-Lagrange equation} \quad (5)\\
-\frac{d}{dt} \nabla_{\dot q} \mathcal{L} &amp;amp;= \nabla_{q} \mathcal{L} &amp;amp; \text{switch to vector notation} \quad (6)\\
-(\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})\ddot q + (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L}) \dot q &amp;amp;= \nabla_q \mathcal{L} &amp;amp; \text{expand time derivative }\frac{d}{dt} \quad (7)\\
-\ddot q &amp;amp;= (\nabla_{\dot q}\nabla_{\dot q}^{\top}\mathcal{L})^{-1}[\nabla_q \mathcal{L} - (\nabla_{q}\nabla_{\dot q}^{\top}\mathcal{L})\dot q] &amp;amp; \text{matrix inverse to solve for } \ddot q \quad (8)\\
-\end{align}\)
-&lt;/span&gt;&lt;/p&gt;
-
-&lt;p&gt;For a given set of coordinates \(x_t=(q_t,\dot q_t)\), we now have a method for calculating \(\dot x_t=(\dot q_t,\ddot q_t)\) from a blackbox Lagrangian. We can integrate this quantity to obtain the dynamics of the system. And in the same manner as Hamiltonian Neural Networks, we can learn \(\mathcal{L_{\theta}}\) by differentiating the MSE loss between \(\dot x_t^{\mathcal{L_{\theta}}}\) and \(\dot x_t^{\textrm{true}}\).&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Implementation.&lt;/strong&gt; If you look closely at Equation 8, you may notice that it involves both the Hessian and the gradient of a neural network during the forward pass of the LNN. This is not a trivial operation, but modern automatic differentiation makes things surprisingly smooth. Written in &lt;a href=&quot;https://github.com/google/jax&quot;&gt;JAX&lt;/a&gt;, Equation 8 is just a few lines of code:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;q_tt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-	&lt;span class=&quot;n&quot;&gt;jax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numpy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linalg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pinv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hessian&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lagrangian&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-		&lt;span class=&quot;n&quot;&gt;jax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lagrangian&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-		&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jacfwd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lagrangian&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;q&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q_t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;q_t&lt;/span&gt;
-	&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;learning-real-lagrangians&quot;&gt;Learning real Lagrangians&lt;/h2&gt;
-
-&lt;p&gt;In our paper, we conduct several experiments to validate this approach. In the first, we show that Lagrangian Neural Networks can learn the dynamics of a double pendulum.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Double pendulum.&lt;/strong&gt; The double pendulum is a dynamics problem that regular neural networks struggle to fit because they have no prior for conserving the total energy of the system. It is also a problem where HNNs struggle, since the canonical coordinates of the system are not trivial to compute (see equations 1 and 2 of &lt;a href=&quot;https://diego.assencio.com/?index=e5ac36fcb129ce95a61f8e8ce0572dbf&quot;&gt;this derivation&lt;/a&gt; for example). But in contrast to these baseline methods, Figure 4 shows that LNNs are able to learn the Lagrangian of a double pendulum.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
-	&lt;img src=&quot;/assets/lagrangian-nns/dblpend_error.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto;&quot;&gt;&lt;b&gt;Figure 4:&lt;/b&gt; Learning the dynamics of a double pendulum. Unlike the baseline neural network, our model learns to approximately conserve the total energy of the system. This is a consequence of the strong physical inductive bias of the Euler-Lagrange constraint.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;It’s also interesting to compare qualitative results. In the video below, we use a baseline neural network and an LNN to predict the dynamics of a double pendulum, starting from the same initial state. You’ll notice that both trajectories seem reasonable until the end of the video, when the baseline model shifts to states that have much lower total energies.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:80%&quot;&gt;
-	&lt;div style=&quot;overflow:hidden; padding-top: 40%; position: relative;&quot;&gt;
-		&lt;iframe style=&quot;border: 0;height: 100%;left: 0;position: absolute;top: 0;width: 100%;&quot; src=&quot;https://www.youtube.com/embed/ulQKNtTEuJI&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-	&lt;/div&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:center; display: block; margin-left: auto; margin-right: auto; width:60%&quot;&gt;&lt;b&gt;Figure 5:&lt;/b&gt; Dynamics predictions of a baseline (left) versus an LNN (right)&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;Relativistic particle.&lt;/strong&gt; Another system we considered was a particle of mass \(m=1\) moving at a relativistic velocity through a potential \(g\) with \(c=1\). The Lagrangian of the system is \(\mathcal{L} = ((1 - \dot{q}^2)^{-1/2} - 1) + g q\) and it is interesting because existing Hamiltonian and Lagrangian learning approaches fail. HNNs fail because the canonical momenta of the system are hard to compute. Deep Lagrangian Networks&lt;sup id=&quot;fnref:fn3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn3&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; fail because they make restrictive assumptions about the form of the Lagrangian.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:80%&quot;&gt;
-	&lt;img src=&quot;/assets/lagrangian-nns/relativistic.png&quot; /&gt;
-	&lt;div class=&quot;thecap&quot; style=&quot;text-align:left; display:block; margin-left: auto; margin-right: auto;&quot;&gt;&lt;b&gt;Figure 6:&lt;/b&gt; Learning the dynamics of a relativistic particle. In the first plot (a), an HNN model fails to model the system because the default coordinates are non-canonical. In the second plot (b), we provide the HNN with proper canonical coordinates and it succeeds. In the third plot (c), we show that an LNN can fit the data even in the absence of canonical coordinates.&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;related-work&quot;&gt;Related Work&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Learning invariant quantities.&lt;/strong&gt; This approach is similar in spirit to &lt;a href=&quot;https://greydanus.github.io/2019/05/15/hamiltonian-nns/&quot;&gt;Hamiltonian Neural Networks&lt;/a&gt; (HNNs) and Hamiltonian Generative Networks&lt;sup id=&quot;fnref:fn2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn2&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; (HGNs). In fact, this blog post was written as a compliment to the original HNN post and it has the same fundamental motivations. Unlike these previous works, our aim here is to learn a Lagrangian rather than a Hamiltonian so as not to restrict the inputs to being canonical coordinates. It’s worth noting that once we learn a Lagrangian, we can always use it to obtain the value of a Hamiltonian using the &lt;a href=&quot;https://en.wikipedia.org/wiki/Legendre_transformation&quot;&gt;Legendre transformation&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Deep Lagrangian Networks (DeLaN, ICLR’19).&lt;/strong&gt; Another closely related work is Deep Lagrangian Networks&lt;sup id=&quot;fnref:fn3:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn3&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; in which the authors show how to learn specific types of Lagrangian systems. They assume that the kinetic energy is an inner product of the velocity, which works well for rigid body dynamics such as those in robotics. However, there are many physical systems that do not have this specific form. Some simple examples include a charged particle in a magnetic field or a fast-moving object with relativistic corrections. We see LNNs as a complement to DeLaNs in that they cover the cases where DeLaNs struggle but are less amenable to robotics applications.&lt;/p&gt;
-
-&lt;h2 id=&quot;closing-thoughts&quot;&gt;Closing Thoughts&lt;/h2&gt;
-
-&lt;!-- Looking forward, we continue to be excited about the connection between machine learning and the principle of stationary action. One thing we&apos;d like to try is to write a loss function that _is_ the action \\(S\\) and then minimize it with gradient descent to obtain dynamics. On a similar note, we&apos;d like to think more about the connection between existing neural network training dynamics and the principle of least action. One of Yann LeCun&apos;s most beautiful papers, for example, is a derivation of backpropagation via the Euler-Lagrange constraint. This may be the proper way to speak about optimization dynamics such as catastrophic forgetting and deep double descent. --&gt;
-
-&lt;p&gt;The principle of stationary action is a unifying force in physics. It represents a consistent “law of the universe” which holds true in every system humans have ever studied: from the very small&lt;sup id=&quot;fnref:fn1:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; to the very large, from the very slow to the very fast. Lagrangian Neural Networks represent a different sort of unification. They aim to strengthen the connection between real-world data and the underlying physical constraints that it obeys. This gives LNNs their own sort of beauty, a beauty that Lagrange himself may have admired.&lt;/p&gt;
-
-&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
-
-&lt;script&gt;
-    function getBrowserSize(){
-       var w, h;
-
-         if(typeof window.innerWidth != &apos;undefined&apos;)
-         {
-          w = window.innerWidth; //other browsers
-          h = window.innerHeight;
-         } 
-         else if(typeof document.documentElement != &apos;undefined&apos; &amp;&amp; typeof      document.documentElement.clientWidth != &apos;undefined&apos; &amp;&amp; document.documentElement.clientWidth != 0) 
-         {
-          w =  document.documentElement.clientWidth; //IE
-          h = document.documentElement.clientHeight;
-         }
-         else{
-          w = document.body.clientWidth; //IE
-          h = document.body.clientHeight;
-         }
-       return {&apos;width&apos;:w, &apos;height&apos;: h};
-}
-
-if(parseInt(getBrowserSize().width) &lt; 800){
- document.getElementById(&quot;longEqnWithLargeScript_A&quot;).style.display = &quot;none&quot;;
-}
-if(parseInt(getBrowserSize().width) &gt; 800){
- document.getElementById(&quot;longEqnWithSmallScript_A&quot;).style.display = &quot;none&quot;;
-}
-
-if(parseInt(getBrowserSize().width) &lt; 800){
- document.getElementById(&quot;longEqnWithLargeScript_B&quot;).style.display = &quot;none&quot;;
-}
-if(parseInt(getBrowserSize().width) &gt; 800){
- document.getElementById(&quot;longEqnWithSmallScript_B&quot;).style.display = &quot;none&quot;;
-}
-&lt;/script&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:fn1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Here \(e^{-S/h}\) is actually the probability of a particular path occurring. Because \(h\) is small, we usually only observe the minimum value of \(S\) on large scales. See &lt;a href=&quot;https://www.feynmanlectures.caltech.edu/II_19.html&quot;&gt;Feynman lecture 19&lt;/a&gt; for more on this. &lt;a href=&quot;#fnref:fn1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:fn1:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn3&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Lutter, M., Ritter, C., and Peters, J. &lt;a href=&quot;https://arxiv.org/abs/1907.04490&quot;&gt;Deep lagrangian networks: Using physics as model prior for deep learning&lt;/a&gt;, &lt;em&gt;International Conference on Learning Representations&lt;/em&gt;, 2019. &lt;a href=&quot;#fnref:fn3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:fn3:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn2&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Toth, P., Rezende, D. J., Jaegle, A., Racanière, S., Botev, A., &amp;amp; Higgins, I. &lt;a href=&quot;https://arxiv.org/abs/1909.13789&quot;&gt;Hamiltonian Generative Networks&lt;/a&gt;, &lt;em&gt;International Conference on Learning Representations&lt;/em&gt;, 2020. &lt;a href=&quot;#fnref:fn2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>With Miles Cranmer and Stephan Hoyer</name></author><summary type="html">As a complement to Hamiltonian Neural Networks, I discuss how to parameterize Lagrangians with neural networks and then learn them from data.</summary></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><summary type="html">We treat every pixel in an image as a biological cell. We train these cells to signal to one another and determine what digit they are shaping.</summary></entry></feed>
