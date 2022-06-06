@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "A Tutorial on Structural Optimization"
+title:  "A Structural Optimization Tutorial"
 excerpt: "Structural optimization lets us design trusses, bridges, and buildings starting from the physics of elastic materials. Let's code it up, from scratch, in 180 lines."
 date:   2022-05-08 11:00:00
 mathjax: true
