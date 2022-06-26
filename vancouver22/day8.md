@@ -1,5 +1,5 @@
 ---
-title: "ENC Vancouver Update Day 8: Out of the Eater"
+title: "Day 8: Out of the Eater"
 layout: page
 permalink: vancouver22/day8
 includelink: true

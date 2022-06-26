@@ -1,5 +1,5 @@
 ---
-title: "ENC Vancouver Update Day 5: Notes from the Field"
+title: "Day 5: Notes from the Field"
 layout: page
 permalink: vancouver22/day5
 includelink: true

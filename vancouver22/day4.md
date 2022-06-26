@@ -1,5 +1,5 @@
 ---
-title: "ENC Vancouver Update Day 4: Refugees"
+title: "Day 4: Refugees"
 layout: page
 permalink: vancouver22/day4
 includelink: true

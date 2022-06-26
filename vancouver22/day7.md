@@ -1,5 +1,5 @@
 ---
-title: "ENC Vancouver Update Day 7: Foundations"
+title: "Day 7: Foundations"
 layout: page
 permalink: vancouver22/day7
 includelink: true

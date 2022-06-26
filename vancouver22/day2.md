@@ -1,5 +1,5 @@
 ---
-title: "ENC Vancouver Update Day 2: Simon Fraser and Hidden Gifts"
+title: "Day 2: Simon Fraser and Hidden Gifts"
 layout: page
 permalink: vancouver22/day2
 includelink: true

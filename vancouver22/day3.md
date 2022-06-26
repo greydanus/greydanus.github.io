@@ -1,5 +1,5 @@
 ---
-title: "ENC Vancouver Update Day 3: Evangelism and the Character of God"
+title: "Day 3: Evangelism and the Character of God"
 layout: page
 permalink: vancouver22/day3
 includelink: true
