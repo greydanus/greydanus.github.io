@@ -1,5 +1,5 @@
 ---
-title: "ENC Vancouver Update Day 6: Take up your Lyre and Play"
+title: "Day 6: Take up your Lyre and Play"
 layout: page
 permalink: vancouver22/day6
 includelink: true

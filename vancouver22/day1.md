@@ -1,11 +1,12 @@
 ---
-title: "ENC Vancouver Update Day 1: Travel"
+title: "Day 1: Travel"
 layout: page
 permalink: vancouver22/day1
 includelink: true
 ---
 
 <div style="display: block; margin-left: auto; margin-right: auto; width:100%; text-align:center;">
+  <a href="day0" id="linkbutton">Previous day</a>
   <a href="../../vancouver22" id="linkbutton">Table of Contents</a>
   <a href="day2" id="linkbutton">Next day</a>
 </div>
