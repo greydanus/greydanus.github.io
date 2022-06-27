@@ -1,5 +1,5 @@
 ---
-title: "Day 9: No update"
+title: "Day 9: Last Night in BC"
 layout: page
 permalink: vancouver22/day9
 includelink: true
@@ -14,7 +14,9 @@ includelink: true
 
 Hello everyone,
 
-This is an update to tell you that, ironically, there will be no update tonight. Some interesting things happened today and I will touch on them in tomorrow's update. Since it's my last night in Vancouver, I'll be spending the extra time with the team.
+Tonight is our last night in BC. On this trip, I've grown to think of my teammates as family; tonight I'll be skipping my regular voluminous update in order to spend extra time with them.
+
+So, ironically, this is an update to tell you tha there will be no update. Some interesting things happened today and I will touch on them in tomorrow's update.
 
 Much love from Canada -
 
