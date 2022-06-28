@@ -16,7 +16,7 @@ Hello everyone,
 
 Tonight is our last night in BC. On this trip, I've grown to think of my teammates as family; tonight I'll be skipping my regular voluminous update in order to spend extra time with them.
 
-So, ironically, this is an update to tell you tha there will be no update. Some interesting things happened today and I will touch on them in tomorrow's update.
+So, ironically, this is an update to tell you that there will be no update. Some interesting things happened today and I will touch on them in tomorrow's update.
 
 Much love from Canada -
 

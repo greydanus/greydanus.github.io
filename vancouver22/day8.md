@@ -28,9 +28,9 @@ Today my teammates and I had a day off and we used our free time to bike around 
 
 Thinking back to the gold miners who unintentionally shaped this area, especially Stanley Park, I was reminded of the idea that _"in all things God works for good"_ (Romans 8:28). I was also reminded of Samson's Riddle from Judges 14:14 -
 
-_Out of the eater came something to eat,
+_Out of the eater came something to eat,_
 
-And out of the strong came something sweet._
+_And out of the strong came something sweet._
 
 How surprising is it that a ravenous worldly hunger can lead to the creation of a place of spiritual nourishment? It's a mystery.
 
