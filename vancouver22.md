@@ -14,7 +14,8 @@ These updates give a running log of my 2022 mission trip to Vancouver, BC.
 * [Day 6: Take up your Lyre and Play](/vancouver22/day6)
 * [Day 7: Foundations](/vancouver22/day7)
 * [Day 8: Out of the Eater](/vancouver22/day8)
-* [Day 9: Last Night in BC](/vancouver22/day9)
+* [Day 9: Last night in BC](/vancouver22/day9)
+* [Day 10: Travel and Closing Remarks](/vancouver22/day10)
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
   <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
