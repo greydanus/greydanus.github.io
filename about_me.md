@@ -9,11 +9,12 @@ includelink: true
 </div>
 
 ## Links
-* [Google Scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en)
+* [Old website](https://greydanus.github.io/about.html)
+* [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en)
 * [Twitter](https://twitter.com/samgreydanus)
 * [Github](https://github.com/greydanus)
 <!-- * [Old personal website (has some old pet projects at the bottom)](/about.html) -->
-* [The Idea of God](/idea-of-god/)
+* [The idea of God](/idea-of-god/)
 * [My email](/static/email.txt)
 
 ## About me
