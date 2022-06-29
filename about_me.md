@@ -9,13 +9,13 @@ includelink: true
 </div>
 
 ## Links
-* [Old website](https://greydanus.github.io/about.html)
-* [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en)
-* [Twitter](https://twitter.com/samgreydanus)
-* [Github](https://github.com/greydanus)
-<!-- * [Old personal website (has some old pet projects at the bottom)](/about.html) -->
+* [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en) / [Twitter](https://twitter.com/samgreydanus) / [Github](https://github.com/greydanus)
 * [The idea of God](/idea-of-god/)
+* [Ten letters from Vancouver](/vancouver22)
+* [My old website](https://greydanus.github.io/about.html)
 * [My email](/static/email.txt)
+
+<html><?php  include 'citation_chart.php'; ?></html>
 
 ## About me
 
