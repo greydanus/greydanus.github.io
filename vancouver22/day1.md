@@ -25,7 +25,7 @@ We reached our hotel in the early evening and had some down time before meeting 
 
 My roommate is from Kentucky. He had been out exploring the city all day and when he got back, we met up before dinner in the room and started talking. We'd been talking for about five minutes and I had just asked him how he had come to know God (I'd been sharing my story) when he said "Sam, we have twelve days and I certainly want to tell you about it. But right now I'm just so darn tired." Well, sure enough, he was snoring in about three minutes. His name is Mark. We talked for a bit at dinner and he has a calm, upbeat demeanor -- he assured me we'll talk more when we get a free evening.
 
-Well, the Lord has been very good to us so far. We have made the trip safely and everything has gone as planned. Tomorrow, the plan is to meet the local ENC church missionaries and walk around Simon Fraser University. In the evening, we will attend the local ENC church, led by Pastor Greg Mitchell.
+Well, the Lord has been very good to us so far. We have made the trip safely and everything has gone as planned. Tomorrow, the plan is to meet the local ENC church missionaries and walk around Simon Fraser University. In the evening, we will attend the local ENC church. It is led by Pastor Greg Mitchell.
 
 Much love from Canada -
 
