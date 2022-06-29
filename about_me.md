@@ -26,7 +26,6 @@ I am a recent graduate of Dartmouth College, where I majored in physics. My work
 * 2017 – Co-captain of US team, International Physicist's Tournament
 * 2018 – Google AI Resident, Google Brain San Francisco
 * 2019 – Deep learning researcher, Oregon State and ML Collective
-* 2021 – Drafting technician, MSS Inc.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
   <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">

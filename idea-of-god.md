@@ -17,6 +17,7 @@ It was with this problem, which I couldn’t think myself out of, that I decided
 
 If you are looking to follow Christ, I would encourage you to read that quote from Matthew. The path to faith might take a long time and involve significant sacrifice, but I can tell you that nothing is more worthwhile. In Christ there is a genuinely new life: one that involves real connection to other people, unconditional love, a meaningful existence, and the chance at redemption no matter who you are.
 
+* [Ten letters](/vancouver22) from my 2022 Vancouver mission trip
 * [Jordan Peterson](https://www.youtube.com/watch?v=f-wWBGo6a2w) on the idea of God
 * [Justification](/justification/) by Seth Trimmer
 * [Mere Christianity](https://www.amazon.com/Mere-Christianity-C-S-Lewis/dp/0060652926) by CS Lewis
