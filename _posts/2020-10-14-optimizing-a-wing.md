@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Optimizing a Wing"
+title:  "Optimizing a Wing Inside a Fluid Simulation"
 excerpt: "How does physics shape flight? To show how fundamental wings are, I derive one from scratch by differentiating through a wind tunnel simulation."
 date:   2020-10-14 11:00:00
 mathjax: true
