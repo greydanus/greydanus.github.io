@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Studying Growth with Cellular Automata"
+title:  "Studying Growth with Neural Cellular Automata"
 excerpt: "We train simulated cells to grow into organisms by communicating with their neighbors. Then we use them to study patterns of growth found in nature."
 date:   2022-05-24 6:50:00
 mathjax: true
