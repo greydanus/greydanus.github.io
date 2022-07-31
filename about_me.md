@@ -10,7 +10,6 @@ includelink: true
 
 ## Links
 * [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en) / [Twitter](https://twitter.com/samgreydanus) / [Github](https://github.com/greydanus)
-* [The idea of God](/idea-of-god/)
 * [Ten letters from Vancouver](/vancouver22)
 * [My old website](https://greydanus.github.io/about.html)
 * [My email](/static/email.txt)
