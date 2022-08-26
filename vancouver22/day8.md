@@ -46,31 +46,31 @@ PS - I've attached some photos. One is of me evangelizing on the UBC campus on T
 
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/files/d8_photo1.jpeg" style="width:100%">
   </div>
 </div>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/files/d8_photo3.jpg" style="width:100%">
   </div>
 </div>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/files/d8_photo2.jpg" style="width:100%">
   </div>
 </div>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/files/d8_photo4.jpg" style="width:100%">
   </div>
 </div>
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
-  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; max-width: 400px">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/scrollwork.jpg" style="width:100%">
   </div>
 </div>

@@ -13,7 +13,7 @@ _This is [a sermon](https://subspla.sh/v2wn3rw) by Seth Trimmer on January 7, 20
 I was in the mall recently and, you know, not a whole lot of people like going to malls as much as they used to. And so they've got to find ways to kind of catch your attention. And one of the kiosks that I noticed was a virtual reality kiosk. They had these little pods and you put on these goggles and these little suits and you go in and you just kind of go into your own little world. Now, I was walking to the mall and it wasn't hopping or anything like that. But there was this little boy who was in one of these virtual reality pods and his parents that obviously paid for him to do it. And he's a pretty little boy, he was stoked on it. And so he has these goggles on and you're watching him in the middle of the mall as he’s surrounded by, you know, bath and body works. And just like everything is going on around him. But he puts on these goggles and it's the most entertaining thing in the world to watch this little boy experience a different world than anyone else currently is. And he's just looking like all around him up and down.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/shopping_mall.jpeg" style="width:100%">
     <!-- <div class="thecap" style="text-align:left">Shopping malls before Amazon Prime.</div> -->
   </div>
@@ -40,7 +40,7 @@ You can't just isolate it to your thoughts and say like, "If I can just think be
 Now, what total depravity does not mean is absolute depravity. Absolute depravity means you are as fully depraved as you ever possibly could be. And that's not nearly true of anyone, although some are giving it a good go. Total depravity just means you are inundated and everything is affected by it. It doesn't mean that you aren't acting out fully in the ways of sin. And it isn't to say that some people haven't gone further than others, but the common glue uniting the entire human story -- no matter where we are on that sin spectrum, elite level experts just pushing the boundaries of what's even possible in the realm of sin or just feeling like we're in more of a medium sort of territory -- we're all covered and stained by it. It’s an actual state of being.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/micsolana_cover.jpeg" style="width:100%">
     <!-- <div class="thecap" style="text-align:left">The modern state of being.</div> -->
   </div>
@@ -77,7 +77,7 @@ Most of us have such a low view of sin that God just kind of feels like the hall
 But every time you see an encounter of a sinful person anywhere near the presence of God in the Bible, it's terrifying. They assume they're dead. This isn't going to work. I'm unclean. I'm stained, I'm wrong. I'm unholy in every possible way. And God, he's the epitome of perfect self giving, radiant love.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/night_painting.png" style="width:100%">
   </div>
 </div>
@@ -120,7 +120,7 @@ My faith isn’t even what rescues my faith. Isn't even that which rescues some 
 If you're falling off a cliff and see two roots dangling off of it, and you have to make a choice, which one do I grab, wanting to decide which one will bear your weight. You don't need to have barely any confidence in the root that you grabbed -- just enough to grab it. But it's the actual strength of the root that will determine your salvation. You grab onto Jesus, which is the smallest amount of mustard seed faith that anyone in the room can muster. And God's amazing grace floods in. You'll never tell a story of like, “Yeah, one day, I just, I just built myself up. I just found my faith, I increased my faith, I grew my faith. And that's how I grabbed hold of Jesus.” No, Jesus grabbed hold of you.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/mines_of_moria.jpeg" style="width:100%">
     <!-- <div class="thecap" style="text-align:left">Mines of Moria.</div> -->
   </div>
@@ -139,8 +139,8 @@ In every moment of the day that is not saturated, being reminded of God's grace 
 They got scars, fam. Kindness. And love. When God our Savior appeared, he did not come to give us what we deserved. But to take it upon himself. So that as a free gift of his grace, we might be justified freely. I don't care how you feel about it. He just says it's what's real. And true. So this morning, if you would like to take communion to celebrate that, or show your gratitude for that you can close out with worship. If here this morning, you want to make that decision: Christianity is a binary thing. It's not “I'm trying to be” or “I'm working at it.” It's a grace you receive or you don't. Working at it and trying harder is not receiving the grace. Do you want to come to the party? It’s an open invitation. It’s not my party but I'm inviting you to it.
 
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
-  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; max-width: 400px">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/scrollwork.jpg" style="width:100%">
   </div>
 </div>
