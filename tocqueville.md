@@ -52,7 +52,7 @@ These are the words of a well-educated aristocrat mourning the loss of his class
 
 I established in one of the preceding chapters that men cannot do without dogmatic beliefs and that it was even very much to be wished that they have them. I add here that among all dogmatic beliefs the most desirable seem to me to be dogmatic beliefs in the matter of religion; that may be deduced very clearly even if one wants to pay attention only to the interests of this world.
 
-<u>There is almost no human action, however particular one supposes it, that does not arise from a very general idea that men have conceived of God, of his relations with the human race, of the nature of their souls, and of their duties toward those like them. One cannot keep these ideas from being the common source from which all the rest flow.</u> [emphasis by SJG]
+<u>There is almost no human action, however particular one supposes it, that does not arise from a very general idea that men have conceived of God, of his relations with the human race, of the nature of their souls, and of their duties toward those like them. One cannot keep these ideas from being the common source from which all the rest flow.</u>
 
 Men therefore have an immense interest in making very fixed ideas for themselves about God, their souls, and their general duties toward their Creator and those like them; for doubt about these first points would deliver all their actions to chance and condemn them to a sort of disorder and impotence.
 
