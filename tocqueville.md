@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: false
-title:  "Tocqueville Excerpt"
+title:  "Tocqueville excerpt"
 excerpt: "There is almost no human action, however particular one supposes it, that does not arise from a very general idea that men have conceived of God...and of their duties toward those like them."
 date:   2022-08-25 11:00:00
 mathjax: true
