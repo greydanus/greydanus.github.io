@@ -10,7 +10,7 @@ includelink: true
 
 ## Links
 * [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en) – [Twitter](https://twitter.com/samgreydanus) – [Github](https://github.com/greydanus)
-* [Ten letters from Vancouver](/vancouver22) – [Tocqueville excerpt](/tocqueville) – [Justification](/justification)
+* [Ten letters from Vancouver](/vancouver22) – [Justification](/justification)
 * [My old website](https://greydanus.github.io/about.html)
 * [My email](/static/email.txt)
 
