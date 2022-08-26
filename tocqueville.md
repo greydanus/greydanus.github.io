@@ -1,8 +1,8 @@
 ---
 layout: post
 comments: false
-title:  "Tocqueville excerpt"
-excerpt: "There is almost no human action, however particular one supposes it, that does not arise from a very general idea that men have conceived of God...and of their duties toward those like them."
+title:  "Tocqueville excerpt from Democracy in America"
+excerpt: '"I established that men cannot do without dogmatic beliefs and that it was even very much to be wished that they have them."'
 date:   2022-08-25 11:00:00
 mathjax: true
 thumbnail: /assets/tocqueville/thumbnail.png
@@ -36,11 +36,11 @@ pre {
 
 ## Preliminary remarks by SJG
 
-This page features an excerpt from _Democracy in America_ by Alexis de Tocqueville, translated and edited by Harvey C. Mansfield and Delba Winthrop. Although written nearly two hundred years ago, many of its observations remain relevant to the culture and institutions of America in 2022. Although Tocqueville writes with an ostensibly neutral voice, we should note that he is very invested in the topics he discusses. From the book's introduction,
+This page features an excerpt from _Democracy in America_ by Alexis de Tocqueville, translated and edited by Harvey C. Mansfield and Delba Winthrop. It  was written nearly two hundred years ago but many of its observations remain relevant to the culture and institutions of America in 2022. Although Tocqueville writes with an ostensibly neutral voice, we should note that he is very invested in the topics he discusses. From the book's introduction,
 
 _“The entire book that you are going to read was written under the pressure of a sort of religious terror in the author’s soul, produced by the sight of this irresistible revolution that for so many centuries has marched over all obstacles, and that one sees still advancing today amid the ruins it has made...”_
 
-These are the words of a well-educated aristocrat mourning the loss of his class' prominence and looking into the future with a mixture of awe and curiousity. With that in mind, let's let Tocqueville begin to speak for himself.
+These are the words of a well-educated aristocrat mourning the loss of his class' prominence and looking into the future with a mixture of awe and curiousity. With that in mind, let's allow Tocqueville begin to speak for himself.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:99%; display: inline-block; vertical-align: top;">

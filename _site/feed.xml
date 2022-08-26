@@ -1,140 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-08-25T23:19:19-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A blog by Sam Greydanus</subtitle><entry><title type="html">Tocqueville excerpt from Democracy in America</title><link href="http://greydanus.github.io/2022/08/25/tocqueville/" rel="alternate" type="text/html" title="Tocqueville excerpt from Democracy in America" /><published>2022-08-25T04:00:00-07:00</published><updated>2022-08-25T04:00:00-07:00</updated><id>http://greydanus.github.io/2022/08/25/tocqueville</id><content type="html" xml:base="http://greydanus.github.io/2022/08/25/tocqueville/">&lt;style&gt;
-.wrap {
-    max-width: 900px;
-}
-p {
-    font-family: sans-serif;
-    font-size: 16.75px;
-    font-weight: 300;
-    overflow-wrap: break-word; /* allow wrapping of very very long strings, like txids */
-}
-.post pre,
-.post code {
-    background-color: #fafafa;
-    font-size: 14px; /* make code smaller for this post... */
-}
-pre {
- white-space: pre-wrap;       /* css-3 */
- white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
- white-space: -pre-wrap;      /* Opera 4-6 */
- white-space: -o-pre-wrap;    /* Opera 7 */
- word-wrap: break-word;       /* Internet Explorer 5.5+ */
-}
-&lt;/style&gt;
-
-&lt;h2 id=&quot;preliminary-remarks-by-sjg&quot;&gt;Preliminary remarks by SJG&lt;/h2&gt;
-
-&lt;p&gt;This page features an excerpt from &lt;em&gt;Democracy in America&lt;/em&gt; by Alexis de Tocqueville, translated and edited by Harvey C. Mansfield and Delba Winthrop. Although written nearly two hundred years ago, many of its observations remain relevant to the culture and institutions of America in 2022. Although Tocqueville writes with an ostensibly neutral voice, we should note that he is very invested in the topics he discusses. From the book’s introduction,&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;“The entire book that you are going to read was written under the pressure of a sort of religious terror in the author’s soul, produced by the sight of this irresistible revolution that for so many centuries has marched over all obstacles, and that one sees still advancing today amid the ruins it has made…”&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;These are the words of a well-educated aristocrat mourning the loss of his class’ prominence and looking into the future with a mixture of awe and curiousity. With that in mind, let’s allow Tocqueville begin to speak for himself.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
-  &lt;div style=&quot;width:99%; display: inline-block; vertical-align: top;&quot;&gt;
-    &lt;img src=&quot;/assets/tocqueville/court-scene.jpeg&quot; style=&quot;width:100%&quot; /&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;how-in-the-united-states-religion-knows-how-to-make-use-of-democratic-institutions&quot;&gt;How, in the United States, religion knows how to make use of democratic institutions&lt;/h2&gt;
-
-&lt;p&gt;I established in one of the preceding chapters that men cannot do without dogmatic beliefs and that it was even very much to be wished that they have them. I add here that among all dogmatic beliefs the most desirable seem to me to be dogmatic beliefs in the matter of religion; that may be deduced very clearly even if one wants to pay attention only to the interests of this world.&lt;/p&gt;
-
-&lt;p&gt;&lt;u&gt;There is almost no human action, however particular one supposes it, that does not arise from a very general idea that men have conceived of God, of his relations with the human race, of the nature of their souls, and of their duties toward those like them. One cannot keep these ideas from being the common source from which all the rest flow.&lt;/u&gt;&lt;/p&gt;
-
-&lt;p&gt;Men therefore have an immense interest in making very fixed ideas for themselves about God, their souls, and their general duties toward their Creator and those like them; for doubt about these first points would deliver all their actions to chance and condemn them to a sort of disorder and impotence.&lt;/p&gt;
-
-&lt;p&gt;That, therefore, is the matter about which it is most important that each of us have fixed ideas; and unfortunately it is also the one in which it is most difficult for each person, left to himself, to come to fix his ideas solely by effort of his reason.&lt;/p&gt;
-
-&lt;p&gt;Only minds very free of the ordinary preoccupations of life, very penetrating, very agile, very practiced, can, with the aid of much time and care, break through to these so necessary truths.&lt;/p&gt;
-
-&lt;p&gt;Still we see that these philosophers themselves are almost always surrounded by uncertainties; that at each step the natural light that enlightens them is obscured and threatens to be extinguished, and that despite all their efforts, they still have been able to discover only a few contradictory notions, in the midst of which the human mind has constantly floated for thousands of years without being able to seize the truth firmly or even to find new errors. Such studies are much above the average capacity of men, and even if most men should be capable of engaging in them, it is evident that they would not have the leisure for it.&lt;/p&gt;
-
-&lt;p&gt;Some fixed ideas about God and human nature are indispensable to the daily practice of their lives, and that practice keeps them from being able to acquire them.&lt;/p&gt;
-
-&lt;p&gt;That appears to me to be unique. Among the sciences there are some that are useful to the crowd and are within its reach; others are accessible only to a few persons and are not cultivated by the majority, who need only their most remote applications; but the daily use of this [science] is indispensable to all, though its study is inaccessible to most.&lt;/p&gt;
-
-&lt;p&gt;General ideas relative to God and human nature are therefore, among all ideas, the ones it is most fitting to shield from the habitual action of individual reason and for which there is most to gain and least to lose in recognizing an authority.&lt;/p&gt;
-
-&lt;p&gt;The first object and one of the principal advantages of religions is to furnish a solution for each of these primordial questions that is clear, precise, intelligible to the crowd, and very lasting.&lt;/p&gt;
-
-&lt;p&gt;There are religions that are very false and very absurd; nevertheless one can say that every religion that remains within the circle I have just indicated and that does not claim to leave it, as several have attempted to do, in order to stop the free ascent of the human mind in all directions, imposes a salutary yoke on the intellect; and one must recognize that if it does not save men in the other world, it is at least very useful to their happiness and their greatness in this one.&lt;/p&gt;
-
-&lt;p&gt;That is above all true of men who live in free countries.&lt;/p&gt;
-
-&lt;p&gt;&lt;u&gt;When religion is destroyed in a people, doubt takes hold of the highest portions of the intellect and half paralyzes all the others. Each becomes accustomed to having only confused and changing notions about matters that most interest those like him and himself; and one defends one’s opinions badly or abandons them, and as one despairs of being able to resolve by oneself the greatest problems that human destiny presents, one is reduced, like a coward, to not thinking about them at all.&lt;/u&gt;&lt;/p&gt;
-
-&lt;p&gt;Such a state cannot fail to ennervate souls; it slackens the springs of the will and prepares citizens for servitude.&lt;/p&gt;
-
-&lt;p&gt;Not only does it then happen that they allow their freedom to be taken away, but often they give it over.&lt;/p&gt;
-
-&lt;p&gt;When authority in the matter of religion no longer exists, nor in the matter of politics, men are soon frightened at the aspect of this limitless independence. This perpetual agitation of all things makes them restive and fatigues them. As everything is moving in the world of the intellect, they want at least that all be firm and stable in the material order; and as they are no longer able to recapture their former beliefs, they give themselves a master.&lt;/p&gt;
-
-&lt;p&gt;As for me, I doubt that man can ever support a complete religious independence and an entire political freedom at once; and I am brought to think that if he has no faith, he must serve, and if he is free, he must believe.&lt;/p&gt;
-
-&lt;p&gt;I do not know, however, whether this great utility of religions is not still more among peoples where conditions are equal than among all others.&lt;/p&gt;
-
-&lt;p&gt;One must recognize that equality, which introduces great goods into the world, nevertheless suggests to men very dangerous instincts, as will be shown hereafter; &lt;u&gt;it tends to isolate them from one another and to bring each of them to be occupied with himself alone.&lt;/u&gt;&lt;/p&gt;
-
-&lt;p&gt;It opens their souls excessively to the love of material enjoyments.&lt;/p&gt;
-
-&lt;p&gt;The greatest advantage of religions is to inspire wholly contrary instincts. There is no religion that does not place man’s desires beyond and above earthly goods and that does not naturally raise his soul toward regions much superior to those of the senses. Nor is there any that does not impose on each some duties toward the human species or in common with it, and that does not thus draw him, from time to time, away from contemplation of himself. This one meets even in the most false and dangerous religions.&lt;/p&gt;
-
-&lt;p&gt;Religious peoples are therefore naturally strong in precisely the spot where democratic peoples are weak; this makes very visible how important it is that men keep to their religion when becoming equal.&lt;/p&gt;
-
-&lt;p&gt;I have neither the right nor the will to examine the supernatural means God uses to make a religious belief reach the heart of man. For the moment I view religions only from a purely human point of view; I seek the manner in which they can most easily preserve their empire in the democratic centuries that we are entering.&lt;/p&gt;
-
-&lt;p&gt;I have brought out how, in times of enlightenment and equality, the human mind consents to receive dogmatic beliefs only with difficulty and feels the need of them keenly only in the case of religion. This indicates first that in those centuries more than in all others religions ought to keep themselves discreetly within the bounds that are proper to them and not seek to leave them; for in wishing to extend their power further than religious matters, they risk no longer being believed in any matter. They ought therefore to trace carefully the sphere within which they claim to fix the human mind, and beyond that to leave it entirely free to be abandoned to itself.&lt;/p&gt;
-
-&lt;p&gt;Mohammed had not only religious doctrines descend from Heaven and placed in the Koran, but political maxims, civil and criminal laws, and scientific theories. The Gospels, in contrast, speak only of the general relations of men to God and among themselves. Outside of that they teach nothing and oblige nothing to be believed. That alone, among a thousand other reasons, is enough to show that the first of these two religions cannot dominate for long in enlightened and democratic times, whereas the second is destined to reign in these centuries as in all the others.&lt;/p&gt;
-
-&lt;p&gt;If I continue this same inquiry further, I find that for religions to be able, humanly speaking, to maintain themselves in democratic countries, they must not only confine themselves carefully to the sphere of religious matters; their power depends even more on the nature of the beliefs they profess, the external forms they adopt, and the obligations they impose.&lt;/p&gt;
-
-&lt;p&gt;What I said previously, that equality brings men to very general and vast ideas, ought to be understood principally in the matter of religion. Men who are alike and equal readily conceive the notion of a single God imposing the same rules on each of them and granting them future happiness at the same price. The idea of the unity of the human race constantly leads them back to the idea of the unity of the Creator, whereas on the contrary, men very separate from one another and very unalike willingly come to make as many divinities as there are peoples, castes, classes and families, and to trace a thousand particular paths for going to Heaven.&lt;/p&gt;
-
-&lt;p&gt;&lt;u&gt;One cannot deny that Christianity itself has in some fashion come under the influence exerted over religious beliefs by the social and political state.&lt;/u&gt;&lt;/p&gt;
-
-&lt;p&gt;At the moment when the Christian religion appeared on earth, Providence, which was undoubtedly preparing the world for its coming, had united a great part of the human species, like an immense flock, under the scepter of the Caesars. The men who composed that multitude differed much from one another, but they nevertheless had this common point: they all obeyed the same laws; and each of them was so weak and small in relation to the greatness of the prince that they all appeared equal when one came to compare them to him.&lt;/p&gt;
-
-&lt;p&gt;One must recognize that this new and particular state of humanity ought to have disposed men to receive the general truths taught by Christianity, and serves to explain the easy and rapid manner with which it then penetrated the human mind.&lt;/p&gt;
-
-&lt;p&gt;The corresponding proof came after the destruction of the Empire.&lt;/p&gt;
-
-&lt;p&gt;As the Roman world was then shattering, so to speak, into a thousand shards, each nation returned to its former individuality. Inside those nations, ranks were soon graduated to infinity; races were marked out, castes partitioned each nation into several peoples. In the midst of this common effort that seemed to bring human societies to subdivide themselves into as many fragments as it was possible to conceive, Christianity did not lose sight of the principal general ideas it had brought to light. But it nonetheless appeared to lend itself, as much as it could, to the new tendencies arising from the fragmentation of the human species. Men continued to adore one God alone as creator and preserver of all things; but each people, each city, and so to speak each man, believed himself able to obtain some separate privilege and to create for himself particular protectors before the sovereign master. Unable to divide the Divinity, they at least multiplied it and magnified its agents beyond measure; the homage due to angels and saints became an almost idolatrous worship for most Christians, and one could fear a moment might come when the Christian religion would regress to the religions it had defeated.&lt;/p&gt;
-
-&lt;p&gt;It appears evident to me that the more the barriers that separate nations within humanity and citizens within the interior of each people tend to disappear, the more the human mind is directed, as if by itself, toward the idea of a single omnipotent being, dispensing the same laws to each man equally and in the same manner. It is therefore particularly in centuries of democracy that it is important not to allow the homage rendered to secondary agents to be confused with the worship that is due only the Creator.&lt;/p&gt;
-
-&lt;p&gt;Another truth appears very clear to me: that religions should be less burdened with external practices in democratic times than in all others.&lt;/p&gt;
-
-&lt;p&gt;I have brought out, concerning the philosophic method of the Americans, that nothing revolts the human mind more in times of equality than the idea of submitting to forms. Men who live in these times suffer [representational] figures with impatience; symbols appear to them to be puerile artifices that are used to veil or atorn for their eyes truths it would be more natural to show to them altogether naked and in broad daylight; &lt;u&gt;the sight of ceremonies leaves them cold, and they are naturally brought to attach only a secondary importance to the details of worship.&lt;/u&gt;&lt;/p&gt;
-
-&lt;p&gt;Those charged with regulating the external form of religions in democratic centuries ought indeed to pay attention to these natural instincts of human intelligence in order not to struggle unnecessarily against them.&lt;/p&gt;
-
-&lt;p&gt;&lt;u&gt;I believe firmly in the necessity of forms; I know that they fix the human mind in the contemplation of abstract truths, and by aiding it to grasp them forcefully, they make it embrace them ardently.&lt;/u&gt; I do not imagine that it is possible to maintain a religion without external practices; but on the other hand, I think that in the centuries we are entering, it would be particularly dangerous to multiply them beyond measure; that one must rather restrict them, and that one ought to retain only what is absolutely necessary for the perpetuation of the dogma itself, which is the substance of religions, whereas worship is only the form. A religion that would become more minute, inflexible, and burdened with small observances at the same time that men were becoming more equal would soon see itself reduced to a flock of impassioned zealots in the midst of an incredulous multitude.&lt;/p&gt;
-
-&lt;p&gt;I know that one will not fail to object that since all religions have general and eternal truths for their object, they cannot so yield to the inconstant instincts of each century without losing the character of certainty in the eyes of men: I shall still respond here that &lt;u&gt;one must distinguish very carefully the principal opinions that constitute a belief and that form what theologians call articles of faith, from the accessory notions that are linked to them.&lt;/u&gt; Religions are obliged always to hold firm in the first, whatever the particular spirit of the times may be; but they would do well to keep from binding themselves in the same manner to the second in centuries in which everything constantly changes place and in which the mind, habituated to the moving spectacle of human things, suffers itself to be held fixed only with regret. Immobility in external and secondary things appears to me to have a chance of lasting only when civil society itself is immobile; everywhere else, I am brought to believe that it is a peril.&lt;/p&gt;
-
-&lt;p&gt;We shall see that among all the passions that equality gives birth to or favors, there is one that it renders particularly keen and that it sets in the hearts of all men at the same time: the love of well-being. The taste for well-being forms the salient and indelible feature of democratic ages.&lt;/p&gt;
-
-&lt;p&gt;One may believe that a religion that undertook to destroy this mother passion would in the end be destroyed by it; if it wanted to tear men entirely from contemplation of the goods of this world to deliver them solely to the thought of those of the other world, one can foresee that their souls would finally escape from its hands to go plunge themselves, far away from it, only in material and present enjoyments.&lt;/p&gt;
-
-&lt;p&gt;The principal business of religions is to purify, regulate, and restrain the too ardent and too exclusive taste for well-being that men in times of equality feel; but I believe that they would be wrong to try to subdue it entirely and to destroy it. They will not succeed in turning men away from love of wealth; but they can still persuade them to enrich themselves only by honest means.&lt;/p&gt;
-
-&lt;p&gt;This leads me to a final consideration that in some fashion comprises all the others. As men become more alike and equal, it is more important that religions, while carefully putting themselves out of the way of the daily movement of affairs, not collide unnecessarily with the generally accepted ideas and permanent interests that reign among the mass; for common opinion appears more and more as the first and most irresistible of powers; there is no support outside of it strong enough to permit long resistance to its blows. That is no less true in a democratic people subject to a despot than in a republic. In centuries of equality, kings often make one obey, but it is always the majority that makes one believe; it is therefore the majority that one must please in all that is not contrary to the faith.&lt;/p&gt;
-
-&lt;p&gt;I showed in my first work how American priests keep their distance from public affairs. This is the most striking, but not the only, example of their restraint. In America religion is a world apart, where the priest reigns, but which he is careful never to leave; &lt;u&gt;within its limits he guides intelligence; outside of it, he leaves men to themselves and abandons them to the independence and instability that are proper to their nature and to the times&lt;/u&gt;. I have not seen a country where Christianity wraps itself in less forms, practices, and [representational] figures than the United States, and presents ideas more clearly, simply, and generally to the human mind. Although Christians of America are divided into a multitude of sects, they all perceive their religion in the same light. This applies to Catholicism as well as to other beliefs. There are no Catholic priests who show less taste for small, individual observances, for extraordinary and particular methods of gaining salvation, or who cling more to the spirit of the law and less to its letter, than the Catholic priests of the United States; nowhere does one teach more clearly or follow better the doctrine of the Church that forbids rendering to saints the worship that is reserved only for God. Nevertheless, Catholics of America are very submissive and very sincere.&lt;/p&gt;
-
-&lt;p&gt;Another remark is applicable to the clergy of all communions: American priests do not try to attract and fix all the attentions of man on the future life; they willingly abandon a part of his heart to present cares; they seem to consider the goods of the world as important although secondary objects; if they do not associate themselves with industry, they are at least interested in its progress and applaud it, and while constantly showing to the faithful the other world as the great object of their hopes and fears, they do not forbid them from honestly searching for well-being in this one. &lt;u&gt;Far from bringing out how these two things are divided and contrary, they rather apply themselves to finding the spot at which they touch and are bound to each other.&lt;/u&gt;&lt;/p&gt;
-
-&lt;p&gt;All American priests know the intellectual empire the majority exercises and respect it. They never support any but necessary struggles against it. They do not mix in the quarrels of the parties, but they willingly adopt the general opinions of their country and time, and they let themselves go without resistance in the current of sentiments and ideas that carries away all things around them. They strive to correct their contemporaries, but they do not separate themselves from them. Public opinion is never, therefore, their enemy; rather it supports and protects them, and their beliefs reign both by the forces that are proper to them and by those of the majority that they borrow.&lt;/p&gt;
-
-&lt;p&gt;Thus it is in respecting all the democratic instincts that are not contrary to it and in taking aid from several of them that religion succeeds in struggling to its advantage against the spirit of individual independence that is the most dangerous of all to it.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; max-width: 400px&quot;&gt;
-  &lt;div style=&quot;width:99%; display: inline-block; vertical-align: top;&quot;&gt;
-    &lt;img src=&quot;/assets/justification/scrollwork.jpg&quot; style=&quot;width:100%&quot; /&gt;
-  &lt;/div&gt;
-&lt;/div&gt;</content><author><name>Alexis de Tocqueville</name></author><summary type="html">&quot;I established that men cannot do without dogmatic beliefs and that it was even very much to be wished that they have them.&quot;</summary></entry><entry><title type="html">Studying Growth with Neural Cellular Automata</title><link href="http://greydanus.github.io/2022/05/23/studying-growth/" rel="alternate" type="text/html" title="Studying Growth with Neural Cellular Automata" /><published>2022-05-23T23:50:00-07:00</published><updated>2022-05-23T23:50:00-07:00</updated><id>http://greydanus.github.io/2022/05/23/studying-growth</id><content type="html" xml:base="http://greydanus.github.io/2022/05/23/studying-growth/">&lt;!-- &quot;We simulate the process of cell growth called morphogenesis. Then we find growth rules that generate a range of flowers and use them to grow a garden.&quot; --&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-08-25T23:25:03-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A blog by Sam Greydanus</subtitle><entry><title type="html">Studying Growth with Neural Cellular Automata</title><link href="http://greydanus.github.io/2022/05/23/studying-growth/" rel="alternate" type="text/html" title="Studying Growth with Neural Cellular Automata" /><published>2022-05-23T23:50:00-07:00</published><updated>2022-05-23T23:50:00-07:00</updated><id>http://greydanus.github.io/2022/05/23/studying-growth</id><content type="html" xml:base="http://greydanus.github.io/2022/05/23/studying-growth/">&lt;!-- &quot;We simulate the process of cell growth called morphogenesis. Then we find growth rules that generate a range of flowers and use them to grow a garden.&quot; --&gt;
 
 &lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
   &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
@@ -2691,4 +2555,118 @@ if(parseInt(getBrowserSize().width) &gt; 600){
       &lt;p&gt;&lt;a href=&quot;https://www.huffpost.com/entry/amelia-earhart-prenup_n_2280057&quot;&gt;Amelia Earhart’s Prenup Is Remarkably Modern&lt;/a&gt;, &lt;em&gt;Huffington Post&lt;/em&gt;, 2017. An image of the prenuptual letter itself is &lt;a href=&quot;https://images.huffingtonpost.com/2012-12-11-earhart.jpg&quot;&gt;here&lt;/a&gt;. &lt;a href=&quot;#fnref:fn8&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">Why do humans want to fly? Let&apos;s start by looking at the humans for whom the desire to fly was strongest: the early aviators.</summary></entry></feed>
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Why do humans want to fly? Let&apos;s start by looking at the humans for whom the desire to fly was strongest: the early aviators.</summary></entry><entry><title type="html">Self-classifying MNIST Digits</title><link href="http://greydanus.github.io/2020/08/27/selforg-mnist/" rel="alternate" type="text/html" title="Self-classifying MNIST Digits" /><published>2020-08-27T04:00:00-07:00</published><updated>2020-08-27T04:00:00-07:00</updated><id>http://greydanus.github.io/2020/08/27/selforg-mnist</id><content type="html" xml:base="http://greydanus.github.io/2020/08/27/selforg-mnist/">&lt;div&gt;
+	&lt;style&gt;
+        #linkbutton:link, #linkbutton:visited {
+          padding: 6px 0px;
+          text-decoration: none;
+          display: inline-block;
+
+          border: 2px solid #777;
+          padding: 10px;
+          font-size: 20px;
+          min-width: 200px;
+          width: 50%;
+          text-align: center;
+          color: #999;
+          margin: 0px auto;
+          cursor: pointer;
+          margin-bottom: 10px;
+        }
+
+        #linkbutton:hover, #linkbutton:active {
+          background-color: rgba(245, 245, 245);
+        }
+
+		.playbutton {
+		  background-color: rgb(148, 196, 146);
+		  border-width: 0;
+		  /*background-color: rgba(255, 130, 0);*/
+		  border-radius: 4px;
+		  color: white;
+		  padding: 5px 8px;
+		  /*width: 60px;*/
+		  text-align: center;
+		  text-decoration: none;
+		  text-transform: uppercase;
+		  font-size: 12px;
+		  /*display: block;*/
+		  /*margin-left: auto;*/
+		  margin: 8px 0px;
+		  margin-right: auto;
+		  min-width:60px;
+		}
+
+		.playbutton:hover, .playbutton:active {
+		  background-color: rgb(128, 176, 126);
+		}
+	&lt;/style&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this project, we treat every pixel in an image as a biological cell. Then we train these cells to send signals to their neighbors so that, over time, the entire population will agree on what digit they are shaping. Every cell “votes” on the global shape by turning one of ten different colors, corresponding to the ten digits. Sometimes the truth prevails and sometimes they are collectively misguided. I like &lt;a href=&quot;https://twitter.com/hardmaru/status/1299152583328559105&quot;&gt;@hardmaru’s example&lt;/a&gt;, reproduced below, of a 4 vs. a 2 (🔴 🔵). It’s similar to an election process – it even has “swing states:”&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;&quot;&gt;
+    &lt;video style=&quot;width:100%;min-width:250px;&quot; controls=&quot;&quot;&gt;
+    	&lt;source src=&quot;/assets/selforg-digits/screencapture.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+&lt;!--     &lt;div style=&quot;text-align: left;margin-left:10px;margin-right:10px;padding-top: 20px;&quot;&gt;
+
+    	&lt;/div&gt; --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I encourage you to read the article and try the interactive demo for yourself on Distill:&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+	&lt;a href=&quot;https://distill.pub/2020/selforg/mnist/&quot; id=&quot;featuredlink&quot; target=&quot;_blank&quot; style=&quot;margin-right: 10px;&quot;&gt;Read the article on Distill&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;useful-properties-of-cellular-automata&quot;&gt;Useful properties of Cellular Automata&lt;/h2&gt;
+
+&lt;p&gt;One of the takeaways from helping write this Distill article is that cellular automata are fascinating and underrated. In particular, I like them because they are:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Local.&lt;/strong&gt; All interactions in physics are local – aside from quantum entanglement, and even that is up for debate.&lt;sup id=&quot;fnref:fn2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn2&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; All interactions in chemistry and biology are also local, including the interactions between neurons that allow us to learn. The value of locality is that it is one of the &lt;em&gt;strongest&lt;/em&gt; bounds on the complexity of a system. Without locality, any unit (atom, molecule, cell, human) can interact with any other, leading to an exponential growth in causal influences on each unit as the size of the system increases. This is bad news if you want to establish any interesting chains of causality between various sub-units.&lt;sup id=&quot;fnref:fn3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn3&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; For example, when you store information using a small chunk of matter, you do so under the assumption that that information will remain where it is and not change in response to external factors.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Parallelizable.&lt;/strong&gt; One particularly important advantage of locality is that it makes CAs immensely parallelizable. It’s not hard to train or evaluate a large population of CAs asynchronously: disparate parts of the system never have to communicate or synchronize with one another. This is why, if we do live in a simulation, it is probably implemented with a CA.&lt;sup id=&quot;fnref:fn4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn4&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Scalable in number of cells.&lt;/strong&gt; This is closely connected to “parallelizable.” Imagine training a 20x20 population of cells to do something and then running a 200x200 population of them on some downstream task. The numbers are different, but we actually do this in the demo. This is not something you can do with neural networks.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Expressive.&lt;/strong&gt; Given how simple some CAs can be – for example, Conway’s Game of Life – they have impressive theoretical properties. They are Turing complete and can simulate any other system. You could even use Conway’s Game of Life to simulate Conway’s Game of Life…and yes, &lt;a href=&quot;https://twitter.com/AlanZucconi/status/1315967202797981696&quot;&gt;someone actually did this&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Resilient.&lt;/strong&gt; Systems where local interactions eventually lead to global behavior are extraordinarily resilient. You can cut a 2-headed planarian in half and both halves will regenerate. You can cut a limb from a tree and the tree will survive. You can leave your company and your coworkers will continue on without you, barely noticing your absence. Ok, that was a joke, they will miss you, but in theory they should be able to cover for you when you take a few vacation days.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Likely to fail gracefully.&lt;/strong&gt; It’s hard to define what it means to “fail gracefully” so this last point is a bit subjective. Consider the failure case of the 4/2 pattern from the video above, reproduced below. That shape is far outside of the CA’s training distribution, but it responded in a fairly intuitive manner. On the left is another fun failure case where a CA was trained to grow, from a single cell, into a yellow fish emoji. The population of cells kept growing even after it became a mature fish, but did so in a way that preserved the fish’s shape and body texture.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:47.3%; min-width:200px; display: inline-block; vertical-align: top;&quot;&gt;
+    &lt;img src=&quot;/assets/selforg-digits/42_color.png&quot; style=&quot;width:100%&quot; /&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;width:52%; min-width:300px; display: inline-block; vertical-align: top;&quot;&gt;
+    &lt;img src=&quot;/assets/selforg-digits/fish.png&quot; style=&quot;width:100%&quot; /&gt;
+&lt;!--     &lt;div style=&quot;text-align:left;&quot;&gt;A plot by &lt;a href=&quot;https://doi.org/10.1002/jmor.10013&quot;&gt;Lindhe (2002)&lt;/a&gt; showing aspect ratio versus wing loading index in some birds, airplanes, a hang-glider, a butterfly, and a maple seed. Just like the families of birds, different human flying machines display substantial variation along these axes.&lt;/div&gt; --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I like CA as a design motif. They capture a set of elegant design principles that, even if we don’t follow them strictly at all times in other areas of science, are worth thinking about.&lt;/p&gt;
+
+&lt;h2 id=&quot;parting-words&quot;&gt;Parting words&lt;/h2&gt;
+
+&lt;p&gt;It feels good to have released the Distill article and demo to the world. Now, on thousands of different browser screens, our little cells are coming to life. They are looking at their particular MNIST pixels, talking to their neighbors, and trying to figure out what their overall digit shape is. Little do they know, they are part of a human scientific endeavor that is much the same. For we humans, too, are looking at our local surroundings, talking with our neighbors, and trying to agree on the overall shape of our reality.&lt;/p&gt;
+
+&lt;p&gt;Best of luck to the little cells and to us humans as well.&lt;/p&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:fn2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;I want to write a post on this, but I have more reading to do first. &lt;a href=&quot;#fnref:fn2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn3&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;One of the problems with fully-connected neural networks is that they use very dense connectivity patterns – denser, perhaps, than locality constraints permit in the brain. In recent years, we’ve seen that particular connectivity patterns (e.g. the local connectivity of ConvNets) have major advantages. &lt;a href=&quot;#fnref:fn3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn4&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Which makes the fact that this article is about CA pretty meta. &lt;a href=&quot;#fnref:fn4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">We treat every pixel in an image as a biological cell. We train these cells to signal to one another and determine what digit they are shaping.</summary></entry></feed>
