@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: false
-title:  "How, in the United States, religion knows how to make use of democratic institutions"
+title:  "Tocqueville Excerpt"
 excerpt: "There is almost no human action, however particular one supposes it, that does not arise from a very general idea that men have conceived of God...and of their duties toward those like them."
 date:   2022-08-25 11:00:00
 mathjax: true
@@ -34,7 +34,7 @@ pre {
 </style>
 
 
-### Preliminary remarks by SJG
+## Preliminary remarks by SJG
 
 This page features an excerpt from _Democracy in America_ by Alexis de Tocqueville, translated and edited by Harvey C. Mansfield and Delba Winthrop. Although written nearly two hundred years ago, many of its observations remain relevant to the culture and institutions of America in 2022. Although Tocqueville writes with an ostensibly neutral voice, we should note that he is very invested in the topics he discusses. From the book's introduction,
 
@@ -48,7 +48,7 @@ These are the words of a well-educated aristocrat mourning the loss of his class
   </div>
 </div>
 
-### Tocqueville
+## How, in the United States, religion knows how to make use of democratic institutions
 
 I established in one of the preceding chapters that men cannot do without dogmatic beliefs and that it was even very much to be wished that they have them. I add here that among all dogmatic beliefs the most desirable seem to me to be dogmatic beliefs in the matter of religion; that may be deduced very clearly even if one wants to pay attention only to the interests of this world.
 
