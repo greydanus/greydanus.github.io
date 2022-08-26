@@ -9,8 +9,8 @@ includelink: true
 </div>
 
 ## Links
-* [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en) / [Twitter](https://twitter.com/samgreydanus) / [Github](https://github.com/greydanus)
-* [Ten letters from Vancouver](/vancouver22)
+* [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en) – [Twitter](https://twitter.com/samgreydanus) – [Github](https://github.com/greydanus)
+* [Ten letters from Vancouver](/vancouver22) – [Tocqueville essay](/tocqueville) – [Justification](/justification)
 * [My old website](https://greydanus.github.io/about.html)
 * [My email](/static/email.txt)
 
@@ -28,7 +28,7 @@ I am a recent graduate of Dartmouth College, where I majored in physics. My work
 * 2019 – Deep learning researcher, Oregon State and ML Collective
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
-  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/scrollwork.jpg" style="width:100%">
   </div>
 </div>

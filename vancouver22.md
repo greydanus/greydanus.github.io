@@ -19,7 +19,7 @@ These letters give a running narrative of my 2022 mission trip to Vancouver, BC.
 * [Day 10: Travel and Closing Remarks](/vancouver22/day10)
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
-  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/scrollwork.jpg" style="width:100%">
   </div>
 </div>

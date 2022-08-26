@@ -49,13 +49,13 @@ Sincerely,
 Sam
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/files/d10_photo1.jpeg" style="width:100%">
   </div>
 </div>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
-  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/scrollwork.jpg" style="width:100%">
   </div>
 </div>
