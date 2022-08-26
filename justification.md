@@ -140,7 +140,7 @@ They got scars, fam. Kindness. And love. When God our Savior appeared, he did no
 
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
-  <div style="width:99%; min-width:350px; display: inline-block; vertical-align: top;">
+  <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/scrollwork.jpg" style="width:100%">
   </div>
 </div>
