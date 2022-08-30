@@ -40,7 +40,7 @@ This page features an excerpt from _Democracy in America_ by Alexis de Tocquevil
 
 _“The entire book that you are going to read was written under the pressure of a sort of religious terror in the author’s soul, produced by the sight of this irresistible revolution that for so many centuries has marched over all obstacles, and that one sees still advancing today amid the ruins it has made...”_
 
-These are the words of a well-educated aristocrat mourning the loss of his class' prominence and looking into the future with a mixture of awe and curiousity. With that in mind, let's allow Tocqueville begin to speak for himself.
+These are the words of a well-educated aristocrat mourning the loss of his class' prominence and looking into the future with a mixture of awe and curiosity. With that in mind, let's allow Tocqueville begin to speak for himself.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:99%; display: inline-block; vertical-align: top;">
