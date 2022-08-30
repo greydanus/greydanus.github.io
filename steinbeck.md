@@ -38,7 +38,7 @@ pre {
 
 On this page you will find three excerpts taken from _East of Eden_ (1952) by John Steinbeck. The focus of the novel is on questions of good and evil, free will, humans, and their relationships with one another.
 
-Steinbeck is notable in that he approaches such themes with the utmost circumspection. Coming at them gently, through metaphor, symbol, and dialogue, he is able to convey nuanced emotions that one could not otherwise. _East of Eden_ is perhaps the best example of how he does this, but you can see him learning how to do it in other books. At the beginning _Cannery Row_ (1945), he writes,
+Steinbeck is notable in that he approaches such themes with the utmost circumspection. Coming at them gently, through metaphor, symbol, and dialogue, he is able to convey nuanced emotions that one could not otherwise. _East of Eden_ is perhaps the best example of how he does this, but you can see him learning how to do it in other books. At the beginning of _Cannery Row_ (1945), he writes,
 
 _"How can the poem and the stink and the grating noise -- the quality of light, the tone, the habit and the dream -- be set down alive? When you collect marine animals there are certain flat worms so delicate that they are almost impossible to capture whole, for they break and tatter under the touch. You must let them ooze and crawl of their own will onto a knife blade and then lift them gently into your bottle of sea water. And perhaps that might be the way to write this book -- to open a page and to let the stories crawl in by themselves"_
 
@@ -80,7 +80,7 @@ Tom said softly, “You think it’s a meteorite, don’t you?”
 
 Samuel Hamilton rode back home in a night so flooded with moonlight that the hills took on the quality of the white and dusty moon. The trees and earth were moon-dry, silent and airless and dead. The shadows were black without shading and the open places were white without color. Here and there Samuel could see secret movement, for the moon-feeders were at work – the deer which browse all night when the moon is clear and sleep under thickets in the day. Rabbits and field mice and all other small hunted that feel safer in the concealing light crept and hopped and crawled and froze to resemble stones or small bushes when ear or nose suspected danger. The predators were working too – the long weasels like waves of brown light; the cobby wildcats crouching near to the ground, almost invisible except when their yellow eyes caught light and flashed for a second; the foxes, sniffling with pointed up-raised noses for a warm-blooded supper; the raccoons padding near still water, talking frogs. The coyotes nuzzled along the slopes and, torn with sorrow-joy, raised their heads and shouted their feeling, half keen, half laughter, at their goddess moon. And over all the shadowy screech owls sailed, drawing a smudge of shadowy fear behind them on the ground. The wind of the afternoon was gone and only a little breeze like a sigh was stirred by the restless thermals of the warm, dry hills.
 
-[Samuel’s horse]’s loud off-beat hoofsteps silenced the night people until after he had passed. Samuel’s beard glinted white, and his graying hair stood up high on his head. He had hung his black hat on his saddle horn. An ache was on the top of his stomach, an apprehension that was like a sick thought. It was a Weltschmerz – which we used to call “Welshrats” – <u>the world sadness that rises into the soul like a gas and spreads despair so that you probe for the offending event and can find none.</u>
+[Samuel’s horse]’s loud off-beat hoofsteps silenced the night people until after he had passed. Samuel’s beard glinted white, and his graying hair stood up high on his head. He had hung his black hat on his saddle horn. An ache was on the top of his stomach, an apprehension that was like a sick thought. It was a _Weltschmerz_ – which we used to call “Welshrats” – <u>the world sadness that rises into the soul like a gas and spreads despair so that you probe for the offending event and can find none.</u>
 
 (Chapter 16)
 
@@ -236,13 +236,13 @@ Lee was peering at him through the darkness. “That’s what it did to those ol
 
 “‘Thou mayest rule over sin,’ Lee. That’s it. I do not believe all men are destroyed. I can name you a dozen who were not, and they are the ones the world lives by. It is true of the spirit as it is true of battles – only the winners are remembered. Surely most men are destroyed, but there are others who like pillars of fire guide frightened men through the darkness. <u>‘Thou mayest, Thou mayest!’ What glory! It is true that we are weak and sick and quarrelsome, but if that is all we ever were, we would, millenniums ago, have disappeared from the face of the earth. A few remnants of fossilized jawbone, some broken teeth in strata of limestone, would be the only mark man would have left of his existence in the world.</u> But the choice, Lee, the choice of winning! I had never understood it or accepted it before. Do you see now why I told Adam tonight? I exercised the choice. Maybe I was wrong, but by telling him I also forced him to live or get off the pot. What is the word, Lee?”
 
-“Timshel,” said Lee. “Will you stop the cart?”
+“_Timshel_,” said Lee. “Will you stop the cart?”
 
 “You’ll have a long walk back.”
 
 Lee climbed down. “Samuel!” he said.
 
-“<u>Here I am.</u>” The old man chuckled. “Liza hates for me to say that.”
+“<u>Here I am</u>.” The old man chuckled. “Liza hates for me to say that.”
 
 “Samuel, you’ve gone beyond me.”
 
