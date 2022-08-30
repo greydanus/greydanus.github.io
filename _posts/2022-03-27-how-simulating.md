@@ -54,7 +54,7 @@ We should recognize that this approach comes at a price. It demands that we sacr
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/how-simulating/fig2.png">
     <div class="thecap"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:100%">
-  This figure is inspired by the experimental setup of <a href="https://drive.google.com/file/d/1ac4E87cKMgp90PfoNeTaRiVE3HEC9ubJ/view?usp=sharing">Clauser and Horne (1974)</a> used to test the Bell inequality. Here we are hypothesizing the existence of a shared hidden variable <i>x</i> which, when updated due the left photon's interaction with a polarizer, also affects the right photon's polarization.
+  This figure is inspired by the experimental setup of <a href="https://drive.google.com/file/d/1ac4E87cKMgp90PfoNeTaRiVE3HEC9ubJ/view?usp=sharing">Clauser and Horne (1974)</a> used to test the Bell inequality. Here we are hypothesizing the existence of a shared hidden variable <i>x</i> which, when updated due to the left photon's interaction with a polarizer, also affects the right photon's polarization.
   </div>
 </div>
 
