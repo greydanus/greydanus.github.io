@@ -42,7 +42,7 @@ Steinbeck is notable in that he approaches such themes with the utmost circumspe
 
 _"How can the poem and the stink and the grating noise -- the quality of light, the tone, the habit and the dream -- be set down alive? When you collect marine animals there are certain flat worms so delicate that they are almost impossible to capture whole, for they break and tatter under the touch. You must let them ooze and crawl of their own will onto a knife blade and then lift them gently into your bottle of sea water. And perhaps that might be the way to write this book -- to open a page and to let the stories crawl in by themselves"_
 
-Without further ado, are three excerpts from _East of Eden_, all taking place at night, which I particularly enjoyed.
+Without further ado, here are three excerpts from _East of Eden_ that I particularly enjoyed. They all take place at night
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:99%; display: inline-block; vertical-align: top;">
