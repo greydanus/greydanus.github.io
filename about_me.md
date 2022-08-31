@@ -22,7 +22,7 @@ I am a recent graduate of Dartmouth College, where I majored in physics. My work
 * 2016 – Software engineering intern, Microsoft
 * 2017 – Co-captain of US team, International Physicist's Tournament
 * 2018 – Google AI Resident, Google Brain San Francisco
-* 2019 – Deep learning researcher, Oregon State and ML Collective
+* 2019 – Deep learning researcher, Oregon State and [The ML Collective](https://mlcollective.org/)
 * 2022 - Owner, Greenfield Properties. Physics and ML at [Windscape AI](https://windscape.ai/)
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
