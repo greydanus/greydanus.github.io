@@ -14,7 +14,7 @@ thumbnail: /assets/regularization/thumbnail.png
 
 Regularization seems fairly insignificant at first glance but it has a huge impact on deep models. I'll use a one-layer neural network trained on the MNIST dataset to give an intuition for how common regularization techniques affect learning.
 
-**Disclaimer (January 2018): I've come a long ways as a researcher since writing this post. I'm worried that some of the stuff I wrote here is not exactly rigorous. I still encourage you to read this it, but do so with skepticism. When I have more time I'll try and make fixes.**
+**Disclaimer (January 2018): This post was written when I was still studying the basics of ML. There are no errors to the best of my knowledge. But take some of the intuitions with a grain of salt.**
 
 ## MNIST Classification
 
