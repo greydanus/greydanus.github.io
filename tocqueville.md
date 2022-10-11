@@ -138,10 +138,6 @@ I showed in my first work how American priests keep their distance from public a
 
 Another remark is applicable to the clergy of all communions: American priests do not try to attract and fix all the attentions of man on the future life; they willingly abandon a part of his heart to present cares; they seem to consider the goods of the world as important although secondary objects; if they do not associate themselves with industry, they are at least interested in its progress and applaud it, and while constantly showing to the faithful the other world as the great object of their hopes and fears, they do not forbid them from honestly searching for well-being in this one. Far from bringing out how these two things are divided and contrary, they rather apply themselves to finding the spot at which they touch and are bound to each other.
 
-All American priests know the intellectual empire the majority exercises and respect it. They never support any but necessary struggles against it. They do not mix in the quarrels of the parties, but they willingly adopt the general opinions of their country and time, and they let themselves go without resistance in the current of sentiments and ideas that carries away all things around them. They strive to correct their contemporaries, but they do not separate themselves from them. Public opinion is never, therefore, their enemy; rather it supports and protects them, and their beliefs reign both by the forces that are proper to them and by those of the majority that they borrow.
-
-Thus it is in respecting all the democratic instincts that are not contrary to it and in taking aid from several of them that religion succeeds in struggling to its advantage against the spirit of individual independence that is the most dangerous of all to it.
-
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; max-width: 400px">
   <div style="width:99%; display: inline-block; vertical-align: top;">
