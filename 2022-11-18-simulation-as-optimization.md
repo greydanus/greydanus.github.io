@@ -1,0 +1,201 @@
+---
+layout: post
+comments: true
+title:  "Simulation as Optimization"
+excerpt: "Every dynamics problem in physics can be written as an optimization problem and solved with gradient descent. Let's work through a simple example."
+date:   2022-11-18 6:50:00
+mathjax: true
+thumbnail: /assets/sim-as-opt/thumbnail.png
+---
+
+<style>
+.wrap {
+    max-width: 900px;
+}
+p {
+    font-family: sans-serif;
+    font-size: 16.75px;
+    font-weight: 300;
+    overflow-wrap: break-word; /* allow wrapping of very very long strings, like txids */
+}
+.post pre,
+.post code {
+    background-color: #fafafa;
+    font-size: 14px; /* make code smaller for this post... */
+}
+pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+</style>
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/sim-as-opt/hero.png">
+  <div class="thecap"  style="text-align:left;padding-left:0px;">
+    Here we solve a simulation problem as though it were an optimization problem. We do this by computing the action <i>S</i> and then minimizing it in order to move from an arbitrary trajectory (yellow) to the path of least action (blue).
+  </div>
+</div>
+
+<div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
+  <a href="https://colab.research.google.com/drive/1VvwlquTGAFsJOPfWnZDBZ9oYYyQwQxsA?usp=sharing" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+</div>
+
+The purpose of this short post is to bring to attention a view of physics which isn't often communicated in introductory courses: the view of _physics as optimization_. By the end, I hope to have convinced you that _any simulation problem can be solved like an optimization problem_ via gradient descent.
+
+## How we'd normally simulate physics
+
+If you have a high school education in physics and math, then you will be familiar with two very simple approaches to solving physics problems (more specifically, solving for equations of motion):
+
+**1. The analytic approach.** Here you use algebra, calculus, and other mathematical tools to find an equation that gives a closed-form equation of motion for the system. In other words, it gives the state of the system as a function of time. For an object in free fall, the equation of motion would be
+
+$$y(t)=\frac{1}{2}gt^2+v_0t+y_0.$$
+
+```python
+def falling_object_analytic(x0, x1, dt, g=1, steps=60):
+  v0 = (x1 - x0) / dt
+  t = np.linspace(0, steps, steps+1) * dt
+  x = .5*-g*t**2 + v0*t + x0  # the equation of motion
+  return t, x
+
+x0, x1 = [0, 2]
+dt = 0.25
+t_ana, x_ana = falling_object_analytic(x0, x1, dt)
+```
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
+  <img src="/assets/sim-as-opt/analytic.png">
+</div>
+
+**2. The numerical approach.** Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can't know their state at some time in the future without simulating all the intervening states. Other physics problems, like weather forecasting, have a lot of environmental noise and uncertainty. They, too, need to be solved numerically.
+
+$$\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = a(t)$$
+
+```python
+def falling_object_numerical(x0, x1, dt, g=1, steps=60):
+  xs = [x0, x1]
+  ts = [0, dt]
+  v = (x1 - x0) / dt
+  x = xs[-1]
+  for i in range(steps-2):
+    v += -g*dt
+    x += v*dt
+    xs.append(x)
+    ts.append(ts[-1]+dt)
+  return np.asarray(ts), np.asarray(xs)
+
+t_num, x_num = falling_object_numerical(x0, x1, dt)
+```
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
+  <img src="/assets/sim-as-opt/numerical.png">
+</div>
+
+## Why simulating physics is actually an optimization problem
+
+**The Lagrangian method.** The approaches we just covered make intuitive sense. That's why we teach them in introductory physics classes. But there is an entirely different way of looking at the problem called the Lagrangian method. Although it's a bit harder to grasp at first, it does a better job of describing reality.
+
+The reason it does a better job of describing reality is that it can be used to obtain equations of motion for _any_ physical system. Lagrangians figure prominently in all four of the main branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the [Standard Model Lagrangian](https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation) they can (attempt to) do just that.
+
+Many of the details of the Lagrangian method are beyond the scope of this post.[^fn0] However, this half-page from David Morin's _Introduction to Classical Mechanics_ does a good job of setting the scene:
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px;">
+  <img src="/assets/sim-as-opt/morin_ch6.png">
+</div>
+
+In the textbook, Prof. Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For the falling particle it would be \\(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.
+
+**What if I don't like infinities?** In the screenshot above, Morin mentions as an aside, _"If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum."_ His purpose was to make the whole situation a bit more intuitive because, granted, things were getting complicated with the introduction of a functional.
+
+But this aside hints at another possibility -- what if we were to take Morin _very_ literally. What if we broke up that path into a number of discrete pieces, summed them together to obtain S (a scalar) and then used numerical optimization techniques to find a stationary value? In finding that stationary value, we would also have found the dynamics of the physical system between times t\\(_1\\) and t\\(_2\\). To my knowledge, nobody has tried this. But why not give it a shot?
+
+## Walking through the implementation
+
+**A discretizing the action.** The setup isn't very difficult. Let's assume a list of coordinates x which contains all the position coordinates of the system between t\\(_1\\) and t\\(_2\\), each separated by a discrete time interval `dt`. Now we can code up the Lagrangian and the action for the system:
+
+
+```python
+def lagrangian(q, g=1, m=1):
+  (x, xdot) = q
+  return .5*m*g*xdot**2 - x
+
+def action(x, dt=1):
+  ''' q is a 1D tensor of n values, one for each (discretized) time step'''
+  xdot = (x[1:] - x[:-1]) / dt
+  xdot = torch.cat([xdot, xdot[-1:]])
+  return lagrangian(q=(x, xdot)).sum()
+```
+
+**Minimizing the action with gradient descent.** Technically, any stationary value of S will do. In many cases (but not all), a good solution can be found at its minimum.[^fn1] For our purposes, though, minimizing the action will work just fine.
+
+```python
+def get_path_between(x, steps=1000, step_size=1e-1, dt=1):
+  t = np.linspace(0, len(x)-1, len(x)) * dt
+  xs = []
+  for i in range(steps):
+    grad = torch.autograd.grad(action(x, dt), x)
+    grad_x = grad[0]
+    grad_x[[0,-1]] *= 0  # fix first and last coordinates by zeroing their grads
+    x.data -= grad_x * step_size
+
+    if i % (steps//10) == 0:
+      xs.append(x.clone().data)
+      print('\ti={:04d}, S={:.3e}'.format(i, action(x).item()))
+  return t, x, xs
+```
+
+**Simulation as optimization.** Now for the fun part. We can initialize our falling particle's path to be a random path through space -- in the code below, it would literally bounce around y=0 at random until time t=15 seconds, at which point it would leap up to its final state of y=7.5 meters. Of course, that path has a much higher value of S than the real path: S=54.6 J·s vs S=-1292= J·s. As our optimization loop runs, this path will gradually get deformed into the proper path.
+
+```python
+dt = 0.25
+x0 = 1.5*torch.randn(61, requires_grad=True)  # a random path through space
+x0[0].data *= 0.0 ; x0[-1].data *= 0.0  # set first and last points to zero
+x0[-1].data += 7.5  # set last point to 7.5 (end height of analytic solution)
+
+t, x, xs = get_path_between(x0.clone(), steps=5000, step_size=3e-2, dt=dt)
+```
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%">
+  <img src="/assets/sim-as-opt/output.png">
+</div>
+
+
+## Applications
+
+The purpose of this post was to show that this technique is possible. Determining whether it has useful applications is another question! Here I will make a few speculations.
+
+**Chaotic deterministic systems.** Some chaotic deterministic systems (eg. fluid dynamics) are so sensitive to integration error that often no one final state can be predicted with absolute certainty. A more relevant question to ask, then, is _"which of these two final states, A or B, is more likely?"_. For example, when making a weather forecast, is weather A or weather B more likely tomorrow? Minimizing the action would allow one to compute these relative probabilities more efficiently, by directly comparing the final values of S for the two scenarios.
+
+**When the final state is irrelevant.** There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\\(_1\\) and t\\(_2\\). This is the case for a fluid simulation of smoke in a video game: the smoke just needs to look realistic. In this case, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than normal numerical methods that don't fix the final state.
+
+**Evaluating ensembles of paths.** If one wants to compare many different paths, perhaps all having slightly different outcomes, then one could solve them in parallel with this approach. Importantly, this could be done _even if those paths interact with one another_ as is the case with, for example, quantum mechanics and path integrals. A common way to do this with traditional numerical computing techniques is to compute all-to-all interactions at each timestep or to evolve the system if it were a probability distribution.
+
+<!-- **Adaptive error and computation time.** The action S is an ideal way to measure integration error. It even has physical units! Each optimization step reduces the error across all the coordinates in the path in proportion to their impact on the action. In order to obtain more accurate dynamics, use more steps of greadient descent. In order to use less computation, run for fewer steps. -->
+
+## Closing thoughts
+
+There is hidden structure in the world around us. In describing how he viewed his life's work, Isaac Newton wrote, "_I do not know what I may appear to the world; but to myself I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me._"
+
+May this post contribute one more drop to that great ocean.
+
+<!-- Like Newton, many contemporary physicists get a sense of awe from discovering this hidden structure. I remember an otherwise somber professor from my undergraduate days jumping out of his seat when the first clicks came out of his muon detector. "Do you hear that? Each click is a particle. Millions of them are showering down from space as we speak."
+
+I hope that this perspective on simulation as optimization serves to deepen that sense of awe
+ -->
+<!-- The Lagrangian method, applied directly to numerical simulation, is quite elegant and I hope that it confers some of this awe to the casual reader. -->
+
+<!-- There is hidden structure in the world around us. In the tradition of Greek philosophy, noticing that structure and describing it well is considered an intrinsic good. The Pythagoreans were of this view. The Judeo-Christian tradition holds a similar position _"It is the glory of God to conceal a thing, but the honor of kings is to search out a matter."_ Modern science, at its best, continues in this tradition.
+
+For many physicists, this process is accompanied by a sense of awe. I remember an otherwise somber professor from my undergraduate days jumping out of his seat when the first clicks came out of his muon detector. "Do you hear that? Each click is a particle. Millions of them are showering down from space as we speak." In describing how he viewed his life's work, Isaac Newton wrote:
+
+_I do not know what I may appear to the world; but to myself I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me._
+
+The Lagrangian method, applied directly to numerical simulation, is quite elegant and I hope that it confers some of this awe to the casual reader. -->
+
+<!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/sim-as-opt/ferns.jpeg">
+</div> -->
+
+## Footnotes
+[^fn0]: I have written previously about it here and here. For a thorough introduction to the topic, I recommend [this](https://scholar.harvard.edu/files/david-morin/files/cmchap6.pdf) textbook chapter].
+[^fn1]: That's why the whole method is often called _The Principle of Least Action_, a misnomer which I personally picked up by reading the Feynman Lectures.
