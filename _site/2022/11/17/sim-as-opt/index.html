@@ -7,7 +7,7 @@
     <title>Simulation as Optimization</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2022-11-18-simulation-as-optimization/">
+    <link rel="canonical" href="http://greydanus.github.io/2022/11/17/sim-as-opt/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -72,8 +72,6 @@
         
           <a class="page-link" href="/2022-04-08-sparsity/">The Story of Sparsity in Neural Networks</a>
         
-          <a class="page-link" href="/2022-11-18-simulation-as-optimization/">Simulation as Optimization</a>
-        
           
         
           <a class="page-link" href="/vancouver22/day1">Day 1: Travel</a>
@@ -128,7 +126,7 @@
 
   <header class="post-header">
     <h1>Simulation as Optimization</h1>
-    <p class="meta">Nov 18, 2022</p>
+    <p class="meta">Nov 17, 2022</p>
   </header>
 
   <article class="post-content">
@@ -167,13 +165,13 @@ pre {
   <a href="https://colab.research.google.com/drive/1VvwlquTGAFsJOPfWnZDBZ9oYYyQwQxsA?usp=sharing" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
 </div>
 
-<p>The purpose of this short post is to bring to attention a view of physics which isn’t often communicated in introductory courses: the view of <em>physics as optimization</em>. By the end, I hope to have convinced you that <em>any simulation problem can be solved like an optimization problem</em> via gradient descent.</p>
+<p>The purpose of this short post is to bring to attention a view of physics which isn’t often communicated in introductory courses: the view of <em>physics as optimization</em>. By the end, I hope to have convinced you that any simulation problem can be rewritten as an optimization problem.</p>
 
 <h2 id="how-wed-normally-simulate-physics">How we’d normally simulate physics</h2>
 
-<p>If you have a high school education in physics and math, then you will be familiar with two very simple approaches to solving physics problems (more specifically, solving for equations of motion):</p>
+<!-- If you have a high school education in physics and math, then you will be familiar with two simple approaches to solving physics problems. -->
 
-<p><strong>1. The analytic approach.</strong> Here you use algebra, calculus, and other mathematical tools to find an equation that gives a closed-form equation of motion for the system. In other words, it gives the state of the system as a function of time. For an object in free fall, the equation of motion would be</p>
+<p><strong>1. The analytic approach.</strong> Here you use algebra, calculus, and other mathematical tools to find an equation that gives a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be</p>
 
 \[y(t)=\frac{1}{2}gt^2+v_0t+y_0.\]
 
@@ -191,7 +189,7 @@ pre {
   <img src="/assets/sim-as-opt/analytic.png" />
 </div>
 
-<p><strong>2. The numerical approach.</strong> Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. Other physics problems, like weather forecasting, have a lot of environmental noise and uncertainty. They, too, need to be solved numerically.</p>
+<p><strong>2. The numerical approach.</strong> Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve by numerical integration</p>
 
 \[\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = a(t)\]
 
@@ -200,8 +198,8 @@ pre {
   <span class="n">ts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">dt</span><span class="p">]</span>
   <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
   <span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="o">-</span><span class="mi">2</span><span class="p">):</span>
-    <span class="n">v</span> <span class="o">+=</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">dt</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="o">-</span><span class="mi">2</span><span class="p">):</span>  <span class="c1"># this loop does simple Euler integration
+</span>    <span class="n">v</span> <span class="o">+=</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">dt</span>
     <span class="n">x</span> <span class="o">+=</span> <span class="n">v</span><span class="o">*</span><span class="n">dt</span>
     <span class="n">xs</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">ts</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">dt</span><span class="p">)</span>
@@ -215,9 +213,7 @@ pre {
 
 <h2 id="why-simulating-physics-is-actually-an-optimization-problem">Why simulating physics is actually an optimization problem</h2>
 
-<p><strong>The Lagrangian method.</strong> The approaches we just covered make intuitive sense. That’s why we teach them in introductory physics classes. But there is an entirely different way of looking at the problem called the Lagrangian method. Although it’s a bit harder to grasp at first, it does a better job of describing reality.</p>
-
-<p>The reason it does a better job of describing reality is that it can be used to obtain equations of motion for <em>any</em> physical system. Lagrangians figure prominently in all four of the main branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the <a href="https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation">Standard Model Lagrangian</a> they can (attempt to) do just that.</p>
+<p><strong>The Lagrangian method.</strong> The approaches we just covered make intuitive sense. That’s why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for <em>any</em> physical system. Lagrangians figure prominently in all four of the main branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the <a href="https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation">Standard Model Lagrangian</a> they can (attempt to) do so.</p>
 
 <p>Many of the details of the Lagrangian method are beyond the scope of this post.<sup id="fnref:fn0" role="doc-noteref"><a href="#fn:fn0" class="footnote">1</a></sup> However, this half-page from David Morin’s <em>Introduction to Classical Mechanics</em> does a good job of setting the scene:</p>
 
@@ -225,28 +221,26 @@ pre {
   <img src="/assets/sim-as-opt/morin_ch6.png" />
 </div>
 
-<p>In the textbook, Prof. Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For the falling particle it would be \(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.</p>
+<p>Earlier in the chapter, Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For a falling particle, L would be \(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.</p>
 
-<p><strong>What if I don’t like infinities?</strong> In the screenshot above, Morin mentions as an aside, <em>“If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum.”</em> His purpose was to make the whole situation a bit more intuitive because, granted, things were getting complicated with the introduction of a functional.</p>
-
-<p>But this aside hints at another possibility – what if we were to take Morin <em>very</em> literally. What if we broke up that path into a number of discrete pieces, summed them together to obtain S (a scalar) and then used numerical optimization techniques to find a stationary value? In finding that stationary value, we would also have found the dynamics of the physical system between times t\(_1\) and t\(_2\). To my knowledge, nobody has tried this. But why not give it a shot?</p>
+<p><strong>What if I don’t like infinities?</strong> In the screenshot above, Morin mentions as an aside, <em>“If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum.”</em> The goal of this sentence was to make the idea of a functional more intuitive – not to provide practical advice for computing the action. And yet, what if we took this sentence literally. What if we used a computer to estimate S (a scalar) and then searched for its stationary values using numerical optimization? In doing so, we would obtain the dynamics of the physical system between times t\(_1\) and t\(_2\). To my knowledge, nobody has tried this. But why not give it a shot?</p>
 
 <h2 id="walking-through-the-implementation">Walking through the implementation</h2>
 
-<p><strong>A discretizing the action.</strong> The setup isn’t very difficult. Let’s assume a list of coordinates x which contains all the position coordinates of the system between t\(_1\) and t\(_2\), each separated by a discrete time interval <code class="language-plaintext highlighter-rouge">dt</code>. Now we can code up the Lagrangian and the action for the system:</p>
+<p>Let’s begin with a list of coordinates, <code class="language-plaintext highlighter-rouge">x</code>, which contains all the position coordinates of the system between t\(_1\) and t\(_2\). We can write the Lagrangian and the action of the system in terms of these coordinates.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lagrangian</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
   <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xdot</span><span class="p">)</span> <span class="o">=</span> <span class="n">q</span>
   <span class="k">return</span> <span class="p">.</span><span class="mi">5</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">xdot</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span>
 
 <span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-  <span class="s">''' q is a 1D tensor of n values, one for each (discretized) time step'''</span>
+  <span class="s">'''q is a 1D tensor of n values, one for each (discretized) time step'''</span>
   <span class="n">xdot</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">dt</span>
-  <span class="n">xdot</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cat</span><span class="p">([</span><span class="n">xdot</span><span class="p">,</span> <span class="n">xdot</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]])</span>
-  <span class="k">return</span> <span class="n">lagrangian</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xdot</span><span class="p">)).</span><span class="nb">sum</span><span class="p">()</span>
+  <span class="n">xdot</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cat</span><span class="p">([</span><span class="n">xdot</span><span class="p">,</span> <span class="n">xdot</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]])</span>  <span class="c1"># hacky approximation: v[-1] = v[-2]
+</span>  <span class="k">return</span> <span class="n">lagrangian</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xdot</span><span class="p">)).</span><span class="nb">sum</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><strong>Minimizing the action with gradient descent.</strong> Technically, any stationary value of S will do. In many cases (but not all), a good solution can be found at its minimum.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">2</a></sup> For our purposes, though, minimizing the action will work just fine.</p>
+<p>Now let’s look for a point of stationary action. Technically, this could be a minimum, a maximum, or an inflection point. In many cases, the point of stationary action occurs at a minimum in S.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">2</a></sup> That’s the case for this particular problem.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_path_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
   <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">*</span> <span class="n">dt</span>
@@ -263,7 +257,7 @@ pre {
   <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">xs</span>
 </code></pre></div></div>
 
-<p><strong>Simulation as optimization.</strong> Now for the fun part. We can initialize our falling particle’s path to be a random path through space – in the code below, it would literally bounce around y=0 at random until time t=15 seconds, at which point it would leap up to its final state of y=7.5 meters. Of course, that path has a much higher value of S than the real path: S=54.6 J·s vs S=-1292= J·s. As our optimization loop runs, this path will gradually get deformed into the proper path.</p>
+<p>Now for the interesting part! We initialize our falling particle’s path to be any random path through space. In the code below, we choose a path where the particle bounces around y=0 at random until time t=15 seconds, at which point it leaps up to its final state of y=7.5 meters. This path has a large action of S = 54.6 J·s. As we run the optimization, this value decreases smoothly until we converge on a parabolic arc with an action of S = -1292= J·s.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.25</span>
 <span class="n">x0</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">61</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># a random path through space
@@ -279,11 +273,11 @@ pre {
 
 <h2 id="applications">Applications</h2>
 
-<p>The purpose of this post was to show that this technique is possible. Determining whether it has useful applications is another question! Here I will make a few speculations.</p>
+<p>The goal of this post is just to show that all this is possible. Determining whether it has useful applications is a question for another day. Nevertheless, I can’t resist including a few speculations.</p>
 
-<p><strong>Chaotic deterministic systems.</strong> Some chaotic deterministic systems (eg. fluid dynamics) are so sensitive to integration error that often no one final state can be predicted with absolute certainty. A more relevant question to ask, then, is <em>“which of these two final states, A or B, is more likely?”</em>. For example, when making a weather forecast, is weather A or weather B more likely tomorrow? Minimizing the action would allow one to compute these relative probabilities more efficiently, by directly comparing the final values of S for the two scenarios.</p>
+<p><strong>Chaotic deterministic systems.</strong> Some chaotic deterministic systems, such as those found in fluid dynamics, are so sensitive to integration error that no single final state can be predicted with certainty. A more relevant question to ask, then, is <em>“which of two final states, A or B, is more likely?”</em>. For example, when making a weather forecast for tomorrow, is weather A or weather B more likely? Minimizing the action would allow us to compute these relative probabilities more efficiently by directly comparing the final values of S.</p>
 
-<p><strong>When the final state is irrelevant.</strong> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\(_1\) and t\(_2\). This is the case for a fluid simulation of smoke in a video game: the smoke just needs to look realistic. In this case, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than normal numerical methods that don’t fix the final state.</p>
+<p><strong>When the final state is irrelevant.</strong> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\(_1\) and t\(_2\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don’t fix the final state.</p>
 
 <p><strong>Evaluating ensembles of paths.</strong> If one wants to compare many different paths, perhaps all having slightly different outcomes, then one could solve them in parallel with this approach. Importantly, this could be done <em>even if those paths interact with one another</em> as is the case with, for example, quantum mechanics and path integrals. A common way to do this with traditional numerical computing techniques is to compute all-to-all interactions at each timestep or to evolve the system if it were a probability distribution.</p>
 
@@ -291,7 +285,7 @@ pre {
 
 <h2 id="closing-thoughts">Closing thoughts</h2>
 
-<p>There is hidden structure in the world around us. In describing how he viewed his life’s work, Isaac Newton wrote, “<em>I do not know what I may appear to the world; but to myself I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me.</em>”</p>
+<p>In describing how he viewed his life’s work, Isaac Newton wrote, “<em>I do not know what I may appear to the world; but to myself I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me.</em>”</p>
 
 <p>May this post contribute one more drop to that great ocean.</p>
 
