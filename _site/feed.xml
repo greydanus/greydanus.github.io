@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-11-18T17:29:48-08:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A blog by Sam Greydanus</subtitle><entry><title type="html">Simulation as Optimization</title><link href="http://greydanus.github.io/2022/11/17/sim-as-opt/" rel="alternate" type="text/html" title="Simulation as Optimization" /><published>2022-11-17T22:50:00-08:00</published><updated>2022-11-17T22:50:00-08:00</updated><id>http://greydanus.github.io/2022/11/17/sim-as-opt</id><content type="html" xml:base="http://greydanus.github.io/2022/11/17/sim-as-opt/">&lt;style&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2022-11-24T00:46:57-08:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A blog by Sam Greydanus</subtitle><entry><title type="html">Simulation as Optimization: Minimizing the Action with Gradient Descent</title><link href="http://greydanus.github.io/2022/11/17/sim-as-opt/" rel="alternate" type="text/html" title="Simulation as Optimization: Minimizing the Action with Gradient Descent" /><published>2022-11-17T22:50:00-08:00</published><updated>2022-11-17T22:50:00-08:00</updated><id>http://greydanus.github.io/2022/11/17/sim-as-opt</id><content type="html" xml:base="http://greydanus.github.io/2022/11/17/sim-as-opt/">&lt;style&gt;
 .wrap {
     max-width: 900px;
 }
@@ -23,23 +23,29 @@ pre {
 &lt;/style&gt;
 
 &lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
-  &lt;img src=&quot;/assets/sim-as-opt/hero.png&quot; /&gt;
+  &lt;img style=&quot;width:51.6%; min-width:330px;&quot; src=&quot;/assets/sim-as-opt/hero1.png&quot; /&gt;
+  &lt;img style=&quot;width:47.5%; min-width:330px;&quot; src=&quot;/assets/sim-as-opt/hero2.png&quot; /&gt;
   &lt;div class=&quot;thecap&quot; style=&quot;text-align:left;padding-left:0px;&quot;&gt;
-    Here we solve a simulation problem as though it were an optimization problem. We do this by computing the action &lt;i&gt;S&lt;/i&gt; and then minimizing it in order to move from an arbitrary trajectory (yellow) to the path of least action (blue).
+    We solve a simulation problem as though it were an optimization problem. First we compute the action &lt;i&gt;S&lt;/i&gt;, then we minimize it. In doing so, we deform the initial random path (yellow) into the path of least action (blue). The final path happens to be a parabola -- the trajectory that a falling object would take in the real world.
   &lt;/div&gt;
 &lt;/div&gt;
+
+&lt;!-- &lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%&quot;&gt;
+  &lt;img src=&quot;/assets/sim-as-opt/hero.png&quot;&gt;
+  &lt;div class=&quot;thecap&quot;  style=&quot;text-align:left;padding-left:0px;&quot;&gt;
+    Here we solve a simulation problem as though it were an optimization problem. We do this by computing the action &lt;i&gt;S&lt;/i&gt; and then minimizing it in order to move from an arbitrary trajectory (yellow) to the path of least action (blue).
+  &lt;/div&gt;
+&lt;/div&gt; --&gt;
 
 &lt;div style=&quot;display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;&quot;&gt;
   &lt;a href=&quot;https://colab.research.google.com/drive/1VvwlquTGAFsJOPfWnZDBZ9oYYyQwQxsA?usp=sharing&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Run&lt;/span&gt; in browser&lt;/a&gt;
 &lt;/div&gt;
 
-&lt;p&gt;The purpose of this short post is to bring to attention a view of physics which isn’t often communicated in introductory courses: the view of &lt;em&gt;physics as optimization&lt;/em&gt;. By the end, I hope to have convinced you that any simulation problem can be rewritten as an optimization problem.&lt;/p&gt;
+&lt;p&gt;The purpose of this short post is to bring to attention a view of physics which isn’t often communicated in introductory courses: the view of &lt;em&gt;physics as optimization&lt;/em&gt;. In order to put this view in perspective, let’s begin by reviewing standard approaches to solving dynamics problems.&lt;/p&gt;
 
-&lt;h2 id=&quot;how-wed-normally-simulate-physics&quot;&gt;How we’d normally simulate physics&lt;/h2&gt;
+&lt;h3 id=&quot;standard-approaches&quot;&gt;Standard approaches&lt;/h3&gt;
 
-&lt;!-- If you have a high school education in physics and math, then you will be familiar with two simple approaches to solving physics problems. --&gt;
-
-&lt;p&gt;&lt;strong&gt;1. The analytic approach.&lt;/strong&gt; Here you use algebra, calculus, and other mathematical tools to find an equation that gives a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The analytic approach.&lt;/strong&gt; Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be&lt;/p&gt;
 
 \[y(t)=\frac{1}{2}gt^2+v_0t+y_0.\]
 
@@ -57,7 +63,7 @@ pre {
   &lt;img src=&quot;/assets/sim-as-opt/analytic.png&quot; /&gt;
 &lt;/div&gt;
 
-&lt;p&gt;&lt;strong&gt;2. The numerical approach.&lt;/strong&gt; Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve by numerical integration&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The numerical approach.&lt;/strong&gt; Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve by numerical integration&lt;/p&gt;
 
 \[\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = a(t)\]
 
@@ -79,9 +85,9 @@ pre {
   &lt;img src=&quot;/assets/sim-as-opt/numerical.png&quot; /&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;why-simulating-physics-is-actually-an-optimization-problem&quot;&gt;Why simulating physics is actually an optimization problem&lt;/h2&gt;
+&lt;h3 id=&quot;dynamics-problems-as-optimization-problems&quot;&gt;Dynamics problems as optimization problems&lt;/h3&gt;
 
-&lt;p&gt;&lt;strong&gt;The Lagrangian method.&lt;/strong&gt; The approaches we just covered make intuitive sense. That’s why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for &lt;em&gt;any&lt;/em&gt; physical system. Lagrangians figure prominently in all four of the main branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the &lt;a href=&quot;https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation&quot;&gt;Standard Model Lagrangian&lt;/a&gt; they can (attempt to) do so.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The Lagrangian method.&lt;/strong&gt; The approaches we just covered make intuitive sense. That’s why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for &lt;em&gt;any&lt;/em&gt; physical system. Lagrangians figure prominently in all four branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the &lt;a href=&quot;https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation&quot;&gt;Standard Model Lagrangian&lt;/a&gt; they can do precisely that.&lt;/p&gt;
 
 &lt;p&gt;Many of the details of the Lagrangian method are beyond the scope of this post.&lt;sup id=&quot;fnref:fn0&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn0&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; However, this half-page from David Morin’s &lt;em&gt;Introduction to Classical Mechanics&lt;/em&gt; does a good job of setting the scene:&lt;/p&gt;
 
@@ -91,9 +97,9 @@ pre {
 
 &lt;p&gt;Earlier in the chapter, Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For a falling particle, L would be \(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;What if I don’t like infinities?&lt;/strong&gt; In the screenshot above, Morin mentions as an aside, &lt;em&gt;“If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum.”&lt;/em&gt; The goal of this sentence was to make the idea of a functional more intuitive – not to provide practical advice for computing the action. And yet, what if we took this sentence literally. What if we used a computer to estimate S (a scalar) and then searched for its stationary values using numerical optimization? In doing so, we would obtain the dynamics of the physical system between times t\(_1\) and t\(_2\). To my knowledge, nobody has tried this. But why not give it a shot?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What if I don’t like infinities?&lt;/strong&gt; In the screenshot above, Morin mentions as an aside, &lt;em&gt;“If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum.”&lt;/em&gt; The goal of this sentence was to make the idea of a functional more intuitive – not to provide practical advice for computing the action. But what if we took this sentence literally? What if we used a computer to estimate S (a scalar) and then searched for its stationary values using numerical optimization? In doing so, we could obtain the dynamics of the physical system between times t\(_1\) and t\(_2\). To my knowledge, nobody has tried this. Why not give it a shot?&lt;/p&gt;
 
-&lt;h2 id=&quot;walking-through-the-implementation&quot;&gt;Walking through the implementation&lt;/h2&gt;
+&lt;h3 id=&quot;a-simple-implementation&quot;&gt;A simple implementation&lt;/h3&gt;
 
 &lt;p&gt;Let’s begin with a list of coordinates, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;x&lt;/code&gt;, which contains all the position coordinates of the system between t\(_1\) and t\(_2\). We can write the Lagrangian and the action of the system in terms of these coordinates.&lt;/p&gt;
 
@@ -125,7 +131,7 @@ pre {
   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xs&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Now for the interesting part! We initialize our falling particle’s path to be any random path through space. In the code below, we choose a path where the particle bounces around y=0 at random until time t=15 seconds, at which point it leaps up to its final state of y=7.5 meters. This path has a large action of S = 54.6 J·s. As we run the optimization, this value decreases smoothly until we converge on a parabolic arc with an action of S = -1292= J·s.&lt;/p&gt;
+&lt;p&gt;Now let’s put it all together. We can initialize our falling particle’s path to be any random path through space. In the code below, we choose a path where the particle bounces around x=0 at random until time t=15 seconds, at which point it leaps up to its final state of x=7.5 meters. This path has a large action of S = 54.6 J·s. As we run the optimization, this value decreases smoothly until we converge on a parabolic arc with an action of S = -1292= J·s.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;dt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.25&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;x0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;61&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;requires_grad&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;# a random path through space
@@ -135,27 +141,27 @@ pre {
 &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_path_between&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clone&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;steps&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;step_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3e-2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:50%&quot;&gt;
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:50%; min-width:330px;&quot;&gt;
   &lt;img src=&quot;/assets/sim-as-opt/output.png&quot; /&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&quot;applications&quot;&gt;Applications&lt;/h2&gt;
+&lt;h3 id=&quot;applications&quot;&gt;Applications&lt;/h3&gt;
 
-&lt;p&gt;The goal of this post is just to show that all this is possible. Determining whether it has useful applications is a question for another day. Nevertheless, I can’t resist including a few speculations.&lt;/p&gt;
+&lt;p&gt;The goal of this post is to show that this technique is possible. Determining whether it has useful applications is a question for another day. Nevertheless, I can’t resist including a few speculations.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Chaotic deterministic systems.&lt;/strong&gt; Some chaotic deterministic systems, such as those found in fluid dynamics, are so sensitive to integration error that no single final state can be predicted with certainty. A more relevant question to ask, then, is &lt;em&gt;“which of two final states, A or B, is more likely?”&lt;/em&gt;. For example, when making a weather forecast for tomorrow, is weather A or weather B more likely? Minimizing the action would allow us to compute these relative probabilities more efficiently by directly comparing the final values of S.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Chaotic deterministic systems.&lt;/strong&gt; Some chaotic deterministic systems, such as those found in fluid dynamics, are so sensitive to integration error that no single final state can be predicted with certainty. A more relevant question to ask, then, is &lt;em&gt;“which of two final states, A or B, is more likely?”&lt;/em&gt;. For example, when making a weather forecast for tomorrow, is weather A or weather B more likely? Minimizing the action may allow us to compute these relative probabilities more efficiently by directly comparing the final values of S.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;When the final state is irrelevant.&lt;/strong&gt; There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\(_1\) and t\(_2\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don’t fix the final state.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Evaluating ensembles of paths.&lt;/strong&gt; If one wants to compare many different paths, perhaps all having slightly different outcomes, then one could solve them in parallel with this approach. Importantly, this could be done &lt;em&gt;even if those paths interact with one another&lt;/em&gt; as is the case with, for example, quantum mechanics and path integrals. A common way to do this with traditional numerical computing techniques is to compute all-to-all interactions at each timestep or to evolve the system if it were a probability distribution.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Evaluating ensembles of paths.&lt;/strong&gt; If one wants to compare many different paths, perhaps all having slightly different outcomes, then one could solve them in parallel with this approach. Importantly, this could be done &lt;em&gt;even if those paths interact with one another&lt;/em&gt; as is the case, for example, in quantum mechanics with path integrals. A common way to do this with traditional numerical computing techniques is to compute all-to-all interactions at each timestep or to evolve the system as if it were a probability distribution.&lt;/p&gt;
 
 &lt;!-- **Adaptive error and computation time.** The action S is an ideal way to measure integration error. It even has physical units! Each optimization step reduces the error across all the coordinates in the path in proportion to their impact on the action. In order to obtain more accurate dynamics, use more steps of greadient descent. In order to use less computation, run for fewer steps. --&gt;
 
-&lt;h2 id=&quot;closing-thoughts&quot;&gt;Closing thoughts&lt;/h2&gt;
+&lt;h3 id=&quot;closing-thoughts&quot;&gt;Closing thoughts&lt;/h3&gt;
 
 &lt;p&gt;In describing how he viewed his life’s work, Isaac Newton wrote, “&lt;em&gt;I do not know what I may appear to the world; but to myself I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me.&lt;/em&gt;”&lt;/p&gt;
 
-&lt;p&gt;May this post contribute one more drop to that great ocean.&lt;/p&gt;
+&lt;p&gt;May this post offer for your inspection one more shell from that divine shore.&lt;/p&gt;
 
 &lt;!-- Like Newton, many contemporary physicists get a sense of awe from discovering this hidden structure. I remember an otherwise somber professor from my undergraduate days jumping out of his seat when the first clicks came out of his muon detector. &quot;Do you hear that? Each click is a particle. Millions of them are showering down from space as we speak.&quot;
 
@@ -185,7 +191,7 @@ The Lagrangian method, applied directly to numerical simulation, is quite elegan
       &lt;p&gt;That’s why the whole method is often called &lt;em&gt;The Principle of Least Action&lt;/em&gt;, a misnomer which I personally picked up by reading the Feynman Lectures. &lt;a href=&quot;#fnref:fn1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name></name></author><summary type="html">Physics problems - almost all of them - can be written as an optimization problem and solved with gradient descent. Let&apos;s work through a simple example.</summary></entry><entry><title type="html">Studying Growth with Neural Cellular Automata</title><link href="http://greydanus.github.io/2022/05/23/studying-growth/" rel="alternate" type="text/html" title="Studying Growth with Neural Cellular Automata" /><published>2022-05-23T23:50:00-07:00</published><updated>2022-05-23T23:50:00-07:00</updated><id>http://greydanus.github.io/2022/05/23/studying-growth</id><content type="html" xml:base="http://greydanus.github.io/2022/05/23/studying-growth/">&lt;!-- &quot;We simulate the process of cell growth called morphogenesis. Then we find growth rules that generate a range of flowers and use them to grow a garden.&quot; --&gt;
+&lt;/div&gt;</content><author><name></name></author><summary type="html">Physics problems can be written as optimization problems and solved with gradient descent.</summary></entry><entry><title type="html">Studying Growth with Neural Cellular Automata</title><link href="http://greydanus.github.io/2022/05/23/studying-growth/" rel="alternate" type="text/html" title="Studying Growth with Neural Cellular Automata" /><published>2022-05-23T23:50:00-07:00</published><updated>2022-05-23T23:50:00-07:00</updated><id>http://greydanus.github.io/2022/05/23/studying-growth</id><content type="html" xml:base="http://greydanus.github.io/2022/05/23/studying-growth/">&lt;!-- &quot;We simulate the process of cell growth called morphogenesis. Then we find growth rules that generate a range of flowers and use them to grow a garden.&quot; --&gt;
 
 &lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
   &lt;div style=&quot;width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;

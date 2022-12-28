@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Simulation as Optimization</title>
+    <title>Simulation as Optimization: Minimizing the Action with Gradient Descent</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
     <link rel="canonical" href="http://greydanus.github.io/2022/11/17/sim-as-opt/">
@@ -125,7 +125,7 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>Simulation as Optimization</h1>
+    <h1>Simulation as Optimization: Minimizing the Action with Gradient Descent</h1>
     <p class="meta">Nov 17, 2022</p>
   </header>
 
@@ -155,23 +155,29 @@ pre {
 </style>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <img src="/assets/sim-as-opt/hero.png" />
+  <img style="width:51.6%; min-width:330px;" src="/assets/sim-as-opt/hero1.png" />
+  <img style="width:47.5%; min-width:330px;" src="/assets/sim-as-opt/hero2.png" />
   <div class="thecap" style="text-align:left;padding-left:0px;">
-    Here we solve a simulation problem as though it were an optimization problem. We do this by computing the action <i>S</i> and then minimizing it in order to move from an arbitrary trajectory (yellow) to the path of least action (blue).
+    We solve a simulation problem as though it were an optimization problem. First we compute the action <i>S</i>, then we minimize it. In doing so, we deform the initial random path (yellow) into the path of least action (blue). The final path happens to be a parabola -- the trajectory that a falling object would take in the real world.
   </div>
 </div>
+
+<!-- <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/sim-as-opt/hero.png">
+  <div class="thecap"  style="text-align:left;padding-left:0px;">
+    Here we solve a simulation problem as though it were an optimization problem. We do this by computing the action <i>S</i> and then minimizing it in order to move from an arbitrary trajectory (yellow) to the path of least action (blue).
+  </div>
+</div> -->
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
   <a href="https://colab.research.google.com/drive/1VvwlquTGAFsJOPfWnZDBZ9oYYyQwQxsA?usp=sharing" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
 </div>
 
-<p>The purpose of this short post is to bring to attention a view of physics which isn’t often communicated in introductory courses: the view of <em>physics as optimization</em>. By the end, I hope to have convinced you that any simulation problem can be rewritten as an optimization problem.</p>
+<p>The purpose of this short post is to bring to attention a view of physics which isn’t often communicated in introductory courses: the view of <em>physics as optimization</em>. In order to put this view in perspective, let’s begin by reviewing standard approaches to solving dynamics problems.</p>
 
-<h2 id="how-wed-normally-simulate-physics">How we’d normally simulate physics</h2>
+<h3 id="standard-approaches">Standard approaches</h3>
 
-<!-- If you have a high school education in physics and math, then you will be familiar with two simple approaches to solving physics problems. -->
-
-<p><strong>1. The analytic approach.</strong> Here you use algebra, calculus, and other mathematical tools to find an equation that gives a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be</p>
+<p><strong>The analytic approach.</strong> Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be</p>
 
 \[y(t)=\frac{1}{2}gt^2+v_0t+y_0.\]
 
@@ -189,7 +195,7 @@ pre {
   <img src="/assets/sim-as-opt/analytic.png" />
 </div>
 
-<p><strong>2. The numerical approach.</strong> Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve by numerical integration</p>
+<p><strong>The numerical approach.</strong> Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve by numerical integration</p>
 
 \[\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = a(t)\]
 
@@ -211,9 +217,9 @@ pre {
   <img src="/assets/sim-as-opt/numerical.png" />
 </div>
 
-<h2 id="why-simulating-physics-is-actually-an-optimization-problem">Why simulating physics is actually an optimization problem</h2>
+<h3 id="dynamics-problems-as-optimization-problems">Dynamics problems as optimization problems</h3>
 
-<p><strong>The Lagrangian method.</strong> The approaches we just covered make intuitive sense. That’s why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for <em>any</em> physical system. Lagrangians figure prominently in all four of the main branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the <a href="https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation">Standard Model Lagrangian</a> they can (attempt to) do so.</p>
+<p><strong>The Lagrangian method.</strong> The approaches we just covered make intuitive sense. That’s why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for <em>any</em> physical system. Lagrangians figure prominently in all four branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the <a href="https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation">Standard Model Lagrangian</a> they can do precisely that.</p>
 
 <p>Many of the details of the Lagrangian method are beyond the scope of this post.<sup id="fnref:fn0" role="doc-noteref"><a href="#fn:fn0" class="footnote">1</a></sup> However, this half-page from David Morin’s <em>Introduction to Classical Mechanics</em> does a good job of setting the scene:</p>
 
@@ -223,9 +229,9 @@ pre {
 
 <p>Earlier in the chapter, Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For a falling particle, L would be \(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.</p>
 
-<p><strong>What if I don’t like infinities?</strong> In the screenshot above, Morin mentions as an aside, <em>“If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum.”</em> The goal of this sentence was to make the idea of a functional more intuitive – not to provide practical advice for computing the action. And yet, what if we took this sentence literally. What if we used a computer to estimate S (a scalar) and then searched for its stationary values using numerical optimization? In doing so, we would obtain the dynamics of the physical system between times t\(_1\) and t\(_2\). To my knowledge, nobody has tried this. But why not give it a shot?</p>
+<p><strong>What if I don’t like infinities?</strong> In the screenshot above, Morin mentions as an aside, <em>“If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum.”</em> The goal of this sentence was to make the idea of a functional more intuitive – not to provide practical advice for computing the action. But what if we took this sentence literally? What if we used a computer to estimate S (a scalar) and then searched for its stationary values using numerical optimization? In doing so, we could obtain the dynamics of the physical system between times t\(_1\) and t\(_2\). To my knowledge, nobody has tried this. Why not give it a shot?</p>
 
-<h2 id="walking-through-the-implementation">Walking through the implementation</h2>
+<h3 id="a-simple-implementation">A simple implementation</h3>
 
 <p>Let’s begin with a list of coordinates, <code class="language-plaintext highlighter-rouge">x</code>, which contains all the position coordinates of the system between t\(_1\) and t\(_2\). We can write the Lagrangian and the action of the system in terms of these coordinates.</p>
 
@@ -257,7 +263,7 @@ pre {
   <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">xs</span>
 </code></pre></div></div>
 
-<p>Now for the interesting part! We initialize our falling particle’s path to be any random path through space. In the code below, we choose a path where the particle bounces around y=0 at random until time t=15 seconds, at which point it leaps up to its final state of y=7.5 meters. This path has a large action of S = 54.6 J·s. As we run the optimization, this value decreases smoothly until we converge on a parabolic arc with an action of S = -1292= J·s.</p>
+<p>Now let’s put it all together. We can initialize our falling particle’s path to be any random path through space. In the code below, we choose a path where the particle bounces around x=0 at random until time t=15 seconds, at which point it leaps up to its final state of x=7.5 meters. This path has a large action of S = 54.6 J·s. As we run the optimization, this value decreases smoothly until we converge on a parabolic arc with an action of S = -1292= J·s.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.25</span>
 <span class="n">x0</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">61</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># a random path through space
@@ -267,27 +273,27 @@ pre {
 <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">get_path_between</span><span class="p">(</span><span class="n">x0</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span> <span class="n">steps</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">3e-2</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%; min-width:330px;">
   <img src="/assets/sim-as-opt/output.png" />
 </div>
 
-<h2 id="applications">Applications</h2>
+<h3 id="applications">Applications</h3>
 
-<p>The goal of this post is just to show that all this is possible. Determining whether it has useful applications is a question for another day. Nevertheless, I can’t resist including a few speculations.</p>
+<p>The goal of this post is to show that this technique is possible. Determining whether it has useful applications is a question for another day. Nevertheless, I can’t resist including a few speculations.</p>
 
-<p><strong>Chaotic deterministic systems.</strong> Some chaotic deterministic systems, such as those found in fluid dynamics, are so sensitive to integration error that no single final state can be predicted with certainty. A more relevant question to ask, then, is <em>“which of two final states, A or B, is more likely?”</em>. For example, when making a weather forecast for tomorrow, is weather A or weather B more likely? Minimizing the action would allow us to compute these relative probabilities more efficiently by directly comparing the final values of S.</p>
+<p><strong>Chaotic deterministic systems.</strong> Some chaotic deterministic systems, such as those found in fluid dynamics, are so sensitive to integration error that no single final state can be predicted with certainty. A more relevant question to ask, then, is <em>“which of two final states, A or B, is more likely?”</em>. For example, when making a weather forecast for tomorrow, is weather A or weather B more likely? Minimizing the action may allow us to compute these relative probabilities more efficiently by directly comparing the final values of S.</p>
 
 <p><strong>When the final state is irrelevant.</strong> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\(_1\) and t\(_2\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don’t fix the final state.</p>
 
-<p><strong>Evaluating ensembles of paths.</strong> If one wants to compare many different paths, perhaps all having slightly different outcomes, then one could solve them in parallel with this approach. Importantly, this could be done <em>even if those paths interact with one another</em> as is the case with, for example, quantum mechanics and path integrals. A common way to do this with traditional numerical computing techniques is to compute all-to-all interactions at each timestep or to evolve the system if it were a probability distribution.</p>
+<p><strong>Evaluating ensembles of paths.</strong> If one wants to compare many different paths, perhaps all having slightly different outcomes, then one could solve them in parallel with this approach. Importantly, this could be done <em>even if those paths interact with one another</em> as is the case, for example, in quantum mechanics with path integrals. A common way to do this with traditional numerical computing techniques is to compute all-to-all interactions at each timestep or to evolve the system as if it were a probability distribution.</p>
 
 <!-- **Adaptive error and computation time.** The action S is an ideal way to measure integration error. It even has physical units! Each optimization step reduces the error across all the coordinates in the path in proportion to their impact on the action. In order to obtain more accurate dynamics, use more steps of greadient descent. In order to use less computation, run for fewer steps. -->
 
-<h2 id="closing-thoughts">Closing thoughts</h2>
+<h3 id="closing-thoughts">Closing thoughts</h3>
 
 <p>In describing how he viewed his life’s work, Isaac Newton wrote, “<em>I do not know what I may appear to the world; but to myself I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me.</em>”</p>
 
-<p>May this post contribute one more drop to that great ocean.</p>
+<p>May this post offer for your inspection one more shell from that divine shore.</p>
 
 <!-- Like Newton, many contemporary physicists get a sense of awe from discovering this hidden structure. I remember an otherwise somber professor from my undergraduate days jumping out of his seat when the first clicks came out of his muon detector. "Do you hear that? Each click is a particle. Millions of them are showering down from space as we speak."
 
