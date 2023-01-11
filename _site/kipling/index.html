@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Three Perspectives on Deep Learning</title>
+    <title>The Gods of the Copybook Headings</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2016/08/05/what-is/">
+    <link rel="canonical" href="http://greydanus.github.io/kipling/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -129,84 +129,90 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>Three Perspectives on Deep Learning</h1>
-    <p class="meta">Aug 5, 2016</p>
+    <h1>The Gods of the Copybook Headings</h1>
+    <p class="meta">Jan 11, 2023 • Rudyard Kipling</p>
   </header>
 
   <article class="post-content">
-  <blockquote>
-  <p>“Deep learning has solved vision…” - Demis Hassabis (Google DeepMind)</p>
-</blockquote>
+  <style>
+.wrap {
+max-width: 900px;
+}
+p {
+font-family: sans-serif;
+font-size: 16.75px;
+font-weight: 300;
+overflow-wrap: break-word; /* allow wrapping of very very long strings, like txids */
+}
+.post pre,
+.post code {
+background-color: #fafafa;
+font-size: 14px; /* make code smaller for this post... */
+}
+pre {
+ white-space: pre-wrap;   /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;  /* Opera 4-6 */
+ white-space: -o-pre-wrap;/* Opera 7 */
+ word-wrap: break-word;   /* Internet Explorer 5.5+ */
+}
+</style>
 
-<p>When <a href="https://en.wikipedia.org/wiki/Demis_Hassabis">Demis Hassabis</a> opened his lecture at the 2015 CERN Data Science conference with this claim, I blinked in disbelief. Hundreds of brilliant scientists have spent their lives pondering the mysteries of the human eye. How could he make that claim so casually? Determined to prove him wrong, I looked at the latest computer vision research and… indeed, certain areas are <a href="https://arxiv.org/abs/1502.01852v1">at human performance</a>.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>As I pass through my incarnations in every age and race,
+I make my proper prostrations to the Gods of the Market Place.
+Peering through reverent fingers I watch them flourish and fall,
+And the Gods of the Copybook Headings, I notice, outlast them all. 
 
-<div class="imgcap">
-	<img src="/assets/what-is/neural_style.png" width="65%" />
-	<div class="thecap" style="text-align:center">Deep learning magic: a ConvNet-based architecture can capture artistic style and apply it to a new image (from <a href="https://github.com/jcjohnson/neural-style">jcjohnson</a>)</div>
-</div>
+We were living in trees when they met us. They showed us each in turn
+That Water would certainly wet us, as Fire would certainly burn:
+But we found them lacking in Uplift, Vision and Breadth of Mind,
+So we left them to teach the Gorillas while we followed the March of Mankind. 
 
-<p>In fact, deep learning can solve more than vision. It can <a href="http://www.nature.com/nature/journal/v529/n7587/full/nature16961.html">defeat the world champion in Go</a>, <a href="https://arxiv.org/abs/1406.1078">translate text</a>, and paint <a href="https://github.com/jcjohnson/neural-style">like Van Gogh</a>. It’s also been known to <a href="https://www.youtube.com/user/stanfordhelicopter">fly helicopters</a> extremely well, <a href="http://www.nature.com/articles/srep17573">fold protiens</a>, and <a href="http://www.jmlr.org/proceedings/papers/v42/sado14.html">classify subatomic particles</a>. Deep learning is awesome…but what exactly is it? After being obsessed with this field for more than a year, I should have a concise and satisfying answer. Strangely, I have three.</p>
+We moved as the Spirit listed. They never altered their pace,
+Being neither cloud nor wind-borne like the Gods of the Market Place,
+But they always caught up with our progress, and presently word would come
+That a tribe had been wiped off its icefield, or the lights had gone out in Rome. 
 
-<h2 id="biological-picture">Biological picture</h2>
-<blockquote>
-  <p>“A lot of the motivation for deep nets did come from looking at the brain…” - Geoffrey Hinton</p>
-</blockquote>
+With the Hopes that our World is built on they were utterly out of touch,
+They denied that the Moon was Stilton; they denied she was even Dutch;
+They denied that Wishes were Horses; they denied that a Pig had Wings;
+So we worshipped the Gods of the Market Who promised these beautiful things. 
 
-<p>The field of deep learning got started when scientists tried to approximate certain circuits in the brain. For example, the Convolutional Neural Network (ConvNet) – a cornerstone of modern computer vision – was inspired by <a href="https://www.ncbi.nlm.nih.gov/pubmed/4966457">a paper</a> about neurons in the monkey striate cortex. Another example is the field of Reinforcement Learning – the hottest area of AI right now - which was built on our understanding of how the brain processes rewards.</p>
+When the Cambrian measures were forming, They promised perpetual peace.
+They swore, if we gave them our weapons, that the wars of the tribes would cease.
+But when we disarmed They sold us and delivered us bound to our foe,
+And the Gods of the Copybook Headings said: "Stick to the Devil you know."  
 
-<div class="imgcap">
-	<img src="/assets/what-is/bio_vs_dl.png" width="90%" />
-	<div class="thecap" style="text-align:center">The architecture of neural networks is inspired by connections between neurons</div>
-</div>
+On the first Feminian Sandstones we were promised the Fuller Life
+(Which started by loving our neighbour and ended by loving his wife)
+Till our women had no more children and the men lost reason and faith,
+And the Gods of the Copybook Headings said: "The Wages of Sin is Death."  
 
-<p>Skeptics claim that deep learning stretches the brain metaphor too far. Some of their critiques are:</p>
+In the Carboniferous Epoch we were promised abundance for all, 
+By robbing selected Peter to pay for collective Paul; 
+But, though we had plenty of money, there was nothing our money could buy, 
+And the Gods of the Copybook Headings said: "If you don't work you die."  
 
-<ol>
-  <li><em>Scale:</em> The largest neural nets have around 100 million ‘connections’. The human brain has over a 100 <em>trillion</em> connections. With faster GPUs and cluster computing, the size of deep learning models has increased by orders of magnitude in the past few years. This pattern will probably continue.</li>
-  <li><em>Backprop:</em> Some scientists believe that the <a href="https://en.wikipedia.org/wiki/Backpropagation">backpropagation algorithm</a> has no biological correlate. Others <a href="https://www.cs.toronto.edu/~hinton/backpropincortex2014.pdf">disagree</a>.</li>
-  <li><em>Architecture:</em> Certain areas of the brain are able to store really complicated memories, perform symbolic operations, and build models of the outside world. These are things that state-of-the art deep learning cannot do.  There’s been a push in research to <a href="https://arxiv.org/abs/1604.00289">change this</a>.</li>
-</ol>
+Then the Gods of the Market tumbled, and their smooth-tongued wizards withdrew
+And the hearts of the meanest were humbled and began to believe it was true
+That All is not Gold that Glitters, and Two and Two make Four
+And the Gods of the Copybook Headings limped up to explain it once more. 
 
-<h2 id="mathematical-picture">Mathematical picture</h2>
-<blockquote>
-  <p>“These adjustable parameters, often called weights, are real numbers that can be seen as ‘knobs’ that define the input–output function of the machine” - <a href="http://www.nature.com/nature/journal/v521/n7553/abs/nature14539.html">2015 Nature Review</a></p>
-</blockquote>
+As it will be in the future, it was at the birth of Man
+There are only four things certain since Social Progress began. 
+That the Dog returns to his Vomit and the Sow returns to her Mire, 
+And the burnt Fool's bandaged finger goes wabbling back to the Fire; 
 
-<p>Mathematicians will tell you that deep learning is just complicated regression. Regression is the art of finding a function that explains the relationship between an input and an output. The simplest example is from middle school math when we used two points on a Cartesian plane to find the variables \(m\) and \(b\) in \(f(x)=mx+b\).</p>
+And that after this is accomplished, and the brave new world begins
+When all men are paid for existing and no man must pay for his sins, 
+As surely as Water will wet us, as surely as Fire will burn, 
+The Gods of the Copybook Headings with terror and slaughter return!
+</code></pre></div></div>
 
-<div class="imgcap">
-	<img src="/assets/what-is/regression.png" width="80%" />
-	<div class="thecap" style="text-align:center">Deep learning as a type of regression (images from 2015 <a href="https://arxiv.org/abs/1409.0575">ImageNet paper</a>)</div>
-</div>
-
-<p>Deep learning is the same thing except \(f(x)\) can be arbitrarily complex and nonlinear. The input could be the pixels of an image and the outputs a caption which describes the image. The input could be a sentence of French and the output could be a sentence in English. Obviously, functions that perform these mappings must be extremely complicated. In fact, deep learning models often have millions of free parameters instead of just an \(m\) and a \(b\). That said, it’s just regression.</p>
-
-<h2 id="computer-science-picture">Computer science picture</h2>
-<blockquote>
-  <p>“The cost of a world-class deep learning expert was about the same as a top NFL quarterback prospect” - Peter Lee (Microsoft Research)</p>
-</blockquote>
-
-<p><strong>The tech industry.</strong> Tech companies love to build hype around vague keyphrases such as ‘cloud’, ‘big data’, and ‘machine learning.’ Inevitably, ‘deep learning’ will join the list. There are really two approaches to deep learning in tech. The first says: this gets great results and makes us a profit – let’s pour a ton of money into it. The second says: this is the cure-all, next-big-thing, singularity-inducing pinnacle of computer science - let’s pour a ton of money into it. There are a few notable exceptions.</p>
-
-<p><strong>Edit, December 2020.</strong> I had previously linked to OpenAI as a ‘notable exception’, but in recent years OpenAI has been acting more like <a href="https://twitter.com/elonmusk/status/1309052632850468864">ClosedAI</a> 😞. My new favorite ‘notable exception’ is the <a href="http://mlcollective.org/">ML Collective</a>, a renegade band of ML researchers who also happen to be friends. This group (of which I am a member) is a nonprofit aimed at advancing deep learning research while making it easier for people from non-traditional paths to get involved.</p>
-
-<div class="imgcap_noborder">
-	<img src="/assets/what-is/trends.png" width="100%" />
-	<div class="thecap" style="text-align:center"></div>
-</div>
-
-<p><strong>Research.</strong> Even in academia, researchers tend to prioritize results over understanding; deep learning theory lags woefully behind practice. If you do not have a background in computer science, you’ll get the best answers to the question “What can deep learning do?” and the worst answers to the question, “What is deep learning?” from people in tech.</p>
-
-<h2 id="closing-thoughts">Closing thoughts</h2>
-<blockquote>
-  <p>“What I cannot create I do not understand” - Richard Feynman</p>
-</blockquote>
-
-<p>Deep learning lets us create some really exciting projects in the areas of computer vision, translation, and strategy. Richard Feynman once said, “What I cannot create I do not understand,” and this really plays to our advantage here. Now that we are able to create these projects, they can help us understand puzzles such as human vision, the structure of language, and decision making on an entirely new level.</p>
-
-<div class="imgcap">
-	<img src="/assets/what-is/griffiths.png" width="100%" />
-	<div class="thecap" style="text-align:left;">Comparing the way humans and ConvNets represent the same set of images can teach us a lot about vision (from <a href="https://arxiv.org/abs/1608.02164">Adapting Deep Network Features to Capture Psychological Representations</a>)</div>
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; max-width: 400px">
+  <div style="width:99%; display: inline-block; vertical-align: top;">
+<img src="/assets/justification/scrollwork.jpg" style="width:100%" />
+  </div>
 </div>
 
   </article>
@@ -218,29 +224,6 @@
 
   <!-- disqus comments -->
  
-  <div id="disqus_thread"></div>
-  <script>
-      /**
-       *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-       *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-       */
-      /*
-      var disqus_config = function () {
-          this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-          this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-      };
-      */
-      (function() {  // DON'T EDIT BELOW THIS LINE
-          var d = document, s = d.createElement('script');
-          
-          s.src = '//greydanus-blog.disqus.com/embed.js';
-          
-          s.setAttribute('data-timestamp', +new Date());
-          (d.head || d.body).appendChild(s);
-      })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-  
 
 
   
