@@ -10,7 +10,7 @@ includelink: true
 
 ## Links
 * [Google scholar](https://scholar.google.com/citations?user=SECnlpMAAAAJ&hl=en) – [Twitter](https://twitter.com/samgreydanus) – [Github](https://github.com/greydanus)
-* [Tocqueville](/tocqueville) – [Steinbeck](/steinbeck) <!-- – [Justification](/justification) --><!--  [Ten letters](/vancouver22) –  -->
+* [Tocqueville](/tocqueville) – [Steinbeck](/steinbeck) – [Kipling](/kipling) <!-- – [Justification](/justification) --><!--  [Ten letters](/vancouver22) –  -->
 * [My old website](https://greydanus.github.io/about.html) – [My email](/static/email.txt)
 
 ## About me
