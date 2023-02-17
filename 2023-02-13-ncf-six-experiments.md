@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Six Experiments in Action Minimization"
+title:  "The Action: Six Experiments"
 excerpt: "By minimizing the action, we obtain dynamics for six different physical systems and show that they are nearly identical to ground-truth dynamics."
 date:   2023-02-16 6:50:00
 mathjax: true
