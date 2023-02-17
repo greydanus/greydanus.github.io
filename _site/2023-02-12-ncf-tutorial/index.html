@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Nature's Cost Function</title>
+    <title>The Action: Nature's Cost Function</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
     <link rel="canonical" href="http://greydanus.github.io/2023-02-12-ncf-tutorial/">
@@ -70,15 +70,13 @@
 <!--         
           <a class="page-link" href="/assets/2017-12-23-neurips17/">A Review of NeurIPS</a>
         
-          <a class="page-link" href="/2022-04-08-sparsity/">The Story of Sparsity in Neural Networks</a>
+          <a class="page-link" href="/2023-02-12-ncf-tutorial/">The Action: Nature's Cost Function</a>
         
-          <a class="page-link" href="/2023-02-12-ncf-tutorial/">Nature's Cost Function</a>
+          <a class="page-link" href="/2023-02-13-ncf-six-experiments/">The Action: Six Experiments</a>
         
-          <a class="page-link" href="/2023-02-13-ncf-six-experiments/">Six Experiments in Action Minimization</a>
+          <a class="page-link" href="/2023-02-14-ncf-quantum/">The Action: Quantum Mechanics</a>
         
-          <a class="page-link" href="/2023-02-14-ncf-quantum/">A Quantum Simulation based on the Feynman Path Integral</a>
-        
-          <a class="page-link" href="/2023-02-15-action-interpretation/">History and Interpretation of the Action</a>
+          <a class="page-link" href="/2023-02-15-ncf-interpretation/">The Action: History and Physical Interpretations</a>
         
           
         
@@ -135,7 +133,7 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>Nature's Cost Function</h1>
+    <h1>The Action: Nature's Cost Function</h1>
     <p class="meta">Feb 16, 2023 • Sam Greydanus, Tim Strang, and Isabella Caruso</p>
   </header>
 
@@ -171,7 +169,15 @@ pre {
   </div>
 </div>
 
-<p>In physics, there is a scalar function called the action which behaves like a cost function. When minimized, it yields the “path of least action” which represents the path a physical system will take through space and time. This function is crucial in theoretical physics and is usually minimized analytically to obtain equations of motion for various problems. In this post, we propose a different approach: instead of minimizing the action analytically, we discretize it and then minimize it directly with gradient descent.</p>
+<p>The purpose of this simple post is to bring to attention a view of physics which isn’t often communicated in introductory courses: the view of <em>physics as optimization</em>.</p>
+
+<p>It begins with a quantity called the action. If you minimize the action, you can obtain a <em>path of least action</em> which represents the path a physical system will take through space and time. Generally speaking, physicists use analytic tools to do this minimization. In this post, we are going to attempt something different and slightly crazy: minimizing the action with gradient descent. For simplicity, we’re going to run our experiment on a very simple system: a free body in a gravitational field. And in order to put our approach in perspective, we’re going to begin by reviewing the standard approaches to this kind of problem.</p>
+
+<div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
+  <a href="" id="linkbutton" target="_blank">Read the paper</a>
+  <a href="https://colab.research.google.com/github/greydanus/ncf/blob/main/tutorial.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+  <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
+</div>
 
 <!-- <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img style='width:51.6%; min-width:330px;' src="/assets/ncf/hero1.png">
@@ -181,12 +187,6 @@ pre {
   </div>
 </div> -->
 
-<div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
-  <a href="" id="linkbutton" target="_blank">Read the paper</a>
-  <a href="https://colab.research.google.com/github/greydanus/ncf/blob/main/tutorial.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
-  <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
-</div>
-
 <!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <img alt="" src="/assets/ncf/hero.png" width="95%" id="lossImage" />
@@ -194,51 +194,49 @@ pre {
   </div>
 </div> -->
 
-<p>To put our approach in perspective we will begin by reviewing standard approaches to solving physics problems.</p>
-
 <h3 id="standard-approaches">Standard approaches</h3>
 
 <p><strong>The analytic approach.</strong> Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be</p>
 
-\[y(t)=\frac{1}{2}gt^2+v_0t+y_0.\]
+\[y(t)=-\frac{1}{2}gt^2+v_0t+y_0.\]
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">falling_object_analytic</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-  <span class="n">v0</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
-  <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">steps</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
-  <span class="n">x</span> <span class="o">=</span> <span class="p">.</span><span class="mi">5</span><span class="o">*-</span><span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v0</span><span class="o">*</span><span class="n">t</span> <span class="o">+</span> <span class="n">x0</span>  <span class="c1"># the equation of motion
-</span>  <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span>
+    <span class="n">v0</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">steps</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="p">.</span><span class="mi">5</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v0</span><span class="o">*</span><span class="n">t</span> <span class="o">+</span> <span class="n">x0</span>  <span class="c1"># the equation of motion
+</span>    <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span>
 
 <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="mf">0.19</span>
 <span class="n">t_ana</span><span class="p">,</span> <span class="n">x_ana</span> <span class="o">=</span> <span class="n">falling_object_analytic</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
 </code></pre></div></div>
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
-  <img src="/assets/ncf/analytic.png" />
+  <img src="/assets/ncf/tutorial_ana.png" />
 </div>
 
-<p><strong>The numerical approach.</strong> Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve by numerical integration</p>
+<p><strong>The numerical approach.</strong> Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve with numerical integration:</p>
 
-\[\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = a(t)\]
+\[\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = -g\]
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">falling_object_numerical</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-  <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">]</span>
-  <span class="n">ts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">dt</span><span class="p">]</span>
-  <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
-  <span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">v</span> <span class="o">+=</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">dt</span>
-    <span class="n">x</span> <span class="o">+=</span> <span class="n">v</span><span class="o">*</span><span class="n">dt</span>
-    <span class="n">xs</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="n">ts</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">dt</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ts</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">]</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">dt</span><span class="p">]</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">v</span> <span class="o">+=</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">dt</span>
+        <span class="n">x</span> <span class="o">+=</span> <span class="n">v</span><span class="o">*</span><span class="n">dt</span>
+        <span class="n">xs</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">ts</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">dt</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">ts</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
 
 <span class="n">t_num</span><span class="p">,</span> <span class="n">x_num</span> <span class="o">=</span> <span class="n">falling_object_numerical</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
 </code></pre></div></div>
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
-  <img src="/assets/ncf/numerical.png" />
+  <img src="/assets/ncf/tutorial_num.png" />
 </div>
 
-<h3 id="dynamics-problems-as-optimization-problems">Dynamics problems as optimization problems</h3>
+<h3 id="our-approach">Our approach</h3>
 
 <p><strong>The Lagrangian method.</strong> The approaches we just covered make intuitive sense. That’s why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for <em>any</em> physical system. Lagrangians figure prominently in all four branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the <a href="https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation">Standard Model Lagrangian</a> they can do precisely that.</p>
 
@@ -250,89 +248,84 @@ pre {
 
 <p>Earlier in the chapter, Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For a falling particle, L would be \(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.</p>
 
-<p><strong>What if I don’t like infinities?</strong> In the screenshot above, Morin mentions as an aside, <em>“If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum.”</em> The goal of this sentence was to make the idea of a functional more intuitive – not to provide practical advice for computing the action. But what if we took this sentence literally? What if we used a computer to estimate S (a scalar) and then searched for its stationary values using numerical optimization? In doing so, we could obtain the dynamics of the physical system between times t\(_1\) and t\(_2\). To my knowledge, nobody has tried this. Why not give it a shot?</p>
+<p><strong>Discretizing the action</strong> In the screenshot above, Morin mentions as an aside, <em>“If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum.”</em> The goal of this sentence was to make the idea of a functional more intuitive – not to provide practical advice for computing the action. But what if we took this sentence literally? What if we used a computer to estimate S (a scalar) and then searched for its stationary values using numerical optimization? In doing so, we could obtain the dynamics of the physical system between times t\(_1\) and t\(_2\).</p>
 
-<h3 id="a-simple-implementation">A simple implementation</h3>
+<h3 id="coding-up-the-discretized-action">Coding up the discretized action</h3>
 
 <p>Let’s begin with a list of coordinates, <code class="language-plaintext highlighter-rouge">x</code>, which contains all the position coordinates of the system between t\(_1\) and t\(_2\). We can write the Lagrangian and the action of the system in terms of these coordinates.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lagrangian</span><span class="p">(</span><span class="n">q</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-  <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xdot</span><span class="p">)</span> <span class="o">=</span> <span class="n">q</span>
-  <span class="k">return</span> <span class="p">.</span><span class="mi">5</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">xdot</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">x</span>
-
-<span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-  <span class="s">'''q is a 1D tensor of n values, one for each (discretized) time step'''</span>
-  <span class="n">xdot</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">dt</span>
-  <span class="n">xdot</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cat</span><span class="p">([</span><span class="n">xdot</span><span class="p">,</span> <span class="n">xdot</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]])</span>  <span class="c1"># hacky approximation: v[-1] = v[-2]
-</span>  <span class="k">return</span> <span class="n">lagrangian</span><span class="p">(</span><span class="n">q</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xdot</span><span class="p">)).</span><span class="nb">sum</span><span class="p">()</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">lagrangian_freebody</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xdot</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="p">.</span><span class="mi">5</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">xdot</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">m</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">x</span>
+    <span class="k">return</span> <span class="n">T</span><span class="p">,</span> <span class="n">V</span>
+  
+<span class="k">def</span> <span class="nf">action</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dt</span><span class="p">):</span>
+    <span class="n">xdot</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">dt</span>
+    <span class="n">xdot</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">cat</span><span class="p">([</span><span class="n">xdot</span><span class="p">,</span> <span class="n">xdot</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">:]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">T</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">lagrangian_freebody</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xdot</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">T</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span><span class="o">-</span><span class="n">V</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>Now let’s look for a point of stationary action. Technically, this could be a minimum, a maximum, or an inflection point. In many cases, the point of stationary action occurs at a minimum in S.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">2</a></sup> That’s the case for this particular problem.</p>
+<p>Now let’s look for a point of stationary action. Technically, this could be a minimum, a maximum, or an inflection point.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">2</a></sup> Here, though, we’re just going to look for a minimum:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_path_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-  <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">*</span> <span class="n">dt</span>
-  <span class="n">xs</span> <span class="o">=</span> <span class="p">[]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
-    <span class="n">grad</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">autograd</span><span class="p">.</span><span class="n">grad</span><span class="p">(</span><span class="n">action</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dt</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span>
-    <span class="n">grad_x</span> <span class="o">=</span> <span class="n">grad</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">grad_x</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">*=</span> <span class="mi">0</span>  <span class="c1"># fix first and last coordinates by zeroing their grads
-</span>    <span class="n">x</span><span class="p">.</span><span class="n">data</span> <span class="o">-=</span> <span class="n">grad_x</span> <span class="o">*</span> <span class="n">step_size</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_path_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_prints</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">num_stashes</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">*</span> <span class="n">dt</span>
+    <span class="n">print_on</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">steps</span><span class="p">)),</span><span class="n">num_prints</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># print more, early on
+</span>    <span class="n">stash_on</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">steps</span><span class="p">)),</span><span class="n">num_stashes</span><span class="p">).</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">xs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="p">):</span>
+        <span class="n">grad_x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">autograd</span><span class="p">.</span><span class="n">grad</span><span class="p">(</span><span class="n">action</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dt</span><span class="p">),</span> <span class="n">x</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">grad_x</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span> <span class="o">*=</span> <span class="mi">0</span>  <span class="c1"># fix first and last coordinates by zeroing their grads
+</span>        <span class="n">x</span><span class="p">.</span><span class="n">data</span> <span class="o">-=</span> <span class="n">grad_x</span> <span class="o">*</span> <span class="n">step_size</span>
 
-    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="p">(</span><span class="n">steps</span><span class="o">//</span><span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-      <span class="n">xs</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">clone</span><span class="p">().</span><span class="n">data</span><span class="p">)</span>
-      <span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="se">\t</span><span class="s">i={:04d}, S={:.3e}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">action</span><span class="p">(</span><span class="n">x</span><span class="p">).</span><span class="n">item</span><span class="p">()))</span>
-  <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">xs</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">print_on</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">'step={:04d}, S={:.4e}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">action</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dt</span><span class="p">).</span><span class="n">item</span><span class="p">()))</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">stash_on</span><span class="p">:</span>
+            <span class="n">xs</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">clone</span><span class="p">().</span><span class="n">data</span><span class="p">.</span><span class="n">numpy</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">stack</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p>Now let’s put it all together. We can initialize our falling particle’s path to be any random path through space. In the code below, we choose a path where the particle bounces around x=0 at random until time t=15 seconds, at which point it leaps up to its final state of x=7.5 meters. This path has a large action of S = 54.6 J·s. As we run the optimization, this value decreases smoothly until we converge on a parabolic arc with an action of S = -1292= J·s.</p>
+<p>Now let’s put it all together. We can initialize our falling particle’s path to be any random path through space. In the code below, we choose a path where the particle bounces around x=0 at random until time t=19 seconds, at which point it leaps up to its final state of x = <code class="language-plaintext highlighter-rouge">x_num[-1]</code> = 21.3 meters. This path has a high action of S = 5330 J·s. As we run the optimization, this value decreases smoothly until we converge on a parabolic arc with an action of S = -2500 J·s.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.25</span>
-<span class="n">x0</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">61</span><span class="p">,</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># a random path through space
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dt</span> <span class="o">=</span> <span class="mf">0.19</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mf">1.5</span><span class="o">*</span><span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_num</span><span class="p">),</span> <span class="n">requires_grad</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>  <span class="c1"># a random path through space
 </span><span class="n">x0</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">data</span> <span class="o">*=</span> <span class="mf">0.0</span> <span class="p">;</span> <span class="n">x0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">data</span> <span class="o">*=</span> <span class="mf">0.0</span>  <span class="c1"># set first and last points to zero
-</span><span class="n">x0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">data</span> <span class="o">+=</span> <span class="mf">7.5</span>  <span class="c1"># set last point to 7.5 (end height of analytic solution)
+</span><span class="n">x0</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">data</span> <span class="o">+=</span> <span class="n">x_num</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># set last point to be the end height of the numerical solution
 </span>
-<span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">get_path_between</span><span class="p">(</span><span class="n">x0</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span> <span class="n">steps</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">3e-2</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+<span class="n">t</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">xs</span> <span class="o">=</span> <span class="n">get_path_between</span><span class="p">(</span><span class="n">x0</span><span class="p">.</span><span class="n">clone</span><span class="p">(),</span> <span class="n">steps</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
 </code></pre></div></div>
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%; min-width:330px;">
-  <img src="/assets/ncf/output.png" />
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%; min-width:330px;">
+  <img src="/assets/ncf/tutorial_printout.png" />
 </div>
 
-<h3 id="applications">Applications</h3>
+<h3 id="direct-comparison-between-the-numerical-ode-solution-and-our-approach">Direct comparison between the numerical (ODE) solution and our approach</h3>
 
-<p>The goal of this post is to show that this technique is possible. Determining whether it has useful applications is a question for another day. Nevertheless, I can’t resist including a few speculations.</p>
+<p>On the left side of the figure below, we compare the normal approach of ODE integration to our approach of action minimization. As a reminder, the action is the sum, over every point in the path, of kinetic energy \(T\) minus potential energy \(V\). We compute the gradients of this quantity with respect to the path coordinates and then deform the initial path (yellow) into the path of least action (green). This path resolves to a parabola, matching the path obtained via ODE integration. On the right side of the figure, we plot of the path’s action \(S\), kinetic energy \(T\), and potential energy \(V\) over the course of optimization. All three quantities asymptote at the \(S\), \(T\), and \(V\) values of the ODE trajectory.</p>
 
-<p><strong>Chaotic deterministic systems.</strong> Some chaotic deterministic systems, such as those found in fluid dynamics, are so sensitive to integration error that no single final state can be predicted with certainty. A more relevant question to ask, then, is <em>“which of two final states, A or B, is more likely?”</em>. For example, when making a weather forecast for tomorrow, is weather A or weather B more likely? Minimizing the action may allow us to compute these relative probabilities more efficiently by directly comparing the final values of S.</p>
-
-<p><strong>When the final state is irrelevant.</strong> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\(_1\) and t\(_2\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don’t fix the final state.</p>
-
-<p><strong>Evaluating ensembles of paths.</strong> If one wants to compare many different paths, perhaps all having slightly different outcomes, then one could solve them in parallel with this approach. Importantly, this could be done <em>even if those paths interact with one another</em> as is the case, for example, in quantum mechanics with path integrals. A common way to do this with traditional numerical computing techniques is to compute all-to-all interactions at each timestep or to evolve the system as if it were a probability distribution.</p>
-
-<!-- **Adaptive error and computation time.** The action S is an ideal way to measure integration error. It even has physical units! Each optimization step reduces the error across all the coordinates in the path in proportion to their impact on the action. In order to obtain more accurate dynamics, use more steps of greadient descent. In order to use less computation, run for fewer steps. -->
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
+  <img src="/assets/ncf/hero.png" />
+</div>
 
 <h3 id="closing-thoughts">Closing thoughts</h3>
 
-<p>In describing how he viewed his life’s work, Isaac Newton wrote, “<em>I do not know what I may appear to the world; but to myself I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me.</em>”</p>
+<p>The goal of this post was just to demonstrate that it’s possible to find a path of least action via gradient descent. Determining whether it has useful applications is a question for another day. Nevertheless, here are a few speculations as to what those applications might look like:</p>
 
-<p>May this post offer for your inspection one more shell from that divine shore.</p>
+<ul>
+  <li>
+    <p><em>ODE super-resolution.</em></p>
+  </li>
+  <li>
+    <p><em>Infilling missing data.</em> Some chaotic deterministic systems</p>
+  </li>
+  <li>
+    <p><em>When the final state is irrelevant.</em> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\(_1\) and t\(_2\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don’t fix the final state.</p>
+  </li>
+</ul>
 
-<!-- Like Newton, many contemporary physicists get a sense of awe from discovering this hidden structure. I remember an otherwise somber professor from my undergraduate days jumping out of his seat when the first clicks came out of his muon detector. "Do you hear that? Each click is a particle. Millions of them are showering down from space as we speak."
+<p>The thing I like most about this little experiment is that it shows how the action really does act like a cost function. This isn’t something you’ll hear in your physics courses, even high level ones. And yet, it’s quite surprising and interesting to learn that nature has a cost function! The action is a very, very fundamental quantity. In a future post, we’ll see how this notion extends even into quantum mechanics - with a few modifications of course.</p>
 
-I hope that this perspective on simulation as optimization serves to deepen that sense of awe
- -->
-<!-- The Lagrangian method, applied directly to numerical simulation, is quite elegant and I hope that it confers some of this awe to the casual reader. -->
-
-<!-- There is hidden structure in the world around us. In the tradition of Greek philosophy, noticing that structure and describing it well is considered an intrinsic good. The Pythagoreans were of this view. The Judeo-Christian tradition holds a similar position _"It is the glory of God to conceal a thing, but the honor of kings is to search out a matter."_ Modern science, at its best, continues in this tradition.
-
-For many physicists, this process is accompanied by a sense of awe. I remember an otherwise somber professor from my undergraduate days jumping out of his seat when the first clicks came out of his muon detector. "Do you hear that? Each click is a particle. Millions of them are showering down from space as we speak." In describing how he viewed his life's work, Isaac Newton wrote:
-
-_I do not know what I may appear to the world; but to myself I seem to have been only like a boy playing on the seashore, and diverting myself in now and then finding a smoother pebble or a prettier shell than ordinary, whilst the great ocean of truth lay all undiscovered before me._
-
-The Lagrangian method, applied directly to numerical simulation, is quite elegant and I hope that it confers some of this awe to the casual reader. -->
-
-<!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <img src="/assets/ncf/ferns.jpeg">
-</div> -->
+<!-- Basic physical principles and the elegant reasoning behind them are often obscured in the midst of numerical approximations and domain-specific notation. This post shows that it's surprisingly easy to solve physics by working directly in terms of the action. It lets us solve simulation problems as though they are optimization problems -- a surprising result! -->
 
 <h2 id="footnotes">Footnotes</h2>
 
@@ -356,7 +349,7 @@ The Lagrangian method, applied directly to numerical simulation, is quite elegan
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:fn0" role="doc-endnote">
-      <p>I have written previously about it here and here. For a thorough introduction to the topic, I recommend <a href="https://scholar.harvard.edu/files/david-morin/files/cmchap6.pdf">this</a> textbook chapter]. <a href="#fnref:fn0" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>For a thorough introduction to the topic, I recommend <a href="https://scholar.harvard.edu/files/david-morin/files/cmchap6.pdf">this</a> textbook chapter]. <a href="#fnref:fn0" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:fn1" role="doc-endnote">
       <p>That’s why the whole method is often called <em>The Principle of Least Action</em>, a misnomer which I personally picked up by reading the Feynman Lectures. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>

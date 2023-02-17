@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "A Quantum Simulation based on the Feynman Path Integral"
+title:  "The Action: Quantum Mechanics"
 excerpt: "This interference occurs because the phase evolves differently with each path and thus is out of sync when the paths recombine."
 date:   2023-02-16 6:50:00
 mathjax: true
