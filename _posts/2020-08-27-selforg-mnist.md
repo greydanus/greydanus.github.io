@@ -5,6 +5,7 @@ title:  "Self-classifying MNIST Digits"
 excerpt: "We treat every pixel in an image as a biological cell. We train these cells to signal to one another and determine what digit they are shaping."
 date:   2020-08-27 11:00:00
 mathjax: true
+author: Sam Greydanus
 thumbnail: /assets/selforg-digits/thumbnail.png
 ---
 

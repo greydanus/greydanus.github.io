@@ -5,6 +5,7 @@ title:  "Differentiable Memory and the Brain"
 excerpt: "We compare the Differentiable Neural Computer, a strong neural memory model, to human memory and discuss where the analogy breaks down."
 date:   2017-02-27 11:00:00
 mathjax: true
+author: Sam Greydanus
 thumbnail: /assets/dnc/thumbnail.png
 ---
 

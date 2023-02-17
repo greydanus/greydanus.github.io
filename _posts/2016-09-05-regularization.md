@@ -5,6 +5,7 @@ title:  "The Art of Regularization"
 excerpt: "Regularization has a huge impact on deep models. Let's visualize the effects of various techniques on a neural network trained on MNIST."
 date:   2016-09-05 11:00:00
 mathjax: true
+author: Sam Greydanus
 thumbnail: /assets/regularization/thumbnail.png
 ---
 

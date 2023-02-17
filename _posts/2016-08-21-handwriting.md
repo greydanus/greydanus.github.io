@@ -5,6 +5,7 @@ title:  "Scribe: Generating Realistic Handwriting with TensorFlow"
 excerpt: "Let's use a deep learning model to generate human-like handwriting. This work is based on <em>Generating Sequences With Recurrent Neural Networks</em> by Alex Graves"
 date:   2016-08-21 10:00:00
 mathjax: true
+author: Sam Greydanus
 thumbnail: /assets/scribe/thumbnail.png
 ---
 

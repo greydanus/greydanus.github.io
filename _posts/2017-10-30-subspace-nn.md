@@ -5,6 +5,7 @@ title:  "Training Networks in Random Subspaces"
 excerpt: "Do we really need over 100,000 free parameters to build a good MNIST classifier? It turns out that we can eliminate 80-90% of them."
 date:   2017-10-30 11:00:00
 mathjax: true
+author: Sam Greydanus
 thumbnail: /assets/subspace-nn/thumbnail.png
 ---
 

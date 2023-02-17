@@ -7,6 +7,7 @@ date:   2019-12-15 11:00:00
 mathjax: true
 meta: <a href="https://deep-inverse.org/">NeurIPS 2019 Deep Inverse Workshop</a>
 thumbnail: /assets/neural-reparam/thumbnail.png
+author: Sam Greydanus
 ---
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:90%" >

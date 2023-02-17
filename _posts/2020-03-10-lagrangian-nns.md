@@ -5,7 +5,7 @@ title:  "Lagrangian Neural Networks"
 excerpt: "As a complement to Hamiltonian Neural Networks, I discuss how to parameterize Lagrangians with neural networks and then learn them from data."
 date:   2020-03-10 11:00:00
 mathjax: true
-author: With Miles Cranmer and Stephan Hoyer
+author: Sam Greydanus, Miles Cranmer, and Stephan Hoyer
 thumbnail: /assets/lagrangian-nns/thumbnail.png
 ---
 

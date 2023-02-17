@@ -1,13 +1,13 @@
 ---
 layout: post
 comments: true
-title:  "Simulation as Optimization: Minimizing the Action with Gradient Descent"
-excerpt: "Physics problems can be written as optimization problems and solved with gradient descent."
-date:   2022-11-18 6:50:00
+title:  "A Quantum Simulation based on the Feynman Path Integral"
+excerpt: "This interference occurs because the phase evolves differently with each path and thus is out of sync when the paths recombine."
+date:   2023-02-16 6:50:00
 mathjax: true
-thumbnail: /assets/sim-as-opt/thumbnail.png
+author: Sam Greydanus, Tim Strang, and Isabella Caruso
+thumbnail: /assets/ncf/thumbnail_quantum.png
 ---
-
 <style>
 .wrap {
     max-width: 900px;
@@ -31,27 +31,37 @@ pre {
  word-wrap: break-word;       /* Internet Explorer 5.5+ */
 }
 </style>
-
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <img style='width:51.6%; min-width:330px;' src="/assets/sim-as-opt/hero1.png">
-  <img style='width:47.5%; min-width:330px;' src="/assets/sim-as-opt/hero2.png">
-  <div class="thecap"  style="text-align:left;padding-left:0px;">
-    We solve a simulation problem as though it were an optimization problem. First we compute the action <i>S</i>, then we minimize it. In doing so, we deform the initial random path (yellow) into the path of least action (blue). The final path happens to be a parabola -- the trajectory that a falling object would take in the real world.
+<div class="imgcap_noborder" style="display: inline-block; margin-left: auto; margin-right: auto; width:99.9%;margin-bottom: 0px;">
+  <div style="width:225px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <img alt="" src="/assets/ncf/compare.png" width="95%" id="compareImage" />
+    <button id="compareButton" onclick="toggleCompare()" class="playbutton">Play</button>
   </div>
 </div>
 
+In physics, there is a scalar function called the action which behaves like a cost function. When minimized, it yields the "path of least action" which represents the path a physical system will take through space and time. This function is crucial in theoretical physics and is usually minimized analytically to obtain equations of motion for various problems. In this post, we propose a different approach: instead of minimizing the action analytically, we discretize it and then minimize it directly with gradient descent.
+
 <!-- <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <img src="/assets/sim-as-opt/hero.png">
+  <img style='width:51.6%; min-width:330px;' src="/assets/ncf/hero1.png">
+  <img style='width:47.5%; min-width:330px;' src="/assets/ncf/hero2.png">
   <div class="thecap"  style="text-align:left;padding-left:0px;">
-    Here we solve a simulation problem as though it were an optimization problem. We do this by computing the action <i>S</i> and then minimizing it in order to move from an arbitrary trajectory (yellow) to the path of least action (blue).
+    We solve a simulation problem as though it were an optimization problem. First we compute the action <i>S</i>, then we minimize it. In doing so, we deform the initial random path (yellow) into the path of least action (blue). The final path happens to be a parabola -- the trajectory that a falling object would take in the real world.
   </div>
 </div> -->
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
-  <a href="https://colab.research.google.com/drive/1VvwlquTGAFsJOPfWnZDBZ9oYYyQwQxsA?usp=sharing" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+  <a href="" id="linkbutton" target="_blank">Read the paper</a>
+  <a href="https://colab.research.google.com/github/greydanus/ncf/blob/main/tutorial.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+  <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
-The purpose of this short post is to bring to attention a view of physics which isn't often communicated in introductory courses: the view of _physics as optimization_. In order to put this view in perspective, let's begin by reviewing standard approaches to solving dynamics problems.
+<!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <img alt="" src="/assets/ncf/hero.png" width="95%" id="lossImage" />
+    <div style="text-align:left;margin-left:10px;margin-right:10px;text-align:center">Caption 2</div>
+  </div>
+</div> -->
+
+To put our approach in perspective we will begin by reviewing standard approaches to solving physics problems.
 
 ### Standard approaches
 
@@ -60,18 +70,18 @@ The purpose of this short post is to bring to attention a view of physics which 
 $$y(t)=\frac{1}{2}gt^2+v_0t+y_0.$$
 
 ```python
-def falling_object_analytic(x0, x1, dt, g=1, steps=60):
+def falling_object_analytic(x0, x1, dt, g=1, steps=100):
   v0 = (x1 - x0) / dt
   t = np.linspace(0, steps, steps+1) * dt
   x = .5*-g*t**2 + v0*t + x0  # the equation of motion
   return t, x
 
 x0, x1 = [0, 2]
-dt = 0.25
+dt = 0.19
 t_ana, x_ana = falling_object_analytic(x0, x1, dt)
 ```
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
-  <img src="/assets/sim-as-opt/analytic.png">
+  <img src="/assets/ncf/analytic.png">
 </div>
 
 **The numerical approach.** Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can't know their state at some time in the future without simulating all the intervening states. These we can solve by numerical integration
@@ -79,12 +89,12 @@ t_ana, x_ana = falling_object_analytic(x0, x1, dt)
 $$\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = a(t)$$
 
 ```python
-def falling_object_numerical(x0, x1, dt, g=1, steps=60):
+def falling_object_numerical(x0, x1, dt, g=1, steps=100):
   xs = [x0, x1]
   ts = [0, dt]
   v = (x1 - x0) / dt
   x = xs[-1]
-  for i in range(steps-2):  # this loop does simple Euler integration
+  for i in range(steps-1):
     v += -g*dt
     x += v*dt
     xs.append(x)
@@ -94,7 +104,7 @@ def falling_object_numerical(x0, x1, dt, g=1, steps=60):
 t_num, x_num = falling_object_numerical(x0, x1, dt)
 ```
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
-  <img src="/assets/sim-as-opt/numerical.png">
+  <img src="/assets/ncf/numerical.png">
 </div>
 
 ### Dynamics problems as optimization problems
@@ -104,7 +114,7 @@ t_num, x_num = falling_object_numerical(x0, x1, dt)
 Many of the details of the Lagrangian method are beyond the scope of this post.[^fn0] However, this half-page from David Morin's _Introduction to Classical Mechanics_ does a good job of setting the scene:
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px;">
-  <img src="/assets/sim-as-opt/morin_ch6.png">
+  <img src="/assets/ncf/morin_ch6.png">
 </div>
 
 Earlier in the chapter, Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For a falling particle, L would be \\(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.
@@ -157,7 +167,7 @@ t, x, xs = get_path_between(x0.clone(), steps=5000, step_size=3e-2, dt=dt)
 ```
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%; min-width:330px;">
-  <img src="/assets/sim-as-opt/output.png">
+  <img src="/assets/ncf/output.png">
 </div>
 
 
@@ -194,10 +204,28 @@ _I do not know what I may appear to the world; but to myself I seem to have been
 The Lagrangian method, applied directly to numerical simulation, is quite elegant and I hope that it confers some of this awe to the casual reader. -->
 
 <!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <img src="/assets/sim-as-opt/ferns.jpeg">
+  <img src="/assets/ncf/ferns.jpeg">
 </div> -->
 
 ## Footnotes
 [^fn0]: I have written previously about it here and here. For a thorough introduction to the topic, I recommend [this](https://scholar.harvard.edu/files/david-morin/files/cmchap6.pdf) textbook chapter].
 [^fn1]: That's why the whole method is often called _The Principle of Least Action_, a misnomer which I personally picked up by reading the Feynman Lectures.
 [^fn2]: Specifically, dynamics problems.
+
+
+<script language="javascript">
+  function toggleCompare() {
+
+    path = document.getElementById("compareImage").src
+      if (path.split('/').pop() == "compare.png")
+      {
+          document.getElementById("compareImage").src = "/assets/ncf/compare.gif";
+          document.getElementById("compareButton").textContent = "Reset";
+      }
+      else 
+      {
+          document.getElementById("compareImage").src = "/assets/ncf/compare.png";
+          document.getElementById("compareButton").textContent = "Play";
+      }
+  }
+</script>

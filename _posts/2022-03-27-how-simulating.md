@@ -5,6 +5,7 @@ title:  "How Simulating the Universe Could Yield Quantum Mechanics"
 excerpt: "We look at the logistics of simulating the universe. We find that enforcing conservation laws, isotropy, etc. in parallel could lead to quantum-like effects."
 date:   2022-03-27 11:00:00
 mathjax: true
+author: Sam Greydanus
 thumbnail: /assets/how-simulating/thumbnail.png
 ---
 
