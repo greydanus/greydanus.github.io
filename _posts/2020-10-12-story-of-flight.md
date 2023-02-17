@@ -5,6 +5,7 @@ title:  "The Story of Flight"
 excerpt: "Why do humans want to fly? Let's start by looking at the humans for whom the desire to fly was strongest: the early aviators."
 date:   2020-10-12 11:00:00
 mathjax: true
+author: Sam Greydanus
 thumbnail: /assets/story-of-flight/thumbnail.png
 ---
 

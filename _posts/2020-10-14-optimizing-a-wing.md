@@ -5,6 +5,7 @@ title:  "Optimizing a Wing Inside a Fluid Simulation"
 excerpt: "How does physics shape flight? To show how fundamental wings are, I derive one from scratch by differentiating through a wind tunnel simulation."
 date:   2020-10-14 11:00:00
 mathjax: true
+author: Sam Greydanus
 thumbnail: /assets/optimizing-a-wing/thumbnail.png
 ---
 

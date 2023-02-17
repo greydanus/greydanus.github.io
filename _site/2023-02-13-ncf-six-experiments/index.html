@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Simulation as Optimization: Minimizing the Action with Gradient Descent</title>
+    <title>Six Experiments in Action Minimization</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2022-11-18-sim-as-opt/">
+    <link rel="canonical" href="http://greydanus.github.io/2023-02-13-ncf-six-experiments/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -72,7 +72,13 @@
         
           <a class="page-link" href="/2022-04-08-sparsity/">The Story of Sparsity in Neural Networks</a>
         
-          <a class="page-link" href="/2022-11-18-sim-as-opt/">Simulation as Optimization: Minimizing the Action with Gradient Descent</a>
+          <a class="page-link" href="/2023-02-12-ncf-tutorial/">Nature's Cost Function</a>
+        
+          <a class="page-link" href="/2023-02-13-ncf-six-experiments/">Six Experiments in Action Minimization</a>
+        
+          <a class="page-link" href="/2023-02-14-ncf-quantum/">A Quantum Simulation based on the Feynman Path Integral</a>
+        
+          <a class="page-link" href="/2023-02-15-action-interpretation/">History and Interpretation of the Action</a>
         
           
         
@@ -129,8 +135,8 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>Simulation as Optimization: Minimizing the Action with Gradient Descent</h1>
-    <p class="meta">Nov 18, 2022</p>
+    <h1>Six Experiments in Action Minimization</h1>
+    <p class="meta">Feb 16, 2023 • Sam Greydanus, Tim Strang, and Isabella Caruso</p>
   </header>
 
   <article class="post-content">
@@ -158,26 +164,37 @@ pre {
 }
 </style>
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <img style="width:51.6%; min-width:330px;" src="/assets/sim-as-opt/hero1.png" />
-  <img style="width:47.5%; min-width:330px;" src="/assets/sim-as-opt/hero2.png" />
-  <div class="thecap" style="text-align:left;padding-left:0px;">
-    We solve a simulation problem as though it were an optimization problem. First we compute the action <i>S</i>, then we minimize it. In doing so, we deform the initial random path (yellow) into the path of least action (blue). The final path happens to be a parabola -- the trajectory that a falling object would take in the real world.
+<div class="imgcap_noborder" style="display: inline-block; margin-left: auto; margin-right: auto; width:99.9%;margin-bottom: 0px;">
+  <div style="width:225px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <img alt="" src="/assets/ncf/compare.png" width="95%" id="compareImage" />
+    <button id="compareButton" onclick="toggleCompare()" class="playbutton">Play</button>
   </div>
 </div>
 
+<p>In physics, there is a scalar function called the action which behaves like a cost function. When minimized, it yields the “path of least action” which represents the path a physical system will take through space and time. This function is crucial in theoretical physics and is usually minimized analytically to obtain equations of motion for various problems. In this post, we propose a different approach: instead of minimizing the action analytically, we discretize it and then minimize it directly with gradient descent.</p>
+
 <!-- <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <img src="/assets/sim-as-opt/hero.png">
+  <img style='width:51.6%; min-width:330px;' src="/assets/ncf/hero1.png">
+  <img style='width:47.5%; min-width:330px;' src="/assets/ncf/hero2.png">
   <div class="thecap"  style="text-align:left;padding-left:0px;">
-    Here we solve a simulation problem as though it were an optimization problem. We do this by computing the action <i>S</i> and then minimizing it in order to move from an arbitrary trajectory (yellow) to the path of least action (blue).
+    We solve a simulation problem as though it were an optimization problem. First we compute the action <i>S</i>, then we minimize it. In doing so, we deform the initial random path (yellow) into the path of least action (blue). The final path happens to be a parabola -- the trajectory that a falling object would take in the real world.
   </div>
 </div> -->
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
-  <a href="https://colab.research.google.com/drive/1VvwlquTGAFsJOPfWnZDBZ9oYYyQwQxsA?usp=sharing" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+  <a href="" id="linkbutton" target="_blank">Read the paper</a>
+  <a href="https://colab.research.google.com/github/greydanus/ncf/blob/main/tutorial.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
+  <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
-<p>The purpose of this short post is to bring to attention a view of physics which isn’t often communicated in introductory courses: the view of <em>physics as optimization</em>. In order to put this view in perspective, let’s begin by reviewing standard approaches to solving dynamics problems.</p>
+<!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
+  <div style="width:100%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+    <img alt="" src="/assets/ncf/hero.png" width="95%" id="lossImage" />
+    <div style="text-align:left;margin-left:10px;margin-right:10px;text-align:center">Caption 2</div>
+  </div>
+</div> -->
+
+<p>To put our approach in perspective we will begin by reviewing standard approaches to solving physics problems.</p>
 
 <h3 id="standard-approaches">Standard approaches</h3>
 
@@ -185,31 +202,31 @@ pre {
 
 \[y(t)=\frac{1}{2}gt^2+v_0t+y_0.\]
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">falling_object_analytic</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">falling_object_analytic</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
   <span class="n">v0</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
   <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">steps</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
   <span class="n">x</span> <span class="o">=</span> <span class="p">.</span><span class="mi">5</span><span class="o">*-</span><span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v0</span><span class="o">*</span><span class="n">t</span> <span class="o">+</span> <span class="n">x0</span>  <span class="c1"># the equation of motion
 </span>  <span class="k">return</span> <span class="n">t</span><span class="p">,</span> <span class="n">x</span>
 
 <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.19</span>
 <span class="n">t_ana</span><span class="p">,</span> <span class="n">x_ana</span> <span class="o">=</span> <span class="n">falling_object_analytic</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
 </code></pre></div></div>
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
-  <img src="/assets/sim-as-opt/analytic.png" />
+  <img src="/assets/ncf/analytic.png" />
 </div>
 
 <p><strong>The numerical approach.</strong> Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve by numerical integration</p>
 
 \[\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = a(t)\]
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">falling_object_numerical</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">60</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">falling_object_numerical</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
   <span class="n">xs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">]</span>
   <span class="n">ts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">dt</span><span class="p">]</span>
   <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
   <span class="n">x</span> <span class="o">=</span> <span class="n">xs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="o">-</span><span class="mi">2</span><span class="p">):</span>  <span class="c1"># this loop does simple Euler integration
-</span>    <span class="n">v</span> <span class="o">+=</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">dt</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">steps</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">v</span> <span class="o">+=</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">dt</span>
     <span class="n">x</span> <span class="o">+=</span> <span class="n">v</span><span class="o">*</span><span class="n">dt</span>
     <span class="n">xs</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">ts</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">dt</span><span class="p">)</span>
@@ -218,7 +235,7 @@ pre {
 <span class="n">t_num</span><span class="p">,</span> <span class="n">x_num</span> <span class="o">=</span> <span class="n">falling_object_numerical</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
 </code></pre></div></div>
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
-  <img src="/assets/sim-as-opt/numerical.png" />
+  <img src="/assets/ncf/numerical.png" />
 </div>
 
 <h3 id="dynamics-problems-as-optimization-problems">Dynamics problems as optimization problems</h3>
@@ -228,7 +245,7 @@ pre {
 <p>Many of the details of the Lagrangian method are beyond the scope of this post.<sup id="fnref:fn0" role="doc-noteref"><a href="#fn:fn0" class="footnote">1</a></sup> However, this half-page from David Morin’s <em>Introduction to Classical Mechanics</em> does a good job of setting the scene:</p>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px;">
-  <img src="/assets/sim-as-opt/morin_ch6.png" />
+  <img src="/assets/ncf/morin_ch6.png" />
 </div>
 
 <p>Earlier in the chapter, Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For a falling particle, L would be \(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.</p>
@@ -278,7 +295,7 @@ pre {
 </code></pre></div></div>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:50%; min-width:330px;">
-  <img src="/assets/sim-as-opt/output.png" />
+  <img src="/assets/ncf/output.png" />
 </div>
 
 <h3 id="applications">Applications</h3>
@@ -314,10 +331,28 @@ _I do not know what I may appear to the world; but to myself I seem to have been
 The Lagrangian method, applied directly to numerical simulation, is quite elegant and I hope that it confers some of this awe to the casual reader. -->
 
 <!-- <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
-  <img src="/assets/sim-as-opt/ferns.jpeg">
+  <img src="/assets/ncf/ferns.jpeg">
 </div> -->
 
 <h2 id="footnotes">Footnotes</h2>
+
+<script language="javascript">
+  function toggleCompare() {
+
+    path = document.getElementById("compareImage").src
+      if (path.split('/').pop() == "compare.png")
+      {
+          document.getElementById("compareImage").src = "/assets/ncf/compare.gif";
+          document.getElementById("compareButton").textContent = "Reset";
+      }
+      else 
+      {
+          document.getElementById("compareImage").src = "/assets/ncf/compare.png";
+          document.getElementById("compareButton").textContent = "Play";
+      }
+  }
+</script>
+
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:fn0" role="doc-endnote">

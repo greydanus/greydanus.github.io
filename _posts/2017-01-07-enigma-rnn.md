@@ -5,6 +5,7 @@ title:  "Learning the Enigma with Recurrent Neural Networks"
 excerpt: "Recurrent Neural Networks are Turing-complete and can approximate any function. As a tip of the hat to Alan Turing, let's approximate the Enigma cipher."
 date:   2017-01-07 11:00:00
 mathjax: true
+author: Sam Greydanus
 thumbnail: /assets/enigma-rnn/thumbnail.png
 ---
 

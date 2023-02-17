@@ -6,7 +6,7 @@ excerpt: "Deep RL agents are good at maximizing rewards but it's often unclear w
 date:   2017-11-1 11:00:00
 mathjax: true
 thumbnail: /assets/visualize-atari/thumbnail.png
-author: With Anurag Koul and Alan Fern
+author: Sam Greydanus, Anurag Koul, and Alan Fern
 ---
 
 <div class="imgcap">
