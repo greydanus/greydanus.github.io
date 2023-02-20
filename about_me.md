@@ -25,7 +25,7 @@ My research interests vary but often involve the intersection between physics --
 * 2017 – Co-captain of US team, International Physicist's Tournament
 * 2018 – Google AI Resident, Google Brain San Francisco
 * 2019 – Deep learning researcher, Oregon State and [The ML Collective](https://mlcollective.org/)
-* 2022 – Owner, Greenfield Properties. Physics and ML at [Windscape AI](https://windscape.ai/)
+* 2022 – Physics and ML at [Windscape AI](https://windscape.ai/). Owner, Greenfield Properties.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
   <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
