@@ -41,7 +41,7 @@ pre {
 
 The purpose of this simple post is to bring to attention a view of physics which isn't often communicated in introductory courses: the view of _physics as optimization_.
 
-It begins with a quantity called the action. If you minimize the action, you can obtain a _path of least action_ which represents the path a physical system will take through space and time. Generally speaking, physicists use analytic tools to do this minimization. In this post, we are going to attempt something different and slightly crazy: minimizing the action with gradient descent. For simplicity, we're going to run our experiment on a very simple system: a free body in a gravitational field. And in order to put our approach in perspective, we're going to begin by reviewing the standard approaches to this kind of problem.
+It begins with a quantity called the action. If you minimize the action, you can obtain a _path of least action_ which represents the path a physical system will take through space and time. Generally speaking, physicists use analytic tools to do this minimization. In this post, we are going to attempt something different and slightly crazy: minimizing the action with gradient descent. For simplicity, we're going to run our experiment on a very simple system: a free body in a gravitational field.
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
   <a href="" id="linkbutton" target="_blank">Read the paper</a>
@@ -65,6 +65,8 @@ It begins with a quantity called the action. If you minimize the action, you can
 </div> -->
 
 ### Standard approaches
+
+To put our approach in perspective, we're going to begin by reviewing the standard approaches to this kind of problem.
 
 **The analytic approach.** Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be
 
@@ -115,9 +117,10 @@ t_num, x_num = falling_object_numerical(x0, x1, dt)
 **How it works.** The Lagrangian method begins by considering all the paths a physical system could take from an initial state $$\bf{x}$$$$(t_0)$$ to a final state $$\bf{x}$$$$(t_1)$$. Then it provides a simple rule for selecting the path \\(\hat{\bf x}\\) that nature will actually take: the action \\(S\\), defined in the equation below, must have a stationary value over this path. Here \\(T\\) and \\(V\\) are the kinetic and potential energy functions for the system at any given time \\(t\\) in \\([t_0,t_1]\\).
 
 $$ \begin{aligned}
-S &:= \int_{t_0}^{t_1} L({\bf x}, ~ \dot{\bf x}, ~ t) ~ dt
-\quad \textrm{where}\quad L = T - V \\
-\quad \hat{\bf x} &~~ \textrm{has the property} \quad \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\hat{x}}(t)} \right) = \frac{\partial L}{\partial \hat{x}(t)} \quad \textrm{for} \quad t \in [t_0,t_1]
+S &:= \int_{t_0}^{t_1} L({\bf x}, ~ \dot{\bf x}, ~ t) ~ dt\\
+&\quad \textrm{where}\quad L = T - V \\
+\quad \hat{\bf x} &~~ \textrm{has the property} \quad \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\hat{x}}(t)} \right) = \frac{\partial L}{\partial \hat{x}(t)} \\
+&\textrm{for} \quad t \in [t_0,t_1]
 \end{aligned} $$
 
 **Finding \\(\hat{\bf x}\\) with Euler-Lagrange (what people usually do).** When \\(S\\) is stationary, we can show that the Euler-Lagrange equation (second line in the equations above) holds true over the interval \\([t_0,t_1]\\) (Morin, 2008). This observation is valuable because it allows us to solve for \\(\hat{\bf x}\\): first we apply the Euler-Lagrange equation to the Lagrangian \\(L\\) and derive a system of partial differential equations. Then we integrate those equations to obtain \\(\hat{\bf x}\\). Importantly, this approach works for all problems spanning classical mechanics, electrodynamics, thermodynamics, and relativity. It provides a coherent theoretical framework for studying classical physics as a whole.
@@ -125,7 +128,9 @@ S &:= \int_{t_0}^{t_1} L({\bf x}, ~ \dot{\bf x}, ~ t) ~ dt
 **Finding \\(\hat{\bf x}\\) with action minimization (what we are going to do).** A more direct approach to finding \\(\hat{\bf x}\\) begins with the insight that paths of stationary action are almost always _also_ paths of least action (Morin 2008). Thus, without much loss of generality, we can exchange the Euler-Lagrange equation for the simple minimization objective shown in the third part of the equation below. Meanwhile, as shown in the first part of the equation below, we can redefine \\(S\\) as a discrete sum over \\(N\\) evenly-spaced time slices:
 
 $$ \begin{aligned}
-S := \sum_{i=0}^{N} L({\bf x}, ~ \dot{\bf{x}}, ~ t_i) \Delta t \quad \textrm{where} \quad \dot{\bf{x}} (t_i) := \frac{ {\bf x}(t_{i+1}) - {\bf x}(t_{i})}{\Delta t} \quad \textrm{and} \quad \hat{\bf x} := \underset{\bf x}{\textrm{argmin}} ~ S(\bf x)
+S &:= \sum_{i=0}^{N} L({\bf x}, ~ \dot{\bf{x}}, ~ t_i) \Delta t \\
+ &\textrm{where} \quad \dot{\bf{x}} (t_i) := \frac{ {\bf x}(t_{i+1}) - {\bf x}(t_{i})}{\Delta t} \\
+ &\textrm{and} \quad \hat{\bf x} := \underset{\bf x}{\textrm{argmin}} ~ S(\bf x)
 \end{aligned} $$
 
 One problem remains: having discretized \\( \hat{\bf{x}} \\) we can no longer take its derivative to obtain an exact value for \\( \dot{\bf{x}}(t_i) \\). Instead, we must use the finite-differences approximation shown in the second part of the equation above. Of course, this approximation will not be possible for the very last \\( \dot{\bf{x}} \\) in the sum because $$\dot{\bf{x}}_{N+1}$$ does not exist. For this value we will assume that, for large \\(N\\), the change in velocity over the interval \\( \Delta t \\) is small and thus let $$\dot{\bf{x}}_N = \dot{\bf{x}}_{N-1}$$. Having made this last approximation, we can now compute the gradient $$\frac{\partial S}{\partial \bf{x}}$$ numerically and use it to minimize \\(S\\). This can be done with PyTorch (Paszke et al, 2019) or any other package that supports automatic differentiation.

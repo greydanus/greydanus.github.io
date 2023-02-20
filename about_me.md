@@ -15,7 +15,9 @@ includelink: true
 
 ## About me
 
-I am a recent graduate of Dartmouth College, where I majored in physics. My work experience includes Google Brain, CERN, Microsoft, and the DARPA Explainable AI Project. My goal as a researcher is to understand how learning happens and use it to make neural networks smarter and more interpretable. On a deeper level, I want to understand what intelligence is and how it works. So far, I am most proud of showing how to learn Hamiltonians from data, making RL agents more interpretable, and training RNNs to generate cursive handwriting. I care about communicating my work and making it easy to replicate.
+I am an ex-professional researcher (Google Brain, DARPA, CERN, and Dartmouth College). I now work for a startup called [Windscape AI](https://windscape.ai/) and run a real estate company called Greenfield Properties. I continue to write blog posts and short papers about scientific topics that interest me. I believe that good research springs from genuine passion and curiosity.
+
+My research interests vary but often involve the intersection between physics -- one of the oldest and most theoretical fields of science -- and ML -- one of the youngest and most data-oriented. Most of my research projects involve trying to build something novel by combining old, established ideas in a new way. Examples include [Hamiltonians and neural networks](../2019/05/15/hamiltonian-nns/), [structural optimization and Autograd](../2019/05/15/hamiltonian-nns/) and [biological morphogenesis and CNNs](../2022/05/23/studying-growth/). I care about communicating my work and making it easy to replicate.
 
 * 2013 – Physics major, Dartmouth College
 * 2015 – Particle physics intern, CERN
