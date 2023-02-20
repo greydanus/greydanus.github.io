@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "The Action: History and Physical Interpretations"
+title:  "History and Physical Interpretations of the Action"
 excerpt: "At its conception, the utility of the action was the main focus. But its interpretation is of fundamental interest to physics."
 date:   2023-02-16 6:50:00
 mathjax: true
