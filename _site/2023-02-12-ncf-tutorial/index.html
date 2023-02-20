@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>The Action: Nature's Cost Function</title>
+    <title>Finding Paths of Least Action with Gradient Descent</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
     <link rel="canonical" href="http://greydanus.github.io/2023-02-12-ncf-tutorial/">
@@ -70,13 +70,13 @@
 <!--         
           <a class="page-link" href="/assets/2017-12-23-neurips17/">A Review of NeurIPS</a>
         
-          <a class="page-link" href="/2023-02-12-ncf-tutorial/">The Action: Nature's Cost Function</a>
+          <a class="page-link" href="/2023-02-12-ncf-tutorial/">Finding Paths of Least Action with Gradient Descent</a>
         
-          <a class="page-link" href="/2023-02-13-ncf-six-experiments/">The Action: Six Experiments</a>
+          <a class="page-link" href="/2023-02-13-ncf-six-experiments/">Six Physics Simulations via Action Minimization</a>
         
-          <a class="page-link" href="/2023-02-14-ncf-quantum/">The Action: Quantum Mechanics</a>
+          <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
-          <a class="page-link" href="/2023-02-15-ncf-interpretation/">The Action: History and Physical Interpretations</a>
+          <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
         
           
         
@@ -133,7 +133,7 @@
       <div class="post">
 
   <header class="post-header">
-    <h1>The Action: Nature's Cost Function</h1>
+    <h1>Finding Paths of Least Action with Gradient Descent</h1>
     <p class="meta">Feb 16, 2023 • Sam Greydanus, Tim Strang, and Isabella Caruso</p>
   </header>
 
@@ -236,21 +236,29 @@ pre {
   <img src="/assets/ncf/tutorial_num.png" />
 </div>
 
-<h3 id="our-approach">Our approach</h3>
+<h3 id="our-approach-action-minimization">Our approach: action minimization</h3>
 
 <p><strong>The Lagrangian method.</strong> The approaches we just covered make intuitive sense. That’s why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for <em>any</em> physical system. Lagrangians figure prominently in all four branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the <a href="https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation">Standard Model Lagrangian</a> they can do precisely that.</p>
 
-<p>Many of the details of the Lagrangian method are beyond the scope of this post.<sup id="fnref:fn0" role="doc-noteref"><a href="#fn:fn0" class="footnote">1</a></sup> However, this half-page from David Morin’s <em>Introduction to Classical Mechanics</em> does a good job of setting the scene:</p>
+<p><strong>How it works.</strong> The Lagrangian method begins by considering all the paths a physical system could take from an initial state \(\bf{x}\)\((t_0)\) to a final state \(\bf{x}\)\((t_1)\). Then it provides a simple rule for selecting the path \(\hat{\bf x}\) that nature will actually take: the action \(S\), defined in the equation below, must have a stationary value over this path. Here \(T\) and \(V\) are the kinetic and potential energy functions for the system at any given time \(t\) in \([t_0,t_1]\).</p>
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px;">
-  <img src="/assets/ncf/morin_ch6.png" />
-</div>
+\[\begin{aligned}
+S &amp;:= \int_{t_0}^{t_1} L({\bf x}, ~ \dot{\bf x}, ~ t) ~ dt
+\quad \textrm{where}\quad L = T - V \\
+\quad \hat{\bf x} &amp;~~ \textrm{has the property} \quad \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\hat{x}}(t)} \right) = \frac{\partial L}{\partial \hat{x}(t)} \quad \textrm{for} \quad t \in [t_0,t_1]
+\end{aligned}\]
 
-<p>Earlier in the chapter, Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For a falling particle, L would be \(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.</p>
+<p><strong>Finding \(\hat{\bf x}\) with Euler-Lagrange (what people usually do).</strong> When \(S\) is stationary, we can show that the Euler-Lagrange equation (second line in the equations above) holds true over the interval \([t_0,t_1]\) (Morin, 2008). This observation is valuable because it allows us to solve for \(\hat{\bf x}\): first we apply the Euler-Lagrange equation to the Lagrangian \(L\) and derive a system of partial differential equations. Then we integrate those equations to obtain \(\hat{\bf x}\). Importantly, this approach works for all problems spanning classical mechanics, electrodynamics, thermodynamics, and relativity. It provides a coherent theoretical framework for studying classical physics as a whole.</p>
 
-<p><strong>Discretizing the action</strong> In the screenshot above, Morin mentions as an aside, <em>“If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum.”</em> The goal of this sentence was to make the idea of a functional more intuitive – not to provide practical advice for computing the action. But what if we took this sentence literally? What if we used a computer to estimate S (a scalar) and then searched for its stationary values using numerical optimization? In doing so, we could obtain the dynamics of the physical system between times t\(_1\) and t\(_2\).</p>
+<p><strong>Finding \(\hat{\bf x}\) with action minimization (what we are going to do).</strong> A more direct approach to finding \(\hat{\bf x}\) begins with the insight that paths of stationary action are almost always <em>also</em> paths of least action (Morin 2008). Thus, without much loss of generality, we can exchange the Euler-Lagrange equation for the simple minimization objective shown in the third part of the equation below. Meanwhile, as shown in the first part of the equation below, we can redefine \(S\) as a discrete sum over \(N\) evenly-spaced time slices:</p>
 
-<h3 id="coding-up-the-discretized-action">Coding up the discretized action</h3>
+\[\begin{aligned}
+S := \sum_{i=0}^{N} L({\bf x}, ~ \dot{\bf{x}}, ~ t_i) \Delta t \quad \textrm{where} \quad \dot{\bf{x}} (t_i) := \frac{ {\bf x}(t_{i+1}) - {\bf x}(t_{i})}{\Delta t} \quad \textrm{and} \quad \hat{\bf x} := \underset{\bf x}{\textrm{argmin}} ~ S(\bf x)
+\end{aligned}\]
+
+<p>One problem remains: having discretized \( \hat{\bf{x}} \) we can no longer take its derivative to obtain an exact value for \( \dot{\bf{x}}(t_i) \). Instead, we must use the finite-differences approximation shown in the second part of the equation above. Of course, this approximation will not be possible for the very last \( \dot{\bf{x}} \) in the sum because \(\dot{\bf{x}}_{N+1}\) does not exist. For this value we will assume that, for large \(N\), the change in velocity over the interval \( \Delta t \) is small and thus let \(\dot{\bf{x}}_N = \dot{\bf{x}}_{N-1}\). Having made this last approximation, we can now compute the gradient \(\frac{\partial S}{\partial \bf{x}}\) numerically and use it to minimize \(S\). This can be done with PyTorch (Paszke et al, 2019) or any other package that supports automatic differentiation.</p>
+
+<h3 id="a-simple-implementation">A simple implementation</h3>
 
 <p>Let’s begin with a list of coordinates, <code class="language-plaintext highlighter-rouge">x</code>, which contains all the position coordinates of the system between t\(_1\) and t\(_2\). We can write the Lagrangian and the action of the system in terms of these coordinates.</p>
 
@@ -266,7 +274,7 @@ pre {
     <span class="k">return</span> <span class="n">T</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span><span class="o">-</span><span class="n">V</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p>Now let’s look for a point of stationary action. Technically, this could be a minimum, a maximum, or an inflection point.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">2</a></sup> Here, though, we’re just going to look for a minimum:</p>
+<p>Now let’s look for a point of stationary action. Technically, this could be a minimum, a maximum, or an inflection point.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup> Here, though, we’re just going to look for a minimum:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_path_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="mf">1e-1</span><span class="p">,</span> <span class="n">dt</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">num_prints</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">num_stashes</span><span class="o">=</span><span class="mi">80</span><span class="p">):</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">*</span> <span class="n">dt</span>
@@ -313,13 +321,13 @@ pre {
 
 <ul>
   <li>
-    <p><em>ODE super-resolution.</em></p>
+    <p><u>ODE super-resolution.</u></p>
   </li>
   <li>
-    <p><em>Infilling missing data.</em> Some chaotic deterministic systems</p>
+    <p><u>Infilling missing data.</u> Some chaotic deterministic systems</p>
   </li>
   <li>
-    <p><em>When the final state is irrelevant.</em> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\(_1\) and t\(_2\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don’t fix the final state.</p>
+    <p><u>When the final state is irrelevant.</u> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\(_1\) and t\(_2\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don’t fix the final state.</p>
   </li>
 </ul>
 
@@ -348,9 +356,6 @@ pre {
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn0" role="doc-endnote">
-      <p>For a thorough introduction to the topic, I recommend <a href="https://scholar.harvard.edu/files/david-morin/files/cmchap6.pdf">this</a> textbook chapter]. <a href="#fnref:fn0" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
-    </li>
     <li id="fn:fn1" role="doc-endnote">
       <p>That’s why the whole method is often called <em>The Principle of Least Action</em>, a misnomer which I personally picked up by reading the Feynman Lectures. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>

@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "The Action: Nature's Cost Function"
+title:  "Finding Paths of Least Action with Gradient Descent"
 excerpt: "In physics there is a scalar function called the action which behaves like a cost function. Here we minimize it to obtain paths of least action."
 date:   2023-02-16 6:50:00
 mathjax: true
@@ -108,21 +108,30 @@ t_num, x_num = falling_object_numerical(x0, x1, dt)
   <img src="/assets/ncf/tutorial_num.png">
 </div>
 
-### Our approach
+### Our approach: action minimization
 
 **The Lagrangian method.** The approaches we just covered make intuitive sense. That's why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for _any_ physical system. Lagrangians figure prominently in all four branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the [Standard Model Lagrangian](https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation) they can do precisely that.
 
-Many of the details of the Lagrangian method are beyond the scope of this post.[^fn0] However, this half-page from David Morin's _Introduction to Classical Mechanics_ does a good job of setting the scene:
+**How it works.** The Lagrangian method begins by considering all the paths a physical system could take from an initial state $$\bf{x}$$$$(t_0)$$ to a final state $$\bf{x}$$$$(t_1)$$. Then it provides a simple rule for selecting the path \\(\hat{\bf x}\\) that nature will actually take: the action \\(S\\), defined in the equation below, must have a stationary value over this path. Here \\(T\\) and \\(V\\) are the kinetic and potential energy functions for the system at any given time \\(t\\) in \\([t_0,t_1]\\).
 
-<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%; min-width: 300px;">
-  <img src="/assets/ncf/morin_ch6.png">
-</div>
+$$ \begin{aligned}
+S &:= \int_{t_0}^{t_1} L({\bf x}, ~ \dot{\bf x}, ~ t) ~ dt
+\quad \textrm{where}\quad L = T - V \\
+\quad \hat{\bf x} &~~ \textrm{has the property} \quad \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\hat{x}}(t)} \right) = \frac{\partial L}{\partial \hat{x}(t)} \quad \textrm{for} \quad t \in [t_0,t_1]
+\end{aligned} $$
 
-Earlier in the chapter, Morin asks us to take his word for the fact that L, the Lagrangian, is the difference between the potential and kinetic energy. For a falling particle, L would be \\(\mathcal{L}=T-V=\frac{1}{2}m\dot{y}^2-mgy_0\\). From there, Morin shows that we can use Equation 6.15 to obtain an equation of motion for the system.
+**Finding \\(\hat{\bf x}\\) with Euler-Lagrange (what people usually do).** When \\(S\\) is stationary, we can show that the Euler-Lagrange equation (second line in the equations above) holds true over the interval \\([t_0,t_1]\\) (Morin, 2008). This observation is valuable because it allows us to solve for \\(\hat{\bf x}\\): first we apply the Euler-Lagrange equation to the Lagrangian \\(L\\) and derive a system of partial differential equations. Then we integrate those equations to obtain \\(\hat{\bf x}\\). Importantly, this approach works for all problems spanning classical mechanics, electrodynamics, thermodynamics, and relativity. It provides a coherent theoretical framework for studying classical physics as a whole.
 
-**Discretizing the action** In the screenshot above, Morin mentions as an aside, _"If you don’t like infinities, you can imagine breaking up the time interval into, say, a million pieces, and then replacing the integral by a discrete sum."_ The goal of this sentence was to make the idea of a functional more intuitive -- not to provide practical advice for computing the action. But what if we took this sentence literally? What if we used a computer to estimate S (a scalar) and then searched for its stationary values using numerical optimization? In doing so, we could obtain the dynamics of the physical system between times t\\(_1\\) and t\\(_2\\).
+**Finding \\(\hat{\bf x}\\) with action minimization (what we are going to do).** A more direct approach to finding \\(\hat{\bf x}\\) begins with the insight that paths of stationary action are almost always _also_ paths of least action (Morin 2008). Thus, without much loss of generality, we can exchange the Euler-Lagrange equation for the simple minimization objective shown in the third part of the equation below. Meanwhile, as shown in the first part of the equation below, we can redefine \\(S\\) as a discrete sum over \\(N\\) evenly-spaced time slices:
 
-### Coding up the discretized action
+$$ \begin{aligned}
+S := \sum_{i=0}^{N} L({\bf x}, ~ \dot{\bf{x}}, ~ t_i) \Delta t \quad \textrm{where} \quad \dot{\bf{x}} (t_i) := \frac{ {\bf x}(t_{i+1}) - {\bf x}(t_{i})}{\Delta t} \quad \textrm{and} \quad \hat{\bf x} := \underset{\bf x}{\textrm{argmin}} ~ S(\bf x)
+\end{aligned} $$
+
+One problem remains: having discretized \\( \hat{\bf{x}} \\) we can no longer take its derivative to obtain an exact value for \\( \dot{\bf{x}}(t_i) \\). Instead, we must use the finite-differences approximation shown in the second part of the equation above. Of course, this approximation will not be possible for the very last \\( \dot{\bf{x}} \\) in the sum because $$\dot{\bf{x}}_{N+1}$$ does not exist. For this value we will assume that, for large \\(N\\), the change in velocity over the interval \\( \Delta t \\) is small and thus let $$\dot{\bf{x}}_N = \dot{\bf{x}}_{N-1}$$. Having made this last approximation, we can now compute the gradient $$\frac{\partial S}{\partial \bf{x}}$$ numerically and use it to minimize \\(S\\). This can be done with PyTorch (Paszke et al, 2019) or any other package that supports automatic differentiation.
+
+
+### A simple implementation
 
 Let's begin with a list of coordinates, `x`, which contains all the position coordinates of the system between t\\(_1\\) and t\\(_2\\). We can write the Lagrangian and the action of the system in terms of these coordinates. 
 
@@ -187,11 +196,11 @@ On the left side of the figure below, we compare the normal approach of ODE inte
 
 The goal of this post was just to demonstrate that it's possible to find a path of least action via gradient descent. Determining whether it has useful applications is a question for another day. Nevertheless, here are a few speculations as to what those applications might look like:
 
-* _ODE super-resolution._ 
+* <u>ODE super-resolution.</u>
 
-* _Infilling missing data._ Some chaotic deterministic systems
+* <u>Infilling missing data.</u> Some chaotic deterministic systems
 
-* _When the final state is irrelevant._ There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\\(_1\\) and t\\(_2\\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don't fix the final state.
+* <u>When the final state is irrelevant.</u> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\\(_1\\) and t\\(_2\\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don't fix the final state.
 
 The thing I like most about this little experiment is that it shows how the action really does act like a cost function. This isn't something you'll hear in your physics courses, even high level ones. And yet, it's quite surprising and interesting to learn that nature has a cost function! The action is a very, very fundamental quantity. In a future post, we'll see how this notion extends even into quantum mechanics - with a few modifications of course.
 
