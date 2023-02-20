@@ -15,7 +15,7 @@ includelink: true
 
 ## About me
 
-I am an ex-professional researcher (Google Brain, DARPA, CERN, and Dartmouth College). I now work for a startup called [Windscape AI](https://windscape.ai/) and run a real estate company called Greenfield Properties. I continue to write blog posts and short papers about scientific topics that interest me. I believe that good research springs from genuine passion and curiosity.
+I am an ex-professional researcher (Google Brain, DARPA, CERN, and Dartmouth College). I now work for a startup called [Windscape AI](https://windscape.ai/) and run a small rental company called Greenfield Properties. I continue to write blog posts and short papers about scientific topics that interest me. I believe that good research springs from genuine passion and curiosity.
 
 My research interests vary but often involve the intersection between physics -- one of the oldest and most theoretical fields of science -- and ML -- one of the youngest and most data-oriented. Most of my research projects involve trying to build something novel by combining old, established ideas in a new way. Examples include [Hamiltonians and neural networks](../2019/05/15/hamiltonian-nns/), [structural optimization and Autograd](../2019/05/15/hamiltonian-nns/) and [biological morphogenesis and CNNs](../2022/05/23/studying-growth/). I care about communicating my work and making it easy to replicate.
 
