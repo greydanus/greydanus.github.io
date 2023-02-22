@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Finding Paths of Least Action with Gradient Descent"
-excerpt: "In physics there is a scalar function called the action which behaves like a cost function. Here we minimize it to obtain paths of least action."
+excerpt: "The purpose of this simple post is to bring to attention a view of physics which isn’t often communicated in intro courses: the view of <i>physics as optimization</i>."
 date:   2023-02-16 6:50:00
 mathjax: true
 author: Sam Greydanus, Tim Strang, and Isabella Caruso
@@ -123,9 +123,9 @@ S &:= \int_{t_0}^{t_1} L({\bf x}, ~ \dot{\bf x}, ~ t) ~ dt\\
 &\textrm{for} \quad t \in [t_0,t_1]
 \end{aligned} $$
 
-**Finding \\(\hat{\bf x}\\) with Euler-Lagrange (what people usually do).** When \\(S\\) is stationary, we can show that the Euler-Lagrange equation (second line in the equations above) holds true over the interval \\([t_0,t_1]\\) (Morin, 2008). This observation is valuable because it allows us to solve for \\(\hat{\bf x}\\): first we apply the Euler-Lagrange equation to the Lagrangian \\(L\\) and derive a system of partial differential equations. Then we integrate those equations to obtain \\(\hat{\bf x}\\). Importantly, this approach works for all problems spanning classical mechanics, electrodynamics, thermodynamics, and relativity. It provides a coherent theoretical framework for studying classical physics as a whole.
+**Finding \\(\hat{\bf x}\\) with Euler-Lagrange (what people usually do).** When \\(S\\) is stationary, we can show that the Euler-Lagrange equation (third line in the equation above) holds true over the interval \\([t_0,t_1]\\) (Morin, 2008). This observation is valuable because it allows us to solve for \\(\hat{\bf x}\\): first we apply the Euler-Lagrange equation to the Lagrangian \\(L\\) and derive a system of partial differential equations.[^fn3] Then we integrate those equations to obtain \\(\hat{\bf x}\\). Importantly, this approach works for all problems spanning classical mechanics, electrodynamics, thermodynamics, and relativity. It provides a coherent theoretical framework for studying classical physics as a whole.
 
-**Finding \\(\hat{\bf x}\\) with action minimization (what we are going to do).** A more direct approach to finding \\(\hat{\bf x}\\) begins with the insight that paths of stationary action are almost always _also_ paths of least action (Morin 2008). Thus, without much loss of generality, we can exchange the Euler-Lagrange equation for the simple minimization objective shown in the third part of the equation below. Meanwhile, as shown in the first part of the equation below, we can redefine \\(S\\) as a discrete sum over \\(N\\) evenly-spaced time slices:
+**Finding \\(\hat{\bf x}\\) with action minimization (what we are going to do).** A more direct approach to finding \\(\hat{\bf x}\\) begins with the insight that paths of stationary action are almost always _also_ paths of least action (Morin 2008). Thus, without much loss of generality, we can exchange the Euler-Lagrange equation for the simple minimization objective shown in the third line of the equation below. Meanwhile, as shown in the first line, we can redefine \\(S\\) as a discrete sum over \\(N\\) evenly-spaced time slices:
 
 $$ \begin{aligned}
 S &:= \sum_{i=0}^{N} L({\bf x}, ~ \dot{\bf{x}}, ~ t_i) \Delta t \\
@@ -133,7 +133,7 @@ S &:= \sum_{i=0}^{N} L({\bf x}, ~ \dot{\bf{x}}, ~ t_i) \Delta t \\
  &\textrm{and} \quad \hat{\bf x} := \underset{\bf x}{\textrm{argmin}} ~ S(\bf x)
 \end{aligned} $$
 
-One problem remains: having discretized \\( \hat{\bf{x}} \\) we can no longer take its derivative to obtain an exact value for \\( \dot{\bf{x}}(t_i) \\). Instead, we must use the finite-differences approximation shown in the second part of the equation above. Of course, this approximation will not be possible for the very last \\( \dot{\bf{x}} \\) in the sum because $$\dot{\bf{x}}_{N+1}$$ does not exist. For this value we will assume that, for large \\(N\\), the change in velocity over the interval \\( \Delta t \\) is small and thus let $$\dot{\bf{x}}_N = \dot{\bf{x}}_{N-1}$$. Having made this last approximation, we can now compute the gradient $$\frac{\partial S}{\partial \bf{x}}$$ numerically and use it to minimize \\(S\\). This can be done with PyTorch (Paszke et al, 2019) or any other package that supports automatic differentiation.
+One problem remains: having discretized \\( \hat{\bf{x}} \\) we can no longer take its derivative to obtain an exact value for \\( \dot{\bf{x}}(t_i) \\). Instead, we must use the finite-differences approximation shown in the second line. Of course, this approximation will not be possible for the very last \\( \dot{\bf{x}} \\) in the sum because $$\dot{\bf{x}}_{N+1}$$ does not exist. For this value we will assume that, for large \\(N\\), the change in velocity over the interval \\( \Delta t \\) is small and thus let $$\dot{\bf{x}}_N = \dot{\bf{x}}_{N-1}$$. Having made this last approximation, we can now compute the gradient $$\frac{\partial S}{\partial \bf{x}}$$ numerically and use it to minimize \\(S\\). This can be done with PyTorch (Paszke et al, 2019) or any other package that supports automatic differentiation.
 
 
 ### A simple implementation
@@ -158,12 +158,12 @@ Now let's look for a point of stationary action. Technically, this could be a mi
 ```python
 def get_path_between(x, steps=1000, step_size=1e-1, dt=1, num_prints=15, num_stashes=80):
     t = np.linspace(0, len(x)-1, len(x)) * dt
-    print_on = np.linspace(0,int(np.sqrt(steps)),num_prints).astype(np.int32)**2 # print more, early on
+    print_on = np.linspace(0,int(np.sqrt(steps)),num_prints).astype(np.int32)**2 # print more early on
     stash_on = np.linspace(0,int(np.sqrt(steps)),num_stashes).astype(np.int32)**2
     xs = []
     for i in range(steps):
         grad_x = torch.autograd.grad(action(x, dt), x)[0]
-        grad_x[[0,-1]] *= 0  # fix first and last coordinates by zeroing their grads
+        grad_x[[0,-1]] *= 0  # fix first and last coordinates by zeroing their gradients
         x.data -= grad_x * step_size
 
         if i in print_on:
@@ -173,7 +173,7 @@ def get_path_between(x, steps=1000, step_size=1e-1, dt=1, num_prints=15, num_sta
     return t, x, np.stack(xs)
 ```
 
-Now let's put it all together. We can initialize our falling particle's path to be any random path through space. In the code below, we choose a path where the particle bounces around x=0 at random until time t=19 seconds, at which point it leaps up to its final state of x = `x_num[-1]` = 21.3 meters. This path has a high action of S = 5330 J·s. As we run the optimization, this value decreases smoothly until we converge on a parabolic arc with an action of S = -2500 J·s.
+Now let's put it all together. We can initialize our falling particle's path to be any random path through space. In the code below, we choose a path where the particle bounces around x=0 at random until time t=19 seconds, at which point it leaps up to its final state of x = `x_num[-1]` = 21.3 meters. This path has a high action of S = 5425 J·s. As we run the optimization, this value decreases smoothly until we converge on a parabolic arc with an action of S = -2500 J·s.
 
 ```python
 dt = 0.19
@@ -190,7 +190,7 @@ t, x, xs = get_path_between(x0.clone(), steps=20000, step_size=1e-2, dt=dt)
 
 ### Direct comparison between the numerical (ODE) solution and our approach
 
-On the left side of the figure below, we compare the normal approach of ODE integration to our approach of action minimization. As a reminder, the action is the sum, over every point in the path, of kinetic energy \\(T\\) minus potential energy \\(V\\). We compute the gradients of this quantity with respect to the path coordinates and then deform the initial path (yellow) into the path of least action (green). This path resolves to a parabola, matching the path obtained via ODE integration. On the right side of the figure, we plot of the path’s action \\(S\\), kinetic energy \\(T\\), and potential energy \\(V\\) over the course of optimization. All three quantities asymptote at the \\(S\\), \\(T\\), and \\(V\\) values of the ODE trajectory.
+On the left side of the figure below, we compare the normal approach of ODE integration to our approach of action minimization. As a reminder, the action is the sum, over every point in the path, of kinetic energy \\(T\\) minus potential energy \\(V\\). We compute the gradients of this quantity with respect to the path coordinates and then deform the initial path (yellow) into the path of least action (green). This path resolves to a parabola, matching the path obtained via ODE integration. On the right side of the figure, we plot the path’s action \\(S\\), kinetic energy \\(T\\), and potential energy \\(V\\) over the course of optimization. All three quantities asymptote at the \\(S\\), \\(T\\), and \\(V\\) values of the ODE trajectory.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/ncf/hero.png">
@@ -199,7 +199,11 @@ On the left side of the figure below, we compare the normal approach of ODE inte
 
 ### Closing thoughts
 
-The goal of this post was just to demonstrate that it's possible to find a path of least action via gradient descent. Determining whether it has useful applications is a question for another day. Nevertheless, here are a few speculations as to what those applications might look like:
+As if by dark magic, we have persuaded a path of random coordinates to make a serpentine transition into a structured and orderly parabolic shape -- the shape of the one trajectory that a free body would take under the influence of a constant gravitational field. This is a simple example, but we have investigated it in detail because it is illustrative of a far deeper, half-invisible phenomenon of our universe which lurks outside the realm of natural human perceptions and intuitions.
+
+This phenomenon, or what we understand of it, is represented by the action (by the vagueness of the name alone, you can sense that it is not a well-understood quantity). In subsequent posts, we will explore how the action works in more complex classical simulations and even in the realm of quantum mechanics. And after that, I will talk about the history of this quantity - how it was discovered, what its discoverers thought of it -- and most importantly, _the lingering questions about what, exactly, it means_.
+
+<!-- The goal of this post was just to demonstrate that it's possible to find a path of least action via gradient descent. Determining whether it has useful applications is a question for another day. Nevertheless, here are a few speculations as to what those applications might look like:
 
 * <u>ODE super-resolution.</u>
 
@@ -207,7 +211,7 @@ The goal of this post was just to demonstrate that it's possible to find a path 
 
 * <u>When the final state is irrelevant.</u> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\\(_1\\) and t\\(_2\\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don't fix the final state.
 
-The thing I like most about this little experiment is that it shows how the action really does act like a cost function. This isn't something you'll hear in your physics courses, even high level ones. And yet, it's quite surprising and interesting to learn that nature has a cost function! The action is a very, very fundamental quantity. In a future post, we'll see how this notion extends even into quantum mechanics - with a few modifications of course.
+The thing I like most about this little experiment is that it shows how the action really does act like a cost function. This isn't something you'll hear in your physics courses, even high level ones. And yet, it's quite surprising and interesting to learn that nature has a cost function! The action is a very, very fundamental quantity. In a future post, we'll see how this notion extends even into quantum mechanics - with a few modifications of course. -->
 
 <!-- Basic physical principles and the elegant reasoning behind them are often obscured in the midst of numerical approximations and domain-specific notation. This post shows that it's surprisingly easy to solve physics by working directly in terms of the action. It lets us solve simulation problems as though they are optimization problems -- a surprising result! -->
 
@@ -216,6 +220,7 @@ The thing I like most about this little experiment is that it shows how the acti
 [^fn0]: For a thorough introduction to the topic, I recommend [this](https://scholar.harvard.edu/files/david-morin/files/cmchap6.pdf) textbook chapter].
 [^fn1]: That's why the whole method is often called _The Principle of Least Action_, a misnomer which I personally picked up by reading the Feynman Lectures.
 [^fn2]: Specifically, dynamics problems.
+[^fn3]: See [Morin, 2008](https://scholar.harvard.edu/files/david-morin/files/cmchap6.pdf) for an example.
 
 
 <script language="javascript">
