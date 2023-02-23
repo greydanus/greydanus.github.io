@@ -68,7 +68,7 @@ It begins with a quantity called the action. If you minimize the action, you can
 
 To put our approach in perspective, we're going to begin by reviewing the standard approaches to this kind of problem.
 
-**The analytic approach.** Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be
+**The analytic approach.** Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be:
 
 $$y(t)=-\frac{1}{2}gt^2+v_0t+y_0.$$
 
@@ -87,7 +87,7 @@ t_ana, x_ana = falling_object_analytic(x0, x1, dt)
   <img src="/assets/ncf/tutorial_ana.png">
 </div>
 
-**The numerical approach.** Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can't know their state at some time in the future without simulating all the intervening states. These we can solve with numerical integration:
+**The numerical approach.** Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can't know their state at some time in the future without simulating all the intervening states. These we can solve with numerical integration. Here's an example of how this would work for a body in free fall:
 
 $$\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = -g$$
 
@@ -112,7 +112,7 @@ t_num, x_num = falling_object_numerical(x0, x1, dt)
 
 ### Our approach: action minimization
 
-**The Lagrangian method.** The approaches we just covered make intuitive sense. That's why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for _any_ physical system. Lagrangians figure prominently in all four branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the [Standard Model Lagrangian](https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation) they can do precisely that.
+**The Lagrangian method.** The approaches we just covered make intuitive sense. That's why we teach them in introductory physics classes. But there is an entirely different way of looking at dynamics called the Lagrangian method. The Lagrangian method does a better job of describing reality because it can produce equations of motion for _any_ physical system.[^fn4] Lagrangians figure prominently in all four branches of physics: classical mechanics, electricity and magnetism, thermodynamics, and quantum mechanics. Without the Lagrangian method, physicists would have a hard time unifying these disparate fields. But with the [Standard Model Lagrangian](https://www.symmetrymagazine.org/article/the-deconstructed-standard-model-equation) they can do precisely that.
 
 **How it works.** The Lagrangian method begins by considering all the paths a physical system could take from an initial state $$\bf{x}$$$$(t_0)$$ to a final state $$\bf{x}$$$$(t_1)$$. Then it provides a simple rule for selecting the path \\(\hat{\bf x}\\) that nature will actually take: the action \\(S\\), defined in the equation below, must have a stationary value over this path. Here \\(T\\) and \\(V\\) are the kinetic and potential energy functions for the system at any given time \\(t\\) in \\([t_0,t_1]\\).
 
@@ -153,7 +153,7 @@ def action(x, dt):
     return T.sum()-V.sum()
 ```
 
-Now let's look for a point of stationary action. Technically, this could be a minimum, a maximum, or an inflection point.[^fn1] Here, though, we're just going to look for a minimum:
+Now let's look for a point of stationary action. Technically, this could be a minimum OR an inflection point.[^fn1] Here, we're just going to look for a minimum:
 
 ```python
 def get_path_between(x, steps=1000, step_size=1e-1, dt=1, num_prints=15, num_stashes=80):
@@ -190,7 +190,7 @@ t, x, xs = get_path_between(x0.clone(), steps=20000, step_size=1e-2, dt=dt)
 
 ### Direct comparison between the numerical (ODE) solution and our approach
 
-On the left side of the figure below, we compare the normal approach of ODE integration to our approach of action minimization. As a reminder, the action is the sum, over every point in the path, of kinetic energy \\(T\\) minus potential energy \\(V\\). We compute the gradients of this quantity with respect to the path coordinates and then deform the initial path (yellow) into the path of least action (green). This path resolves to a parabola, matching the path obtained via ODE integration. On the right side of the figure, we plot the path’s action \\(S\\), kinetic energy \\(T\\), and potential energy \\(V\\) over the course of optimization. All three quantities asymptote at the \\(S\\), \\(T\\), and \\(V\\) values of the ODE trajectory.
+On the left side of the figure below, we compare the normal approach of ODE integration to our approach of action minimization. As a reminder, the action is the sum, over every point in the path, of kinetic energy \\(T\\) minus potential energy \\(V\\). We compute the gradients of this quantity with respect to the path coordinates and then deform the initial path (yellow) into the path of least action (green). This path resolves to a parabola, matching the path obtained via ODE integration. On the right side of the figure, we plot the path’s action \\(S\\), kinetic energy \\(T\\), and potential energy \\(V\\) over the course of optimization. All three quantities asymptote at the respective values of the ODE trajectory.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/ncf/hero.png">
@@ -199,9 +199,9 @@ On the left side of the figure below, we compare the normal approach of ODE inte
 
 ### Closing thoughts
 
-As if by dark magic, we have persuaded a path of random coordinates to make a serpentine transition into a structured and orderly parabolic shape -- the shape of the one trajectory that a free body would take under the influence of a constant gravitational field. This is a simple example, but we have investigated it in detail because it is illustrative of a far deeper, half-invisible phenomenon of our universe which lurks outside the realm of natural human perceptions and intuitions.
+As if by esoteric magic, we have persuaded a path of random coordinates to make a serpentine transition into a structured and orderly parabolic shape -- the shape of the one trajectory that a free body will take under the influence of a constant gravitational field. This is a simple example, but we have investigated it in detail because it is illustrative of the broader "principle of least action" which defies natural human intuition and sculpts the very structure of our physical universe.
 
-This phenomenon, or what we understand of it, is represented by the action (by the vagueness of the name alone, you can sense that it is not a well-understood quantity). In subsequent posts, we will explore how the action works in more complex classical simulations and even in the realm of quantum mechanics. And after that, I will talk about the history of this quantity - how it was discovered, what its discoverers thought of it -- and most importantly, _the lingering questions about what, exactly, it means_.
+By the vagueness of its name alone, "the action," you may sense that it is not a well-understood phenomenon. In subsequent posts, we will explore how it works in more complex classical simulations and then, later, in the realm of quantum mechanics. And after that, we will talk about its history: how it was discovered, what its discoverers thought of it. And most importantly, _the lingering speculations as to what, exactly, it means_.
 
 <!-- The goal of this post was just to demonstrate that it's possible to find a path of least action via gradient descent. Determining whether it has useful applications is a question for another day. Nevertheless, here are a few speculations as to what those applications might look like:
 
@@ -218,9 +218,10 @@ The thing I like most about this little experiment is that it shows how the acti
 
 ## Footnotes
 [^fn0]: For a thorough introduction to the topic, I recommend [this](https://scholar.harvard.edu/files/david-morin/files/cmchap6.pdf) textbook chapter].
-[^fn1]: That's why the whole method is often called _The Principle of Least Action_, a misnomer which I personally picked up by reading the Feynman Lectures.
+[^fn1]: That's why the whole method is often called _The Principle of Least Action_, a misnomer which I (and others) have picked up by reading the Feynman lectures.
 [^fn2]: Specifically, dynamics problems.
 [^fn3]: See [Morin, 2008](https://scholar.harvard.edu/files/david-morin/files/cmchap6.pdf) for an example.
+[^fn4]: Tim informs me that there are some string theories that can't be lagranged. So in the interest of precision, I will narrow this claim to cover _all physical systems that have been observed experimentally_.
 
 
 <script language="javascript">
