@@ -17,7 +17,7 @@ includelink: true
 
 I am an ex-professional researcher (Google Brain, DARPA, CERN, and Dartmouth College). I now work for a startup called [Windscape AI](https://windscape.ai/) and run a small rental company called Greenfield Properties. I continue to write blog posts and short papers about scientific topics that interest me. I believe that good research springs from genuine passion and curiosity.
 
-My research interests vary but often involve the intersection between physics -- one of the oldest and most theoretical fields of science -- and ML -- one of the youngest and most data-oriented. I often try and build something new by combining established tools and ideas in a creative way. Examples include [Hamiltonians + neural networks](../2019/05/15/hamiltonian-nns/), [structural optimization + Autograd](../2019/05/15/hamiltonian-nns/), and [biological morphogenesis + CNNs](../2022/05/24/studying-growth/). I care about communicating my work and making it easy to replicate.
+My research interests vary but often involve the intersection between physics -- one of the oldest and most theoretical fields of science -- and ML -- one of the youngest and most data-oriented. I often try and build something new by combining established tools and ideas in a creative way. Examples include [Hamiltonians + neural networks](../2019/05/15/hamiltonian-nns/), [structural optimization + Autograd](../2022/05/08/structural-optimization/), and [biological morphogenesis + CNNs](../2022/05/24/studying-growth/). I care about communicating my work and making it easy to replicate.
 
 * 2013 – Physics major, Dartmouth College
 * 2015 – Particle physics intern, CERN
