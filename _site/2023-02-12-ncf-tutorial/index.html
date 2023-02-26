@@ -171,13 +171,17 @@ pre {
 
 <p>The purpose of this simple post is to bring to attention a view of physics which isn’t often communicated in introductory courses: the view of <em>physics as optimization</em>.</p>
 
-<p>It begins with a quantity called the action. If you minimize the action, you can obtain a <em>path of least action</em> which represents the path a physical system will take through space and time. Generally speaking, physicists use analytic tools to do this minimization. In this post, we are going to attempt something different and slightly crazy: minimizing the action with gradient descent. For simplicity, we’re going to run our experiment on a very simple system: a free body in a gravitational field.</p>
+<p>This approach begins with a quantity called the action. If you minimize the action, you can obtain a <em>path of least action</em> which represents the path a physical system will take through space and time. Generally speaking, physicists use analytic tools to do this minimization. In this post, we are going to attempt something different and slightly crazy: minimizing the action with gradient descent.</p>
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
   <a href="" id="linkbutton" target="_blank">Read the paper</a>
   <a href="https://colab.research.google.com/github/greydanus/ncf/blob/main/tutorial.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
   <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
 </div>
+
+<p><strong>In this post.</strong> In order to communicate this technique as clearly and concretely as possible, we’re going to apply it to a simple toy problem: a free body in a gravitational field. Keep in mind, though, that it works just as well on larger and more complex systems such as an ideal gas – we will treat these sorts of systems in the paper and in future blog posts.</p>
+
+<p>Now, to put our approach in the proper context, we’re going to quickly review the standard approaches to this kind of problem.</p>
 
 <!-- <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img style='width:51.6%; min-width:330px;' src="/assets/ncf/hero1.png">
@@ -196,13 +200,11 @@ pre {
 
 <h3 id="standard-approaches">Standard approaches</h3>
 
-<p>To put our approach in perspective, we’re going to begin by reviewing the standard approaches to this kind of problem.</p>
-
-<p><strong>The analytic approach.</strong> Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be:</p>
+<p><strong>The analytical approach.</strong> Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be:</p>
 
 \[y(t)=-\frac{1}{2}gt^2+v_0t+y_0.\]
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">falling_object_analytic</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">falling_object_analytical</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">steps</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
     <span class="n">v0</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">)</span> <span class="o">/</span> <span class="n">dt</span>
     <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">steps</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
     <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="p">.</span><span class="mi">5</span><span class="o">*</span><span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">v0</span><span class="o">*</span><span class="n">t</span> <span class="o">+</span> <span class="n">x0</span>  <span class="c1"># the equation of motion
@@ -210,13 +212,13 @@ pre {
 
 <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="mf">0.19</span>
-<span class="n">t_ana</span><span class="p">,</span> <span class="n">x_ana</span> <span class="o">=</span> <span class="n">falling_object_analytic</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
+<span class="n">t_ana</span><span class="p">,</span> <span class="n">x_ana</span> <span class="o">=</span> <span class="n">falling_object_analytical</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">dt</span><span class="p">)</span>
 </code></pre></div></div>
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
   <img src="/assets/ncf/tutorial_ana.png" />
 </div>
 
-<p><strong>The numerical approach.</strong> Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve with numerical integration. Here’s an example of how this would work for a body in free fall:</p>
+<p><strong>The numerical approach.</strong> Not all physics problems have an analytical solution. Some, like the <a href="https://en.wikipedia.org/wiki/Double_pendulum">double pendulum</a> or the <a href="https://en.wikipedia.org/wiki/Three-body_problem">three-body problem</a>, are deterministic but chaotic. In other words, their dynamics are predictable but we can’t know their state at some time in the future without simulating all the intervening states. These we can solve with numerical integration. For the body in a gravitational field, here’s what the numerical approach would look like:</p>
 
 \[\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = -g\]
 
@@ -322,9 +324,9 @@ S &amp;:= \sum_{i=0}^{N} L({\bf x}, ~ \dot{\bf{x}}, ~ t_i) \Delta t \\
 
 <h3 id="closing-thoughts">Closing thoughts</h3>
 
-<p>As if by esoteric magic, we have persuaded a path of random coordinates to make a serpentine transition into a structured and orderly parabolic shape – the shape of the one trajectory that a free body will take under the influence of a constant gravitational field. This is a simple example, but we have investigated it in detail because it is illustrative of the broader “principle of least action” which defies natural human intuition and sculpts the very structure of our physical universe.</p>
+<p>As if by snake-charming magic, we have coaxed a path of random coordinates to make a serpentine transition into a structured and orderly parabolic shape – the shape of the one trajectory that a free body will take under the influence of a constant gravitational field. This is a simple example, but we have investigated it in detail because it is illustrative of the broader “principle of least action” which defies natural human intuition and sculpts the very structure of our physical universe.</p>
 
-<p>By the vagueness of its name alone, “the action,” you may sense that it is not a well-understood phenomenon. In subsequent posts, we will explore how it works in more complex classical simulations and then, later, in the realm of quantum mechanics. And after that, we will talk about its history: how it was discovered, what its discoverers thought of it. And most importantly, <em>the lingering speculations as to what, exactly, it means</em>.</p>
+<p>By the vagueness of its name alone, “the action,” you may sense that it is not a well-understood phenomenon. In subsequent posts, we will explore how it works in more complex classical simulations and then, later, in the realm of quantum mechanics. And after that, we will talk about its history: how it was discovered and what its discoverers thought when they found it. And most importantly, we will address <em>the lingering speculations as to what, exactly, it means</em>.</p>
 
 <!-- The goal of this post was just to demonstrate that it's possible to find a path of least action via gradient descent. Determining whether it has useful applications is a question for another day. Nevertheless, here are a few speculations as to what those applications might look like:
 
