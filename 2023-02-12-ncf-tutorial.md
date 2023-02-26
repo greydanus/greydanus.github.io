@@ -41,13 +41,17 @@ pre {
 
 The purpose of this simple post is to bring to attention a view of physics which isn't often communicated in introductory courses: the view of _physics as optimization_.
 
-It begins with a quantity called the action. If you minimize the action, you can obtain a _path of least action_ which represents the path a physical system will take through space and time. Generally speaking, physicists use analytic tools to do this minimization. In this post, we are going to attempt something different and slightly crazy: minimizing the action with gradient descent. For simplicity, we're going to run our experiment on a very simple system: a free body in a gravitational field.
+This approach begins with a quantity called the action. If you minimize the action, you can obtain a _path of least action_ which represents the path a physical system will take through space and time. Generally speaking, physicists use analytic tools to do this minimization. In this post, we are going to attempt something different and slightly crazy: minimizing the action with gradient descent.
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
   <a href="" id="linkbutton" target="_blank">Read the paper</a>
   <a href="https://colab.research.google.com/github/greydanus/ncf/blob/main/tutorial.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
   <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
 </div>
+
+**In this post.** In order to communicate this technique as clearly and concretely as possible, we're going to apply it to a simple toy problem: a free body in a gravitational field. Keep in mind, though, that it works just as well on larger and more complex systems such as an ideal gas -- we will treat these sorts of systems in the paper and in future blog posts. 
+
+Now, to put our approach in the proper context, we're going to quickly review the standard approaches to this kind of problem.
 
 <!-- <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img style='width:51.6%; min-width:330px;' src="/assets/ncf/hero1.png">
@@ -66,14 +70,12 @@ It begins with a quantity called the action. If you minimize the action, you can
 
 ### Standard approaches
 
-To put our approach in perspective, we're going to begin by reviewing the standard approaches to this kind of problem.
-
-**The analytic approach.** Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be:
+**The analytical approach.** Here you use algebra, calculus, and other mathematical tools to find a closed-form equation of motion for the system. It gives the state of the system as a function of time. For an object in free fall, the equation of motion would be:
 
 $$y(t)=-\frac{1}{2}gt^2+v_0t+y_0.$$
 
 ```python
-def falling_object_analytic(x0, x1, dt, g=1, steps=100):
+def falling_object_analytical(x0, x1, dt, g=1, steps=100):
     v0 = (x1 - x0) / dt
     t = np.linspace(0, steps, steps+1) * dt
     x = -.5*g*t**2 + v0*t + x0  # the equation of motion
@@ -81,13 +83,13 @@ def falling_object_analytic(x0, x1, dt, g=1, steps=100):
 
 x0, x1 = [0, 2]
 dt = 0.19
-t_ana, x_ana = falling_object_analytic(x0, x1, dt)
+t_ana, x_ana = falling_object_analytical(x0, x1, dt)
 ```
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:300px">
   <img src="/assets/ncf/tutorial_ana.png">
 </div>
 
-**The numerical approach.** Not all physics problems have an analytic solution. Some, like the double pendulum or the three-body problem, are deterministic but chaotic. In other words, their dynamics are predictable but we can't know their state at some time in the future without simulating all the intervening states. These we can solve with numerical integration. Here's an example of how this would work for a body in free fall:
+**The numerical approach.** Not all physics problems have an analytical solution. Some, like the [double pendulum](https://en.wikipedia.org/wiki/Double_pendulum) or the [three-body problem](https://en.wikipedia.org/wiki/Three-body_problem), are deterministic but chaotic. In other words, their dynamics are predictable but we can't know their state at some time in the future without simulating all the intervening states. These we can solve with numerical integration. For the body in a gravitational field, here's what the numerical approach would look like:
 
 $$\frac{\partial y}{\partial t} = v(t) \quad \textrm{and} \quad \frac{\partial v}{\partial t} = -g$$
 
@@ -199,9 +201,9 @@ On the left side of the figure below, we compare the normal approach of ODE inte
 
 ### Closing thoughts
 
-As if by esoteric magic, we have persuaded a path of random coordinates to make a serpentine transition into a structured and orderly parabolic shape -- the shape of the one trajectory that a free body will take under the influence of a constant gravitational field. This is a simple example, but we have investigated it in detail because it is illustrative of the broader "principle of least action" which defies natural human intuition and sculpts the very structure of our physical universe.
+As if by snake-charming magic, we have coaxed a path of random coordinates to make a serpentine transition into a structured and orderly parabolic shape -- the shape of the one trajectory that a free body will take under the influence of a constant gravitational field. This is a simple example, but we have investigated it in detail because it is illustrative of the broader "principle of least action" which defies natural human intuition and sculpts the very structure of our physical universe.
 
-By the vagueness of its name alone, "the action," you may sense that it is not a well-understood phenomenon. In subsequent posts, we will explore how it works in more complex classical simulations and then, later, in the realm of quantum mechanics. And after that, we will talk about its history: how it was discovered, what its discoverers thought of it. And most importantly, _the lingering speculations as to what, exactly, it means_.
+By the vagueness of its name alone, "the action," you may sense that it is not a well-understood phenomenon. In subsequent posts, we will explore how it works in more complex classical simulations and then, later, in the realm of quantum mechanics. And after that, we will talk about its history: how it was discovered and what its discoverers thought when they found it. And most importantly, we will address _the lingering speculations as to what, exactly, it means_.
 
 <!-- The goal of this post was just to demonstrate that it's possible to find a path of least action via gradient descent. Determining whether it has useful applications is a question for another day. Nevertheless, here are a few speculations as to what those applications might look like:
 

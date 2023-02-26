@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Six Experiments in Action Minimization"
-excerpt: "We obtain dynamics for six different physical systems, including a double pendulum and a gas simulation, by minimizing the action."
+excerpt: "Using action minimization, we obtain dynamics for six different physical systems including a double pendulum and a gas with a Lennard-Jones potential."
 date:   2023-02-16 6:50:00
 mathjax: true
 author: Sam Greydanus, Tim Strang, and Isabella Caruso
@@ -33,14 +33,14 @@ pre {
 </style>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
-  <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+  <div style="width:25%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <video id="video_init" style="width:100%;min-width:250px;">
       <source src="/assets/ncf/video_3body_0.mp4" type="video/mp4">
     </video>
-    <button class="playbutton" id="video_sim_button" onclick="playPauseInit()">Play</button> 
+    <button class="playbutton" id="video_init_button" onclick="playPauseInit()">Play</button> 
     <div style="text-align: left;margin-left:10px;margin-right:10px;">The initial, highly-perturbed path for the three body problem.</div>
   </div>
-  <div style="width:32%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
+  <div style="width:25%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
     <video id="video_final" style="width:100%;min-width:250px;">
       <source src="/assets/ncf/video_3body_f.mp4" type="video/mp4">
     </video>
@@ -73,7 +73,7 @@ function playPauseFinal() {
 } 
 </script>
 
-In the previous post, we found the path of least action for a free bodyusing gradient descent. That this worked in the first place was interesting, but it is natural to wonder if this approach can transfer to larger, more nonlinear, or more chaotic systems. With this in mind, we are going to apply action minimization to six different physical systems.
+In a recent post [link], we used gradient descent to find the path of least action for a free body. That this worked at all was interesting -- but how well this approach transfer to larger, more nonlinear, and more chaotic systems? That is the question we tackle in this short post.
 
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
@@ -82,58 +82,62 @@ In the previous post, we found the path of least action for a free bodyusing gra
   <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
-### Standard approaches
+## Six Systems
 
-We will begin with two toy problems (one of which is the free body) for the purpose of debugging. Then we will apply our methods to four more complex systems: a double pendulum, the three body problem, a simple gas, and a real ephemeris dataset of planetary motion. These systems presented an interesting challenge because they were all nonlinear, chaotic, and high-dimensional.[^fn0] In each case, we compared our results to a baseline path obtained with a simple ODE solver using Euler integration.
+We studied six systems of increasing size and complexity. The first of these was the free body: it served as a minimal working example. The next system was a simple pendulum, which was a minimal working example for studying periodic nonlinearities and radial coordinates.
 
-Minimizing the action in the way we have described has not been studied in detail. We have discussed a few related works which do this in the context of the OM function but their scope and details diverge from this work and each other. Thus in our experiments we prioritized simplicity. Unless otherwise specified, we set all constants such as mass and gravity to one. When selecting physical systems, we began with two toy problems (for debugging): a free body and a pendulum. Then we investigated four more complex systems: a double pendulum, the three body problem, a simple gas, and a real ephemeris dataset of planetary motion. These systems presented an interesting challenge because they were all nonlinear, chaotic, and high-dimensional.[^fn0] In each case, we compared our results to a baseline path obtained with a simple ODE solver using Euler integration. The paper gives more details, including the Lagrangians and equations of motion.
-
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%;">
-  <img src="/assets/ncf/results.png">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%;">
+  <img src="/assets/ncf/lagn_plus_schema.png">
 </div>
 
-**The unconstrained energy effect.** Early in our experiments we encountered \textit{the unconstrained energy effect}. This happens when the optimizer converges on a valid physical path with a different total energy from the baseline. The figure above shows an example. The reason this happens is that, although we fix the initial and final states, we do not constrain the path's total energy \\(T+V\\). Even though paths like the one in Figure X are not necessarily invalid, they make it difficult for us to recover baseline ODE paths. For this reason, we use the baseline ODE paths to initialize our paths, perturb them with Gaussian noise, and then use early stopping to select for paths which are similar (often, identical) to the ODE baselines. This approach matches the mathematical ansatz of the "calculus of variations" where one studies perturbed paths in the vicinity of the true path of least action. We note that there are other ways to mitigate this effect which don't require an ODE-generated initial path. We discuss them [here], as they are beyond the main scope of this work.
+Once we had tuned our approach on these two simple systems, we turned our attention to four more complex systems: a double pendulum, the three body problem, a simple gas, and a real ephemeris dataset of planetary motion (the orbits were projected onto a 2D plane). These systems presented an interesting challenge because they were all nonlinear, chaotic, and high-dimensional.[^fn0] In each case, we compared our results to a baseline path obtained with a simple ODE solver using Euler integration.
+
+## The unconstrained energy effect
+
+Early in our experiments we encountered _the unconstrained energy effect_. This happens when the optimizer converges on a valid physical path with a different total energy from the baseline. The figure below shows an example. The reason this happens is that, although we fix the initial and final states, we do not constrain the path's total energy \\(T+V\\). Even though paths like the one shown below are not necessarily invalid, they make it difficult for us to recover baseline ODE paths. For this reason, we used the baseline ODE paths to initialize our paths, perturbed them with Gaussian noise, and then used early stopping to select for paths which were similar (often, identical) to the ODE baselines. This approach matched the mathematical ansatz of the "calculus of variations" where one studies perturbed paths in the vicinity of the true path of least action. We note that there are other ways to mitigate this effect which don't require an ODE-generated initial path - we discuss them in the paper.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:70%;min-width: 300px;">
   <img src="/assets/ncf/unconstrained.png">
 </div>
 
-**Results.** On all six physical systems we obtained paths of least action which were nearly identical to the baseline paths of the ODE solver. Figure X shows optimization dynamics and qualitative results while Table X shows quantitative results. These results suggest that action minimization can generate physically-valid dynamics even for chaotic and strongly-coupled systems like the double pendulum and three body problem. One interesting pattern we noticed was that optimization dynamics were dominated by the kinetic energy term $$T$$ (third row of Figure X. This occurs because $$S$$ tends to be more sensitive to $$T$$ (which grows as $${\bf \dot{x}}^2$$) than $$V$$. Future methods should focus on stabilizing $$T$$.
+## Results
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:40%;min-width: 300px;">
-  <img src="/assets/ncf/lj_states.png">
+On all six physical systems we obtained paths of least action which were nearly identical to the baseline paths of the ODE solver. Figure X shows optimization dynamics and qualitative results while Table X shows quantitative results. These results suggest that action minimization can generate physically-valid dynamics even for chaotic and strongly-coupled systems like the double pendulum and three body problem. One interesting pattern we noticed was that optimization dynamics were dominated by the kinetic energy term $$T$$ (third row of Figure X. This occurs because $$S$$ tends to be more sensitive to $$T$$ (which grows as $${\bf \dot{x}}^2$$) than $$V$$. Future methods should focus on stabilizing $$T$$.
+
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%;">
+  <img src="/assets/ncf/results.png">
 </div>
 
 
 ### Applications
 
-The goal of this post is to show that this technique is possible. Determining whether it has useful applications is a question for another day. Nevertheless, I can't resist including a few speculations.
+The goal of this post was just to demonstrate that it's possible to find a path of least action via gradient descent. Determining whether it has useful applications is a question for another day. Nevertheless, here are a few speculations as to what those applications might look like:
 
-**Chaotic deterministic systems.** Some chaotic deterministic systems, such as those found in fluid dynamics, are so sensitive to integration error that no single final state can be predicted with certainty. A more relevant question to ask, then, is _"which of two final states, A or B, is more likely?"_. For example, when making a weather forecast for tomorrow, is weather A or weather B more likely? Minimizing the action may allow us to compute these relative probabilities more efficiently by directly comparing the final values of $$S$$.
+* <u>ODE super-resolution.</u>
+* <u>Infilling missing data.</u> Some chaotic deterministic systems
+* <u>When the final state is irrelevant.</u> There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times $$t_1$$ and $$t_2$$. This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don't fix the final state.
 
-**When the final state is irrelevant.** There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times t\\(_1\\) and t\\(_2\\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don't fix the final state.
-
-**Evaluating ensembles of paths.** If one wants to compare many different paths, perhaps all having slightly different outcomes, then one could solve them in parallel with this approach. Importantly, this could be done _even if those paths interact with one another_ as is the case, for example, in quantum mechanics with path integrals. A common way to do this with traditional numerical computing techniques is to compute all-to-all interactions at each timestep or to evolve the system as if it were a probability distribution.
-
-### Closing thoughts
-
-Once again we have persuaded a path of random coordinates to make a serpentine transition into a structured and orderly parabolic shape -- the shape of the one trajectory that a free body will take under the influence of a constant gravitational field. This is a simple example, but we have investigated it in detail because it is illustrative of the broader "principle of least action" which defies natural human intuition and sculpts the very structure of our physical universe.
-
-In subsequent posts, we will explore how it works in the realm of quantum mechanics. And after that, we will talk about its history: how it was discovered, what its discoverers thought of it. And most importantly, _the lingering speculations as to what, exactly, it means_.
+The thing I like most about this little experiment is that it shows how the action really does act like a cost function. This isn't something you'll hear in your physics courses, even high level ones. And yet, it's quite surprising and interesting to learn that nature has a cost function! The action is a very, very fundamental quantity. In a future post, we'll see how this notion extends even into quantum mechanics - with a few modifications of course.
 
 
 ## Footnotes
 [^fn0]: The state of the simple gas, for example, has a hundred degrees of freedom.
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:70%;min-width: 330px;">
-  <img src="/assets/ncf/lagrangians.png">
-</div>
-
 The double pendulum and Lennard-Jones potentials were too long to fit into the table above. Here they are:
 
-<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:70%;min-width: 330px;">
+<div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%;">
   <img src="/assets/ncf/lagrangians_fn.png">
 </div>
+
+**Details: gas simulation.** Molecular dynamics (MD) simulations enable investigation of dynamic systems that would be difficult to observe experimentally \citep{hollingsworth2018molecular}. These types of simulations date back to the 1950s, with the earliest work studying hard sphere gasses \citep{alder1959studies}. Today, MD is used to understand far more complicated systems, from helium diffusion in titanium to protein folding \citep{zhang2013molecular, lee2017finding}. These lines of work have advanced in step with our computing abilities. At their most basic and traditional, MD simulations operate by taking the locations of all atoms in the system, using some potential to model interactions between the atoms, calculating each pairwise interaction, and updating the velocities and positions of the atoms accordingly \citep{schroeder2015interactive}.
+
+<div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:40%;min-width: 300px;">
+  <img src="/assets/ncf/lj_states.png">
+</div>
+
+Our simulation is similar to early MD simulations and simple MD simulations such as \cite{schroeder2015interactive} that are often used to help students understand the properties of gasses in introductory chemistry and physics classes. This simulation is not optimized for a particular material or problem, so there are limits to the quantitative information that we can get from it. We use a Lennard-Jones potential (Figure \ref{fig:capped-lj}) in determining interaction forces for simplicity, but this only describes pairwise interactions. More sophisticated force fields are possible. Even with this simple simulation, we are able to generate a gas-like state and a solid-like state (Figure  \ref{fig:states-lj}), akin to those possible with other simple MD simulations that use a Lennard-Jones potential \citep{schroeder2015interactive,sweet2018facilitating}. 
+
+**Details: Ephemeris experiment.** We downloaded raw ephemeris data for the inner planets of the solar system for the calendar year 2022 (1 day resolution). To do this we used the online interface provided by NASA's Horizons project. We used the Solar System Barycenter (SSB) for a coordinate center. In constructing our simulation, we used the simple gravitational well potential of $$\frac{Gm_i m_j}{r_{ij}}$$ and used SI units for the gravitational constant $G$, planet masses $m$, and durations of time. In exploring whether action minimization could reconstruct the inner planetary orbits, we perturbed only the paths of the inner planets and not that of the Sun. We considered a time duration of two months for this experiment because the orbits of Venus and Mercury cycle more rapidly than that of the Earth (qualitative visualizations of initial and final paths grew difficult as their orbits begin to extend over more than one cycle and overlap their tails).
 
 
 <script language="javascript">
