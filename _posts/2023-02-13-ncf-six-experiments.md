@@ -73,7 +73,7 @@ function playPauseFinal() {
 } 
 </script>
 
-In a recent post [link], we used gradient descent to find the path of least action for a free body. That this worked at all was interesting -- but how well this approach transfer to larger, more nonlinear, and more chaotic systems? That is the question we tackle in this short post.
+In a recent post [link], we used gradient descent to find the path of least action for a free body. That this worked at all was interesting -- but some important questions remain. For example: how well does this approach transfer to larger, more nonlinear, and more chaotic systems? That is the question we will tackle in this post.
 
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
@@ -82,9 +82,9 @@ In a recent post [link], we used gradient descent to find the path of least acti
   <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
-## Six Systems
+## Six systems
 
-We studied six systems of increasing size and complexity. The first of these was the free body: it served as a minimal working example. The next system was a simple pendulum, which was a minimal working example for studying periodic nonlinearities and radial coordinates.
+In order to determine how action minimization works on more complex systems, we studied six systems of increasing complexity. The first of these was the free body, which served as a minimal working example, useful for debugging. The next system was a simple pendulum -- another minimal working example, but this time with periodic nonlinearities and radial coordinates.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%;">
   <img src="/assets/ncf/lagn_plus_schema.png">
@@ -94,11 +94,13 @@ Once we had tuned our approach on these two simple systems, we turned our attent
 
 ## The unconstrained energy effect
 
-Early in our experiments we encountered _the unconstrained energy effect_. This happens when the optimizer converges on a valid physical path with a different total energy from the baseline. The figure below shows an example. The reason this happens is that, although we fix the initial and final states, we do not constrain the path's total energy \\(T+V\\). Even though paths like the one shown below are not necessarily invalid, they make it difficult for us to recover baseline ODE paths. For this reason, we used the baseline ODE paths to initialize our paths, perturbed them with Gaussian noise, and then used early stopping to select for paths which were similar (often, identical) to the ODE baselines. This approach matched the mathematical ansatz of the "calculus of variations" where one studies perturbed paths in the vicinity of the true path of least action. We note that there are other ways to mitigate this effect which don't require an ODE-generated initial path - we discuss them in the paper.
+Early in our experiments we encountered _the unconstrained energy effect_. This happens when the optimizer converges on a valid physical path with a different total energy from the baseline. The figure below shows an example. The reason this happens is that, although we fix the initial and final states, we do not constrain the path's total energy \\(T+V\\). Even though paths like the one shown below are not necessarily invalid, they make it difficult for us to recover baseline paths.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:70%;min-width: 300px;">
   <img src="/assets/ncf/unconstrained.png">
 </div>
+
+For this reason, we used the baseline ODE paths to initialize our paths, perturbed them with Gaussian noise, and then used early stopping to select for paths which were similar (often, identical) to the ODE baselines. This approach matched the mathematical ansatz of the "calculus of variations" where one studies perturbed paths in the vicinity of the true path. We note that there are other ways to mitigate this effect which don't require an ODE-generated initial path.[^fn1]
 
 ## Results
 
@@ -122,6 +124,7 @@ The thing I like most about this little experiment is that it shows how the acti
 
 ## Footnotes
 [^fn0]: The state of the simple gas, for example, has a hundred degrees of freedom.
+[^fn1]: We discuss these in the Appendix of the paper.
 
 The double pendulum and Lennard-Jones potentials were too long to fit into the table above. Here they are:
 
