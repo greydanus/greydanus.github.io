@@ -7,7 +7,7 @@
     <title>Six Experiments in Action Minimization</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2023-02-13-ncf-six-experiments/">
+    <link rel="canonical" href="http://greydanus.github.io/2023/02/15/ncf-six-experiments/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -70,10 +70,6 @@
 <!--         
           <a class="page-link" href="/assets/2017-12-23-neurips17/">A Review of NeurIPS</a>
         
-          <a class="page-link" href="/2023-02-12-ncf-tutorial/">Finding Paths of Least Action with Gradient Descent</a>
-        
-          <a class="page-link" href="/2023-02-13-ncf-six-experiments/">Six Experiments in Action Minimization</a>
-        
           <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
           <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
@@ -134,7 +130,7 @@
 
   <header class="post-header">
     <h1>Six Experiments in Action Minimization</h1>
-    <p class="meta">Feb 16, 2023 • Sam Greydanus, Tim Strang, and Isabella Caruso</p>
+    <p class="meta">Feb 15, 2023 • Sam Greydanus, Tim Strang, and Isabella Caruso</p>
   </header>
 
   <article class="post-content">
@@ -203,7 +199,7 @@ function playPauseFinal() {
 } 
 </script>
 
-<p>In a recent post [link], we used gradient descent to find the path of least action for a free body. That this worked at all was interesting – but how well this approach transfer to larger, more nonlinear, and more chaotic systems? That is the question we tackle in this short post.</p>
+<p>In a recent post [link], we used gradient descent to find the path of least action for a free body. That this worked at all was interesting – but some important questions remain. For example: how well does this approach transfer to larger, more nonlinear, and more chaotic systems? That is the question we will tackle in this post.</p>
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
   <a href="" id="linkbutton" target="_blank">Read the paper</a>
@@ -211,9 +207,9 @@ function playPauseFinal() {
   <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
 </div>
 
-<h2 id="six-systems">Six Systems</h2>
+<h2 id="six-systems">Six systems</h2>
 
-<p>We studied six systems of increasing size and complexity. The first of these was the free body: it served as a minimal working example. The next system was a simple pendulum, which was a minimal working example for studying periodic nonlinearities and radial coordinates.</p>
+<p>In order to determine how action minimization works on more complex systems, we studied six systems of increasing complexity. The first of these was the free body, which served as a minimal working example, useful for debugging. The next system was a simple pendulum – another minimal working example, but this time with periodic nonlinearities and radial coordinates.</p>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:100%;">
   <img src="/assets/ncf/lagn_plus_schema.png" />
@@ -223,11 +219,13 @@ function playPauseFinal() {
 
 <h2 id="the-unconstrained-energy-effect">The unconstrained energy effect</h2>
 
-<p>Early in our experiments we encountered <em>the unconstrained energy effect</em>. This happens when the optimizer converges on a valid physical path with a different total energy from the baseline. The figure below shows an example. The reason this happens is that, although we fix the initial and final states, we do not constrain the path’s total energy \(T+V\). Even though paths like the one shown below are not necessarily invalid, they make it difficult for us to recover baseline ODE paths. For this reason, we used the baseline ODE paths to initialize our paths, perturbed them with Gaussian noise, and then used early stopping to select for paths which were similar (often, identical) to the ODE baselines. This approach matched the mathematical ansatz of the “calculus of variations” where one studies perturbed paths in the vicinity of the true path of least action. We note that there are other ways to mitigate this effect which don’t require an ODE-generated initial path - we discuss them in the paper.</p>
+<p>Early in our experiments we encountered <em>the unconstrained energy effect</em>. This happens when the optimizer converges on a valid physical path with a different total energy from the baseline. The figure below shows an example. The reason this happens is that, although we fix the initial and final states, we do not constrain the path’s total energy \(T+V\). Even though paths like the one shown below are not necessarily invalid, they make it difficult for us to recover baseline paths.</p>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:70%;min-width: 300px;">
   <img src="/assets/ncf/unconstrained.png" />
 </div>
+
+<p>For this reason, we used the baseline ODE paths to initialize our paths, perturbed them with Gaussian noise, and then used early stopping to select for paths which were similar (often, identical) to the ODE baselines. This approach matched the mathematical ansatz of the “calculus of variations” where one studies perturbed paths in the vicinity of the true path. We note that there are other ways to mitigate this effect which don’t require an ODE-generated initial path.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">2</a></sup></p>
 
 <h2 id="results">Results</h2>
 
@@ -288,6 +286,9 @@ function playPauseFinal() {
   <ol>
     <li id="fn:fn0" role="doc-endnote">
       <p>The state of the simple gas, for example, has a hundred degrees of freedom. <a href="#fnref:fn0" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:fn1" role="doc-endnote">
+      <p>We discuss these in the Appendix of the paper. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
