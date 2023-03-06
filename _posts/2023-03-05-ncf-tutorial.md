@@ -3,7 +3,7 @@ layout: post
 comments: true
 title:  "Finding Paths of Least Action with Gradient Descent"
 excerpt: "The purpose of this simple post is to bring to attention a view of physics which isn’t often communicated in intro courses: the view of <i>physics as optimization</i>."
-date:   2023-02-16 6:50:00
+date:   2023-03-05 12:00:00
 mathjax: true
 author: Sam Greydanus, Tim Strang, and Isabella Caruso
 thumbnail: /assets/ncf/thumbnail_tutorial.png
