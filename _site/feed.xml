@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2023-03-06T08:41:14-08:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A blog by Sam Greydanus</subtitle><entry><title type="html">Finding Paths of Least Action with Gradient Descent</title><link href="http://greydanus.github.io/2023/03/05/ncf-tutorial/" rel="alternate" type="text/html" title="Finding Paths of Least Action with Gradient Descent" /><published>2023-03-05T04:00:00-08:00</published><updated>2023-03-05T04:00:00-08:00</updated><id>http://greydanus.github.io/2023/03/05/ncf-tutorial</id><content type="html" xml:base="http://greydanus.github.io/2023/03/05/ncf-tutorial/">&lt;style&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2023-03-08T13:37:16-08:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A blog by Sam Greydanus</subtitle><entry><title type="html">Finding Paths of Least Action with Gradient Descent</title><link href="http://greydanus.github.io/2023/03/05/ncf-tutorial/" rel="alternate" type="text/html" title="Finding Paths of Least Action with Gradient Descent" /><published>2023-03-05T04:00:00-08:00</published><updated>2023-03-05T04:00:00-08:00</updated><id>http://greydanus.github.io/2023/03/05/ncf-tutorial</id><content type="html" xml:base="http://greydanus.github.io/2023/03/05/ncf-tutorial/">&lt;style&gt;
 .wrap {
     max-width: 900px;
 }
@@ -109,7 +109,7 @@ pre {
 \[\begin{aligned}
 S &amp;amp;:= \int_{t_0}^{t_1} L({\bf x}, ~ \dot{\bf x}, ~ t) ~ dt\\
 &amp;amp;\quad \textrm{where}\quad L = T - V \\
-\quad \hat{\bf x} &amp;amp;~~ \textrm{has the property} \quad \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\hat{x}}(t)} \right) = \frac{\partial L}{\partial \hat{x}(t)} \\
+\quad \hat{\bf x} &amp;amp;~~ \textrm{has property}~ \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\hat{x}}(t)} \right) = \frac{\partial L}{\partial \hat{x}(t)} \\
 &amp;amp;\textrm{for} \quad t \in [t_0,t_1]
 \end{aligned}\]
 

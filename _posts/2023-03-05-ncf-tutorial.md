@@ -121,7 +121,7 @@ t_num, x_num = falling_object_numerical(x0, x1, dt)
 $$ \begin{aligned}
 S &:= \int_{t_0}^{t_1} L({\bf x}, ~ \dot{\bf x}, ~ t) ~ dt\\
 &\quad \textrm{where}\quad L = T - V \\
-\quad \hat{\bf x} &~~ \textrm{has the property} \quad \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\hat{x}}(t)} \right) = \frac{\partial L}{\partial \hat{x}(t)} \\
+\quad \hat{\bf x} &~~ \textrm{has property}~ \frac{d}{dt} \left( \frac{\partial L}{\partial \dot{\hat{x}}(t)} \right) = \frac{\partial L}{\partial \hat{x}(t)} \\
 &\textrm{for} \quad t \in [t_0,t_1]
 \end{aligned} $$
 
