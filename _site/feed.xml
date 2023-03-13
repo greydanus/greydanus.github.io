@@ -1,4 +1,135 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2023-03-08T13:37:16-08:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A blog by Sam Greydanus</subtitle><entry><title type="html">Finding Paths of Least Action with Gradient Descent</title><link href="http://greydanus.github.io/2023/03/05/ncf-tutorial/" rel="alternate" type="text/html" title="Finding Paths of Least Action with Gradient Descent" /><published>2023-03-05T04:00:00-08:00</published><updated>2023-03-05T04:00:00-08:00</updated><id>http://greydanus.github.io/2023/03/05/ncf-tutorial</id><content type="html" xml:base="http://greydanus.github.io/2023/03/05/ncf-tutorial/">&lt;style&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.0">Jekyll</generator><link href="http://greydanus.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="http://greydanus.github.io/" rel="alternate" type="text/html" /><updated>2023-03-13T09:43:08-07:00</updated><id>http://greydanus.github.io/feed.xml</id><title type="html">Natural Intelligence</title><subtitle>A blog by Sam Greydanus</subtitle><entry><title type="html">Six Experiments in Action Minimization</title><link href="http://greydanus.github.io/2023/03/11/ncf-six-experiments/" rel="alternate" type="text/html" title="Six Experiments in Action Minimization" /><published>2023-03-11T22:50:00-08:00</published><updated>2023-03-11T22:50:00-08:00</updated><id>http://greydanus.github.io/2023/03/11/ncf-six-experiments</id><content type="html" xml:base="http://greydanus.github.io/2023/03/11/ncf-six-experiments/">&lt;style&gt;
+.wrap {
+    max-width: 900px;
+}
+p {
+    font-family: sans-serif;
+    font-size: 16.75px;
+    font-weight: 300;
+    overflow-wrap: break-word; /* allow wrapping of very very long strings, like txids */
+}
+.post pre,
+.post code {
+    background-color: #fafafa;
+    font-size: 14px; /* make code smaller for this post... */
+}
+pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+&lt;/style&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
+  &lt;div style=&quot;width:25%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;video_init&quot; style=&quot;width:100%;min-width:250px;&quot;&gt;
+      &lt;source src=&quot;/assets/ncf/video_3body_0.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video_init_button&quot; onclick=&quot;playPauseInit()&quot;&gt;Play&lt;/button&gt; 
+    &lt;div style=&quot;text-align: left;margin-left:10px;margin-right:10px;&quot;&gt;The initial, highly-perturbed path for the three body problem.&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;width:25%; min-width:250px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;&quot;&gt;
+    &lt;video id=&quot;video_final&quot; style=&quot;width:100%;min-width:250px;&quot;&gt;
+      &lt;source src=&quot;/assets/ncf/video_3body_f.mp4&quot; type=&quot;video/mp4&quot; /&gt;
+    &lt;/video&gt;
+    &lt;button class=&quot;playbutton&quot; id=&quot;video_final_button&quot; onclick=&quot;playPauseFinal()&quot;&gt;Play&lt;/button&gt; 
+    &lt;div style=&quot;text-align:left;margin-left:10px;margin-right:10px;&quot;&gt;Dynamics of the three bodies after action minimization.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;  
+function playPauseInit() { 
+  var video = document.getElementById(&quot;video_init&quot;); 
+  var button = document.getElementById(&quot;video_init_button&quot;);
+  if (video.paused) {
+    video.play();
+  button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+
+function playPauseFinal() { 
+  var video = document.getElementById(&quot;video_final&quot;); 
+  var button = document.getElementById(&quot;video_final_button&quot;);
+  if (video.paused) {
+    video.play();
+  button.textContent = &quot;Pause&quot;;}
+  else {
+    video.pause(); 
+  button.textContent = &quot;Play&quot;;}
+} 
+&lt;/script&gt;
+
+&lt;p&gt;In a &lt;a href=&quot;../../../../2023/03/05/ncf-tutorial/&quot;&gt;recent post&lt;/a&gt;, we used gradient descent to find the path of least action for a free body. That this worked at all was interesting – but some important questions remain. For example: how well does this approach transfer to larger, more nonlinear, and more chaotic systems? That is the question we will tackle in this post.&lt;/p&gt;
+
+&lt;div style=&quot;display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;&quot;&gt;
+  &lt;a href=&quot;&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Read the paper&lt;/a&gt;
+  &lt;a href=&quot;https://colab.research.google.com/github/greydanus/ncf/blob/main/tutorial.ipynb&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;&lt;span class=&quot;colab-span&quot;&gt;Run&lt;/span&gt; in browser&lt;/a&gt;
+  &lt;a href=&quot;https://github.com/greydanus/ncf&quot; id=&quot;linkbutton&quot; target=&quot;_blank&quot;&gt;Get the code&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;six-systems&quot;&gt;Six systems&lt;/h2&gt;
+
+&lt;p&gt;In order to determine how action minimization works on more complex systems, we studied six systems of increasing complexity. The first of these was the free body, which served as a minimal working example, useful for debugging. The next system was a simple pendulum – another minimal working example, but this time with periodic nonlinearities and radial coordinates.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%;&quot;&gt;
+  &lt;img src=&quot;/assets/ncf/lagn_plus_schema.png&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Once we had tuned our approach on these two simple systems, we turned our attention to four more complex systems: a double pendulum, the three body problem, a simple gas, and a real ephemeris dataset of planetary motion (the orbits were projected onto a 2D plane). These systems presented an interesting challenge because they were all nonlinear, chaotic, and high-dimensional.&lt;sup id=&quot;fnref:fn0&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn0&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; In each case, we compared our results to a baseline path obtained with a simple ODE solver using Euler integration.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-unconstrained-energy-effect&quot;&gt;The unconstrained energy effect&lt;/h2&gt;
+
+&lt;p&gt;Early in our experiments we encountered &lt;em&gt;the unconstrained energy effect&lt;/em&gt;. This happens when the optimizer converges on a valid physical path with a different total energy from the baseline. The figure below shows an example. The reason this happens is that, although we fix the initial and final states, we do not constrain the path’s total energy \(T+V\). Even though paths like the one shown below are not necessarily invalid, they make it difficult for us to recover baseline paths.&lt;/p&gt;
+
+&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:70%;min-width: 300px;&quot;&gt;
+  &lt;img src=&quot;/assets/ncf/unconstrained.png&quot; /&gt;
+&lt;/div&gt;
+
+&lt;p&gt;For this reason, we used the baseline ODE paths to initialize our paths, perturbed them with Gaussian noise, and then used early stopping to select for paths which were similar (often, identical) to the ODE baselines. This approach matched the mathematical ansatz of the “calculus of variations” where one studies perturbed paths in the vicinity of the true path. We note that there are other ways to mitigate this effect which don’t require an ODE-generated initial path.&lt;sup id=&quot;fnref:fn1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn1&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;results&quot;&gt;Results&lt;/h2&gt;
+
+&lt;p&gt;On all six physical systems we obtained paths of least action which were nearly identical to the baseline paths. In the figure below you can also see the optimization dynamics. Our results suggest that action minimization can generate physically-valid dynamics even for chaotic and strongly-coupled systems like the double pendulum and three body problem. One interesting pattern we noticed was that optimization dynamics were dominated by the kinetic energy term \(T\). This occured because \(S\) tended to be more sensitive to \(T\) (which grew as \({\bf \dot{x}}^2\)) than \(V\).&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%;&quot;&gt;
+  &lt;img src=&quot;/assets/ncf/results.png&quot; /&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;applications&quot;&gt;Applications&lt;/h2&gt;
+
+&lt;p&gt;The goal of this post was just to demonstrate that action minimization scales to larger problems. Nevertheless, we can’t help but take a moment to speculate on potential applications of this method:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;u&gt;ODE super-resolution.&lt;/u&gt; If one were to obtain a low-resolution trajectory via a traditional integration method such as Euler integration, one could then upsample the path by a factor of 10 to 100 (using, eg, linear interpolation) and then run action minimization to make it physically-valid. This procedure would take less time than using the ODE integrator alone.&lt;/li&gt;
+  &lt;li&gt;&lt;u&gt;Infilling missing data.&lt;/u&gt; Many real-world datasets have periods of missing data. These might occur due to a sensor malfunction, or they might be built into the experimental setup – for example, a satellite can’t image clouds and weather patterns as well at night – either way, action minimization is well-suited for inferring the sequence of states that connect a fixed start and end state. Doing this with an ODE integrator, meanwhile, is not as natural because there’s no easy way to incorporate the known end state into the problem definition.&lt;/li&gt;
+  &lt;li&gt;&lt;u&gt;When the final state is irrelevant.&lt;/u&gt; There are many simulation scenarios where the final state is not important at all. What really matters is that the dynamics look realistic in between times \(t_1\) and \(t_2\). This is the case for simulated smoke in a video game: the smoke just needs to look realistic. With that in mind, we could choose a random final state and then minimize the action of the intervening states. This could allow us to obtain realistic graphics more quickly than numerical methods that don’t fix the final state.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;discussion&quot;&gt;Discussion&lt;/h2&gt;
+
+&lt;p&gt;Action minimization shows how the action really does act like a cost function. This isn’t something you’ll hear in your physics courses, even most high-level ones. And yet, it’s an elegant and accurate way to view physics. In a future post, we’ll see how this notion extends even into quantum mechanics.&lt;/p&gt;
+
+&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
+
+&lt;p&gt;The double pendulum and Lennard-Jones potentials were too long to fit into the table above. Here they are:&lt;/p&gt;
+
+&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%;&quot;&gt;
+  &lt;img src=&quot;/assets/ncf/lagrangians_fn.png&quot; /&gt;
+&lt;/div&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:fn0&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;The state of the simple gas, for example, has a hundred degrees of freedom. &lt;a href=&quot;#fnref:fn0&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:fn1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;We discuss these in the Appendix of the paper. &lt;a href=&quot;#fnref:fn1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name>Sam Greydanus, Tim Strang, and Isabella Caruso</name></author><summary type="html">Using action minimization, we obtain dynamics for six different physical systems including a double pendulum and a gas with a Lennard-Jones potential.</summary></entry><entry><title type="html">Finding Paths of Least Action with Gradient Descent</title><link href="http://greydanus.github.io/2023/03/05/ncf-tutorial/" rel="alternate" type="text/html" title="Finding Paths of Least Action with Gradient Descent" /><published>2023-03-05T04:00:00-08:00</published><updated>2023-03-05T04:00:00-08:00</updated><id>http://greydanus.github.io/2023/03/05/ncf-tutorial</id><content type="html" xml:base="http://greydanus.github.io/2023/03/05/ncf-tutorial/">&lt;style&gt;
 .wrap {
     max-width: 900px;
 }
@@ -2635,157 +2766,4 @@ if(parseInt(getBrowserSize().width) &gt; 600){
       &lt;p&gt;Many of the airfoil shapes used in this post were taken from NASA’s &lt;a href=&quot;https://history.nasa.gov/SP-4305/p115.htm&quot;&gt;historical archives&lt;/a&gt;. See “SP-4305 Engineer in Charge” &lt;a href=&quot;https://history.nasa.gov/&quot;&gt;&lt;em&gt;NASA History Division&lt;/em&gt;&lt;/a&gt;, 1986. &lt;a href=&quot;#fnref:fn11&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Sam Greydanus</name></author><summary type="html">How did flight become a reality? Let&apos;s look at the inventors who took flight from the world of ideas to the world of things – focusing in particular on airfoil design.</summary></entry><entry><title type="html">The Story of Flight</title><link href="http://greydanus.github.io/2020/10/12/story-of-flight/" rel="alternate" type="text/html" title="The Story of Flight" /><published>2020-10-12T04:00:00-07:00</published><updated>2020-10-12T04:00:00-07:00</updated><id>http://greydanus.github.io/2020/10/12/story-of-flight</id><content type="html" xml:base="http://greydanus.github.io/2020/10/12/story-of-flight/">&lt;div&gt;
-  &lt;style&gt;
-      #linkbutton:link, #linkbutton:visited {
-        padding: 6px 0px;
-        text-decoration: none;
-        display: inline-block;
-
-        border: 2px solid #777;
-        padding: 10px;
-        font-size: 20px;
-        min-width: 200px;
-        width: 50%;
-        text-align: center;
-        color: #999;
-        margin: 0px auto;
-        cursor: pointer;
-        margin-bottom: 10px;
-      }
-
-      #linkbutton:hover, #linkbutton:active {
-        background-color: rgba(245, 245, 245);
-      }
-
-    .playbutton {
-      background-color: rgba(0, 153, 51);
-      /*background-color: rgba(255, 130, 0);*/
-      border-radius: 4px;
-      color: white;
-      padding: 3px 8px;
-      /*width: 60px;*/
-      text-align: center;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-size: 12px;
-      /*display: block;*/
-      /*margin-left: auto;*/
-      margin: 8px 0px;
-      margin-right: auto;
-      min-width:80px;
-    }
-  &lt;/style&gt;
-&lt;/div&gt;
-
-&lt;!-- &lt;div class=&quot;imgcap_noborder&quot;&gt;
-  &lt;img src=&quot;/assets/story-of-flight/hummingbird.png&quot; style=&quot;width:10%;min-width:150px;&quot;&gt;
-&lt;/div&gt; --&gt;
-
-&lt;p&gt;When I was growing up, hummingbirds used to fly into our garage and get stuck. I remember finding one perched on a windowsill, weak from exertion. It let me fold my hands around it and carry it outside. And when I opened my hands, it lay on my palms for a moment. That’s when the sunlight ignited its iridescent plumage and engulfed its whole body in a cloud of blues and greens. Then it understood it was free, whirred its wings, and vanished into the open air. Long after it had departed, my mind’s eye gazed upon the little bird. With an idle curiosity, I tried to imagine how natural forces could have wrought such a thing. We know of lift and drag, thrust and gravity as rough textbook concepts. But it’s another thing entirely to gaze upon a creature of beauty and sophistication and realize that it was shaped in part by those simple forces.&lt;/p&gt;
-
-&lt;p&gt;Since my encounter with the hummingbird, I have always been naturally drawn to flight. It’s a bizarre desire to possess, since humans did not evolve to fly. And yet many humans have felt the same way over the years. Entire cultures, even, have dreamed of flight. And step by step, they have used technology to fashion their own artificial wings and bring about the modern-day miracle of flight. The purpose of this series of posts is to recount that epic adventure. I will tell it through the lens of history, looking at the individual people who wanted to fly, the lens of technology, looking at the key inventions leading up to modern airplanes, and the lens of physics, looking at the equations of airflow that made it all possible. As a final flourish, I will derive a wing from scratch by simulating a wind tunnel, differentiating through it, and using gradient descent to deform a rectangular occlusion into a wing.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
-  &lt;div style=&quot;width:32.8%; min-width:200px; display: inline-block; vertical-align: top;&quot;&gt;
-    &lt;img src=&quot;/assets/story-of-flight/leonardo.jpg&quot; style=&quot;width:100%&quot; /&gt;
-    &lt;div style=&quot;text-align: left;&quot;&gt;Leonardo da Vinci, an important figure in the history of flight.&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div style=&quot;width:32.8%; min-width:200px; display: inline-block; vertical-align: top;&quot;&gt;
-    &lt;img src=&quot;/assets/story-of-flight/lilienthal.jpg&quot; style=&quot;width:100%&quot; /&gt;
-    &lt;div style=&quot;text-align:left;&quot;&gt;Otto Lilienthal, who made key technological breakthroughs in wing shape and design.&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div style=&quot;width:32.8%; min-width:200px; display: inline-block; vertical-align: top;&quot;&gt;
-    &lt;img src=&quot;/assets/story-of-flight/wing_shape.png&quot; id=&quot;wingShapeImage&quot; onclick=&quot;toggleWingShape()&quot; style=&quot;width:100%&quot; /&gt;
-    &lt;div style=&quot;text-align:left;&quot;&gt;Optimizing our own wing in a fluid simulation. &lt;p style=&quot;color:grey;display:inline;&quot;&gt;[Click to pause or play.]&lt;/p&gt;&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;h3 id=&quot;the-early-aviators&quot;&gt;The Early Aviators&lt;/h3&gt;
-
-&lt;p&gt;In the past century alone, airplane design has progressed from the Wright brothers’ ramshackle &lt;em&gt;Flyer&lt;/em&gt; to Lockheed Martin’s streamlined &lt;em&gt;SR-71 Blackbird&lt;/em&gt;. In parallel, our commercial aviation system has developed to the point where anyone can enjoy the possibilities of flight. Flight has become so common and so reasonable that it’s easy to forget the towering lusts and follies that accompanied its invention. But if we are to understand why humans wanted to fly in the first place, we need to relive those lusts and follies. One way to do this is by looking back at the lives of the early aviators.&lt;/p&gt;
-
-&lt;p&gt;Perhaps none of the early aviators wanted to fly as much as the tower jumpers. Beginning in the Middle Ages, there was a string of inventors who fashioned wings for themselves and then leaped from towers in imitation of birds. These daredevils were the tower jumpers. Having neglected the essential calculations of lift and drag, they relied mostly on wits, intuition, and dumb luck to survive. Alas, gravity tended to be stronger. Most of their attempts ended in death or serious injury. But one exception to the rule was the Andalusian inventor Abbas ibn Firnas. The story goes that he made his jump at the astonishing age of seventy years. Once he was airborne, his feather suit cushioned his fall and allowed him to glide to the ground unharmed.&lt;sup id=&quot;fnref:fn1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; Somehow, in spite of his wild deeds, Abbas lived on to the respectable age of 78.&lt;/p&gt;
-
-&lt;p&gt;The common folk of Andalusia must have enjoyed laughter and endless conversations about Abbas and his wingsuit. They would have asked, why does he want to fly? Pigs do not have wings and they are quite content about it. Why should humans, who likewise have no wings, want to pretend at flight? They would have been making a good point. After all, the tower jumpers needed to be more than half mad to take the risks they did. But on a fundamental level, they were probably driven by things that most humans can relate to: the desires for freedom, glory, and adventure.&lt;/p&gt;
-
-&lt;h3 id=&quot;the-freedom-of-flight&quot;&gt;The Freedom of Flight&lt;/h3&gt;
-
-&lt;p&gt;We can see this in Leonardo da Vinci, whose work on flight was deeply rooted in a desire for freedom. Most people know that da Vinci painted the Mona Lisa and sketched a number of remarkable flying machines. However, few of them are aware of the pressures that shaped him.&lt;sup id=&quot;fnref:fn2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; Leonardo began life as the illegitimate son of an Italian aristocrat and a peasant woman. And so he had to support himself from an early age by taking on strict apprenticeships and painting for wealthy patrons. The fact that he was gay complicated things even further.&lt;/p&gt;
-
-&lt;p&gt;His life reached a moment of crisis on his 27th birthday when he and his friends were imprisoned for acts of sodomy. Imprisonment affected him deeply. As soon as he was released, he sketched a machine meant to “open a prison from the inside” and another for tearing bars off of windows. Around the same time, he became obsessed with bird flight and began buying birds at markets in order to sketch them. When he finished sketching them, he would free them from their cages. “Once you have tasted flight,” he wrote, “you will forever walk the earth with your eyes turned skyward. For there you have been, and there you will always long to return.” For da Vinci, flight seems to have been a metaphor for freedom and an antidote to the horrors of captivity.&lt;/p&gt;
-
-&lt;h3 id=&quot;the-glory-of-flight&quot;&gt;The Glory of Flight&lt;/h3&gt;
-
-&lt;p&gt;But freedom is not the only reason people wanted to fly. For others, flight was a shot at glory – and nobody loved glory more than the French chemist Pilatre de Rozier. This man was quite a character. He was known to breathe fire, seduce older women, and give himself fake titles.&lt;sup id=&quot;fnref:fn3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn3&quot; class=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;As a young scientist, he signed his papers, “Apothecary,” then “first Apothecary,”” and finally, “Pharmacy Inspector” of the Prince of Limbourg. This impressed his colleagues until they discovered that the Prince of Limbourg did not, in fact, exist. In a twist of irony, it was this same hunger for glory that also led de Rozier to his greatest scientific breakthroughs. The first was the match, which he invented in order to show off his fire breathing skills in a public lecture. The second was the gas mask, which he used in a stunt that involved lowering himself into the fumes of a vat of fermenting beer. The final, and most significant breakthrough, was his completion of the first manned voyage in a hot air balloon. King Louis XVI wanted to put criminals in the balloon but de Rozier objected, saying “The glory should not be given to criminals!”&lt;sup id=&quot;fnref:fn4&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn4&quot; class=&quot;footnote&quot;&gt;4&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
-
-&lt;p&gt;Pilatre was far from perfect, but his bravery and showmanship inspired people and gave aeronauts an immensely positive image in France. His initial balloon launch attracted a crowd of over a hundred thousand people. When these people saw him land safely, common attitudes about flight changed. No longer was human flight seen as a thing of folly. It became a source of national pride and a crowning achievement of science. And for many, it began to represent an exciting new frontier.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:99.9%&quot;&gt;
-  &lt;div style=&quot;width:35.5%; min-width:180px; display: inline-block; vertical-align: top;&quot;&gt;
-    &lt;img src=&quot;/assets/story-of-flight/davinci_glider.jpg&quot; style=&quot;width:100%&quot; /&gt;
-    &lt;div style=&quot;text-align: left;&quot;&gt;A page from one of da Vinci&apos;s journals describes an &quot;air screw&quot; that resembles a modern helicopter. &lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div style=&quot;width:26.9%; min-width:130px; display: inline-block; vertical-align: top;&quot;&gt;
-    &lt;img src=&quot;/assets/story-of-flight/balloon.png&quot; style=&quot;width:100%&quot; /&gt;
-    &lt;div style=&quot;text-align:left;&quot;&gt;Pilatre de Rozier and his companion take off in a hot air balloon.&lt;/div&gt;
-  &lt;/div&gt;
-  &lt;div style=&quot;width:36.4%; min-width:180px; display: inline-block; vertical-align: top;&quot;&gt;
-    &lt;img src=&quot;/assets/story-of-flight/earhart.jpg&quot; style=&quot;width:100%&quot; /&gt;
-    &lt;div style=&quot;text-align:left;&quot;&gt;Amelia Earhart sitting upon the nose of her plane in 1936.&lt;/div&gt;
-  &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Like any new frontier, flight called most strongly to those with a sense of imagination and adventure. One person who heeded this call was &lt;a href=&quot;https://en.wikipedia.org/wiki/Antoine_de_Saint-Exup%C3%A9ry&quot;&gt;Antoine de Saint-Exupery&lt;/a&gt;. In his short life, he became both a decorated military pilot and one of France’s best poets and novelists. He managed this double act by blending his writing with his flying until they became almost the same activity. There are eccentric stories about how he wrote poetry during military scouting missions and once circled a landing strip for an hour to finish reading a good novel.&lt;sup id=&quot;fnref:fn6&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn6&quot; class=&quot;footnote&quot;&gt;5&lt;/a&gt;&lt;/sup&gt; To Saint-Exupery, flight was as much an adventure of the mind as it was the body. In fact, he argued that these two adventures were inseparable: the way a mind perceives the physical world determines how the body will eventually shape it. Or, as he put it, “A rock pile ceases to be a rock pile the moment a single man contemplates it, bearing within him the image of a cathedral.” His own life supports that idea, for, in thinking and writing about flight from the lens of an artist, he transformed it into something that promised not only freedom and glory, but also beauty and adventure.&lt;/p&gt;
-
-&lt;p&gt;The other side of venturing into a frontier is that one must leave behind the comforts of civilized life. Even as airplanes improved in the early 1900’s, they remained costly, dangerous, and generally impractical. So every one of the early aviators had to make sacrifices in order to fly. But one person who had to make especially tough choices was Amelia Earhart.&lt;/p&gt;
-
-&lt;p&gt;Earhart was one of the best early airplane pilots and famously went missing during an attempt to fly around the world. The first, and most obvious choice she had to make was to risk her life in pursuit of that goal. But apart from safety, she had to risk bankruptcy throughout her twenties – taking odd jobs and once selling her plane in order to support herself. And finally, once she was able to support herself financially, she had to risk losing love and the chance at marriage. The publicist George Putnam had proposed and the two were preparing for marriage when she explained to him, “I cannot endure at all times even an attractive cage.”&lt;sup id=&quot;fnref:fn8&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fn8&quot; class=&quot;footnote&quot;&gt;6&lt;/a&gt;&lt;/sup&gt; Putnam eventually agreed to an unconventional open marriage, but Earhart’s letter suggests she was prepared to forgo it entirely if it interfered with her ability to fly. Like Earhart, many of the early aviators had to lose wealth, love, or life in the pursuit of flight.&lt;/p&gt;
-
-&lt;p&gt;That was the nature of life on the new frontier.&lt;/p&gt;
-
-&lt;div class=&quot;imgcap_noborder&quot; style=&quot;display: block; margin-left: auto; margin-right: auto; width:100%;margin-bottom: 100px; margin-top: 50px&quot;&gt;
-    &lt;a href=&quot;../../../../2020/10/13/stepping-stones/&quot; id=&quot;featuredlink&quot; target=&quot;_blank&quot; style=&quot;margin-right: 10px;&quot;&gt;Post #2: The Stepping Stones of Flight&lt;/a&gt;
-&lt;/div&gt;
-
-&lt;h2 id=&quot;footnotes&quot;&gt;Footnotes&lt;/h2&gt;
-
-&lt;script language=&quot;javascript&quot;&gt;
-  function toggleWingShape() {
-
-    path = document.getElementById(&quot;wingShapeImage&quot;).src
-      if (path.split(&apos;/&apos;).pop() == &quot;wing_shape.png&quot;) 
-      {
-          document.getElementById(&quot;wingShapeImage&quot;).src = &quot;/assets/story-of-flight/wing_summary.gif&quot;;
-      }
-      else 
-      {
-          document.getElementById(&quot;wingShapeImage&quot;).src = &quot;/assets/story-of-flight/wing_shape.png&quot;;
-      }
-  }
-&lt;/script&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:fn1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;White, Lynn Townsend Jr. &lt;a href=&quot;https://www.jstor.org/stable/pdf/3101411.pdf?seq=1&quot;&gt;Eilmer of Malmesbury, an Eleventh Century Aviator: A Case Study of Technological Innovation, Its Context and Tradition&lt;/a&gt;, &lt;em&gt;Technology and Culture 2&lt;/em&gt;, p. 97-111, 1961. For a quick but less scholarly overview, try &lt;a href=&quot;https://www.thefamouspeople.com/profiles/abbas-ibn-firnas-33319.php&quot;&gt;this online article&lt;/a&gt;. &lt;a href=&quot;#fnref:fn1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn2&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Isaacson, Walter. Leonardo da Vinci, &lt;em&gt;Simon &amp;amp; Schuster&lt;/em&gt;, 2017. See also this New Yorker &lt;a href=&quot;https://www.newyorker.com/magazine/2017/10/16/the-secret-lives-of-leonardo-da-vinci&quot;&gt;review article&lt;/a&gt; about the book. &lt;a href=&quot;#fnref:fn2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn3&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Duval, Clément. &lt;a href=&quot;https://online.ucpress.edu/hsns/article/doi/10.2307/27757275/33554/Pilatre-de-Rozier-1754-1785-Chemist-and-First&quot;&gt;Pilatre de Rozier (1754-1785), Chemist and First Aeronaut&lt;/a&gt;, &lt;em&gt;Chymia&lt;/em&gt;, 1967. This article is well written, and quite fun to read. I’d recommend the whole thing. &lt;a href=&quot;#fnref:fn3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn4&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Penenberg, Adam L. &lt;a href=&quot;https://books.google.com/books?id=WCmUCwAAQBAJ&amp;amp;pg=PT56&amp;amp;lpg=PT56&amp;amp;dq=rozier+louis+criminal+balloon&amp;amp;source=bl&amp;amp;ots=c0b-7imHWp&amp;amp;sig=ACfU3U14AFxunsLlX7D6PxEp82CYpVC5FQ&amp;amp;hl=en&amp;amp;sa=X&amp;amp;ved=2ahUKEwjHyZCZxJvqAhUU7J4KHRStCqcQ6AEwDHoECAwQAQ#v=onepage&amp;amp;q=rozier%20louis%20criminal%20balloon&amp;amp;f=false&quot;&gt;Sky Rivals: Two Men. Two Planes. An Epic Race Around the World.&lt;/a&gt;, &lt;em&gt;Wayzgoose Press&lt;/em&gt;, 2016 &lt;a href=&quot;#fnref:fn4&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn6&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Schiff, Stacy. &lt;a href=&quot;https://web.archive.org/web/20161020193505/https://books.google.com/books?id=2G4Q_GNpCUMC&amp;amp;hl=en&quot;&gt;Saint-Exupéry: A Biography&lt;/a&gt;, &lt;em&gt;Da Capo Press&lt;/em&gt;, 1997. See also the &lt;a href=&quot;https://en.wikipedia.org/wiki/Antoine_de_Saint-Exup%C3%A9ry&quot;&gt;Wikipedia article&lt;/a&gt; about Saint-Exupéry. &lt;a href=&quot;#fnref:fn6&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fn8&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;&lt;a href=&quot;https://www.huffpost.com/entry/amelia-earhart-prenup_n_2280057&quot;&gt;Amelia Earhart’s Prenup Is Remarkably Modern&lt;/a&gt;, &lt;em&gt;Huffington Post&lt;/em&gt;, 2017. An image of the prenuptual letter itself is &lt;a href=&quot;https://images.huffingtonpost.com/2012-12-11-earhart.jpg&quot;&gt;here&lt;/a&gt;. &lt;a href=&quot;#fnref:fn8&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Sam Greydanus</name></author><summary type="html">Why do humans want to fly? Let&apos;s start by looking at the humans for whom the desire to fly was strongest: the early aviators.</summary></entry></feed>
+&lt;/div&gt;</content><author><name>Sam Greydanus</name></author><summary type="html">How did flight become a reality? Let&apos;s look at the inventors who took flight from the world of ideas to the world of things – focusing in particular on airfoil design.</summary></entry></feed>
