@@ -15,9 +15,9 @@ includelink: true
 
 ## About me
 
-I am an ex-professional researcher (Google Brain, DARPA, CERN, and Dartmouth College). I now work for a startup called [Windscape AI](https://windscape.ai/) and run a small rental company called Greenfield Properties. I continue to write blog posts and short papers about scientific topics that interest me. I believe that good research springs from genuine passion and curiosity.
+I am a software engineer and researcher (Google Brain, DARPA, CERN, and Dartmouth College). I currently work for a startup called [Windscape AI](https://windscape.ai/) and run a small rental company called Greenfield Properties. This is my research blog, where I write posts about topics that interest me, or highlight actual papers I've written.
 
-My research interests vary but often involve the intersection between physics -- one of the oldest and most theoretical fields of science -- and ML -- one of the youngest and most data-oriented. I often try and build something new by combining established tools and ideas in a creative way. Examples include [Hamiltonians + neural networks](../2019/05/15/hamiltonian-nns/), [structural optimization + Autograd](../2022/05/08/structural-optimization/), and [biological morphogenesis + CNNs](../2022/05/24/studying-growth/). I care about communicating my work and making it easy to replicate.
+My research interests vary but often involve the intersection between physics -- one of the oldest and most theoretical fields of science -- and ML -- one of the youngest and most data-oriented. I often build new things by combining established tools and ideas in creative ways. Examples include [Hamiltonians & neural networks](../2019/05/15/hamiltonian-nns/), [structural optimization & Autograd](../2022/05/08/structural-optimization/), and [biological morphogenesis & CNNs](../2022/05/24/studying-growth/).
 
 * 2013 – Physics major, Dartmouth College
 * 2015 – Particle physics intern, CERN
@@ -25,7 +25,7 @@ My research interests vary but often involve the intersection between physics --
 * 2017 – Co-captain of US team, International Physicist's Tournament
 * 2018 – Google AI Resident, Google Brain San Francisco
 * 2019 – Deep learning researcher, Oregon State and [The ML Collective](https://mlcollective.org/)
-* 2022 – Physics and ML at [Windscape AI](https://windscape.ai/). Owner, Greenfield Properties.
+* 2022 – Physics and ML at [Windscape AI](https://windscape.ai/). Owner at Greenfield Properties.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
   <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
