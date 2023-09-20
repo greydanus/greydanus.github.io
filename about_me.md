@@ -5,7 +5,7 @@ includelink: true
 ---
 
 <div class="imgcap_noborder">
-  <img src="/static/me_long.jpg" width="100%">
+  <img src="/static/me_long.jpeg" width="100%">
 </div>
 
 ## Links
