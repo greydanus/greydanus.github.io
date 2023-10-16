@@ -15,9 +15,9 @@ includelink: true
 
 ## About me
 
-I am a software engineer and researcher (Google Brain, DARPA, CERN, and Dartmouth College). I currently work for a startup called [Windscape AI](https://windscape.ai/) and run a small rental company called Greenfield Properties. This is my research blog, where I write posts about topics that interest me and highlight papers I've written.
+I'm a software engineer and researcher (Google Brain, DARPA, CERN, and Dartmouth College). I currently work for a startup called [Windscape AI](https://windscape.ai/) and run a small rental company called Greenfield Properties. This is my research blog. I write posts about topics that interest me and highlight papers I've written.
 
-My research interests vary but often involve the intersection between physics -- one of the oldest and most theoretical fields of science -- and ML -- one of the youngest and most data-oriented. I like to build new things by combining established tools and ideas in creative ways. Some examples include [Hamiltonians & neural networks](../2019/05/15/hamiltonian-nns/), [structural optimization & Autograd](../2022/05/08/structural-optimization/), and [biological morphogenesis & NCAs](../2022/05/24/studying-growth/).
+My research interests tend to involve the intersection between physics -- one of the oldest and most theoretical fields of science -- and ML -- one of the youngest and most data-oriented. I like to build new things by combining established tools and ideas in creative ways. Some examples include [Hamiltonians & neural networks](../2019/05/15/hamiltonian-nns/), [structural optimization & Autograd](../2022/05/08/structural-optimization/), and [biological morphogenesis & NCAs](../2022/05/24/studying-growth/).
 
 * 2013 – Physics major, Dartmouth College
 * 2015 – Particle physics intern, CERN
