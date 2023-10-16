@@ -34,7 +34,7 @@ Much of the internet is optimized for engagement. As a result, navigating websit
 Another related point is that camera photos tend to demand more attention than simple diagrams or sketches. I do not know the subtle fen shui behind this, but try this thought experiment: imagine you walk through a house full of windows, each one looking out on a different scene. It would be interesting, but distracting. You'd want to look through each window as soon as you came upon it. Tasteful pictures and wall hangings are more toned down; they let you walk through the house without having your attention pulled here and there so aggressively. Later, at your leisure, you can rest your eyes on them and find something to appreciate.
 
 
-In making this blog I have rebelled against tendencies towards too much color and too many real photos. I've sought to make the site aesthetically appealing and easy to use while keeping the theme modest enough that the sensitive reader can relax while he or she explores it. I cannot attest to how others feel about it, but I enjoy the theme and that's a good first step.
+In making this blog I have rebelled against tendencies towards too much color and too many real photos. I've sought to keep the theme modest enough that the sensitive reader can relax while he or she explores it. I cannot attest to how others feel about it, but I enjoy the theme and that's a good first step.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
   <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
