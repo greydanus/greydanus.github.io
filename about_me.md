@@ -33,7 +33,7 @@ Much of the internet is optimized for engagement. As a result, navigating websit
 
 Another related point is that camera photos tend to demand more attention than simple diagrams or sketches. I do not know the subtle feng shui behind this, but try the following thought experiment: imagine you walk through a house full of windows, each one looking out on a different scene. It would be interesting but distracting. You'd want to look through each window as soon as you came upon it. Tasteful pictures and wall hangings are more toned down; they let you walk through the house without having your attention pulled here and there so aggressively. Later, at your leisure, you can rest your eyes on them and find something to appreciate.
 
-In designing this blog I've used a modest theme so that the reader can relax while he or she explores.
+In designing this blog I've used a modest theme so that the reader can relax while he explores.
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:60%">
   <div style="width:99%; min-width:300px; display: inline-block; vertical-align: top;">
