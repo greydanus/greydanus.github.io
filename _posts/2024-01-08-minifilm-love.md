@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title:  "Atomized Love: A Minifilm"
+title:  "Coeur Noir: A Minifilm"
 excerpt: "Night falls on a small town and spirits stir. A minifilm about men and women in an atomized environment."
 date:   2024-01-08 00:00:00
 mathjax: true
