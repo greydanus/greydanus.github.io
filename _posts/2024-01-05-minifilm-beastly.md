@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Beastly Bluff: A Minifilm"
-excerpt: "On an ordinary morning at the office, Reginald Sniffleton makes a discovery. A minifilm about office work and the call of adventure."
+excerpt: "On an ordinary morning at the office, Reginald Sniffleton makes a discovery. A minifilm about work and the call of adventure."
 date:   2024-01-05 00:00:00
 mathjax: true
 thumbnail: /assets/minifilms/thumbnail-beastly.png
