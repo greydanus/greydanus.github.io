@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Coeur Noir: A Minifilm"
-excerpt: "Night falls on a small town and spirits stir. A minifilm about men and women in an atomized environment."
+excerpt: "Night falls on a small town and spirits stir."
 date:   2024-01-08 00:00:00
 mathjax: true
 thumbnail: /assets/minifilms/thumbnail-love.png
