@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "The Carpenter's Evening: A Minifilm"
-excerpt: "A carpenter finishes his work and begins dreaming of the sea. A minifilm about active and passive psychological flow states."
+excerpt: "A carpenter finishes his work and begins dreaming of the sea."
 date:   2024-01-09 00:00:00
 mathjax: true
 thumbnail: /assets/minifilms/thumbnail-carpenters.png
