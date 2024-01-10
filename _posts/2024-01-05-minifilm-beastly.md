@@ -10,7 +10,7 @@ thumbnail: /assets/minifilms/thumbnail-beastly.png
 
 <style>.wrap {max-width: 900px;}</style>
 
-On an ordinary morning at the office, Reginald Sniffleton makes a discovery.
+On an ordinary morning at work, an office worker makes a discovery.
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
     <video id="video_beastly" controls style="width:100%">
