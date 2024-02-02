@@ -77,7 +77,7 @@ In a [recent post](../../../../2023/03/05/ncf-tutorial/), we used gradient desce
 
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
-  <a href="" id="linkbutton" target="_blank">Read the paper</a>
+  <a href="https://arxiv.org/abs/2303.02115" id="linkbutton" target="_blank">Read the paper</a>
   <a href="https://colab.research.google.com/github/greydanus/ncf/blob/main/tutorial.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
   <a href="https://github.com/greydanus/ncf" id="linkbutton" target="_blank">Get the code</a>
 </div>
