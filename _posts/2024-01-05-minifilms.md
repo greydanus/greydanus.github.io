@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Three Minifilms"
-excerpt: "A fun post to show off three minifilms I made. Each one has a plot and story, but can also be enjoyed in the abstract."
+excerpt: "A short post to show off three minifilms I made. Each one has a plot and story but can also be enjoyed in the abstract."
 date:   2024-01-05 00:00:00
 mathjax: true
 thumbnail: /assets/minifilms/thumbnail-beastly.png
