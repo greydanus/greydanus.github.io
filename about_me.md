@@ -27,9 +27,9 @@ My research interests tend to involve the intersection between physics -- one of
 * 2019 – Deep learning researcher, Oregon State and [The ML Collective](https://mlcollective.org/)
 * 2022 – Physics and ML at [Windscape AI](https://windscape.ai/). Owner at Greenfield Properties.
 
-## Why is this website mostly black and white?
+<!-- ## Why is this website mostly black and white?
 
-Much of the internet is optimized for engagement. Because of this, navigating websites can be an overwhelming and subtly stressful experience. Consider color. Color is an important part of the natural world, but bright reds and yellows show up sparingly. Like salt and herbs, they are garnishes that enhance the taste of a dish but are not meant to be the dish itself. It is impolite for a website to use bright, gaudy colors in its theme. In designing this blog I've used a modest theme and black and white icons so that the reader can relax while her or she explores.
+Much of the internet is optimized for engagement. Because of this, navigating websites can be an overwhelming and subtly stressful experience. Consider color. Color is an important part of the natural world, but bright reds and yellows show up sparingly. Like salt and herbs, they are garnishes that enhance the taste of a dish but are not meant to be the dish itself. It is impolite for a website to use bright, gaudy colors in its theme. In designing this blog I've used a modest theme and black and white icons so that the reader can relax while her or she explores. -->
 
 <!-- Another related point is that camera photos tend to demand more attention than simple diagrams or sketches. I do not know the subtle feng shui behind this, but try the following thought experiment: imagine you walk through a house full of windows, each one looking out on a different scene. It would be interesting but distracting. You'd want to look through each window as soon as you came upon it. Tasteful pictures and wall hangings are more toned down; they let you walk through the house without having your attention pulled here and there so aggressively. Later, at your leisure, you can rest your eyes on them and find something to appreciate. -->
 
