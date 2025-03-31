@@ -10,5 +10,7 @@
 *.tar
 *.zip
 *.jekyll-cache*
+.jekyll-cache/*
 # *.pkl # allow pickle files
 __pycache__
+assets/.DS_Store
