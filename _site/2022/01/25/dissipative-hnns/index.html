@@ -7,7 +7,7 @@
     <title>Dissipative Hamiltonian Neural Networks</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2022/01/25/dissipative-hnns/">
+    <link rel="canonical" href="http://localhost:4000/2022/01/25/dissipative-hnns/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -73,6 +73,8 @@
           <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
           <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
+        
+          <a class="page-link" href="/2024-01-05-minifilms/">Three Minifilms</a>
         
           
         
@@ -187,7 +189,7 @@
   <img src="/assets/dissipative-hnns/dampedspring.jpg" style="width:100%; max-width: 600px" />
 </div>
 
-<p>In the image above, the damped mass-spring dataset is plotted in the upper left square. Each arrow represents the time derivative of the system with respect to that \((p,q)\) coordinate. The Helmholtz decomposition tells us that this vector field can be decomposed into conservative and dissipative components, and indeed that is what we have done in the second and third columns.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup> You may notice that the dissipative field in the third column isolates the force due to friction.</p>
+<p>In the image above, the damped mass-spring dataset is plotted in the upper left square. Each arrow represents the time derivative of the system with respect to that \((p,q)\) coordinate. The Helmholtz decomposition tells us that this vector field can be decomposed into conservative and dissipative components, and indeed that is what we have done in the second and third columns.<sup id="fnref:fn1"><a href="#fn:fn1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> You may notice that the dissipative field in the third column isolates the force due to friction.</p>
 
 <p>In the second row, we evaluate a D-HNN trained on the system. The D-HNN produces a trajectory that closely matches ground truth. By plotting the symplectic gradient of \(\mathcal{H}\) and the gradient of \(\mathcal{D}\), we can see that it has properly decoupled the conservative and dissipative dynamics respectively. By contrast, in the third row, we train a baseline model (an MLP) on the same data; this model produces a good trajectory but is unable to learn conservative and dissipative dynamics separately. Finally, in the fourth row, we train an HNN on the same dataset and find that it is only able to model the conservative component of the system’s dynamics. It strictly enforces conservation of energy in a scenario where energy is not actually conserved, leading to a poor prediction.</p>
 
@@ -217,7 +219,7 @@
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn1" role="doc-endnote">
+    <li id="fn:fn1">
       <p>In practice, we performed this decomposition using a few hundred iterations of the Gauss-Seidel method to solve Poisson’s equation. Again, see <a href="https://drive.google.com/file/d/1upKFdtnM0xcTVxNsPHI1KCvmcanAJheL/view?usp=sharing">this paper</a> for details. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

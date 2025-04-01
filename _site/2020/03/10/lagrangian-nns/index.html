@@ -7,7 +7,7 @@
     <title>Lagrangian Neural Networks</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2020/03/10/lagrangian-nns/">
+    <link rel="canonical" href="http://localhost:4000/2020/03/10/lagrangian-nns/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -73,6 +73,8 @@
           <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
           <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
+        
+          <a class="page-link" href="/2024-01-05-minifilms/">Three Minifilms</a>
         
           
         
@@ -201,7 +203,7 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 \end{align}\)
 </span></p>
 
-<p><strong>Nature’s cost function.</strong> As a physicist who now does machine learning, I can’t help but think of \(S\) as Nature’s cost function. After all, it is a scalar quantity for which Nature finds a stationary point, usually a minimum, in order to generate the dynamics of the entire universe. The analogy gets even more interesting at small spatial scales, where quantum wavefunctions can be interpreted as Nature’s way of exploring multiple paths that are all very close to the path of stationary action.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup></p>
+<p><strong>Nature’s cost function.</strong> As a physicist who now does machine learning, I can’t help but think of \(S\) as Nature’s cost function. After all, it is a scalar quantity for which Nature finds a stationary point, usually a minimum, in order to generate the dynamics of the entire universe. The analogy gets even more interesting at small spatial scales, where quantum wavefunctions can be interpreted as Nature’s way of exploring multiple paths that are all very close to the path of stationary action.<sup id="fnref:fn1"><a href="#fn:fn1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
 
 <h2 id="how-we-usually-solve-lagrangians">How we usually solve Lagrangians</h2>
 
@@ -249,9 +251,9 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 <p><strong>Implementation.</strong> If you look closely at Equation 8, you may notice that it involves both the Hessian and the gradient of a neural network during the forward pass of the LNN. This is not a trivial operation, but modern automatic differentiation makes things surprisingly smooth. Written in <a href="https://github.com/google/jax">JAX</a>, Equation 8 is just a few lines of code:</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">q_tt</span> <span class="o">=</span> <span class="p">(</span>
-	<span class="n">jax</span><span class="p">.</span><span class="n">numpy</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="n">hessian</span><span class="p">(</span><span class="n">lagrangian</span><span class="p">,</span> <span class="mi">1</span><span class="p">)(</span><span class="n">q</span><span class="p">,</span> <span class="n">q_t</span><span class="p">))</span> <span class="o">@</span> <span class="p">(</span>
-		<span class="n">jax</span><span class="p">.</span><span class="n">grad</span><span class="p">(</span><span class="n">lagrangian</span><span class="p">,</span> <span class="mi">0</span><span class="p">)(</span><span class="n">q</span><span class="p">,</span> <span class="n">q_t</span><span class="p">)</span>
-		<span class="o">-</span> <span class="n">jax</span><span class="p">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="n">grad</span><span class="p">(</span><span class="n">lagrangian</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">)(</span><span class="n">q</span><span class="p">,</span> <span class="n">q_t</span><span class="p">)</span> <span class="o">@</span> <span class="n">q_t</span>
+	<span class="n">jax</span><span class="p">.</span><span class="n">numpy</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="nf">pinv</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="nf">hessian</span><span class="p">(</span><span class="n">lagrangian</span><span class="p">,</span> <span class="mi">1</span><span class="p">)(</span><span class="n">q</span><span class="p">,</span> <span class="n">q_t</span><span class="p">))</span> <span class="o">@</span> <span class="p">(</span>
+		<span class="n">jax</span><span class="p">.</span><span class="nf">grad</span><span class="p">(</span><span class="n">lagrangian</span><span class="p">,</span> <span class="mi">0</span><span class="p">)(</span><span class="n">q</span><span class="p">,</span> <span class="n">q_t</span><span class="p">)</span>
+		<span class="o">-</span> <span class="n">jax</span><span class="p">.</span><span class="nf">jacfwd</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="nf">grad</span><span class="p">(</span><span class="n">lagrangian</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">)(</span><span class="n">q</span><span class="p">,</span> <span class="n">q_t</span><span class="p">)</span> <span class="o">@</span> <span class="n">q_t</span>
 	<span class="p">)</span>
 <span class="p">)</span>
 </code></pre></div></div>
@@ -276,7 +278,7 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 	<div class="thecap" style="text-align:center; display: block; margin-left: auto; margin-right: auto; width:60%"><b>Figure 5:</b> Dynamics predictions of a baseline (left) versus an LNN (right)</div>
 </div>
 
-<p><strong>Relativistic particle.</strong> Another system we considered was a particle of mass \(m=1\) moving at a relativistic velocity through a potential \(g\) with \(c=1\). The Lagrangian of the system is \(\mathcal{L} = ((1 - \dot{q}^2)^{-1/2} - 1) + g q\) and it is interesting because existing Hamiltonian and Lagrangian learning approaches fail. HNNs fail because the canonical momenta of the system are hard to compute. Deep Lagrangian Networks<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">2</a></sup> fail because they make restrictive assumptions about the form of the Lagrangian.</p>
+<p><strong>Relativistic particle.</strong> Another system we considered was a particle of mass \(m=1\) moving at a relativistic velocity through a potential \(g\) with \(c=1\). The Lagrangian of the system is \(\mathcal{L} = ((1 - \dot{q}^2)^{-1/2} - 1) + g q\) and it is interesting because existing Hamiltonian and Lagrangian learning approaches fail. HNNs fail because the canonical momenta of the system are hard to compute. Deep Lagrangian Networks<sup id="fnref:fn3"><a href="#fn:fn3" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> fail because they make restrictive assumptions about the form of the Lagrangian.</p>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:80%">
 	<img src="/assets/lagrangian-nns/relativistic.png" />
@@ -285,15 +287,15 @@ S ~=~ \int_{t_0}^{t_1} T(q_t, \dot q_t) - V(q_t, \dot q_t) ~~ dt.
 
 <h2 id="related-work">Related Work</h2>
 
-<p><strong>Learning invariant quantities.</strong> This approach is similar in spirit to <a href="https://greydanus.github.io/2019/05/15/hamiltonian-nns/">Hamiltonian Neural Networks</a> (HNNs) and Hamiltonian Generative Networks<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">3</a></sup> (HGNs). In fact, this blog post was written as a compliment to the original HNN post and it has the same fundamental motivations. Unlike these previous works, our aim here is to learn a Lagrangian rather than a Hamiltonian so as not to restrict the inputs to being canonical coordinates. It’s worth noting that once we learn a Lagrangian, we can always use it to obtain the value of a Hamiltonian using the <a href="https://en.wikipedia.org/wiki/Legendre_transformation">Legendre transformation</a>.</p>
+<p><strong>Learning invariant quantities.</strong> This approach is similar in spirit to <a href="https://greydanus.github.io/2019/05/15/hamiltonian-nns/">Hamiltonian Neural Networks</a> (HNNs) and Hamiltonian Generative Networks<sup id="fnref:fn2"><a href="#fn:fn2" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> (HGNs). In fact, this blog post was written as a compliment to the original HNN post and it has the same fundamental motivations. Unlike these previous works, our aim here is to learn a Lagrangian rather than a Hamiltonian so as not to restrict the inputs to being canonical coordinates. It’s worth noting that once we learn a Lagrangian, we can always use it to obtain the value of a Hamiltonian using the <a href="https://en.wikipedia.org/wiki/Legendre_transformation">Legendre transformation</a>.</p>
 
-<p><strong>Deep Lagrangian Networks (DeLaN, ICLR’19).</strong> Another closely related work is Deep Lagrangian Networks<sup id="fnref:fn3:1" role="doc-noteref"><a href="#fn:fn3" class="footnote">2</a></sup> in which the authors show how to learn specific types of Lagrangian systems. They assume that the kinetic energy is an inner product of the velocity, which works well for rigid body dynamics such as those in robotics. However, there are many physical systems that do not have this specific form. Some simple examples include a charged particle in a magnetic field or a fast-moving object with relativistic corrections. We see LNNs as a complement to DeLaNs in that they cover the cases where DeLaNs struggle but are less amenable to robotics applications.</p>
+<p><strong>Deep Lagrangian Networks (DeLaN, ICLR’19).</strong> Another closely related work is Deep Lagrangian Networks<sup id="fnref:fn3:1"><a href="#fn:fn3" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> in which the authors show how to learn specific types of Lagrangian systems. They assume that the kinetic energy is an inner product of the velocity, which works well for rigid body dynamics such as those in robotics. However, there are many physical systems that do not have this specific form. Some simple examples include a charged particle in a magnetic field or a fast-moving object with relativistic corrections. We see LNNs as a complement to DeLaNs in that they cover the cases where DeLaNs struggle but are less amenable to robotics applications.</p>
 
 <h2 id="closing-thoughts">Closing Thoughts</h2>
 
 <!-- Looking forward, we continue to be excited about the connection between machine learning and the principle of stationary action. One thing we'd like to try is to write a loss function that _is_ the action \\(S\\) and then minimize it with gradient descent to obtain dynamics. On a similar note, we'd like to think more about the connection between existing neural network training dynamics and the principle of least action. One of Yann LeCun's most beautiful papers, for example, is a derivation of backpropagation via the Euler-Lagrange constraint. This may be the proper way to speak about optimization dynamics such as catastrophic forgetting and deep double descent. -->
 
-<p>The principle of stationary action is a unifying force in physics. It represents a consistent “law of the universe” which holds true in every system humans have ever studied: from the very small<sup id="fnref:fn1:1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup> to the very large, from the very slow to the very fast. Lagrangian Neural Networks represent a different sort of unification. They aim to strengthen the connection between real-world data and the underlying physical constraints that it obeys. This gives LNNs their own sort of beauty, a beauty that Lagrange himself may have admired.</p>
+<p>The principle of stationary action is a unifying force in physics. It represents a consistent “law of the universe” which holds true in every system humans have ever studied: from the very small<sup id="fnref:fn1:1"><a href="#fn:fn1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> to the very large, from the very slow to the very fast. Lagrangian Neural Networks represent a different sort of unification. They aim to strengthen the connection between real-world data and the underlying physical constraints that it obeys. This gives LNNs their own sort of beauty, a beauty that Lagrange himself may have admired.</p>
 
 <h2 id="footnotes">Footnotes</h2>
 
@@ -335,13 +337,13 @@ if(parseInt(getBrowserSize().width) > 800){
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn1" role="doc-endnote">
+    <li id="fn:fn1">
       <p>Here \(e^{-S/h}\) is actually the probability of a particular path occurring. Because \(h\) is small, we usually only observe the minimum value of \(S\) on large scales. See <a href="https://www.feynmanlectures.caltech.edu/II_19.html">Feynman lecture 19</a> for more on this. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:fn1:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:fn3" role="doc-endnote">
+    <li id="fn:fn3">
       <p>Lutter, M., Ritter, C., and Peters, J. <a href="https://arxiv.org/abs/1907.04490">Deep lagrangian networks: Using physics as model prior for deep learning</a>, <em>International Conference on Learning Representations</em>, 2019. <a href="#fnref:fn3" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:fn3:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:fn2" role="doc-endnote">
+    <li id="fn:fn2">
       <p>Toth, P., Rezende, D. J., Jaegle, A., Racanière, S., Botev, A., &amp; Higgins, I. <a href="https://arxiv.org/abs/1909.13789">Hamiltonian Generative Networks</a>, <em>International Conference on Learning Representations</em>, 2020. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

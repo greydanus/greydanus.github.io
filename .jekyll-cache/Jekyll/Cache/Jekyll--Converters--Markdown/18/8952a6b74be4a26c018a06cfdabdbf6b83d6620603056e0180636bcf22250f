@@ -1,4 +1,4 @@
-I"�z<p style="font-size: 20px;text-align: center;color: #999;"><i>(My last post in a series about human flight; <a target="_blank" style="color: #777;" href="../../../../2020/10/12/story-of-flight/">post 1</a>, <a target="_blank" style="color: #777;" href="../../../../2020/10/13/stepping-stones/">post 2</a>).</i></p>
+I"z<p style="font-size: 20px;text-align: center;color: #999;"><i>(My last post in a series about human flight; <a target="_blank" style="color: #777;" href="../../../../2020/10/12/story-of-flight/">post 1</a>, <a target="_blank" style="color: #777;" href="../../../../2020/10/13/stepping-stones/">post 2</a>).</i></p>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; text-align:center; width:80%">
     <img alt="" src="/assets/optimizing-a-wing/wing_shape.png" onclick="toggleWingShape()" style="width:315px" id="wingShapeImage" />
@@ -16,7 +16,7 @@
 
 <p>Our universe has the same versatile structure. It seems to run according to just a few simple forces, but as those forces interact, they give rise to intricate patterns across many scales of space and time. You see this everywhere you look in nature – in the fractal design of a seashell or the intricate polities of a coral. In the convection of a teacup or the circulation of the atmosphere. And this simple structure even determines the shape and behavior of man’s most complicated flying machines.</p>
 
-<p>To see this more clearly, we are going to start from the basic physical laws of airflow and use them to derive the shape of a wing.<sup id="fnref:fn18" role="doc-noteref"><a href="#fn:fn18" class="footnote">1</a></sup> Since we are using so few assumptions, the wing shape we come up with will be as fundamental as the physics of the air that swirls around it. This is pretty fundamental. In fact, if an alien species started building flying machines on another planet, they would probably converge on a similar shape.</p>
+<p>To see this more clearly, we are going to start from the basic physical laws of airflow and use them to derive the shape of a wing.<sup id="fnref:fn18"><a href="#fn:fn18" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> Since we are using so few assumptions, the wing shape we come up with will be as fundamental as the physics of the air that swirls around it. This is pretty fundamental. In fact, if an alien species started building flying machines on another planet, they would probably converge on a similar shape.</p>
 
 <h2 id="navier-stokes">Navier-Stokes</h2>
 
@@ -138,7 +138,7 @@
   <li>Make the flow laminar and compressible</li>
 </ol>
 
-<p>Aside from these improvements, the overall principle is much the same. In both cases, we write down some words and symbols, turn them into code, and then use the code to shape our wing.<sup id="fnref:fn14" role="doc-noteref"><a href="#fn:fn14" class="footnote">2</a></sup> The fact that we can do all of this without ever building a physical wing makes it feel a bit like magic. But this process really works, for when we <a href="http://aero-comlab.stanford.edu/Papers/jameson-cincin-pm.pdf#page=36">put these wings on airplanes</a> and trust them with our lives, they carry us safely to our destinations.<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">3</a></sup> <sup id="fnref:fn17" role="doc-noteref"><a href="#fn:fn17" class="footnote">4</a></sup></p>
+<p>Aside from these improvements, the overall principle is much the same. In both cases, we write down some words and symbols, turn them into code, and then use the code to shape our wing.<sup id="fnref:fn14"><a href="#fn:fn14" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> The fact that we can do all of this without ever building a physical wing makes it feel a bit like magic. But this process really works, for when we <a href="http://aero-comlab.stanford.edu/Papers/jameson-cincin-pm.pdf#page=36">put these wings on airplanes</a> and trust them with our lives, they carry us safely to our destinations.<sup id="fnref:fn3"><a href="#fn:fn3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> <sup id="fnref:fn17"><a href="#fn:fn17" class="footnote" rel="footnote" role="doc-noteref">4</a></sup></p>
 
 <p>Just like the real wind tunnels of the twentieth century, these simulated wind tunnels need to go through lots of debugging before we can trust them. In fact, while building this demo we discovered a number of ways that things can go wrong. Here are some of the most amusing failure cases:</p>
 
@@ -157,7 +157,7 @@
 </div>
 <p>Our wind tunnel simulation is interesting first, because it illustrates how the Platonic ideal of wing design is rooted in the laws of physics. As we saw in the earlier posts, there were many cultural and technological forces that contributed to airfoil design. These forces were important for many reasons, but they were not the primary factor in the wing shapes they produced – physics was.</p>
 
-<p>But to balance this idea, we have also shown how a million variants of the Platonic form of a wing can fulfill particular needs. Indeed, these variants could be said to occupy complimentary niches in the same way that different birds and flying insects occupy different niches in nature. After all, even though nature follows the laws of physics with absolute precision, she takes a consummate joy in variation. Look at the variety of wing shapes in birds, for example.<sup id="fnref:fn4" role="doc-noteref"><a href="#fn:fn4" class="footnote">5</a></sup> Species of hummingbirds have wings with low aspect ratios that enable quick, agile flight patterns. Other birds, like the albatross, have high aspect ratios for extreme efficiency. Still others, like the common raven, are good all-around fliers. Remarkably, we are beginning to see this same speciation occur in modern aircraft as well. There are surveillance planes built for speed and stealth, short-winged bush planes built for maneuverability, and massive commercial airliners built for efficiency.<sup id="fnref:fn5" role="doc-noteref"><a href="#fn:fn5" class="footnote">6</a></sup></p>
+<p>But to balance this idea, we have also shown how a million variants of the Platonic form of a wing can fulfill particular needs. Indeed, these variants could be said to occupy complimentary niches in the same way that different birds and flying insects occupy different niches in nature. After all, even though nature follows the laws of physics with absolute precision, she takes a consummate joy in variation. Look at the variety of wing shapes in birds, for example.<sup id="fnref:fn4"><a href="#fn:fn4" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> Species of hummingbirds have wings with low aspect ratios that enable quick, agile flight patterns. Other birds, like the albatross, have high aspect ratios for extreme efficiency. Still others, like the common raven, are good all-around fliers. Remarkably, we are beginning to see this same speciation occur in modern aircraft as well. There are surveillance planes built for speed and stealth, short-winged bush planes built for maneuverability, and massive commercial airliners built for efficiency.<sup id="fnref:fn5"><a href="#fn:fn5" class="footnote" rel="footnote" role="doc-noteref">6</a></sup></p>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:36.4815%; min-width:200px; display: inline-block; vertical-align: top;">
@@ -196,7 +196,7 @@
 
 <h2 id="thanks">Thanks</h2>
 
-<p>Thanks to Maclaurin et al. (2018) for releasing Autograd<sup id="fnref:fn18:1" role="doc-noteref"><a href="#fn:fn18" class="footnote">1</a></sup> to the world along with a number of thought-provoking demos.
+<p>Thanks to Maclaurin et al. (2018) for releasing Autograd<sup id="fnref:fn18:1"><a href="#fn:fn18" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> to the world along with a number of thought-provoking demos.
 Thanks to Stephan Hoyer, Shan Carter, and Matthew Johnson for conversations that shaped some of the early versions
 of this work. And thanks to Andrew Sosanya, Jason Yosinski, and Tina White for feedback on early versions of this
 essay. Special thanks to my family and friends for serving as guinea pigs for early iterations of this story.</p>
@@ -305,22 +305,22 @@ if(parseInt(getBrowserSize().width) > 600){
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn18" role="doc-endnote">
+    <li id="fn:fn18">
       <p>Specifically, we build on ideas laid out in <a href="https://github.com/HIPS/autograd/blob/master/examples/fluidsim/wing.png">Maclaurin et al. (2018)</a>. <a href="#fnref:fn18" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:fn18:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:fn14" role="doc-endnote">
+    <li id="fn:fn14">
       <p>See <a href="https://optimization.mccormick.northwestern.edu/index.php/Wing_Shape_Optimization">this online textbook page</a> for an overview of full-scale wing optimization techniques. <a href="#fnref:fn14" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn3" role="doc-endnote">
+    <li id="fn:fn3">
       <p>Jameson, Antony and Vassberg, John. <a href="https://doi.org/10.2514/6.2001-538">Computational fluid dynamics for aerodynamic design - Its current and future impact</a>, <em>American Institute of Aeronautics &amp; Astronautics</em>, 2012. <a href="#fnref:fn3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn17" role="doc-endnote">
+    <li id="fn:fn17">
       <p>Jameson, Antony. <a href="http://aero-comlab.stanford.edu/Papers/AirplaneDesignShanghai.pdf">Airplane Design with Aerodynamic Shape Optimization</a>, <em>Commercial Aircraft Company of China, Shanghai</em>, 2010. <a href="#fnref:fn17" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn4" role="doc-endnote">
+    <li id="fn:fn4">
       <p>Lockwood, Rowan and Swaddle, John P. and Rayner, Jeremy M. V. <a href="https://doi.org/10.2307/3677110">Avian Wingtip Shape Reconsidered: Wingtip Shape Indices and Morphological Adaptations to Migration</a>, <em>Journal of Avian Biology</em> Vol. 29, No. 3, pp. 273-292, 1998. <a href="#fnref:fn4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn5" role="doc-endnote">
+    <li id="fn:fn5">
       <p>Norberg, Ulla M. Lindhe. <a href="https://doi.org/10.1002/jmor.10013">Structure, Form, and Function of Flight in Engineering and the Living World</a>. <em>Journal of Morphology</em>, 2002. <a href="#fnref:fn5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

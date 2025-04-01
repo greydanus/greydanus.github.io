@@ -7,7 +7,7 @@
     <title>Studying Growth with Neural Cellular Automata</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2022/05/23/studying-growth/">
+    <link rel="canonical" href="http://localhost:4000/2022/05/23/studying-growth/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -73,6 +73,8 @@
           <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
           <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
+        
+          <a class="page-link" href="/2024-01-05-minifilms/">Three Minifilms</a>
         
           
         
@@ -212,7 +214,7 @@ With all of this in mind, let's take a closer look at how NCA work and then appl
 
 <h2 id="motivation">Motivation</h2>
 
-<p>The purpose of cellular automata (CA) <em>writ large</em> is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels where each pixel represents a different cell. Then a set of growth rules, controlling how cells respond to their neighbors, are applied to the population in an iterative manner. Although these growth rules are simple to write down, they are choosen so as to produce complex self-organizing behaviors. For example, Conway’s Game of Life has just three simple growth rules that give rise to a diverse range of structures.<sup id="fnref:fn4" role="doc-noteref"><a href="#fn:fn4" class="footnote">1</a></sup></p>
+<p>The purpose of cellular automata (CA) <em>writ large</em> is to mimic biological growth at the cellular level. Most CAs begin with a grid of pixels where each pixel represents a different cell. Then a set of growth rules, controlling how cells respond to their neighbors, are applied to the population in an iterative manner. Although these growth rules are simple to write down, they are choosen so as to produce complex self-organizing behaviors. For example, Conway’s Game of Life has just three simple growth rules that give rise to a diverse range of structures.<sup id="fnref:fn4"><a href="#fn:fn4" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></p>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:49.4%; min-width:280px; display: inline-block; vertical-align: top;text-align:center;">
@@ -300,7 +302,7 @@ With all of this in mind, let's take a closer look at how NCA work and then appl
 </div>
 <p>The cells in the frozen region are, as the name would suggest, frozen. Both their RGBA and hidden channels are fixed throughout training. The cells in the mature region are similar; the only difference is that their hidden channels are allowed to change. The growing region, meanwhile, begins the simulation without any living cells. Cells from the mature region need to grow outwards into this area and arrange themselves properly before the simulation ends.</p>
 
-<p><strong>Scale and rotation invariance.</strong> Part of the objective in this “gnomonic growth” problem is to learn a growth rule that is scale and rotation invariant. We can accomplish this by rotating and scaling the nautilus template as shown in the six examples above. By training on all of these examples at once, we are able to obtain a model that grows properly at any scale or orientation. Once it learns to do this, it can grow multiple gnomons, one after the other, without much interference. Below, for example, we add eight new compartments and quadruple the shell’s size by letting the NCA run for eight growth cycles.<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">2</a></sup></p>
+<p><strong>Scale and rotation invariance.</strong> Part of the objective in this “gnomonic growth” problem is to learn a growth rule that is scale and rotation invariant. We can accomplish this by rotating and scaling the nautilus template as shown in the six examples above. By training on all of these examples at once, we are able to obtain a model that grows properly at any scale or orientation. Once it learns to do this, it can grow multiple gnomons, one after the other, without much interference. Below, for example, we add eight new compartments and quadruple the shell’s size by letting the NCA run for eight growth cycles.<sup id="fnref:fn3"><a href="#fn:fn3" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></p>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
   <img src="/assets/studying-growth/nautilus_bw.png" />
@@ -342,7 +344,7 @@ function playPauseNaut() {
 
 <p>The alternative to a fully decentralized consensus mechanism is cellular induction. This happens when one small group of cells (usually in an embryo) tells the rest how to grow. The first group of cells is called the inducing tissue and the second is called the responding tissue. Induction controls the growth of many tissues and organs including the eye and the heart.</p>
 
-<p>In this section, we will grow an image of a newt and then graft part of its eye tissue onto its belly. After doing this, we will watch to see whether those cells are able to induce growth in the rest of the eye in that region. We’ve chosen this particular experiment as an homage to <a href="https://en.wikipedia.org/wiki/Hans_Spemann">Hans Spemann</a>,<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">3</a></sup> who won the Nobel Prize for Medicine in 1935 for using similar experiments on real newts to discover “the organizer effect in embryonic development.”<sup id="fnref:fn5" role="doc-noteref"><a href="#fn:fn5" class="footnote">4</a></sup> Spemann’s major insight was that “at every stage of embryonic development, structures already present act as organizers, inducing the emergence of whatever structures are next on the timetable.”<sup id="fnref:fn7" role="doc-noteref"><a href="#fn:fn7" class="footnote">5</a></sup></p>
+<p>In this section, we will grow an image of a newt and then graft part of its eye tissue onto its belly. After doing this, we will watch to see whether those cells are able to induce growth in the rest of the eye in that region. We’ve chosen this particular experiment as an homage to <a href="https://en.wikipedia.org/wiki/Hans_Spemann">Hans Spemann</a>,<sup id="fnref:fn2"><a href="#fn:fn2" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> who won the Nobel Prize for Medicine in 1935 for using similar experiments on real newts to discover “the organizer effect in embryonic development.”<sup id="fnref:fn5"><a href="#fn:fn5" class="footnote" rel="footnote" role="doc-noteref">4</a></sup> Spemann’s major insight was that “at every stage of embryonic development, structures already present act as organizers, inducing the emergence of whatever structures are next on the timetable.”<sup id="fnref:fn7"><a href="#fn:fn7" class="footnote" rel="footnote" role="doc-noteref">5</a></sup></p>
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:90%">
   <img src="/assets/studying-growth/newt_timeline_tall.png" style="width:75%; min-width:320px" />
@@ -385,7 +387,7 @@ function playPauseNewt() {
 
 <p>As development progresses, these branching milestones occur dozens of times, each time causing a group of cells to become more specialized. Towards the end of development, the branching rules might read, <em>“If I am an ectoderm cell and if I am a nervous system cell and if I am an eye cell and if I am distal to the optic nerve then I am going to be part of the corneal epithelium.”</em></p>
 
-<p><strong>Attractor theory of development.</strong> While this sounds complex, it’s actually the simplest and most robust way to construct a multicellular organism. Each of these branching statements determines how morphogenesis unfolds at a different hierarchy of complexity. Unlike a printer, which has to place every dot of ink on a page with perfect precision, a growing embryo doesn’t need to know the final coordinates of every mature adult cell. Moreover, it can withstand plenty of noise and perturbations at each stage of development and still produce an intricate, well-formed organism in the end.<sup id="fnref:fn6" role="doc-noteref"><a href="#fn:fn6" class="footnote">6</a></sup> Intuitively, this is possible because during each stage of growth, clusters of cells naturally converge to target “attractor” states in spite of perturbations. Errors get corrected before the next stage of growth begins. And in the next stage, new attractor states perform error-correction as well. In this way, embryonic induction allows nature to construct multicellular organisms with great reliability, even in a world full of noise and change.</p>
+<p><strong>Attractor theory of development.</strong> While this sounds complex, it’s actually the simplest and most robust way to construct a multicellular organism. Each of these branching statements determines how morphogenesis unfolds at a different hierarchy of complexity. Unlike a printer, which has to place every dot of ink on a page with perfect precision, a growing embryo doesn’t need to know the final coordinates of every mature adult cell. Moreover, it can withstand plenty of noise and perturbations at each stage of development and still produce an intricate, well-formed organism in the end.<sup id="fnref:fn6"><a href="#fn:fn6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup> Intuitively, this is possible because during each stage of growth, clusters of cells naturally converge to target “attractor” states in spite of perturbations. Errors get corrected before the next stage of growth begins. And in the next stage, new attractor states perform error-correction as well. In this way, embryonic induction allows nature to construct multicellular organisms with great reliability, even in a world full of noise and change.</p>
 
 <h3 id="3-apoptosis"><a href="https://colab.research.google.com/drive/1qQcztNsqyMLLMB00CVRxc0Pm7ipca0ww">3. Apoptosis</a></h3>
 
@@ -474,7 +476,7 @@ function playPauseSeeds() {
   <a href="https://colab.research.google.com/drive/1vG7yjOHxejdk_YfvKhASanNs0YvKDO5-" id="linkbutton" target="_blank"><span class="colab-span">Speciation</span> with NCA</a>
 </div>
 
-<p>From a dynamical systems perspective, this NCA model has three different <a href="http://www.scholarpedia.org/article/Basin_of_attraction"><em>basins of attraction</em></a>, one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final organisms. Then we could use its “DNA” vectors to construct a “tree of life,” showing how closely-related various organisms are<sup id="fnref:fn9" role="doc-noteref"><a href="#fn:fn9" class="footnote">7</a></sup> and at what point in training they split from a common ancestor.</p>
+<p>From a dynamical systems perspective, this NCA model has three different <a href="http://www.scholarpedia.org/article/Basin_of_attraction"><em>basins of attraction</em></a>, one for each flower. The initial seed determines which basin the system ultimately converges to. In the future, it would be interesting to train a model that produces a wider variety of final organisms. Then we could use its “DNA” vectors to construct a “tree of life,” showing how closely-related various organisms are<sup id="fnref:fn9"><a href="#fn:fn9" class="footnote" rel="footnote" role="doc-noteref">7</a></sup> and at what point in training they split from a common ancestor.</p>
 
 <h2 id="final-remarks">Final remarks</h2>
 
@@ -497,25 +499,25 @@ Just as there is a shared but invisible structure -- based on Newtonian physics 
  -->
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn4" role="doc-endnote">
+    <li id="fn:fn4">
       <p>In fact, Conway’s Game of Life is Turing Complete; it can be used to simulate computations of arbitrary complexity. It can even be used to <a href="https://twitter.com/AlanZucconi/status/1315967202797981696">simulate itself</a>. <a href="#fnref:fn4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn3" role="doc-endnote">
+    <li id="fn:fn3">
       <p>Out only interference is to convert growin regions to mature regions and mature regions to frozen regions every 160 steps. This causes the system to move on to the next unit of growth. <a href="#fnref:fn3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn2" role="doc-endnote">
+    <li id="fn:fn2">
       <p>And his student Hilde <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn5" role="doc-endnote">
+    <li id="fn:fn5">
       <p>“<a href="https://www.nobelprize.org/prizes/medicine/1935/spemann/lecture/">The Organizer-Effect in Embryonic Development</a>,” Hans Spemann, Nobel Lecture, December 12, 1935 <a href="#fnref:fn5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn7" role="doc-endnote">
+    <li id="fn:fn7">
       <p><em>Growth</em>, p38. <a href="#fnref:fn7" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn6" role="doc-endnote">
+    <li id="fn:fn6">
       <p>There’s probably an analogy to be made to fourier analysis where the spatial modes are reconstructed in order of their principal components. Like decompressing a .JPEG file. <a href="#fnref:fn6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn9" role="doc-endnote">
+    <li id="fn:fn9">
       <p>These “organisms” are actually <em>images of organisms</em> in this context. <a href="#fnref:fn9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

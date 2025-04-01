@@ -1,4 +1,4 @@
-I"ÙF<div class="imgcap">
+I"ÕF<div class="imgcap">
 	<img src="/assets/neurips17/nips-registrations.png" width="70%" />
 	<div class="thecap" style="text-align:center">AI hype in one picture.</div>
 </div>
@@ -27,7 +27,7 @@
 	<div class="thecap" style="text-align:center">Taken from <a href="https://www.economist.com/news/business/21732125-tech-giants-are-investing-billions-transformative-technology-google-leads-race">the Economist</a>.</div>
 </div>
 
-<p><strong>Impact on research.</strong> In years past, <a href="https://scholar.google.com/citations?user=09kJn28AAAAJ">one of my advisors</a> explained, NeurIPS was a mellow conference. It was generally aimed at professors and their graduate students. Doing a quick scan over the NeurIPS 2017 accepted papers, I found that the organization with the most affiliated authors was Google/DeepMind/Brain (210), followed by Carnegie Mellon (108), MIT (93), Stanford (81), Berkeley (81), and Microsoft (70)<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup>. So the majority of NeurIPS attendees are still academic, but industry participation (read: Google) is growing.</p>
+<p><strong>Impact on research.</strong> In years past, <a href="https://scholar.google.com/citations?user=09kJn28AAAAJ">one of my advisors</a> explained, NeurIPS was a mellow conference. It was generally aimed at professors and their graduate students. Doing a quick scan over the NeurIPS 2017 accepted papers, I found that the organization with the most affiliated authors was Google/DeepMind/Brain (210), followed by Carnegie Mellon (108), MIT (93), Stanford (81), Berkeley (81), and Microsoft (70)<sup id="fnref:fn1"><a href="#fn:fn1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>. So the majority of NeurIPS attendees are still academic, but industry participation (read: Google) is growing.</p>
 
 <div class="imgcap">
 	<img src="/assets/neurips17/avg_attendee.jpg" width="50%" />
@@ -134,7 +134,7 @@
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn1" role="doc-endnote">
+    <li id="fn:fn1">
       <p>Note that some authors are featured on more than one paper and thus are counted more than onceÂ <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

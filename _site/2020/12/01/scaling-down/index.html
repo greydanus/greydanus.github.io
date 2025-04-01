@@ -7,7 +7,7 @@
     <title>Scaling down Deep Learning</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2020/12/01/scaling-down/">
+    <link rel="canonical" href="http://localhost:4000/2020/12/01/scaling-down/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -73,6 +73,8 @@
           <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
           <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
+        
+          <a class="page-link" href="/2024-01-05-minifilms/">Three Minifilms</a>
         
           
         
@@ -244,7 +246,7 @@
 }
 </script>
 
-<p><strong>Observing deep double descent.</strong> Another intriguing property of neural networks is the “double descent” phenomenon. This phrase refers to a training regime where more data, model parameters, or gradient steps can actually <em>reduce</em> a model’s test accuracy<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup> <sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">2</a></sup> <sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">3</a></sup> <sup id="fnref:fn4" role="doc-noteref"><a href="#fn:fn4" class="footnote">4</a></sup>. The intuition is that during supervised learning there is an interpolation threshold where the learning procedure, consisting of a model and an optimization algorithm, is just barely able to fit the entire training set. At this threshold there is effectively just one model that can fit the data and this model is very sensitive to label noise and model mis-specification.</p>
+<p><strong>Observing deep double descent.</strong> Another intriguing property of neural networks is the “double descent” phenomenon. This phrase refers to a training regime where more data, model parameters, or gradient steps can actually <em>reduce</em> a model’s test accuracy<sup id="fnref:fn1"><a href="#fn:fn1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> <sup id="fnref:fn2"><a href="#fn:fn2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> <sup id="fnref:fn3"><a href="#fn:fn3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> <sup id="fnref:fn4"><a href="#fn:fn4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>. The intuition is that during supervised learning there is an interpolation threshold where the learning procedure, consisting of a model and an optimization algorithm, is just barely able to fit the entire training set. At this threshold there is effectively just one model that can fit the data and this model is very sensitive to label noise and model mis-specification.</p>
 
 <p>Several properties of this effect, such as what factors affect its width and location, are not well understood in the context of deep models. We see the MNIST-1D dataset as a good tool for exploring these properties. In fact, we were able to reproduce the double descent pattern in a Colab notebook after just 25 minutes of walltime. The figure below shows our results for a fully-connected network. You can reproduce these results <a href="https://colab.research.google.com/drive/1pYHdmP0U6KYBzb3riqEk5PN3ULPRdtjL?usp=sharing">here</a>.</p>
 
@@ -272,7 +274,7 @@
   <div class="thecap" style="text-align:left;">Metalearning a learning rate: looking at the third plot, the optimal learning rate appears to be 0.6. Unlike many gradient-based metalearning implementations, ours takes seconds to run and occupies a few dozen lines of code. This allows researchers to iterate on novel ideas before scaling.</div>
 </div>
 
-<p><strong>Metalearning an activation function.</strong> Having implemented a “minimal working example” of gradient-based metalearning, we realized that it permitted a simple and novel extension: metalearning an activation function. With a few more hours of researcher time, we were able to parameterize our classifier’s activation function with a second neural network and then learn the weights using meta-gradients. Shown below, our learned activation function substantially outperforms baseline nonlinearities such as ReLU, Elu<sup id="fnref:fn5" role="doc-noteref"><a href="#fn:fn5" class="footnote">5</a></sup>, and Swish<sup id="fnref:fn6" role="doc-noteref"><a href="#fn:fn6" class="footnote">6</a></sup>. You can reproduce these results <a href="https://bit.ly/38V4GlQ">here</a>.</p>
+<p><strong>Metalearning an activation function.</strong> Having implemented a “minimal working example” of gradient-based metalearning, we realized that it permitted a simple and novel extension: metalearning an activation function. With a few more hours of researcher time, we were able to parameterize our classifier’s activation function with a second neural network and then learn the weights using meta-gradients. Shown below, our learned activation function substantially outperforms baseline nonlinearities such as ReLU, Elu<sup id="fnref:fn5"><a href="#fn:fn5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup>, and Swish<sup id="fnref:fn6"><a href="#fn:fn6" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>. You can reproduce these results <a href="https://bit.ly/38V4GlQ">here</a>.</p>
 
 <div class="imgcap" style="display: block; margin-left: auto; margin-right: auto; width:99.9%">
   <div style="width:32.7%; min-width:250px; display: inline-block; vertical-align: top;">
@@ -342,22 +344,22 @@ Once again, the genetics analogy is useful. In genetics, scale has been most eff
 <h2 id="footnotes">Footnotes</h2>
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn1" role="doc-endnote">
+    <li id="fn:fn1">
       <p>Trunk, Gerard V. “<a href="https://ieeexplore.ieee.org/document/4766926">A problem of dimensionality: A simple example</a>.” IEEE Transactions on pattern analysis and machine intelligence 3 (1979): 306-307. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn2" role="doc-endnote">
+    <li id="fn:fn2">
       <p>Belkin, Mikhail, et al. “<a href="https://www.pnas.org/content/116/32/15849">Reconciling modern machine-learning practice and the classical bias–variance trade-off</a>.” Proceedings of the National Academy of Sciences 116.32 (2019): 15849-15854. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn3" role="doc-endnote">
+    <li id="fn:fn3">
       <p>Spigler, Stefano, et al. “<a href="https://arxiv.org/abs/1810.09665">A jamming transition from under-to over-parametrization affects loss landscape and generalization</a>.” arXiv preprint arXiv:1810.09665 (2018). <a href="#fnref:fn3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn4" role="doc-endnote">
+    <li id="fn:fn4">
       <p>Nakkiran, Preetum, et al. “<a href="https://arxiv.org/abs/1912.02292">Deep double descent: Where bigger models and more data hurt</a>.” arXiv preprint arXiv:1912.02292 (2019). <a href="#fnref:fn4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn5" role="doc-endnote">
+    <li id="fn:fn5">
       <p>Clevert, Djork-Arné, Thomas Unterthiner, and Sepp Hochreiter. <a href="https://arxiv.org/abs/1511.07289">Fast and accurate deep network learning by exponential linear units (elus).</a> ICLR 2016. <a href="#fnref:fn5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn6" role="doc-endnote">
+    <li id="fn:fn6">
       <p>Ramachandran, Prajit, Barret Zoph, and Quoc V. Le. <a href="https://arxiv.org/abs/1710.05941">Searching for activation functions</a>. (2017). <a href="#fnref:fn6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

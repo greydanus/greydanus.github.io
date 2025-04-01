@@ -1,4 +1,4 @@
-I"==<div class="imgcap">
+I"9=<div class="imgcap">
     <img src="/assets/visualize-atari/robots.png" width="60%" />
 </div>
 
@@ -8,7 +8,7 @@
     <a href="https://www.sciencemag.org/news/2018/08/why-does-ai-stink-certain-video-games-researchers-made-one-play-ms-pac-man-find-out" id="linkbutton" target="_blank">Coverage by Science</a>
 </div>
 
-<p>Deep RL agents are effective at maximizing rewards but it’s often unclear what strategies they use to do so. I’ll talk about a paper<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup> I just finished, aimed at solving this problem.</p>
+<p>Deep RL agents are effective at maximizing rewards but it’s often unclear what strategies they use to do so. I’ll talk about a paper<sup id="fnref:fn1"><a href="#fn:fn1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> I just finished, aimed at solving this problem.</p>
 
 <h2 id="solving-atari-in-180-lines">Solving Atari in 180 lines</h2>
 
@@ -139,7 +139,7 @@
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn1" role="doc-endnote">
+    <li id="fn:fn1">
       <p>Selected for an oral presentation at the NIPS 2017 Interpretability Workshop! <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

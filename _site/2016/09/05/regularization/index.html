@@ -7,7 +7,7 @@
     <title>The Art of Regularization</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2016/09/05/regularization/">
+    <link rel="canonical" href="http://localhost:4000/2016/09/05/regularization/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -73,6 +73,8 @@
           <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
           <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
+        
+          <a class="page-link" href="/2024-01-05-minifilms/">Three Minifilms</a>
         
           
         
@@ -151,20 +153,20 @@
 
 <p>The basic idea here is to train a learning model to classify 28x28 images of handwritten digits (0-9). The dataset is relatively small (60k training examples) so it’s a classic benchmark for evaluating small models. TensorFlow provides a really simple API for loading the training data:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
-<span class="kn">from</span> <span class="nn">tensorflow.examples.tutorials.mnist</span> <span class="kn">import</span> <span class="n">input_data</span>
-<span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">.</span><span class="n">read_data_sets</span><span class="p">(</span><span class="s">'MNIST_data'</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">tensorflow</span> <span class="k">as</span> <span class="n">tf</span>
+<span class="kn">from</span> <span class="n">tensorflow.examples.tutorials.mnist</span> <span class="kn">import</span> <span class="n">input_data</span>
+<span class="n">mnist</span> <span class="o">=</span> <span class="n">input_data</span><span class="p">.</span><span class="nf">read_data_sets</span><span class="p">(</span><span class="sh">'</span><span class="s">MNIST_data</span><span class="sh">'</span><span class="p">,</span> <span class="n">one_hot</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="n">batch</span> <span class="o">=</span> <span class="n">mnist</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">next_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">mnist</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="nf">next_batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
 </code></pre></div></div>
 
 <p>Now <code class="language-plaintext highlighter-rouge">batch[0]</code> holds the training data and <code class="language-plaintext highlighter-rouge">batch[1]</code> holds the training labels. Making the model itself is really easy as well. For a fully-connected model without any regularization, we simply write:</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">xlen</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">"x"</span><span class="p">)</span> <span class="c1"># xlen is 28x28 = 784
-</span><span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">ylen</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">"y_"</span><span class="p">)</span> <span class="c1"># ylen is 10
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="nf">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">xlen</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">x</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># xlen is 28x28 = 784
+</span><span class="n">y_</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="nf">placeholder</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="bp">None</span><span class="p">,</span> <span class="n">ylen</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="sh">"</span><span class="s">y_</span><span class="sh">"</span><span class="p">)</span> <span class="c1"># ylen is 10
 </span>
-<span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"W"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">])</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">))</span> <span class="c1"># no bias because meh
+<span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="nf">get_variable</span><span class="p">(</span><span class="sh">"</span><span class="s">W</span><span class="sh">"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">])</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nf">softmax</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="nf">matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">))</span> <span class="c1"># no bias because meh
 </span></code></pre></div></div>
 
 <p>The full code is available on <a href="https://github.com/greydanus/regularization">GitHub</a>. I trained each model for 150,000 interations (well beyond convergence) to accentuate the differences between regularization methods.</p>
@@ -204,11 +206,11 @@
 
 <p>In the process of learning all this, I devised my own method for estimating \(\mu\) and a \(\sigma\). I’m not sure how to interpret the result theoretically but I thought I’d include it because 1) the weights look far different from those of the other models 2) the test accuracy is still quite high (91.5%).</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">S_hat</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"S_hat"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
-<span class="n">S</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">S_hat</span><span class="p">)</span> <span class="c1"># make sure sigma matrix is positive
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">S_hat</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="nf">get_variable</span><span class="p">(</span><span class="sh">"</span><span class="s">S_hat</span><span class="sh">"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="nf">exp</span><span class="p">(</span><span class="n">S_hat</span><span class="p">)</span> <span class="c1"># make sure sigma matrix is positive
 </span>
-<span class="n">mu</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">get_variable</span><span class="p">(</span><span class="s">"mu"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
-<span class="n">W</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">noise_source</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span> <span class="c1"># draw each weight from a Gaussian distribution
+<span class="n">mu</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="nf">get_variable</span><span class="p">(</span><span class="sh">"</span><span class="s">mu</span><span class="sh">"</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">[</span><span class="n">xlen</span><span class="p">,</span><span class="n">ylen</span><span class="p">],</span> <span class="n">initializer</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
+<span class="n">W</span> <span class="o">=</span> <span class="nf">gaussian</span><span class="p">(</span><span class="n">noise_source</span><span class="p">,</span> <span class="n">mu</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span> <span class="c1"># draw each weight from a Gaussian distribution
 </span></code></pre></div></div>
 <div class="imgcap">
 	<img src="/assets/regularization/gauss.png" width="70%" />
@@ -219,8 +221,8 @@
 
 <p>L2 regularization penalizes weights with large magnitudes. Large weights are the most obvious symptom of overfitting, so it’s an obvious fix. It’s less obvious that L2 regularization actually has a Bayesian interpretation: since we initialize weights to very small values and L2 regression keeps these values small, we’re actually biasing the model towards the prior.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">l2_loss</span><span class="p">(</span> <span class="n">y_</span> <span class="o">-</span> <span class="n">output</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ylen</span><span class="o">*</span><span class="n">batch_size</span><span class="p">)</span> <span class="o">+</span> \
-		 <span class="nb">sum</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">get_collection</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">GraphKeys</span><span class="p">.</span><span class="n">REGULARIZATION_LOSSES</span><span class="p">))</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nf">l2_loss</span><span class="p">(</span> <span class="n">y_</span> <span class="o">-</span> <span class="n">output</span> <span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">ylen</span><span class="o">*</span><span class="n">batch_size</span><span class="p">)</span> <span class="o">+</span> \
+		 <span class="nf">sum</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="nf">get_collection</span><span class="p">(</span><span class="n">tf</span><span class="p">.</span><span class="n">GraphKeys</span><span class="p">.</span><span class="n">REGULARIZATION_LOSSES</span><span class="p">))</span>
 </code></pre></div></div>
 <div class="imgcap">
 	<img src="/assets/regularization/mag.png" width="70%" />
@@ -231,7 +233,7 @@
 
 <p>Normalizing the weight matrix is another way of keeping weights close to zero so it behaves similarly to L2 regularization. However, this form of regularization is not equivalent to L2 regularization and may behave differently in wider/deeper models.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="n">l2_normalize</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">W</span> <span class="o">=</span> <span class="n">tf</span><span class="p">.</span><span class="n">nn</span><span class="p">.</span><span class="nf">l2_normalize</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
 </code></pre></div></div>
 <div class="imgcap">
 	<img src="/assets/regularization/norm.png" width="70%" />

@@ -7,7 +7,7 @@
     <title>Six Experiments in Action Minimization</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2023/03/11/ncf-six-experiments/">
+    <link rel="canonical" href="http://localhost:4000/2023/03/11/ncf-six-experiments/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -73,6 +73,8 @@
           <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
           <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
+        
+          <a class="page-link" href="/2024-01-05-minifilms/">Three Minifilms</a>
         
           
         
@@ -215,7 +217,7 @@ function playPauseFinal() {
   <img src="/assets/ncf/lagn_plus_schema.png" />
 </div>
 
-<p>Once we had tuned our approach on these two simple systems, we turned our attention to four more complex systems: a double pendulum, the three body problem, a simple gas, and a real ephemeris dataset of planetary motion (the orbits were projected onto a 2D plane). These systems presented an interesting challenge because they were all nonlinear, chaotic, and high-dimensional.<sup id="fnref:fn0" role="doc-noteref"><a href="#fn:fn0" class="footnote">1</a></sup> In each case, we compared our results to a baseline path obtained with a simple ODE solver using Euler integration.</p>
+<p>Once we had tuned our approach on these two simple systems, we turned our attention to four more complex systems: a double pendulum, the three body problem, a simple gas, and a real ephemeris dataset of planetary motion (the orbits were projected onto a 2D plane). These systems presented an interesting challenge because they were all nonlinear, chaotic, and high-dimensional.<sup id="fnref:fn0"><a href="#fn:fn0" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> In each case, we compared our results to a baseline path obtained with a simple ODE solver using Euler integration.</p>
 
 <h2 id="the-unconstrained-energy-effect">The unconstrained energy effect</h2>
 
@@ -225,7 +227,7 @@ function playPauseFinal() {
   <img src="/assets/ncf/unconstrained.png" />
 </div>
 
-<p>For this reason, we used the baseline ODE paths to initialize our paths, perturbed them with Gaussian noise, and then used early stopping to select for paths which were similar (often, identical) to the ODE baselines. This approach matched the mathematical ansatz of the “calculus of variations” where one studies perturbed paths in the vicinity of the true path. We note that there are other ways to mitigate this effect which don’t require an ODE-generated initial path.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">2</a></sup></p>
+<p>For this reason, we used the baseline ODE paths to initialize our paths, perturbed them with Gaussian noise, and then used early stopping to select for paths which were similar (often, identical) to the ODE baselines. This approach matched the mathematical ansatz of the “calculus of variations” where one studies perturbed paths in the vicinity of the true path. We note that there are other ways to mitigate this effect which don’t require an ODE-generated initial path.<sup id="fnref:fn1"><a href="#fn:fn1" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></p>
 
 <h2 id="results">Results</h2>
 
@@ -258,10 +260,10 @@ function playPauseFinal() {
 </div>
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn0" role="doc-endnote">
+    <li id="fn:fn0">
       <p>The state of the simple gas, for example, has a hundred degrees of freedom. <a href="#fnref:fn0" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn1" role="doc-endnote">
+    <li id="fn:fn1">
       <p>We discuss these in the Appendix of the paper. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

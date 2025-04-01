@@ -7,7 +7,7 @@
     <title>How Simulating the Universe Could Yield Quantum Mechanics</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2022/03/27/how-simulating/">
+    <link rel="canonical" href="http://localhost:4000/2022/03/27/how-simulating/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -73,6 +73,8 @@
           <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
           <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
+        
+          <a class="page-link" href="/2024-01-05-minifilms/">Three Minifilms</a>
         
           
         
@@ -143,8 +145,8 @@
 <p>Let’s imagine the universe is being simulated. Based on what we know about physics, what can we say about how the simulation would be implemented? Well, it would probably have:</p>
 
 <ol>
-  <li><strong>Massive parallelism.</strong> Taking advantage of the fact that, in physics, all interactions are local and limited by the speed of light, one could parallelize the simulation. Spatially adjacent regions would run on the same CPUs whereas spatially distant regions would run on separate CPUs.<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup></li>
-  <li><strong>Conservation laws enforced.</strong> Physics is built on the idea that certain quantities are strictly conserved. Scalar quantities like <a href="https://en.wikipedia.org/wiki/Conservation_law#Exact_laws">mass-energy</a> are conserved, as are vector quantities like <a href="https://en.wikipedia.org/wiki/Conservation_law#Exact_laws">angular momentum</a>.<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">2</a></sup></li>
+  <li><strong>Massive parallelism.</strong> Taking advantage of the fact that, in physics, all interactions are local and limited by the speed of light, one could parallelize the simulation. Spatially adjacent regions would run on the same CPUs whereas spatially distant regions would run on separate CPUs.<sup id="fnref:fn1"><a href="#fn:fn1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup></li>
+  <li><strong>Conservation laws enforced.</strong> Physics is built on the idea that certain quantities are strictly conserved. Scalar quantities like <a href="https://en.wikipedia.org/wiki/Conservation_law#Exact_laws">mass-energy</a> are conserved, as are vector quantities like <a href="https://en.wikipedia.org/wiki/Conservation_law#Exact_laws">angular momentum</a>.<sup id="fnref:fn2"><a href="#fn:fn2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup></li>
   <li><strong>Binary logic.</strong> Our computers use discrete, binary logic to represent and manipulate information. Non-discrete numbers are represented with sequences of discrete symbols (see <a href="https://en.wikipedia.org/wiki/Single-precision_floating-point_format">float32</a>). Let’s assume our simulation does the same thing.</li>
   <li><strong>Adaptive computation.</strong> To simulate the universe efficiently, we would want to spend most of our compute time on regions where a lot of matter and energy are concentrated: that’s where the dynamics would be most complex. So we’d probably want to use a <a href="https://en.wikipedia.org/wiki/Lagrangian_particle_tracking">particle-based (Lagrangian) simulation</a> of some sort.</li>
   <li><strong>Isotropy.</strong> Space would be <a href="https://en.wikipedia.org/wiki/Isotropy">uniform in all directions</a>; physics would be invariant under rotation.</li>
@@ -186,7 +188,7 @@
   </div>
 </div>
 
-<p>Interestingly, the mechanics of this nonlocal relationship would predict a violation of <a href="https://www.youtube.com/watch?v=zcqZHYo7ONs&amp;vl=en">Bell’s inequality</a> which would match experimental results. Physicists agree that violation of Bell’s inequality implies that nature violates either <em>realism</em>, the principle that reality exists with definite properties even when not being observed, or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism. In this line of thinking, entangled particles cannot be said to have deterministic states and instead exist in a state of superposition until they are measured. But in our simulated universe, realism would be preserved and locality would be sacrificed. Entangled particles would have definite states but sometimes those states would change due to shared references to spatially distant “twins.”<sup id="fnref:fn4" role="doc-noteref"><a href="#fn:fn4" class="footnote">3</a></sup> To see how this would work in practice, try simulating it yourself at the link below.</p>
+<p>Interestingly, the mechanics of this nonlocal relationship would predict a violation of <a href="https://www.youtube.com/watch?v=zcqZHYo7ONs&amp;vl=en">Bell’s inequality</a> which would match experimental results. Physicists agree that violation of Bell’s inequality implies that nature violates either <em>realism</em>, the principle that reality exists with definite properties even when not being observed, or locality. Since locality is seen as a more fundamental principle than realism, the modern consensus is that quantum mechanics violates realism. In this line of thinking, entangled particles cannot be said to have deterministic states and instead exist in a state of superposition until they are measured. But in our simulated universe, realism would be preserved and locality would be sacrificed. Entangled particles would have definite states but sometimes those states would change due to shared references to spatially distant “twins.”<sup id="fnref:fn4"><a href="#fn:fn4" class="footnote" rel="footnote" role="doc-noteref">3</a></sup> To see how this would work in practice, try simulating it yourself at the link below.</p>
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
   <a href="https://colab.research.google.com/drive/1b_DJo27Cq9E6zxSD9KpvyilaVV512SkU?usp=sharing" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
@@ -209,11 +211,11 @@
 
 <p>You might notice that there is a tension between this spatially delocalized, wave-like behavior (a consequence of filtering, which is related to assumption 3) and the conservation/quantization of quantities like energy (assumption 2). The tension is this: when a wave interacts with an object, it transfers energy in a manner that is delocalized and proportionate to its amplitude at a given location. But we have decided to quantize energy in order to keep an exact accounting of it across our simulation. So when our ensemble of particles interacts with some matter, it must transfer exactly one quanta of energy and it must do so at one particular location.</p>
 
-<p>The simplest way to implement this would be to choose one particle out of the ensemble and allow it to interact with other matter and transfer energy. The rest of the particles in the ensemble would be removed from the simulation upon coming into contact with other matter. The interesting thing about this approach is that it could help explain the wave-particle duality of subatomic particles such as photons. For example, it could be used to reproduce the empirical results of the double slit experiment in a fully deterministic manner.<sup id="fnref:fn6" role="doc-noteref"><a href="#fn:fn6" class="footnote">4</a></sup></p>
+<p>The simplest way to implement this would be to choose one particle out of the ensemble and allow it to interact with other matter and transfer energy. The rest of the particles in the ensemble would be removed from the simulation upon coming into contact with other matter. The interesting thing about this approach is that it could help explain the wave-particle duality of subatomic particles such as photons. For example, it could be used to reproduce the empirical results of the double slit experiment in a fully deterministic manner.<sup id="fnref:fn6"><a href="#fn:fn6" class="footnote" rel="footnote" role="doc-noteref">4</a></sup></p>
 
 <h2 id="but-classical-computers-cant-simulate-quantum-effects">“But classical computers can’t simulate quantum effects”</h2>
 
-<p>It is generally accepted that the cost of simulating \(N\) entangled particles, each with \(d\) degrees of freedom, grows as \(d^{N}\). This means that simulating a quantum system with a classical computer becomes prohibitively expensive for even small groups of particles. And if you simulate such systems probabilistically, you will inevitably encounter cases where the simulated physics doesn’t match reality.<sup id="fnref:fn5" role="doc-noteref"><a href="#fn:fn5" class="footnote">5</a></sup> If it’s that difficult for classical computers to simulate quantum effects – and the universe is quantum mechanical – then isn’t this entire thought experiment destined to fail?</p>
+<p>It is generally accepted that the cost of simulating \(N\) entangled particles, each with \(d\) degrees of freedom, grows as \(d^{N}\). This means that simulating a quantum system with a classical computer becomes prohibitively expensive for even small groups of particles. And if you simulate such systems probabilistically, you will inevitably encounter cases where the simulated physics doesn’t match reality.<sup id="fnref:fn5"><a href="#fn:fn5" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> If it’s that difficult for classical computers to simulate quantum effects – and the universe is quantum mechanical – then isn’t this entire thought experiment destined to fail?</p>
 
 <p>Perhaps not. Claims about the difficulty of simulating quantum effects are based on <a href="https://en.wikipedia.org/wiki/Quantum_indeterminacy">quantum indeterminacy</a>, the idea that entangled particles do not have definite states prior to measurement. This interpretation of quantum effects comes about when we sacrifice the assumption of realism. But if we sacrifice locality (as we have done in this article), then we need not sacrifice realism. In a world where entangled particles can affect each other’s states instantaneously at a distance (nonlocality), they can always have specific states (realism) and still produce the empirical behaviors (<a href="https://en.wikipedia.org/wiki/Bell%27s_theorem#Experiments">violation of Bell’s theorem</a>) that consitute the basis of the theory of quantum mechanics. This sort of world could be simulated on a classical computer.</p>
 
@@ -230,7 +232,7 @@
   </div>
 </div>
 
-<p><em>Then we change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">6</a></sup> and could be used to transmit information faster than light.</em></p>
+<p><em>Then we change the experiment by measuring the second photon in the pair before the first photon reaches the double slit. This will break the entanglement, causing both photons to enter well-defined polarization states. When this happens, the first photon will behave like a particle as it passes through the double slit experiment. This would be a surprising result because such a setup would violate the locality assumption<sup id="fnref:fn3"><a href="#fn:fn3" class="footnote" rel="footnote" role="doc-noteref">6</a></sup> and could be used to transmit information faster than light.</em></p>
 
 <h2 id="closing-thoughts">Closing thoughts</h2>
 
@@ -254,22 +256,22 @@ function hideShowNote() {
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn1" role="doc-endnote">
+    <li id="fn:fn1">
       <p>This is connected to the notion of <a href="https://plato.stanford.edu/entries/cellular-automata/#CAModeReal">cellular automata as models of reality</a>. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn2" role="doc-endnote">
+    <li id="fn:fn2">
       <p>As a subset of conservation of angular momentum, <a href="https://www.nature.com/articles/s41467-019-10939-x">polarization</a> is also conserved. This is relevant to later examples which assume conservation of polarization. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn4" role="doc-endnote">
+    <li id="fn:fn4">
       <p>Physicists have certainly entertained the idea of using non-local theories to explain Bell’s inequality. One of the reasons these theories are not more popular is that <a href="https://drive.google.com/file/d/1RTlV08KhQ7lNwOukbNcMok0f6E42uMyI/view?usp=sharing">Groblacher et al, 2007</a> and others have reported experimental results that rule out some of the more reasonable options (eg Leggett-style non-local theories). But the idea we are proposing here is somewhat more radical; it would permit information to travel faster than the speed of light, violating the <a href="https://en.wikipedia.org/wiki/No-communication_theorem">No-communication theorem</a>. Of course, the only information that could be communicated faster than the speed of light would be <em>whether a given pair of particles is in a superposition of states or not</em>. Look at the “Testing our hypothesis” section for more discussion on this topic. <a href="#fnref:fn4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn6" role="doc-endnote">
+    <li id="fn:fn6">
       <p>Update (May 16, 2022): I tried to <a href="https://colab.research.google.com/drive/1Ayh4mGyx4Td63nfF2-bLd5cQJaGQLEz5?usp=sharing">code this up</a> and encountered some problems. First of all, it’s a nontrivial simulation problem. But apart from that, it’s difficult to achieve wavelike behaviors across the group without faster-than-light propagation of electric fields (which I suspect is nonphysical). I suspect that this filtering path is still a viable route to explaining the double slit experiment, but I now believe that the implementation details may look a bit different. One idea Jason Yosinski suggested was: what if our simulator was solving a PDE in both the spatial domain <em>and</em> the frequency domain and occasionally, whenever a spatial pattern got too diffuse, it would be transferred over to the frequency domain. Conversely, whenever a frequency pattern got too localized, it would be transferred over to the spatial domain. This could help to explain, for example <a href="https://en.wikipedia.org/wiki/Vacuum_energy">particle generation in a vacuum</a>. More on this in the future. <a href="#fnref:fn6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn5" role="doc-endnote">
+    <li id="fn:fn5">
       <p>See Section 5 of Feynman’s “<a href="https://www.taylorfrancis.com/chapters/edit/10.1201/9780429500459-11/simulating-physics-computers-richard-feynman">Simulating physics with computers</a>” <a href="#fnref:fn5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn3" role="doc-endnote">
+    <li id="fn:fn3">
       <p>Relatedly, it will also violate the <a href="https://en.wikipedia.org/wiki/No-communication_theorem">no-communication theorem</a>, which is a core claim of quantum mechanics. <a href="#fnref:fn3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

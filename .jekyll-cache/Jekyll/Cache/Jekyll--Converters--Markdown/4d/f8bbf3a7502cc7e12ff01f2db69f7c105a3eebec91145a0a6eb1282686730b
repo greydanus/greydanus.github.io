@@ -1,4 +1,4 @@
-I"z"<div>
+I"n"<div>
 	<style>
         #linkbutton:link, #linkbutton:visited {
           padding: 6px 0px;
@@ -69,9 +69,9 @@
 
 <p>One of the takeaways from helping write this Distill article is that cellular automata are fascinating and underrated. In particular, I like them because they are:</p>
 
-<p><strong>Local.</strong> All interactions in physics are local – aside from quantum entanglement, and even that is up for debate.<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">1</a></sup> All interactions in chemistry and biology are also local, including the interactions between neurons that allow us to learn. The value of locality is that it is one of the <em>strongest</em> bounds on the complexity of a system. Without locality, any unit (atom, molecule, cell, human) can interact with any other, leading to an exponential growth in causal influences on each unit as the size of the system increases. This is bad news if you want to establish any interesting chains of causality between various sub-units.<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">2</a></sup> For example, when you store information using a small chunk of matter, you do so under the assumption that that information will remain where it is and not change in response to external factors.</p>
+<p><strong>Local.</strong> All interactions in physics are local – aside from quantum entanglement, and even that is up for debate.<sup id="fnref:fn2"><a href="#fn:fn2" class="footnote" rel="footnote" role="doc-noteref">1</a></sup> All interactions in chemistry and biology are also local, including the interactions between neurons that allow us to learn. The value of locality is that it is one of the <em>strongest</em> bounds on the complexity of a system. Without locality, any unit (atom, molecule, cell, human) can interact with any other, leading to an exponential growth in causal influences on each unit as the size of the system increases. This is bad news if you want to establish any interesting chains of causality between various sub-units.<sup id="fnref:fn3"><a href="#fn:fn3" class="footnote" rel="footnote" role="doc-noteref">2</a></sup> For example, when you store information using a small chunk of matter, you do so under the assumption that that information will remain where it is and not change in response to external factors.</p>
 
-<p><strong>Parallelizable.</strong> One particularly important advantage of locality is that it makes CAs immensely parallelizable. It’s not hard to train or evaluate a large population of CAs asynchronously: disparate parts of the system never have to communicate or synchronize with one another. This is why, if we do live in a simulation, it is probably implemented with a CA.<sup id="fnref:fn4" role="doc-noteref"><a href="#fn:fn4" class="footnote">3</a></sup></p>
+<p><strong>Parallelizable.</strong> One particularly important advantage of locality is that it makes CAs immensely parallelizable. It’s not hard to train or evaluate a large population of CAs asynchronously: disparate parts of the system never have to communicate or synchronize with one another. This is why, if we do live in a simulation, it is probably implemented with a CA.<sup id="fnref:fn4"><a href="#fn:fn4" class="footnote" rel="footnote" role="doc-noteref">3</a></sup></p>
 
 <p><strong>Scalable in number of cells.</strong> This is closely connected to “parallelizable.” Imagine training a 20x20 population of cells to do something and then running a 200x200 population of them on some downstream task. The numbers are different, but we actually do this in the demo. This is not something you can do with neural networks.</p>
 
@@ -102,13 +102,13 @@
 <h2 id="footnotes">Footnotes</h2>
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn2" role="doc-endnote">
+    <li id="fn:fn2">
       <p>I want to write a post on this, but I have more reading to do first. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn3" role="doc-endnote">
+    <li id="fn:fn3">
       <p>One of the problems with fully-connected neural networks is that they use very dense connectivity patterns – denser, perhaps, than locality constraints permit in the brain. In recent years, we’ve seen that particular connectivity patterns (e.g. the local connectivity of ConvNets) have major advantages. <a href="#fnref:fn3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn4" role="doc-endnote">
+    <li id="fn:fn4">
       <p>Which makes the fact that this article is about CA pretty meta. <a href="#fnref:fn4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>

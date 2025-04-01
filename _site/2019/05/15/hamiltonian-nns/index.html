@@ -7,7 +7,7 @@
     <title>Hamiltonian Neural Networks</title>
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="A blog by Sam Greydanus">
-    <link rel="canonical" href="http://greydanus.github.io/2019/05/15/hamiltonian-nns/">
+    <link rel="canonical" href="http://localhost:4000/2019/05/15/hamiltonian-nns/">
     <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Natural Intelligence posts" />
 
     <!-- Custom CSS -->
@@ -73,6 +73,8 @@
           <a class="page-link" href="/2023-02-14-ncf-quantum/">Simulating Quantum Mechanics with the Phase-Action Matrix</a>
         
           <a class="page-link" href="/2023-02-15-ncf-interpretation/">History and Physical Interpretations of the Action</a>
+        
+          <a class="page-link" href="/2024-01-05-minifilms/">Three Minifilms</a>
         
           
         
@@ -185,7 +187,7 @@
 
 <p>We begin with an equation called the Hamiltonian, which relates the state of a system to some conserved quantity (usually energy) and lets us simulate how the system changes with time. Physicists generally use domain-specific knowledge to find this equation, but here we try a different approach: <i>Instead of crafting Hamiltonians by hand, we parameterize them with neural networks and then learn them directly from data.</i></p>
 
-<p><strong>Related work.</strong> A variety of previous works have sought to endow neural networks with intuitive physics priors. Some of these works were domain-specific: they solved problems in molecular dynamics<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote">1</a></sup>, quantum mechanics<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote">2</a></sup>, or robotics<sup id="fnref:fn3" role="doc-noteref"><a href="#fn:fn3" class="footnote">3</a></sup>. Others, such as Interaction Networks<sup id="fnref:fn4" role="doc-noteref"><a href="#fn:fn4" class="footnote">4</a></sup>, were meant to be fully general. A common pattern among these works, is that none of them showed how to learn invariant quantities. Schmidt and Lipson<sup id="fnref:fn7" role="doc-noteref"><a href="#fn:fn7" class="footnote">5</a></sup> did tackle this challenge, but whereas they used a genetic algorithm to search over a space of mathematical expressions, in this work we train a neural network with gradient descent.</p>
+<p><strong>Related work.</strong> A variety of previous works have sought to endow neural networks with intuitive physics priors. Some of these works were domain-specific: they solved problems in molecular dynamics<sup id="fnref:fn1"><a href="#fn:fn1" class="footnote" rel="footnote" role="doc-noteref">1</a></sup>, quantum mechanics<sup id="fnref:fn2"><a href="#fn:fn2" class="footnote" rel="footnote" role="doc-noteref">2</a></sup>, or robotics<sup id="fnref:fn3"><a href="#fn:fn3" class="footnote" rel="footnote" role="doc-noteref">3</a></sup>. Others, such as Interaction Networks<sup id="fnref:fn4"><a href="#fn:fn4" class="footnote" rel="footnote" role="doc-noteref">4</a></sup>, were meant to be fully general. A common pattern among these works, is that none of them showed how to learn invariant quantities. Schmidt and Lipson<sup id="fnref:fn7"><a href="#fn:fn7" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> did tackle this challenge, but whereas they used a genetic algorithm to search over a space of mathematical expressions, in this work we train a neural network with gradient descent.</p>
 
 <h2 id="a-quick-tour-of-hamiltonian-mechanics">A Quick Tour of Hamiltonian Mechanics</h2>
 
@@ -211,8 +213,8 @@
 
 <p><strong>Overview.</strong> To summarize, Hamiltonian mechanics is a tool for modeling large and chaotic physical systems. It’s useful because it generalizes to almost any field of physics and can handle systems that are large and chaotic. The general recipe for applying Hamiltonian mechanics to a problem is:</p>
 <ol>
-  <li>Choose a set of coordinates that describe the state of a system<sup id="fnref:fn5" role="doc-noteref"><a href="#fn:fn5" class="footnote">6</a></sup>. A common choice is position and momentum \((\mathbf{q},\mathbf{p})\).</li>
-  <li>Write the total energy of the system as a function of those coordinates<sup id="fnref:fn6" role="doc-noteref"><a href="#fn:fn6" class="footnote">7</a></sup>. This equation is called the Hamiltonian.</li>
+  <li>Choose a set of coordinates that describe the state of a system<sup id="fnref:fn5"><a href="#fn:fn5" class="footnote" rel="footnote" role="doc-noteref">6</a></sup>. A common choice is position and momentum \((\mathbf{q},\mathbf{p})\).</li>
+  <li>Write the total energy of the system as a function of those coordinates<sup id="fnref:fn6"><a href="#fn:fn6" class="footnote" rel="footnote" role="doc-noteref">7</a></sup>. This equation is called the Hamiltonian.</li>
   <li>Compute the partial derivatives of the Hamiltonian w.r.t. the coordinates. Then use Hamilton’s equations (Equation 1) to find the time derivatives of the system.</li>
   <li>Integrate the time derivatives to predict the state of the system at some time in the future (Equation 2).</li>
 </ol>
@@ -238,7 +240,7 @@
 	<div class="thecap" style="text-align:left"><b>Figure 4:</b> Schema of the Baseline and HNN models. The Baseline NN in the figure above represents the supervised learning approach to modeling the time derivatives of (<b>q</b>, <b>p</b>). In both cases, the inputs are the coordinates of the system and the targets are their time derivatives.</div>
 </div>
 
-<p>There are not many previous works that optimize the gradients of a neural network. Work by Schmidt and Lipson<sup id="fnref:fn7:1" role="doc-noteref"><a href="#fn:fn7" class="footnote">5</a></sup> uses a loss function of this form, but they do not use it to optimize a neural network. Wang et al.<sup id="fnref:fn8" role="doc-noteref"><a href="#fn:fn8" class="footnote">8</a></sup> optimize the gradients of a neural network, but not for the purpose of learning Hamiltonians. But not only is this technique possible; we also found that it works reasonably well.</p>
+<p>There are not many previous works that optimize the gradients of a neural network. Work by Schmidt and Lipson<sup id="fnref:fn7:1"><a href="#fn:fn7" class="footnote" rel="footnote" role="doc-noteref">5</a></sup> uses a loss function of this form, but they do not use it to optimize a neural network. Wang et al.<sup id="fnref:fn8"><a href="#fn:fn8" class="footnote" rel="footnote" role="doc-noteref">8</a></sup> optimize the gradients of a neural network, but not for the purpose of learning Hamiltonians. But not only is this technique possible; we also found that it works reasonably well.</p>
 
 <p><strong>Results on simple tasks.</strong> We trained an HNN and a baseline model on three simple physics tasks. You can explore the setup and results for each of these tasks in Figure 5. Generally speaking, the HNN trained about as easily as the baseline model and produced better results. In order to predict dynamics, we integrated our models using <code class="language-plaintext highlighter-rouge">scipy.integrate.solve_ivp</code> and set the error tolerance to \(10^{-9}\)</p>
 
@@ -275,7 +277,7 @@
 	}
 </script>
 
-<p><strong>What is the HNN conserving?</strong> It’s worth noting that the quantity conserved by the HNN is not equivalent to the total energy; rather, it’s something very close to the total energy. The last two plots in Figure 5 provide a useful comparison between the HNN-conserved quantity and the total energy. Looking closely at the spacing of the \(y\) axes, you can see that the HNN-conserved quantity has the same scale as total energy, but differs by a constant factor. Since energy is a relative quantity, this is perfectly acceptable<sup id="fnref:fn9" role="doc-noteref"><a href="#fn:fn9" class="footnote">9</a></sup>.</p>
+<p><strong>What is the HNN conserving?</strong> It’s worth noting that the quantity conserved by the HNN is not equivalent to the total energy; rather, it’s something very close to the total energy. The last two plots in Figure 5 provide a useful comparison between the HNN-conserved quantity and the total energy. Looking closely at the spacing of the \(y\) axes, you can see that the HNN-conserved quantity has the same scale as total energy, but differs by a constant factor. Since energy is a relative quantity, this is perfectly acceptable<sup id="fnref:fn9"><a href="#fn:fn9" class="footnote" rel="footnote" role="doc-noteref">9</a></sup>.</p>
 
 <h2 id="modeling-larger-systems">Modeling Larger Systems</h2>
 
@@ -369,31 +371,31 @@
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
-    <li id="fn:fn1" role="doc-endnote">
+    <li id="fn:fn1">
       <p>Rupp, M., Tkatchenko, A., Muller, K.R., and Von Lilienfeld, O. A. <a href="https://arxiv.org/abs/1109.2618">Fast and accurate modeling of molecular atomization energies with machine learning</a>. Physical review letters, 108(5): 058301, 2012. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn2" role="doc-endnote">
+    <li id="fn:fn2">
       <p>Schutt, K. T., Arbabzadah, F., Chmiela, S., Muller, K. R., and Tkatchenko, A. <a href="Quantum chemical insights from deep tensor neural networks">Quantum chemical insights from deep tensor neural networks</a>. Nature communications, 8:13890, 2017. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn3" role="doc-endnote">
+    <li id="fn:fn3">
       <p>Lutter, M., Ritter, C., and Peters, J. <a href="https://openreview.net/forum?id=BklHpjCqKm">Deep lagrangian networks: Using physics as model prior for deep learning.</a>, International Conference on Learning Representations, 2019. <a href="#fnref:fn3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn4" role="doc-endnote">
+    <li id="fn:fn4">
       <p>Battaglia P, Pascanu R, Lai M, Rezende DJ. <a href="https://arxiv.org/abs/1612.00222">Interaction networks for learning about objects, relations and physics</a>. Advances in neural information processing systems, 2016 <a href="#fnref:fn4" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn7" role="doc-endnote">
+    <li id="fn:fn7">
       <p>Schmidt, M. and Lipson, H. <a href="https://science.sciencemag.org/content/324/5923/81">Distilling free-form natural laws from experimental data</a>. Science, 324(5923):81–85, 2009. <a href="#fnref:fn7" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:fn7:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
     </li>
-    <li id="fn:fn5" role="doc-endnote">
+    <li id="fn:fn5">
       <p>They also need to obey a set of relations called the Poisson bracket relations, but we’ll ignore those for now. <a href="#fnref:fn5" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn6" role="doc-endnote">
+    <li id="fn:fn6">
       <p>More generally, this quantity can be anything that does not change over time and has nonzero derivatives w.r.t. the coordinates of the system. But in this work we’ll focus on total energy. <a href="#fnref:fn6" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn8" role="doc-endnote">
+    <li id="fn:fn8">
       <p>Wang, J., Olsson, S., Wehmeyer, C., Perez, A., Charron, N. E., de Fabritiis, G., Noe, F., and Clementi, C. <a href="https://pubs.acs.org/doi/full/10.1021/acscentsci.8b00913">Machine learning of coarse-grained molecular dynamics force fields</a>. ACS Central Science, 2018. <a href="#fnref:fn8" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
-    <li id="fn:fn9" role="doc-endnote">
+    <li id="fn:fn9">
       <p>To see why energy is relative, imagine a cat that is at an elevation of 0 m in one reference frame and 1 m in another. Its potential energy (and total energy) will differ by a constant factor depending on frame of reference. <a href="#fnref:fn9" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
