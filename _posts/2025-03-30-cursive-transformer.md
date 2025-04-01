@@ -45,6 +45,7 @@ pre {
   <a href="https://github.com/greydanus/cursivetransformer" id="linkbutton" target="_blank">Get the code</a>
   <a href="https://colab.research.google.com/github/greydanus/cursivetransformer/blob/main/train_sample_visualize.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
   <a href="https://wandb.ai/sam-greydanus/bigbank_2k?nw=nwusersamgreydanus" id="linkbutton" target="_blank">W&B project</a>
+  <a href="[https://wandb.ai/sam-greydanus/bigbank_2k?nw=nwusersamgreydanus](https://github.com/greydanus/cursivetransformer/blob/main/data/bigbank_3500.json.zip)" id="linkbutton" target="_blank">Dataset</a>
 </div>
 
 Cursive handwriting is more than just a means of communication -- it is also an art form. From ancient manuscripts to modern signatures, it is used to signal both individual personality and as well as cultural taste and sensitivity. Cursive is unique from print in that the strokes of a given character depend heavily on the characters' neighbors: for example, in the figure below an "i" next to an "f" tends to have a connecting stroke at the base of the two letters, whereas an "i" next to an "n" will have a connecting stroke that proceeds diagonally from the base of the "i" to the top of the "n". This presents an intriguing challenge for designing cursive fonts: ASCII cursive-style fonts cannot accommodate this complexity and thus have differed from the real thing for decades.
