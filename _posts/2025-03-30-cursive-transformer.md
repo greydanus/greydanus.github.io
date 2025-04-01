@@ -69,7 +69,7 @@ The beauty of this approach -- compared to previous works such as Graves (2014)[
 
 One of the reasons that cursive generation is an unsolved problem in machine learning research is that there are very few high-quality, publicly-available datasets for the task. Some handwriting datasets, like the IAM dataset used by Graves (2014) contain a few messy cursive samples, but these samples are often not actual cursive, in that they feature connections between characters but do not follow cursive conventions for uppercase letters and do not actually connect all the letters. For this reason, we were forced to construct our own small dataset from scratch.
 
-We constructed this dataset using a [simple web app](https://github.com/greydanus/cursivetransformer/blob/main/data/collect.html). This web app samples one word at a time from a word bank, shows it to the user, and provides a window in which to write that word in cursive using a trackpad or touchscreen. When a sufficient number of examples have been entered, the user can export the data as a list of json dictionaries. We collected 3500 handwriting samples from a single author in this manner.
+We constructed this dataset using a [simple web app](https://greydanus.github.io/cursivetransformer/data/collect.html). This web app samples one word at a time from a word bank, shows it to the user, and provides a window in which to write that word in cursive using a trackpad or touchscreen. When a sufficient number of examples have been entered, the user can export the data as a list of json dictionaries. We collected 3500 handwriting samples from a single author in this manner.
 
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:100%">
