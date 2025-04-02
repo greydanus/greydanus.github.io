@@ -41,7 +41,7 @@ pre {
 </div>
 
 <div style="display: block; margin-left: auto; margin-right:auto; width:100%; text-align:center;">
-  <a href="" id="linkbutton" target="_blank">Read the paper</a>
+  <a href="http://arxiv.org/abs/2504.00051" id="linkbutton" target="_blank">Read the paper</a>
   <a href="https://github.com/greydanus/cursivetransformer" id="linkbutton" target="_blank">Get the code</a>
   <a href="https://colab.research.google.com/github/greydanus/cursivetransformer/blob/main/train_sample_visualize.ipynb" id="linkbutton" target="_blank"><span class="colab-span">Run</span> in browser</a>
   <a href="https://wandb.ai/sam-greydanus/bigbank_2k?nw=nwusersamgreydanus" id="linkbutton" target="_blank">W&B project</a>
