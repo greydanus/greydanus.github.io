@@ -36,6 +36,11 @@
         }
         .table {
             border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+        .supporting-quote {
+            font-style: italic;
+            font-size: 0.75rem;
         }
     </style>
 </head>
@@ -43,11 +48,11 @@
 
     <div class="container-fluid">
         <div class="row gx-4">
-            <div class="col-md-5 d-flex flex-column h-100">
+            <div class="col-md-4 d-flex flex-column h-100">
                 <h5 class="mb-2">Paste JSON Criteria Here</h5>
                 <textarea id="jsonInput" class="form-control flex-grow-1" placeholder="Paste your JSON here..."></textarea>
             </div>
-            <div class="col-md-7 d-flex flex-column h-100">
+            <div class="col-md-8 d-flex flex-column h-100">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <h5 class="mb-0">Human-Readable Format</h5>
                     <div class="buttons">
@@ -69,6 +74,7 @@
         const copyCsvButton = document.getElementById('copyCsvButton');
 
         let currentQuestions = [];
+        let fullJsonData = null;
 
         jsonInput.addEventListener('input', handleInputChange);
         copyButton.addEventListener('click', handleCopyClick);
@@ -83,15 +89,14 @@
 
             if (!rawText) return;
 
-            let jsonData;
             try {
-                jsonData = JSON.parse(rawText);
+                fullJsonData = JSON.parse(rawText);
             } catch (error) {
                 tableContainer.innerHTML = `<div class="p-3 text-danger">Invalid JSON: ${error.message}</div>`;
                 return;
             }
 
-            const questions = findQuestionsArray(jsonData);
+            const questions = findQuestionsArray(fullJsonData);
 
             if (questions && Array.isArray(questions)) {
                 currentQuestions = questions;
@@ -156,8 +161,9 @@
                     <tr>
                         <th style="width: 5%; ${cellBorderStyle}">Q#</th>
                         <th style="${cellBorderStyle}">Question</th>
-                        <th style="width: 15%; ${cellBorderStyle}">If Yes</th>
-                        <th style="width: 15%; ${cellBorderStyle}">If No</th>
+                        <th style="${cellBorderStyle}">Supporting Quote</th>
+                        <th style="width: 7.5%; ${cellBorderStyle}">If Yes</th>
+                        <th style="width: 7.5%; ${cellBorderStyle}">If No</th>
                     </tr>
                 </thead>
                 <tbody>`;
@@ -167,14 +173,17 @@
                 const noCondition = q.conditions.find(c => c.value === 'no');
                 const yesOutcome = formatOutcome(yesCondition);
                 const noOutcome = formatOutcome(noCondition);
+                const supportingQuote = q.supporting_quote || '';
                 const stripeStyle = useInlineStyles && index % 2 !== 0 ? 'background-color: #f8f9fa;' : '';
+                const editableAttr = useInlineStyles ? '' : 'contenteditable="true"';
 
                 tableHtml += `
                     <tr>
                         <td style="${cellBorderStyle} ${stripeStyle}">Q${q.index + 1}</td>
-                        <td style="${cellBorderStyle} ${stripeStyle}">${q.question_text}</td>
-                        <td style="${cellBorderStyle} ${stripeStyle}">${yesOutcome}</td>
-                        <td style="${cellBorderStyle} ${stripeStyle}">${noOutcome}</td>
+                        <td ${editableAttr} data-q-index="${index}" data-field="question_text" style="${cellBorderStyle} ${stripeStyle}">${q.question_text}</td>
+                        <td ${editableAttr} data-q-index="${index}" data-field="supporting_quote" class="supporting-quote" style="${cellBorderStyle} ${stripeStyle} font-style: italic;">${supportingQuote}</td>
+                        <td ${editableAttr} data-q-index="${index}" data-field="if_yes" style="${cellBorderStyle} ${stripeStyle}">${yesOutcome}</td>
+                        <td ${editableAttr} data-q-index="${index}" data-field="if_no" style="${cellBorderStyle} ${stripeStyle}">${noOutcome}</td>
                     </tr>`;
             });
 
@@ -184,6 +193,36 @@
 
         function renderTable(questions) {
             tableContainer.innerHTML = generateTableHtml(questions, false);
+            tableContainer.querySelectorAll('td[contenteditable]').forEach(cell => {
+                cell.addEventListener('blur', e => {
+                    const qIndex = parseInt(e.target.dataset.qIndex);
+                    const field = e.target.dataset.field;
+                    const newValue = e.target.textContent.trim();
+
+                    if (field === 'question_text') {
+                        currentQuestions[qIndex].question_text = newValue;
+                    } else if (field === 'supporting_quote') {
+                        if (newValue) currentQuestions[qIndex].supporting_quote = newValue;
+                        else delete currentQuestions[qIndex].supporting_quote;
+                    } else {
+                        const condValue = field === 'if_yes' ? 'yes' : 'no';
+                        const cond = currentQuestions[qIndex].conditions.find(c => c.value === condValue);
+                        if (newValue === 'Approve') cond.outcome = 'approve';
+                        else if (newValue === 'Deny') cond.outcome = 'deny';
+                        else if (newValue.startsWith('Go to Q')) {
+                            cond.outcome = 'next_question';
+                            cond.next_question_index = parseInt(newValue.match(/\d+/)[0]) - 1;
+                        }
+                    }
+
+                    jsonInput.removeEventListener('input', handleInputChange);
+                    jsonInput.value = JSON.stringify(fullJsonData, null, 2);
+                    jsonInput.addEventListener('input', handleInputChange);
+                });
+                cell.addEventListener('keydown', e => {
+                    if (e.key === 'Enter') { e.preventDefault(); e.target.blur(); }
+                });
+            });
         }
 
         function generateCsvContent(questions) {
