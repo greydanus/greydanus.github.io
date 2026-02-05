@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criteria Tree Editor</title>
+    <style>
+        :root { --bg: #f5f5f5; --card: #fff; --border: #e5e7eb; --text: #1a1a1a; --text-muted: #6b7280; --accent: #2563eb; --danger: #dc2626; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); padding: 16px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 8px; }
+        .header h1 { font-size: 18px; }
+        .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        .btn { padding: 6px 14px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px; font-weight: 500; background: var(--accent); color: #fff; }
+        .btn:hover { opacity: 0.9; }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+        .btn-outline:hover { background: var(--border); }
+        .btn-danger { background: var(--danger); }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+        .upload-zone { text-align: center; padding: 48px; color: var(--text-muted); border: 2px dashed var(--border); border-radius: 8px; cursor: pointer; }
+        .upload-zone:hover { border-color: var(--accent); color: var(--accent); }
+        .tree-view { font-size: 9pt; }
+        .tree-view ul { list-style: none; padding-left: 16px; margin: 0; }
+        .tree-view > ul { padding-left: 0; }
+        .tree-node { padding: 3px 0; }
+        .tree-node.dimmed > .tree-id, .tree-node.dimmed > .tree-text { opacity: 0.25; }
+        .tree-node.redline-added { border-left: 3px solid #16a34a; padding-left: 6px; background: #f0fdf4; }
+        .tree-node.redline-deleted { border-left: 3px solid var(--danger); padding-left: 6px; background: #fef2f2; opacity: 0.6; }
+        .tree-node.redline-deleted .tree-text { text-decoration: line-through; }
+        .tree-node-action { font-size: 7pt; padding: 1px 5px; border-radius: 3px; border: none; cursor: pointer; margin-left: 4px; }
+        .tree-node-action.accept { background: #dcfce7; color: #166534; }
+        .tree-node-action.reject { background: #fee2e2; color: #991b1b; }
+        .tree-node-action.accept:hover { background: #16a34a; color: #fff; }
+        .tree-node-action.reject:hover { background: var(--danger); color: #fff; }
+        .tree-toggle { cursor: pointer; user-select: none; width: 14px; display: inline-block; color: var(--text-muted); }
+        .tree-toggle:hover { color: var(--accent); }
+        .tree-id { font-weight: 500; color: var(--accent); margin-right: 6px; font-size: 8pt; }
+        .tree-text { cursor: pointer; }
+        .tree-text:hover { background: var(--border); border-radius: 3px; }
+        .tree-detail-btn, .tree-add-btn, .tree-del-btn, .tree-comment-btn { cursor: pointer; font-size: 8pt; color: var(--text-muted); margin-left: 4px; padding: 0 4px; border-radius: 3px; background: var(--border); }
+        .tree-detail-btn:hover, .tree-add-btn:hover, .tree-comment-btn:hover { background: var(--accent); color: #fff; }
+        .tree-del-btn:hover { background: var(--danger); color: #fff; }
+        .tree-comment-btn.has-comments { background: #fef3c7; color: #92400e; }
+        .tree-detail { display: none; margin: 4px 0 4px 20px; padding: 6px 10px; background: var(--bg); border-radius: 4px; font-size: 8pt; color: var(--text-muted); border-left: 2px solid var(--accent); }
+        .tree-detail strong { color: var(--text); }
+        .tree-logic { font-size: 8pt; padding: 1px 5px; border-radius: 3px; margin-left: 6px; background: #e0e7ff; color: #3730a3; cursor: pointer; }
+        .tree-logic:hover { background: #c7d2fe; }
+        .tree-gate { font-size: 8pt; padding: 1px 5px; border-radius: 3px; margin-left: 6px; background: #be185d; color: #fff; font-weight: 600; cursor: help; position: relative; }
+        .tree-gate-tip { display: none; position: absolute; left: 0; top: 100%; margin-top: 4px; width: 320px; padding: 8px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-size: 8pt; color: var(--text); line-height: 1.5; z-index: 10; white-space: normal; font-weight: 400; }
+        .tree-gate:hover .tree-gate-tip { display: block; }
+        .tree-edit { width: 100%; padding: 6px 8px; font-size: 9pt; border: 1px solid var(--accent); border-radius: 4px; margin: 4px 0; min-height: 60px; resize: vertical; font-family: inherit; line-height: 1.4; }
+        .tree-edit-hint { font-size: 8pt; color: var(--text-muted); text-align: right; margin-top: 2px; }
+        .tree-controls { display: flex; gap: 8px; }
+        .meta-row { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; margin-bottom: 12px; }
+        .meta-item { display: flex; gap: 6px; align-items: center; }
+        .meta-label { color: var(--text-muted); }
+        #file-input { display: none; }
+        #search { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; width: 200px; }
+        #search:focus { outline: none; border-color: var(--accent); }
+        .redline-old { text-decoration: line-through; color: var(--danger); background: #fee2e2; padding: 0 2px; border-radius: 2px; pointer-events: none; }
+        .redline-new { color: #16a34a; background: #dcfce7; padding: 0 2px; border-radius: 2px; pointer-events: none; }
+        .redline-actions { display: inline; margin-left: 6px; }
+        .redline-actions button { font-size: 7pt; padding: 1px 5px; border-radius: 3px; border: none; cursor: pointer; margin-left: 2px; }
+        .redline-accept { background: #dcfce7; color: #166534; }
+        .redline-reject { background: #fee2e2; color: #991b1b; }
+        .redline-accept:hover { background: #16a34a; color: #fff; }
+        .redline-reject:hover { background: var(--danger); color: #fff; }
+        .comment-panel { display: none; margin: 4px 0 4px 20px; padding: 8px 10px; background: #fffbeb; border-left: 2px solid #f59e0b; border-radius: 4px; font-size: 8pt; }
+        .comment-item { margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px solid #fde68a; }
+        .comment-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .comment-author { font-weight: 600; color: #92400e; }
+        .comment-time { color: var(--text-muted); margin-left: 6px; }
+        .comment-text { margin-top: 2px; color: var(--text); }
+        .comment-input { display: flex; gap: 4px; margin-top: 6px; }
+        .comment-input input { flex: 1; padding: 4px 6px; border: 1px solid #fde68a; border-radius: 4px; font-size: 8pt; }
+        .comment-input button { padding: 4px 8px; font-size: 8pt; border: none; border-radius: 4px; background: #f59e0b; color: #fff; cursor: pointer; }
+        .author-input { padding: 6px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; width: 120px; }
+        .author-input:focus { outline: none; border-color: var(--accent); }
+        .download-menu { position: relative; display: inline-block; }
+        .download-opts { display: none; position: absolute; right: 0; top: 100%; margin-top: 4px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 20; min-width: 180px; }
+        .download-opts.open { display: block; }
+        .download-opts button { display: block; width: 100%; text-align: left; padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; color: var(--text); }
+        .download-opts button:hover { background: var(--bg); }
+        .download-opts button small { display: block; color: var(--text-muted); font-size: 9px; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1 id="page-title">Criteria Tree Editor</h1>
+    <div class="header-actions">
+        <input type="file" id="file-input" accept=".json">
+        <input type="text" id="search" placeholder="Find..." style="display:none">
+        <span id="author-box" style="display:none"><input type="text" class="author-input" id="author-name" placeholder="Your name" title="Your name for comments"></span>
+        <button class="btn btn-outline" onclick="document.getElementById('file-input').click()">Upload JSON</button>
+        <button class="btn btn-outline" id="clear-btn" style="display:none" onclick="clearAll()">Clear</button>
+        <button class="btn btn-outline" id="undo-btn" style="display:none" onclick="undo()" title="Ctrl/Cmd+Z">Undo (⌘Z)</button>
+        <button class="btn btn-outline" id="expand-btn" style="display:none" onclick="expandAll()">Expand All</button>
+        <button class="btn btn-outline" id="collapse-btn" style="display:none" onclick="collapseAll()">Collapse All</button>
+        <div class="download-menu" id="download-menu" style="display:none">
+            <button class="btn" onclick="toggleDownloadMenu()">Download ▾</button>
+            <div class="download-opts" id="download-opts">
+                <button onclick="download('draft')">Download Draft<small>Includes comments + redlines for review</small></button>
+                <button onclick="download('clean')">Download Clean<small>Final version, annotations stripped</small></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="meta" class="meta-row" style="display:none"></div>
+
+<div class="card">
+    <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+        Drop a job_template.json here or click to upload
+    </div>
+    <div class="tree-view" id="tree-view" style="display:none"></div>
+</div>
+
+<script>
+let fullJson = null, nodeIndex = {}, treeData = null, dirty = false;
+const undoStack = [];
+const STORAGE_KEY = 'edit_fhir_policy_autosave';
+
+// === Undo ===
+function pushUndo() { undoStack.push(JSON.stringify(fullJson)); if (undoStack.length > 50) undoStack.shift(); updateUndoBtn(); }
+function undo() {
+    if (!undoStack.length) return;
+    fullJson = JSON.parse(undoStack.pop());
+    rerender(); persist(); updateUndoBtn();
+}
+function updateUndoBtn() { const b = document.getElementById('undo-btn'); if (b) b.style.display = undoStack.length ? '' : 'none'; }
+
+// === localStorage persistence ===
+function persist() { if (fullJson) localStorage.setItem(STORAGE_KEY, JSON.stringify(fullJson)); dirty = true; }
+function clearPersisted() { localStorage.removeItem(STORAGE_KEY); }
+
+// === Author name persistence ===
+function getAuthor() { return document.getElementById('author-name')?.value?.trim() || 'Anonymous'; }
+document.getElementById('author-name')?.addEventListener('input', e => localStorage.setItem('fhir_editor_author', e.target.value));
+const savedAuthor = localStorage.getItem('fhir_editor_author');
+if (savedAuthor) document.getElementById('author-name').value = savedAuthor;
+
+// === FHIR parsing ===
+const SEL_MAP = {all:'all', any:'one-or-more', 'at-most-one':'exactly-one', 'exactly-one':'exactly-one', 'one-or-more':'one-or-more', 'at-least-one':'at-least-one', none:'none'};
+function getPlanDef(data) {
+    const fhir = data?.guideline || data;
+    return fhir?.entry ? fhir.entry.find(e => e.resource?.resourceType === 'PlanDefinition')?.resource : fhir;
+}
+function fhirToTree(data) {
+    const planDef = getPlanDef(data);
+    if (!planDef) return null;
+    function convert(a, parentId) {
+        const expr = a.condition?.[0]?.expression?.expression || '';
+        const nh = a.condition?.[0]?.expression?.null_hypothesis || '';
+        const hasCondition = !!expr, hasChildren = (a.action || []).length > 0;
+        const node = {
+            id: a.id || '', text: expr || a.title || '',
+            title: a.title || '',
+            child_logic: SEL_MAP[a.selectionBehavior] || null,
+            children: (a.action || []).map(c => convert(c, a.id)),
+            required_documentation: a.description || '',
+            source: a.documentation?.[0]?.label || '',
+            null_hypothesis: nh, _parentId: parentId,
+            is_gating: hasCondition && hasChildren,
+            _comments: a._comments || [],
+            _redlines: a._redlines || {},
+            _added: !!a._redline_added,
+            _deleted: !!a._redline_deleted
+        };
+        nodeIndex[node.id] = a;
+        return node;
+    }
+    return {criteria: (planDef.action || []).map(c => convert(c, null)), name: planDef.title || planDef.name || ''};
+}
+
+// === Write edits back to FHIR ===
+function getFhirFieldValue(a, field) {
+    if (field === 'text') return a.condition?.[0]?.expression?.expression || a.title || '';
+    if (field === 'title') return a.title || '';
+    if (field === 'required_documentation') return a.description || '';
+    if (field === 'source') return a.documentation?.[0]?.label || '';
+    if (field === 'null_hypothesis') return a.condition?.[0]?.expression?.null_hypothesis || '';
+    return '';
+}
+function setFhirFieldValue(a, field, value) {
+    if (field === 'text') { if (a.condition?.[0]?.expression) a.condition[0].expression.expression = value; else a.title = value; }
+    else if (field === 'title') a.title = value;
+    else if (field === 'required_documentation') { if (value) a.description = value; else delete a.description; }
+    else if (field === 'source') { if (a.documentation?.[0]) a.documentation[0].label = value; }
+    else if (field === 'null_hypothesis' && a.condition?.[0]?.expression) {
+        const meaningful = (value || '').replace(/\s/g, '').length > 5;
+        if (meaningful) a.condition[0].expression.null_hypothesis = value; else delete a.condition[0].expression.null_hypothesis;
+    }
+}
+function applyEdit(nodeId, field, value) {
+    if (field === '_idSegment') { renameNode(nodeId, value); return; }
+    const a = nodeIndex[nodeId];
+    if (!a) return;
+    // track redline for any field (skip for newly added nodes — they're all "new")
+    if (!a._redline_added) {
+        if (!a._redlines) a._redlines = {};
+        const orig = getFhirFieldValue(a, field);
+        if (value !== orig && !a._redlines[field]) a._redlines[field] = { original: orig };
+        else if (a._redlines[field] && value === a._redlines[field].original) delete a._redlines[field];
+        if (!Object.keys(a._redlines).length) delete a._redlines;
+    }
+    setFhirFieldValue(a, field, value);
+}
+
+// === Comments ===
+function addComment(nodeId, text) {
+    const a = nodeIndex[nodeId];
+    if (!a || !text.trim()) return;
+    pushUndo();
+    if (!a._comments) a._comments = [];
+    a._comments.push({ author: getAuthor(), text: text.trim(), ts: new Date().toISOString() });
+    rerender(); persist();
+}
+
+// === Redline resolution ===
+function resolveRedline(nodeId, field, accept) {
+    const a = nodeIndex[nodeId];
+    if (!a?._redlines?.[field]) return;
+    pushUndo();
+    if (!accept) {
+        if (field === 'selectionBehavior') a.selectionBehavior = a._redlines[field].original;
+        else setFhirFieldValue(a, field, a._redlines[field].original);
+    }
+    delete a._redlines[field];
+    if (!Object.keys(a._redlines).length) delete a._redlines;
+    rerender(); persist();
+}
+
+// === Rename node ID ===
+function renameNode(oldId, newSegment) {
+    const newSeg = newSegment.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '');
+    if (!newSeg) return;
+    const parts = oldId.split('.'); parts[parts.length - 1] = newSeg;
+    const newId = parts.join('.');
+    if (newId === oldId) return;
+    function renameFhir(a, oldPre, newPre) {
+        if (a.id === oldPre || a.id.startsWith(oldPre + '.')) a.id = newPre + a.id.slice(oldPre.length);
+        (a.action || []).forEach(c => renameFhir(c, oldPre, newPre));
+    }
+    const a = nodeIndex[oldId];
+    if (a) renameFhir(a, oldId, newId);
+    rerender(); persist();
+}
+
+// === Add/delete nodes in FHIR JSON ===
+function findFhirParent(nodeId) {
+    const root = getPlanDef(fullJson)?.action || [];
+    if (root.some(a => a.id === nodeId)) return root;
+    function find(actions) {
+        for (const a of actions) {
+            if ((a.action || []).some(c => c.id === nodeId)) return a.action;
+            const deeper = find(a.action || []);
+            if (deeper) return deeper;
+        }
+        return null;
+    }
+    return find(root);
+}
+
+function addChild(nodeId) {
+    pushUndo();
+    const a = nodeIndex[nodeId];
+    if (!a) return;
+    if (!a.action) a.action = [];
+    if (!a.selectionBehavior) a.selectionBehavior = 'all';
+    const newId = nodeId + '.new_' + Date.now().toString(36);
+    a.action.push({
+        id: newId, title: '(new criterion — click to edit)', _redline_added: true,
+        description: '', documentation: [{type: 'documentation', label: '', display: '', url: 'N/A'}],
+        condition: [{kind: 'applicability', expression: {language: 'text/plain', expression: '(new criterion — click to edit)'}}]
+    });
+    rerender(); persist();
+}
+function addSibling(nodeId) {
+    pushUndo();
+    const siblings = findFhirParent(nodeId);
+    if (!siblings) return;
+    const idx = siblings.findIndex(a => a.id === nodeId);
+    const parentPrefix = nodeId.includes('.') ? nodeId.slice(0, nodeId.lastIndexOf('.') + 1) : '';
+    const newId = parentPrefix + 'new_' + Date.now().toString(36);
+    siblings.splice(idx + 1, 0, {
+        id: newId, title: '(new criterion — click to edit)', _redline_added: true,
+        description: '', documentation: [{type: 'documentation', label: '', display: '', url: 'N/A'}],
+        condition: [{kind: 'applicability', expression: {language: 'text/plain', expression: '(new criterion — click to edit)'}}]
+    });
+    rerender(); persist();
+}
+
+function deleteNode(nodeId) {
+    const a = nodeIndex[nodeId];
+    if (!a) return;
+    if (a._redline_added) { // added node: just remove it entirely
+        const siblings = findFhirParent(nodeId);
+        if (!siblings) return;
+        pushUndo();
+        const idx = siblings.findIndex(s => s.id === nodeId);
+        if (idx >= 0) siblings.splice(idx, 1);
+    } else { // existing node: mark for deletion
+        pushUndo();
+        a._redline_deleted = true;
+    }
+    rerender(); persist();
+}
+function resolveNodeRedline(nodeId, accept) {
+    const a = nodeIndex[nodeId];
+    if (!a) return;
+    pushUndo();
+    if (a._redline_added) {
+        if (!accept) { // reject addition: remove node
+            const siblings = findFhirParent(nodeId);
+            if (siblings) { const idx = siblings.findIndex(s => s.id === nodeId); if (idx >= 0) siblings.splice(idx, 1); }
+        } else { delete a._redline_added; } // accept addition: keep it
+    } else if (a._redline_deleted) {
+        if (accept) { // accept deletion: actually remove
+            const siblings = findFhirParent(nodeId);
+            if (siblings) { const idx = siblings.findIndex(s => s.id === nodeId); if (idx >= 0) siblings.splice(idx, 1); }
+        } else { delete a._redline_deleted; } // reject deletion: restore
+    }
+    rerender(); persist();
+}
+
+// === Word-level diff (Myers-like LCS) ===
+function wordDiff(oldStr, newStr) {
+    const a = oldStr.split(/\s+/).filter(Boolean), b = newStr.split(/\s+/).filter(Boolean);
+    const n = a.length, m = b.length;
+    // LCS via DP (fine for <500 words)
+    const dp = Array.from({length: n + 1}, () => new Uint16Array(m + 1));
+    for (let i = 1; i <= n; i++) for (let j = 1; j <= m; j++) dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] + 1 : Math.max(dp[i-1][j], dp[i][j-1]);
+    // backtrack to get ops
+    const ops = [];
+    let i = n, j = m;
+    while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && a[i-1] === b[j-1]) { ops.push({type: 'equal', word: a[--i]}); j--; }
+        else if (j > 0 && (i === 0 || dp[i][j-1] >= dp[i-1][j])) { ops.push({type: 'add', word: b[--j]}); }
+        else { ops.push({type: 'del', word: a[--i]}); }
+    }
+    return ops.reverse();
+}
+function renderDiff(el, oldStr, newStr) {
+    el.innerHTML = '';
+    const ops = wordDiff(oldStr, newStr);
+    // merge consecutive ops of same type
+    let cur = null;
+    const flush = () => { if (!cur) return; const s = document.createElement('span'); if (cur.type === 'del') s.className = 'redline-old'; else if (cur.type === 'add') s.className = 'redline-new'; s.textContent = cur.words.join(' ') + ' '; el.appendChild(s); cur = null; };
+    for (const op of ops) { if (cur && cur.type === op.type) cur.words.push(op.word); else { flush(); cur = {type: op.type, words: [op.word]}; } }
+    flush();
+}
+
+// === Search/filter ===
+function applyFilter(query) {
+    const q = query.toLowerCase().trim();
+    document.querySelectorAll('.tree-node').forEach(li => {
+        if (!q) { li.classList.remove('dimmed'); return; }
+        const texts = [...li.querySelectorAll(':scope > .tree-text:not(.tree-id)')].map(e => e.textContent.toLowerCase()).join(' ');
+        li.classList.toggle('dimmed', !texts.includes(q));
+    });
+    if (q) expandAll();
+}
+
+// === Shared UI helpers ===
+function makeRedlineActions(nodeId, field) {
+    const actions = document.createElement('span');
+    actions.className = 'redline-actions';
+    const ab = document.createElement('button'); ab.className = 'redline-accept'; ab.textContent = '✓';
+    ab.onclick = e => { e.stopPropagation(); resolveRedline(nodeId, field, true); };
+    const rb = document.createElement('button'); rb.className = 'redline-reject'; rb.textContent = '✗';
+    rb.onclick = e => { e.stopPropagation(); resolveRedline(nodeId, field, false); };
+    actions.appendChild(ab); actions.appendChild(rb);
+    return actions;
+}
+
+// === Render tree ===
+function renderTree(nodes, depth = 0) {
+    const ul = document.createElement('ul');
+    nodes.forEach(n => {
+        const li = document.createElement('li');
+        li.className = 'tree-node' + (n._added ? ' redline-added' : '') + (n._deleted ? ' redline-deleted' : '');
+        const hasKids = n.children?.length > 0;
+        // toggle
+        const toggle = document.createElement('span');
+        toggle.className = 'tree-toggle';
+        toggle.textContent = hasKids ? '▼' : '·';
+        if (hasKids) toggle.onclick = () => {
+            const kids = li.querySelector(':scope > ul');
+            const open = kids.style.display !== 'none';
+            kids.style.display = open ? 'none' : '';
+            toggle.textContent = open ? '▶' : '▼';
+        };
+        li.appendChild(toggle);
+        // editable ID
+        n._idSegment = n.id.split('.').pop();
+        const id = document.createElement('span');
+        id.className = 'tree-id tree-text';
+        id.textContent = n._idSegment;
+        id.title = n.id + ' (click to rename)';
+        id.onclick = () => startEdit(li, n, id, '_idSegment');
+        li.appendChild(id);
+        // text (with redline rendering)
+        const txt = document.createElement('span');
+        txt.className = 'tree-text';
+        if (n._redlines?.text) {
+            txt.innerHTML = '';
+            renderDiff(txt, n._redlines.text.original, n.text);
+            txt.appendChild(makeRedlineActions(n.id, 'text'));
+            txt.onclick = e => { if (!e.target.closest('.redline-actions')) startEdit(li, n, txt, 'text'); };
+            txt.title = 'Click to edit';
+        } else {
+            txt.textContent = n.text.slice(0, 175) + (n.text.length > 175 ? '...' : '');
+            txt.title = 'Click to edit';
+            txt.onclick = () => startEdit(li, n, txt, 'text');
+        }
+        li.appendChild(txt);
+        // logic badge (clickable dropdown)
+        if (n.child_logic || hasKids) {
+            const logic = document.createElement('span');
+            logic.className = 'tree-logic';
+            logic.textContent = n.child_logic || '+logic';
+            logic.title = 'Click to change selection behavior';
+            logic.onclick = e => {
+                e.stopPropagation();
+                if (li.querySelector('.logic-select')) return;
+                const sel = document.createElement('select');
+                sel.className = 'logic-select';
+                sel.style.cssText = 'font-size:8pt;margin-left:4px;border-radius:3px;border:1px solid var(--accent);padding:1px 4px;';
+                ['all', 'one-or-more', 'at-least-one', 'exactly-one', 'none'].forEach(v => {
+                    const opt = document.createElement('option');
+                    opt.value = v; opt.textContent = v; if (v === (n.child_logic || 'all')) opt.selected = true;
+                    sel.appendChild(opt);
+                });
+                logic.after(sel);
+                sel.focus();
+                const done = () => {
+                    const v = sel.value;
+                    sel.remove();
+                    if (v !== (n.child_logic || '')) {
+                        pushUndo();
+                        const a = nodeIndex[n.id];
+                        if (a) {
+                            if (!a._redline_added && !a._redlines?.selectionBehavior) {
+                                if (!a._redlines) a._redlines = {};
+                                a._redlines.selectionBehavior = { original: a.selectionBehavior || '' };
+                            }
+                            a.selectionBehavior = v;
+                        }
+                        rerender(); persist();
+                    }
+                };
+                sel.onchange = done;
+                sel.onblur = done;
+            };
+            li.appendChild(logic);
+        }
+        // gate badge
+        if (n.is_gating) {
+            const gate = document.createElement('span');
+            gate.className = 'tree-gate';
+            gate.innerHTML = 'Gate<span class="tree-gate-tip">'
+                + 'Gating node<br>'
+                + 'This criterion acts as a prerequisite gate because it has both an expression and children. '
+                + 'The gate condition must be met first, then children are evaluated.<br><br>'
+                + 'To remove gating: clear this node\'s expression (making it a pure aggregation node) '
+                + 'or move the expression to a new child.</span>';
+            li.appendChild(gate);
+        }
+        // detail button
+        const detBtn = document.createElement('span');
+        detBtn.className = 'tree-detail-btn'; detBtn.textContent = '+';
+        const detail = document.createElement('div');
+        detail.className = 'tree-detail';
+        const makeField = (label, field) => {
+            const div = document.createElement('div');
+            div.innerHTML = `<strong>${label}:</strong> `;
+            const redline = n._redlines?.[field];
+            if (redline) {
+                const diffSpan = document.createElement('span');
+                renderDiff(diffSpan, redline.original, n[field] || '');
+                diffSpan.className = 'tree-text';
+                diffSpan.onclick = e => { if (!e.target.closest('.redline-actions')) startEdit(div, n, diffSpan, field); };
+                diffSpan.appendChild(makeRedlineActions(n.id, field));
+                div.appendChild(diffSpan);
+            } else {
+                const span = document.createElement('span');
+                span.className = 'tree-text';
+                span.textContent = n[field] || '(click to add)';
+                span.style.fontStyle = n[field] ? '' : 'italic';
+                span.onclick = e => { e.stopPropagation(); startEdit(div, n, span, field); };
+                div.appendChild(span);
+            }
+            return div;
+        };
+        if (n.text.length > 175) detail.appendChild(makeField('Full text', 'text'));
+        if (n.is_gating) detail.appendChild(makeField('Title', 'title'));
+        detail.appendChild(makeField('Required documentation', 'required_documentation'));
+        detail.appendChild(makeField('Source', 'source'));
+        detail.appendChild(makeField('Null hypothesis', 'null_hypothesis'));
+        const hasDetailRedlines = ['title', 'required_documentation', 'source', 'null_hypothesis'].some(f => n._redlines?.[f]);
+        if (hasDetailRedlines) { detail.style.display = 'block'; detBtn.textContent = '−'; detBtn.style.cssText = 'background:#16a34a;color:#fff;'; }
+        detBtn.onclick = () => { const open = detail.style.display === 'block'; detail.style.display = open ? 'none' : 'block'; detBtn.textContent = open ? '+' : '−'; };
+        li.appendChild(detBtn);
+        // comment button
+        const commentBtn = document.createElement('span');
+        commentBtn.className = 'tree-comment-btn' + (n._comments?.length ? ' has-comments' : '');
+        commentBtn.textContent = n._comments?.length ? `💬${n._comments.length}` : '💬';
+        commentBtn.title = 'Comments';
+        const commentPanel = document.createElement('div');
+        commentPanel.className = 'comment-panel';
+        // render existing comments
+        (n._comments || []).forEach((c, ci) => {
+            const item = document.createElement('div');
+            item.className = 'comment-item';
+            const ts = new Date(c.ts);
+            const timeStr = ts.toLocaleDateString() + ' ' + ts.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+            const author = document.createElement('span'); author.className = 'comment-author'; author.textContent = c.author;
+            const time = document.createElement('span'); time.className = 'comment-time'; time.textContent = timeStr;
+            const del = document.createElement('span'); del.textContent = ' ×'; del.style.cssText = 'cursor:pointer;color:var(--text-muted);font-size:7pt;';
+            del.onclick = () => { pushUndo(); const a = nodeIndex[n.id]; if (a?._comments) { a._comments.splice(ci, 1); if (!a._comments.length) delete a._comments; } rerender(); persist(); };
+            const body = document.createElement('div'); body.className = 'comment-text'; body.textContent = c.text;
+            item.appendChild(author); item.appendChild(time); item.appendChild(del); item.appendChild(body);
+            commentPanel.appendChild(item);
+        });
+        // add comment input
+        const inputRow = document.createElement('div');
+        inputRow.className = 'comment-input';
+        const inp = document.createElement('input');
+        inp.type = 'text'; inp.placeholder = 'Add a comment...';
+        inp.onkeydown = e => { if (e.key === 'Enter' && inp.value.trim()) { addComment(n.id, inp.value); } };
+        const addBtn = document.createElement('button');
+        addBtn.textContent = 'Add';
+        addBtn.onclick = () => { if (inp.value.trim()) addComment(n.id, inp.value); };
+        inputRow.appendChild(inp);
+        inputRow.appendChild(addBtn);
+        commentPanel.appendChild(inputRow);
+        commentBtn.onclick = () => {
+            const open = commentPanel.style.display === 'block';
+            commentPanel.style.display = open ? 'none' : 'block';
+            if (!open) setTimeout(() => inp.focus(), 0);
+        };
+        li.appendChild(commentBtn);
+        // add/delete buttons
+        if (!n._deleted) {
+            const childBtn = document.createElement('span');
+            childBtn.className = 'tree-add-btn'; childBtn.textContent = '+child'; childBtn.title = 'Add child node';
+            childBtn.onclick = () => addChild(n.id);
+            li.appendChild(childBtn);
+            const sibBtn = document.createElement('span');
+            sibBtn.className = 'tree-add-btn'; sibBtn.textContent = '+sibling'; sibBtn.title = 'Add sibling node';
+            sibBtn.onclick = () => addSibling(n.id);
+            li.appendChild(sibBtn);
+            const delBtn = document.createElement('span');
+            delBtn.className = 'tree-del-btn'; delBtn.textContent = '×'; delBtn.title = 'Delete this node';
+            delBtn.onclick = () => deleteNode(n.id);
+            li.appendChild(delBtn);
+        }
+        // accept/reject for added or deleted nodes
+        if (n._added || n._deleted) {
+            const ab = document.createElement('button'); ab.className = 'tree-node-action accept';
+            ab.textContent = n._added ? '✓ Keep' : '✓ Delete'; ab.title = n._added ? 'Accept addition' : 'Accept deletion';
+            ab.onclick = e => { e.stopPropagation(); resolveNodeRedline(n.id, true); };
+            const rb = document.createElement('button'); rb.className = 'tree-node-action reject';
+            rb.textContent = n._added ? '✗ Remove' : '✗ Restore'; rb.title = n._added ? 'Reject addition' : 'Reject deletion';
+            rb.onclick = e => { e.stopPropagation(); resolveNodeRedline(n.id, false); };
+            li.appendChild(ab); li.appendChild(rb);
+        }
+        // panels
+        li.appendChild(detail);
+        li.appendChild(commentPanel);
+        if (hasKids) li.appendChild(renderTree(n.children, depth + 1));
+        ul.appendChild(li);
+    });
+    return ul;
+}
+
+function startEdit(container, node, txtSpan, field) {
+    if (container.querySelector('.tree-edit')) return;
+    pushUndo();
+    const wrapper = document.createElement('div'), textarea = document.createElement('textarea');
+    textarea.className = 'tree-edit';
+    textarea.value = node[field] || '';
+    const fhirNode = nodeIndex[node.id];
+    const origText = field !== '_idSegment' ? (fhirNode?._redlines?.[field]?.original ?? (node[field] || '')) : null;
+    const diffEl = origText !== null ? document.createElement('div') : null;
+    if (diffEl) {
+        diffEl.style.cssText = 'font-size:8pt;padding:4px 6px;background:var(--bg);border-radius:3px;margin-top:2px;line-height:1.6;';
+        const updateDiff = () => renderDiff(diffEl, origText, textarea.value.trim());
+        textarea.addEventListener('input', updateDiff);
+        updateDiff();
+    }
+    wrapper.innerHTML += '<div class="tree-edit-hint">Enter to save · Shift+Enter for newline · Esc to cancel</div>';
+    wrapper.prepend(textarea);
+    if (diffEl) wrapper.appendChild(diffEl);
+    txtSpan.style.display = 'none';
+    container.appendChild(wrapper);
+    textarea.focus(); textarea.select();
+    let done = false;
+    const cleanup = () => { wrapper.remove(); txtSpan.style.display = ''; };
+    const save = () => {
+        if (done) return; done = true;
+        const v = textarea.value.trim();
+        cleanup();
+        if (v !== (node[field] || '')) {
+            node[field] = v;
+            txtSpan.textContent = v || '(click to add)';
+            txtSpan.style.fontStyle = v ? '' : 'italic';
+            applyEdit(node.id, field, v);
+            rerender(); persist();
+        } else { undoStack.pop(); updateUndoBtn(); }
+    };
+    textarea.onblur = save;
+    textarea.onkeydown = e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); save(); } if (e.key === 'Escape') { done = true; undoStack.pop(); updateUndoBtn(); cleanup(); } };
+}
+
+function expandAll() {
+    document.querySelectorAll('.tree-view ul').forEach(ul => ul.style.display = '');
+    document.querySelectorAll('.tree-toggle').forEach(t => { if (t.textContent === '▶') t.textContent = '▼'; });
+}
+function collapseAll() {
+    document.querySelectorAll('.tree-view ul ul').forEach(ul => ul.style.display = 'none');
+    document.querySelectorAll('.tree-toggle').forEach(t => { if (t.textContent === '▼') t.textContent = '▶'; });
+}
+
+function countNodes(nodes) { return nodes.reduce((s, n) => s + 1 + countNodes(n.children || []), 0); }
+
+function rerender() {
+    nodeIndex = {};
+    treeData = fhirToTree(fullJson);
+    if (!treeData) return;
+    const tv = document.getElementById('tree-view');
+    tv.innerHTML = '';
+    tv.appendChild(renderTree(treeData.criteria));
+    const q = document.getElementById('search').value;
+    if (q) applyFilter(q);
+}
+
+function loadJson(data) {
+    fullJson = data;
+    rerender();
+    if (!treeData) { alert('Could not find PlanDefinition in JSON'); return; }
+    document.getElementById('page-title').textContent = treeData.name || 'Criteria Tree Editor';
+    // metadata
+    const meta = document.getElementById('meta'), items = [];
+    if (data.procedure_code) items.push(`<div class="meta-item"><span class="meta-label">CPT:</span> <strong>${data.procedure_code}</strong></div>`);
+    if (data.states?.length) items.push(`<div class="meta-item"><span class="meta-label">States:</span> <strong>${data.states.join(', ')}</strong></div>`);
+    items.push(`<div class="meta-item"><span class="meta-label">Nodes:</span> <strong>${countNodes(treeData.criteria)}</strong></div>`);
+    let comments = 0, redlines = 0;
+    function countAnnotations(actions) { for (const a of actions) { if (a._comments?.length) comments += a._comments.length; if (a._redlines) redlines += Object.keys(a._redlines).length; if (a._redline_added) redlines++; if (a._redline_deleted) redlines++; countAnnotations(a.action || []); } }
+    const pd = getPlanDef(data);
+    if (pd) countAnnotations(pd.action || []);
+    if (comments || redlines) items.push(`<div class="meta-item"><span class="meta-label">Annotations:</span> <strong>${comments} comment${comments !== 1 ? 's' : ''}, ${redlines} redline${redlines !== 1 ? 's' : ''}</strong></div>`);
+    meta.innerHTML = items.join('');
+    meta.style.display = items.length ? '' : 'none';
+    document.getElementById('tree-view').style.display = '';
+    document.getElementById('upload-zone').style.display = 'none';
+    ['expand-btn', 'collapse-btn', 'download-menu', 'search', 'clear-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = '');
+    persist();
+    undoStack.length = 0;
+    updateUndoBtn();
+}
+
+function clearAll() {
+    if (!confirm('Clear current tree? This cannot be undone.')) return;
+    fullJson = null; nodeIndex = {}; treeData = null; dirty = false;
+    undoStack.length = 0;
+    clearPersisted();
+    document.getElementById('tree-view').innerHTML = '';
+    document.getElementById('tree-view').style.display = 'none';
+    document.getElementById('upload-zone').style.display = '';
+    document.getElementById('meta').style.display = 'none';
+    document.getElementById('page-title').textContent = 'Criteria Tree Editor';
+    document.getElementById('search').value = '';
+    ['expand-btn', 'collapse-btn', 'download-menu', 'search', 'clear-btn', 'undo-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = 'none');
+}
+
+// === Download ===
+function toggleDownloadMenu() {
+    document.getElementById('download-opts').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+    if (!e.target.closest('.download-menu')) document.getElementById('download-opts')?.classList.remove('open');
+});
+
+function download(mode) {
+    document.getElementById('download-opts').classList.remove('open');
+    const json = JSON.parse(JSON.stringify(fullJson)); // deep clone
+    if (mode === 'clean') {
+        // strip all _comments and _redline, accept proposed redlines (keep current text)
+        function strip(actions) {
+            for (let i = actions.length - 1; i >= 0; i--) {
+                if (actions[i]._redline_deleted) { actions.splice(i, 1); continue; }
+                delete actions[i]._comments;
+                delete actions[i]._redlines;
+                delete actions[i]._redline_added;
+                strip(actions[i].action || []);
+            }
+        }
+        const pd = getPlanDef(json);
+        if (pd) strip(pd.action || []);
+        delete json._draft_metadata;
+    } else {
+        json._draft_metadata = {
+            format: 'fhir-criteria-draft-v1',
+            description: 'Fields prefixed with _ are review annotations, not part of the FHIR spec.',
+            _redlines: 'Per-field change tracking. Each key is a field name, value has "original" (before edit). The current FHIR field value is the proposed replacement.',
+            _redline_added: 'Node was added by a reviewer (not in the original).',
+            _redline_deleted: 'Node is proposed for deletion (still present for review).',
+            _comments: 'Reviewer comments with author, text, and timestamp.'
+        };
+    }
+    const blob = new Blob([JSON.stringify(json, null, 2)], {type: 'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = mode === 'clean' ? 'job_template.json' : 'job_template_draft.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+}
+
+// === File input + drag-and-drop ===
+document.getElementById('file-input').onchange = e => {
+    const file = e.target.files[0];
+    if (file) file.text().then(t => loadJson(JSON.parse(t)));
+};
+const zone = document.getElementById('upload-zone');
+zone.ondragover = e => { e.preventDefault(); zone.style.borderColor = 'var(--accent)'; };
+zone.ondragleave = () => zone.style.borderColor = '';
+zone.ondrop = e => { e.preventDefault(); zone.style.borderColor = ''; const f = e.dataTransfer.files[0]; if (f) f.text().then(t => loadJson(JSON.parse(t))); };
+
+// === Search ===
+document.getElementById('search').oninput = e => applyFilter(e.target.value);
+
+// === Keyboard shortcut ===
+document.onkeydown = e => { if ((e.ctrlKey || e.metaKey) && e.key === 'z' && !['INPUT','TEXTAREA'].includes(e.target.tagName)) { e.preventDefault(); undo(); } };
+
+// === Restore from localStorage on load ===
+const saved = localStorage.getItem(STORAGE_KEY);
+if (saved) {
+    try {
+        const data = JSON.parse(saved);
+        if (data && confirm('Restore unsaved session?')) loadJson(data);
+        else clearPersisted();
+    } catch { clearPersisted(); }
+}
+</script>
+</body>
+</html>
