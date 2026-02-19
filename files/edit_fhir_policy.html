@@ -19,7 +19,7 @@
         .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; }
         .upload-zone { text-align: center; padding: 48px; color: var(--text-muted); border: 2px dashed var(--border); border-radius: 8px; cursor: pointer; }
         .upload-zone:hover { border-color: var(--accent); color: var(--accent); }
-        .tree-view { font-size: 9pt; }
+        .tree-view { font-size: 9pt; background: var(--bg); border-radius: 8px; padding: 12px; }
         .tree-view ul { list-style: none; padding-left: 16px; margin: 0; }
         .tree-view > ul { padding-left: 0; }
         .tree-node { padding: 3px 0; }
@@ -41,11 +41,15 @@
         .tree-detail-btn:hover, .tree-add-btn:hover, .tree-comment-btn:hover { background: var(--accent); color: #fff; }
         .tree-del-btn:hover { background: var(--danger); color: #fff; }
         .tree-comment-btn.has-comments { background: #fef3c7; color: #92400e; }
-        .tree-detail { display: none; margin: 4px 0 4px 20px; padding: 6px 10px; background: var(--bg); border-radius: 4px; font-size: 8pt; color: var(--text-muted); border-left: 2px solid var(--accent); }
+        .tree-detail { display: none; margin: 4px 0 4px 20px; padding: 6px 10px; background: var(--card); border-radius: 4px; font-size: 8pt; color: var(--text-muted); border-left: 2px solid var(--accent); }
         .tree-detail strong { color: var(--text); }
-        .tree-logic { font-size: 8pt; padding: 1px 5px; border-radius: 3px; margin-left: 6px; background: #e0e7ff; color: #3730a3; cursor: pointer; }
-        .tree-logic:hover { background: #c7d2fe; }
-        .tree-gate { font-size: 8pt; padding: 1px 5px; border-radius: 3px; margin-left: 6px; background: #be185d; color: #fff; font-weight: 600; cursor: help; position: relative; }
+        .tree-logic { font-size: 8pt; padding: 1px 5px; border-radius: 3px; margin-left: 6px; background: var(--border); color: var(--text-muted); cursor: pointer; }
+        .tree-logic.all { background: #dbeafe; color: #1e40af; }
+        .tree-logic.one-or-more { background: #dcfce7; color: #166534; }
+        .tree-logic.exactly-one { background: #fef3c7; color: #92400e; }
+        .tree-logic.none { background: #fee2e2; color: #991b1b; }
+        .tree-logic:hover { opacity: 0.8; }
+        .tree-gate { font-size: 8pt; padding: 1px 5px; border-radius: 3px; margin-left: 6px; background: #f3e8ff; color: #6b21a8; font-weight: 600; cursor: help; position: relative; }
         .tree-gate-tip { display: none; position: absolute; left: 0; top: 100%; margin-top: 4px; width: 320px; padding: 8px 10px; background: var(--card); border: 1px solid var(--border); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-size: 8pt; color: var(--text); line-height: 1.5; z-index: 10; white-space: normal; font-weight: 400; }
         .tree-gate:hover .tree-gate-tip { display: block; }
         .tree-edit { width: 100%; padding: 6px 8px; font-size: 9pt; border: 1px solid var(--accent); border-radius: 4px; margin: 4px 0; min-height: 60px; resize: vertical; font-family: inherit; line-height: 1.4; }
@@ -301,6 +305,7 @@ function deleteNode(nodeId) {
         const idx = siblings.findIndex(s => s.id === nodeId);
         if (idx >= 0) siblings.splice(idx, 1);
     } else { // existing node: mark for deletion
+        if (!confirm('Delete this node and all its children?')) return;
         pushUndo();
         a._redline_deleted = true;
     }
@@ -356,8 +361,8 @@ function applyFilter(query) {
     const q = query.toLowerCase().trim();
     document.querySelectorAll('.tree-node').forEach(li => {
         if (!q) { li.classList.remove('dimmed'); return; }
-        const texts = [...li.querySelectorAll(':scope > .tree-text:not(.tree-id)')].map(e => e.textContent.toLowerCase()).join(' ');
-        li.classList.toggle('dimmed', !texts.includes(q));
+        const expr = (li.dataset.expression || '').toLowerCase();
+        li.classList.toggle('dimmed', !expr.includes(q));
     });
     if (q) expandAll();
 }
@@ -375,11 +380,13 @@ function makeRedlineActions(nodeId, field) {
 }
 
 // === Render tree ===
-function renderTree(nodes, depth = 0) {
+function renderTree(nodes, depth = 0, ancestorDeleted = false) {
     const ul = document.createElement('ul');
     nodes.forEach(n => {
+        const effectiveDeleted = ancestorDeleted || n._deleted;
         const li = document.createElement('li');
         li.className = 'tree-node' + (n._added ? ' redline-added' : '') + (n._deleted ? ' redline-deleted' : '');
+        li.dataset.expression = n.text || '';
         const hasKids = n.children?.length > 0;
         // toggle
         const toggle = document.createElement('span');
@@ -418,7 +425,7 @@ function renderTree(nodes, depth = 0) {
         // logic badge (clickable dropdown)
         if (n.child_logic || hasKids) {
             const logic = document.createElement('span');
-            logic.className = 'tree-logic';
+            logic.className = 'tree-logic ' + (n.child_logic || '');
             logic.textContent = n.child_logic || '+logic';
             logic.title = 'Click to change selection behavior';
             logic.onclick = e => {
@@ -542,7 +549,7 @@ function renderTree(nodes, depth = 0) {
         };
         li.appendChild(commentBtn);
         // add/delete buttons
-        if (!n._deleted) {
+        if (!effectiveDeleted) {
             const childBtn = document.createElement('span');
             childBtn.className = 'tree-add-btn'; childBtn.textContent = '+child'; childBtn.title = 'Add child node';
             childBtn.onclick = () => addChild(n.id);
@@ -556,20 +563,27 @@ function renderTree(nodes, depth = 0) {
             delBtn.onclick = () => deleteNode(n.id);
             li.appendChild(delBtn);
         }
-        // accept/reject for added or deleted nodes
-        if (n._added || n._deleted) {
+        // accept/reject for added nodes
+        if (n._added) {
             const ab = document.createElement('button'); ab.className = 'tree-node-action accept';
-            ab.textContent = n._added ? '✓ Keep' : '✓ Delete'; ab.title = n._added ? 'Accept addition' : 'Accept deletion';
+            ab.textContent = '✓ Keep'; ab.title = 'Accept addition';
             ab.onclick = e => { e.stopPropagation(); resolveNodeRedline(n.id, true); };
             const rb = document.createElement('button'); rb.className = 'tree-node-action reject';
-            rb.textContent = n._added ? '✗ Remove' : '✗ Restore'; rb.title = n._added ? 'Reject addition' : 'Reject deletion';
+            rb.textContent = '✗ Remove'; rb.title = 'Reject addition';
             rb.onclick = e => { e.stopPropagation(); resolveNodeRedline(n.id, false); };
             li.appendChild(ab); li.appendChild(rb);
+        }
+        // restore button for deleted nodes
+        if (n._deleted && !ancestorDeleted) {
+            const restoreBtn = document.createElement('span');
+            restoreBtn.className = 'tree-add-btn'; restoreBtn.textContent = 'restore'; restoreBtn.title = 'Restore this node and its children';
+            restoreBtn.onclick = () => { pushUndo(); const a = nodeIndex[n.id]; if (a) delete a._redline_deleted; rerender(); persist(); };
+            li.appendChild(restoreBtn);
         }
         // panels
         li.appendChild(detail);
         li.appendChild(commentPanel);
-        if (hasKids) li.appendChild(renderTree(n.children, depth + 1));
+        if (hasKids) li.appendChild(renderTree(n.children, depth + 1, effectiveDeleted));
         ul.appendChild(li);
     });
     return ul;
