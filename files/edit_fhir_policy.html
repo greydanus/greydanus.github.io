@@ -101,7 +101,10 @@
         <button class="btn btn-outline" id="undo-btn" style="display:none" onclick="undo()" title="Ctrl/Cmd+Z">Undo (⌘Z)</button>
         <button class="btn btn-outline" id="expand-btn" style="display:none" onclick="expandAll()">Expand All</button>
         <button class="btn btn-outline" id="collapse-btn" style="display:none" onclick="collapseAll()">Collapse All</button>
-        <button class="btn btn-outline" id="export-diffs-btn" style="display:none" onclick="exportDiffs()">Export All Diffs</button>
+        <span id="export-diffs-box" style="display:none">
+            <button class="btn btn-outline" id="export-diffs-btn" onclick="exportDiffs()">Export All Diffs</button>
+            <label style="font-size:11px;color:var(--text-muted);cursor:pointer;user-select:none"><input type="checkbox" id="export-minify" checked style="margin:0 3px 0 6px;vertical-align:middle">minified</label>
+        </span>
         <div class="download-menu" id="download-menu" style="display:none">
             <button class="btn" onclick="toggleDownloadMenu()">Download ▾</button>
             <div class="download-opts" id="download-opts">
@@ -670,7 +673,7 @@ function loadJson(data) {
     meta.style.display = items.length ? '' : 'none';
     document.getElementById('tree-view').style.display = '';
     document.getElementById('upload-zone').style.display = 'none';
-    ['expand-btn', 'collapse-btn', 'download-menu', 'export-diffs-btn', 'search', 'clear-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = '');
+    ['expand-btn', 'collapse-btn', 'download-menu', 'export-diffs-box', 'search', 'clear-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = '');
     persist();
     undoStack.length = 0;
     updateUndoBtn();
@@ -687,7 +690,7 @@ function clearAll() {
     document.getElementById('meta').style.display = 'none';
     document.getElementById('page-title').textContent = 'Criteria Tree Editor';
     document.getElementById('search').value = '';
-    ['expand-btn', 'collapse-btn', 'download-menu', 'export-diffs-btn', 'search', 'clear-btn', 'undo-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = 'none');
+    ['expand-btn', 'collapse-btn', 'download-menu', 'export-diffs-box', 'search', 'clear-btn', 'undo-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = 'none');
 }
 
 // === Download ===
@@ -782,7 +785,8 @@ function exportDiffs() {
     }
     walk(pd.action || [], null);
     if (!Object.keys(diffs).length) { alert('No diffs to export — no edits, comments, or structural changes found.'); return; }
-    const out = JSON.stringify(diffs, null, 2);
+    const minify = document.getElementById('export-minify').checked;
+    const out = minify ? JSON.stringify(diffs) : JSON.stringify(diffs, null, 2);
     navigator.clipboard.writeText(out).then(() => {
         const btn = document.getElementById('export-diffs-btn');
         const orig = btn.textContent;
