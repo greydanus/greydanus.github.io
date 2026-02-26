@@ -86,6 +86,13 @@
         .download-opts button { display: block; width: 100%; text-align: left; padding: 8px 12px; border: none; background: none; cursor: pointer; font-size: 11px; color: var(--text); }
         .download-opts button:hover { background: var(--bg); }
         .download-opts button small { display: block; color: var(--text-muted); font-size: 9px; }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; justify-content: center; align-items: center; }
+        .modal-overlay.open { display: flex; }
+        .modal-box { background: var(--card); border-radius: 8px; padding: 16px; width: 560px; max-width: 90vw; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+        .modal-box h3 { font-size: 14px; margin-bottom: 8px; }
+        .modal-box textarea { width: 100%; height: 240px; font-family: monospace; font-size: 11px; border: 1px solid var(--border); border-radius: 6px; padding: 8px; resize: vertical; }
+        .modal-box textarea:focus { outline: none; border-color: var(--accent); }
+        .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
     </style>
 </head>
 <body>
@@ -104,6 +111,7 @@
         <span id="export-diffs-box" style="display:none">
             <button class="btn btn-outline" id="export-diffs-btn" onclick="exportDiffs()">Export All Diffs</button>
             <label style="font-size:11px;color:var(--text-muted);cursor:pointer;user-select:none"><input type="checkbox" id="export-minify" checked style="margin:0 3px 0 6px;vertical-align:middle">minified</label>
+            <button class="btn btn-outline" id="import-diffs-btn" onclick="importDiffs()">Import Diffs</button>
         </span>
         <div class="download-menu" id="download-menu" style="display:none">
             <button class="btn" onclick="toggleDownloadMenu()">Download ▾</button>
@@ -111,6 +119,17 @@
                 <button onclick="download('draft')">Download Draft<small>Includes comments + redlines for review</small></button>
                 <button onclick="download('clean')">Download Clean<small>Final version, annotations stripped</small></button>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="import-modal">
+    <div class="modal-box">
+        <h3>Import Diffs</h3>
+        <textarea id="import-textarea" placeholder="Paste diff JSON here..."></textarea>
+        <div class="modal-actions">
+            <button class="btn btn-outline" onclick="closeImportModal()">Cancel</button>
+            <button class="btn" onclick="submitImportModal()">Import</button>
         </div>
     </div>
 </div>
@@ -794,9 +813,102 @@ function exportDiffs() {
         btn.style.background = '#16a34a'; btn.style.color = '#fff'; btn.style.borderColor = '#16a34a';
         setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 1500);
     }).catch(() => {
-        // fallback: show in a prompt for manual copy
         prompt('Copy this diff JSON:', out);
     });
+}
+
+function importDiffs() {
+    if (!fullJson) return;
+    document.getElementById('import-textarea').value = '';
+    document.getElementById('import-modal').classList.add('open');
+    setTimeout(() => document.getElementById('import-textarea').focus(), 0);
+}
+function closeImportModal() { document.getElementById('import-modal').classList.remove('open'); }
+document.getElementById('import-modal').onclick = e => { if (e.target === e.currentTarget) closeImportModal(); };
+function submitImportModal() {
+    const raw = document.getElementById('import-textarea').value.trim();
+    if (!raw) return;
+    let diffs;
+    const ta = document.getElementById('import-textarea');
+    try { diffs = JSON.parse(raw); } catch (e) {
+        ta.style.borderColor = 'var(--danger)';
+        ta.setCustomValidity('Invalid JSON: ' + e.message);
+        ta.reportValidity();
+        return;
+    }
+    ta.style.borderColor = '';
+    const pd = getPlanDef(fullJson);
+    if (!pd) return;
+    // build a lookup from node id to its FHIR action object
+    function buildIndex(actions, map) { for (const a of actions) { map[a.id] = a; buildIndex(a.action || [], map); } return map; }
+    const idx = buildIndex(pd.action || [], {});
+    // validate all referenced node ids exist before applying anything
+    const creates = [], rest = [];
+    for (const [id, entry] of Object.entries(diffs)) {
+        if (entry.action === 'create') creates.push([id, entry]);
+        else rest.push([id, entry]);
+    }
+    const missing = rest.filter(([id]) => !idx[id]).map(([id]) => id);
+    creates.sort((a, b) => a[0].split('.').length - b[0].split('.').length);
+    const missingParents = creates.filter(([, entry]) => entry.parent !== 'root' && !idx[entry.parent]).map(([id, entry]) => `${id} (parent: ${entry.parent})`);
+    if (missing.length || missingParents.length) {
+        let msg = 'Diff references nodes not found in this tree. Are you importing to the wrong policy?\n\n';
+        if (missing.length) msg += 'Missing nodes: ' + missing.slice(0, 10).join(', ') + (missing.length > 10 ? ` (+${missing.length - 10} more)` : '') + '\n';
+        if (missingParents.length) msg += 'Missing parents for new nodes: ' + missingParents.slice(0, 10).join(', ') + (missingParents.length > 10 ? ` (+${missingParents.length - 10} more)` : '') + '\n';
+        ta.style.borderColor = 'var(--danger)';
+        ta.setCustomValidity(msg);
+        ta.reportValidity();
+        return;
+    }
+    closeImportModal();
+    pushUndo();
+    // pass 1: edits, deletes, comments
+    for (const [id, entry] of rest) {
+        const a = idx[id];
+        if (entry.action === 'delete') { a._redline_deleted = true; continue; }
+        if (entry.edits) {
+            if (!a._redlines) a._redlines = {};
+            for (const [field, change] of Object.entries(entry.edits)) {
+                if (!a._redlines[field]) a._redlines[field] = { original: getFhirFieldValue(a, field) };
+                setFhirFieldValue(a, field, change.to);
+            }
+        }
+        if (entry.edit_child_logic) {
+            if (!a._redlines) a._redlines = {};
+            if (!a._redlines.selectionBehavior) a._redlines.selectionBehavior = { original: a.selectionBehavior || '' };
+            a.selectionBehavior = entry.edit_child_logic.to;
+        }
+        if (entry.comments) {
+            if (!a._comments) a._comments = [];
+            for (const c of entry.comments) {
+                const colonIdx = c.indexOf(': ');
+                const author = colonIdx >= 0 ? c.slice(0, colonIdx) : 'Imported';
+                const text = colonIdx >= 0 ? c.slice(colonIdx + 2) : c;
+                a._comments.push({ author, text, ts: new Date().toISOString() });
+            }
+        }
+    }
+    // pass 2: creates (already sorted by depth during validation)
+    for (const [id, entry] of creates) {
+        const parentId = entry.parent;
+        const parent = parentId === 'root' ? null : (idx[parentId] || null);
+        const targetList = parent ? (parent.action || (parent.action = [])) : pd.action;
+        const newNode = {
+            id, title: entry.title || entry.text || '', _redline_added: true,
+            description: entry.required_documentation || '',
+            documentation: [{type: 'documentation', label: entry.source || '', display: '', url: 'N/A'}],
+            condition: [{kind: 'applicability', expression: {language: 'text/plain', expression: entry.text || ''}}]
+        };
+        if (entry.child_logic) newNode.selectionBehavior = entry.child_logic;
+        if (entry.null_hypothesis && newNode.condition[0].expression) newNode.condition[0].expression.null_hypothesis = entry.null_hypothesis;
+        targetList.push(newNode);
+        idx[id] = newNode; // so children of this node can find it
+        if (parent && !parent.selectionBehavior) parent.selectionBehavior = 'all';
+    }
+    rerender(); persist();
+    const btn = document.getElementById('import-diffs-btn');
+    btn.textContent = 'Imported!'; btn.style.background = '#16a34a'; btn.style.color = '#fff'; btn.style.borderColor = '#16a34a';
+    setTimeout(() => { btn.textContent = 'Import Diffs'; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 1500);
 }
 
 // === File input + drag-and-drop ===
