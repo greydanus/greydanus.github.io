@@ -101,6 +101,7 @@
         <button class="btn btn-outline" id="undo-btn" style="display:none" onclick="undo()" title="Ctrl/Cmd+Z">Undo (⌘Z)</button>
         <button class="btn btn-outline" id="expand-btn" style="display:none" onclick="expandAll()">Expand All</button>
         <button class="btn btn-outline" id="collapse-btn" style="display:none" onclick="collapseAll()">Collapse All</button>
+        <button class="btn btn-outline" id="export-diffs-btn" style="display:none" onclick="exportDiffs()">Export All Diffs</button>
         <div class="download-menu" id="download-menu" style="display:none">
             <button class="btn" onclick="toggleDownloadMenu()">Download ▾</button>
             <div class="download-opts" id="download-opts">
@@ -669,7 +670,7 @@ function loadJson(data) {
     meta.style.display = items.length ? '' : 'none';
     document.getElementById('tree-view').style.display = '';
     document.getElementById('upload-zone').style.display = 'none';
-    ['expand-btn', 'collapse-btn', 'download-menu', 'search', 'clear-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = '');
+    ['expand-btn', 'collapse-btn', 'download-menu', 'export-diffs-btn', 'search', 'clear-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = '');
     persist();
     undoStack.length = 0;
     updateUndoBtn();
@@ -686,7 +687,7 @@ function clearAll() {
     document.getElementById('meta').style.display = 'none';
     document.getElementById('page-title').textContent = 'Criteria Tree Editor';
     document.getElementById('search').value = '';
-    ['expand-btn', 'collapse-btn', 'download-menu', 'search', 'clear-btn', 'undo-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = 'none');
+    ['expand-btn', 'collapse-btn', 'download-menu', 'export-diffs-btn', 'search', 'clear-btn', 'undo-btn', 'author-box'].forEach(id => document.getElementById(id).style.display = 'none');
 }
 
 // === Download ===
@@ -730,6 +731,68 @@ function download(mode) {
     a.download = mode === 'clean' ? 'job_template.json' : 'job_template_draft.json';
     a.click();
     URL.revokeObjectURL(a.href);
+}
+
+// === Export diffs ===
+function exportDiffs() {
+    if (!fullJson) return;
+    const pd = getPlanDef(fullJson);
+    if (!pd) return;
+    const diffs = {};
+    function walk(actions, parentId) {
+        for (const a of actions) {
+            const id = a.id;
+            const entry = {};
+            if (a._redline_deleted) {
+                entry.action = 'delete';
+                diffs[id] = entry;
+                continue; // children are implicitly deleted
+            }
+            if (a._redline_added) {
+                entry.action = 'create';
+                entry.parent = parentId || 'root';
+                entry.text = getFhirFieldValue(a, 'text');
+                if (a.selectionBehavior) entry.child_logic = a.selectionBehavior;
+                const title = a.title; if (title && title !== entry.text) entry.title = title;
+                const desc = a.description; if (desc) entry.required_documentation = desc;
+                const src = a.documentation?.[0]?.label; if (src) entry.source = src;
+                const nh = a.condition?.[0]?.expression?.null_hypothesis; if (nh) entry.null_hypothesis = nh;
+                diffs[id] = entry;
+                // recurse into children of added nodes (they're also new)
+                if (a.action?.length) walk(a.action, id);
+                continue;
+            }
+            // existing node: collect edits, comments, selectionBehavior changes
+            if (a._redlines) {
+                for (const [field, info] of Object.entries(a._redlines)) {
+                    if (field === 'selectionBehavior') {
+                        entry.edit_child_logic = {from: info.original || 'none', to: a.selectionBehavior || 'none'};
+                    } else {
+                        if (!entry.edits) entry.edits = {};
+                        entry.edits[field] = {from: info.original, to: getFhirFieldValue(a, field)};
+                    }
+                }
+            }
+            if (a._comments?.length) {
+                entry.comments = a._comments.map(c => c.author + ': ' + c.text);
+            }
+            if (Object.keys(entry).length) diffs[id] = entry;
+            if (a.action?.length) walk(a.action, id);
+        }
+    }
+    walk(pd.action || [], null);
+    if (!Object.keys(diffs).length) { alert('No diffs to export — no edits, comments, or structural changes found.'); return; }
+    const out = JSON.stringify(diffs, null, 2);
+    navigator.clipboard.writeText(out).then(() => {
+        const btn = document.getElementById('export-diffs-btn');
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.background = '#16a34a'; btn.style.color = '#fff'; btn.style.borderColor = '#16a34a';
+        setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 1500);
+    }).catch(() => {
+        // fallback: show in a prompt for manual copy
+        prompt('Copy this diff JSON:', out);
+    });
 }
 
 // === File input + drag-and-drop ===
