@@ -14,3 +14,4 @@
 # *.pkl # allow pickle files
 __pycache__
 assets/.DS_Store
+_static/*
