@@ -189,9 +189,7 @@ For Fight Club, the result looked like this:
 }
 ```
 
-Note that the deep fields aren't really meant for human use. They are primarily meant to help us create good context vectors. We believe that the `what_its_really_about` field is the most important because it makes explicit the specific philosophical ideas that two films might have in common even if they seem to be about a different thing based on the title, plot, year made, and so forth. The `who_loves_it` is useful for grouping films by audience, which is a useful way to organize a library, especially for cases where users might be searching "movies my grandmother would love" or "movies for a date night with a physicist." In a similar manner, the `mood` field is meant to help with cases where people search "movies to watch in the rain" -- but also specific filmmaking styles such as "french new wave" or "soviet montage."
-
-We also generate the cast list in this step, since the TMDb gives an unsorted cast column, and sometimes the full cast list is quite long. For our purposes we only wanted to list the top actors that users might be searching. 
+The deep fields are written for the embedding model, not for humans — they're designed so that two films with shared themes end up as neighbors even if their titles and genres look nothing alike.
 
 **Obtaining per-movie context vectors.** With the enriched per-movie JSONs in hand, we proceeded to concatenate the fields of each json to create a single per-movie string (as shown below) and then convert these strings into vectors with [Voyage AI](https://www.voyageai.com/) (`voyage-3-large`, 512 dimensions). The deep fields dominate the context vectors because they have the most words, but the simpler fields (title, cast, genre) are also present and searchable. Which movies end up as neighbors is mostly driven by the deep fields.
 
@@ -207,7 +205,7 @@ Audience: {who_loves_it}
 
 The full embedding matrix is 80,937 × 512 values, stored as float16 to halve memory (from ~195MB to ~79MB). At runtime, the server loads this matrix into memory once at startup and uses a numpy dot product for search — cosine similarity against the full matrix.
 
-**UMAP dimensionality reduction.** The last step of the data pipeline involves projecting the 512-dimensional context vectors to 2d using the [UMAP](https://umap-learn.readthedocs.io/) (Uniform Manifold Approximation and Projection) algorithm. The result is an approximation of the high-dimensional space that preserves some of the global and local structure while making the overall point cloud viewable in two dimensions.
+**UMAP dimensionality reduction.** The last step of the data pipeline involves projecting the 512-dimensional context vectors to 2D using the [UMAP](https://umap-learn.readthedocs.io/) (Uniform Manifold Approximation and Projection) algorithm. The result is an approximation of the high-dimensional space that preserves some of the global and local structure while making the overall point cloud viewable in two dimensions.
 
 In order to make the UMAP zoomable and interactive, we decided to plot it on a full-viewport dark Mapbox map. Mapbox comes with nice zoom properties, thumbnail support, and it's relatively easy to embed coordinates in links. So we chose to plot our UMAP as if each movie coordinate were literally a position on earth with latitude/longitude coordinates. To this end, we scaled the 2D coordinates to latitude/longitude ranges of -30° to +30° lng and -20° to +20° lat so that Mapbox can render them at a reasonable scale.
 
