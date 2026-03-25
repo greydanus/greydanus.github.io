@@ -225,11 +225,11 @@ Running UMAP on 80,937 × 512 vectors takes less than 10 minutes on a laptop. Af
 
 The whole application — data loading, API endpoints, search, and the entire frontend — is a single Python file of about 930 lines, deployed as a [Tidepool](https://tidepool.sh) pod.
 
-**Notes on the UMAP topography.** As shown in the image above, the lion's share of movies live on a large central landmass of character-driven indie drama and European indie comedy. Bollywood forms its own island to the northwest. Superhero and animation films sit in the south, with Japanese pop culture (anime, tokusatsu, manga adaptations) just below them. Horror and transgressive cinema dominate the west, with action films between them and the center. And floating off to the northeast is a little island of "Holiday Entertainment Mix" movies — whimsy, safe and far from the horror regions.
+## Genre clusters
+
+The lion's share of movies live on a large central landmass of character-driven indie drama and European indie comedy. Bollywood forms its own island to the northwest. Superhero and animation films sit in the south, with Japanese pop culture (anime, tokusatsu, manga adaptations) just below them. Horror and transgressive cinema dominate the west, with action films between them and the center. And floating off to the northeast is a little island of "Holiday Entertainment Mix" movies — whimsy, safe and far from the horror regions.
 
 Of the 80,000+ movies, the majority are dramas of one form or another. There are historical dramas, crime dramas, character studies, and family dramas. The long tail of cinema is not distributed evenly across genres; it is especially rich in character-driven stories. This is partly because dramas are the easiest kind of movie to make (no elaborate sets or special effects required). But another, deeper cause might be that indie filmmakers disproportionately care about families, friendships, and romantic relationships - in short, about our relationships with one another. If you only pay attention to blockbusters and top-1000 movies you might miss this fact.
-
-## Genre clusters
 
 Zooming in reveals structure that no genre taxonomy would predict. Here are four regions that show what the embedding captures.
 
@@ -263,9 +263,7 @@ The Scooby-Doo region is also fun because many people know of one or two Scooby-
 
 The South Asian island in the bottom right corner isn't really an island at all, it's more of an Australia-size continent. It has its own internal structure. There are historical films (*Gautamiputra Satakarni*), Bollywood romances (*Dilwale Dulhania Le Jayenge* etc), and Tamil action films (*Viduthalai: Part I*) each in their own clusters.
 
-## Discovering new films
-
-The map is fairly useful for discovering new movies as well. Consider this example, where we start by zooming in on Terminator and then look at its (less popular) neighbors.
+**Discovering new films.** These clusters show the embedding working at medium zoom. But the map is most useful at close zoom, where you can discover individual films you might never have found otherwise.
 
 <div class="imgcap_noborder img-expand" style="cursor:zoom-in;" onclick="openOverlay('/assets/moviescape/terminator.png')">
   <img src="/assets/moviescape/terminator.png">
@@ -279,13 +277,14 @@ This zoomed-in view is where the embedding really shines. If we just grouped fil
 
 It's important to note that this map is showing you something different from "people who liked movie X also like the set of movies {Y}", which is what many recommender systems do. Rather, it shows "the themes, mood, and ideas of movie X are shared by the set of neighbors {Y}". This is a different and more first-principles way for users to discover new films.
 
+## Landscapes are better than feeds
 
-## AI as chaos, AI as signal
+Most of our information today is consumed as part of endless social media scrolling, search result scrolling, or AI chat scrolling. Scrolling is the opposite of exploring a map. It causes us to over-index on the top few elements of a Pareto distribution while missing the long tail. And while the top few elements can indeed be interesting, over a long timeframe this approach to information consumption will homogenize our information diets and cause the long tail of information -- where truly unique and interesting elements live -- to collapse.
 
-I have long wished that information on the internet -- from movies, to books, to music, to websites, to really any other data modality -- were spatially organized. We humans have strong spatial "software" in the sense that we are better at remembering and manipulating information when it is associated with a specific place. Look into, for example, memory palaces and the [Method of loci](https://en.wikipedia.org/wiki/Method_of_loci). Since this is the case, as much of the information that we consume should be spatial as possible.
+I have long wished that information on the internet -- from movies, to books, to music, to websites, to really any other data modality -- were spatially organized. We humans have strong spatial "software" in the sense that we are better at remembering and manipulating information when it is associated with a specific place. Look into, for example, memory palaces and the [Method of loci](https://en.wikipedia.org/wiki/Method_of_loci). Interfaces like Moviescape lean into this: they let the user examine a corpus from a bird's eye view, organize it spatially, and then zoom into the unique regions that hold the greatest interest and appeal.
 
-This is particularly important in an age when most of our information is consumed as part of endless social media scrolling, search result scrolling, or AI chat scrolling. Scrolling is the opposite of exploring a map. It causes us to over-index on the top few elements of a Pareto distribution while missing the long tail. And while the top few elements can indeed be interesting, over a long timeframe this approach to information consumption will homogenize our information diets and cause the long tail of information -- where truly unique and interesting elements live -- to collapse. The solution to this problem is interfaces like Moviescape, which allow the user to examine all human knowledge from a bird's eye view, organize it spatially, and then zoom into and explore the unique regions that hold the greatest interest and appeal.
+Through spatial layouts like Moviescape we may be able to use AI to bring more signal to the internet rather than less.
 
-It is through spatial layouts like Moviescape that I hope AI will actually bring more signal to the internet rather than less.
+<!-- Borges' library contained every book ever written, but no catalogue. The librarians wandered for lifetimes, finding only gibberish. Moviescape is a small attempt at that missing catalogue — not for books, but for films. And unlike Borges' librarians, we have AI to help us build it. -->
 
 Moviescape is live at [moviescape.site](https://moviescape.site). The code is on [GitHub](https://github.com/greydanus/tidepool/tree/main/moviescape). This project was built with [Tidepool](https://tidepool.sh).
