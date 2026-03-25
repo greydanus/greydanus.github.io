@@ -189,7 +189,7 @@ For Fight Club, the result looked like this:
 }
 ```
 
-The deep fields are written for the embedding model, not for humans — they're designed so that two films with shared themes end up as neighbors even if their titles and genres look nothing alike.
+The deep fields are written for the embedding model, not for humans. They're designed so that two films with shared themes end up as neighbors even if their titles and genres look nothing alike.
 
 **Obtaining per-movie context vectors.** With the enriched per-movie JSONs in hand, we proceeded to concatenate the fields of each json to create a single per-movie string (as shown below) and then convert these strings into vectors with [Voyage AI](https://www.voyageai.com/) (`voyage-3-large`, 512 dimensions). The deep fields dominate the context vectors because they have the most words, but the simpler fields (title, cast, genre) are also present and searchable. Which movies end up as neighbors is mostly driven by the deep fields.
 
