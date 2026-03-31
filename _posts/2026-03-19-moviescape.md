@@ -135,7 +135,7 @@ In Borges' story *The Library of Babel*, the universe is an infinite library con
 
 The internet often feels like exactly that library. It contains more film criticism, reviews, recommendations, and AI-generated slop than anyone could read in a lifetime, and yet I, among others, find it increasingly difficult to find a good new niche movie. Every year, somewhere around 10,000 new feature films are produced, and yet most recommendation algorithms point us towards the same top 5-10 titles. These recommendation algorithms, which promised to help us with variety and personalization, actually seem to be sharpening the power law distribution of "movies people actually watch."
 
-The problem is not information, as we have more of that than ever before, but rather structure. We need a map to orient ourselves. And it needs to be spatial, ideally 2D, and organized in such a way that we can use popular movies and categories to orient ourselves, but we also want to stumble across niche/unusual titles by accident. And we want to stumble across the *right* niche titles given the context, but a string of non-sequitors. The "top 10" lists don't do this. They are based on the taste of movie critics and Hollywood institutions which, at this point, are wildly out of sync with what most people actually enjoy.
+The problem is not information, as we have more of that than ever before, but rather structure. We need a map to orient ourselves. And it needs to be spatial, ideally 2D, and organized in such a way that we can use popular movies and categories to orient ourselves, but we also want to stumble across niche/unusual titles by accident. And we want to stumble across the *right* niche titles given the context, not a string of non-sequiturs. The "top 10" lists don't do this. They are based on the taste of movie critics and Hollywood institutions which, at this point, are wildly out of sync with what most people actually enjoy.
 
 Moviescape is a first attempt at that map. We took 80,000 movies, used AI to characterize their plots, themes and mood, and projected them onto a 2D map that's zoomable, pannable, and searchable. In this post, we will walk through how this was done and how the map itself can be used to explore the world of cinema and pick out interesting films on the "long tail" of content.
 
@@ -267,7 +267,7 @@ Zooming in reveals structure that no genre taxonomy would predict. Here are four
 <div style="margin-bottom:20px;">
   <div class="thecap thecap-sm"  style="text-align:left; display:block; margin-left: auto; margin-right: auto; width:95%">
     <b>Top left:</b> The Scooby-Doo region with dozens of direct-to-video animated mysteries cluster together, from <i>Scooby Goes Hollywood</i> (1979) to <i>Scoob!</i> (2020). Surrounding them are other children's franchise films: <i>The Powerpuff Girls</i>, <i>Doug's 1st Movie</i>, and some Simpsons specials. Many people know of one or two Scooby-Doo movies but have not heard of all the others; a person who likes Scooby-Doo can zoom in on this little region and see how the lesser-known titles relate to the better-known ones.
-    <b>Top right:</b> The Tintin cluster (in spite of spanning decades and different animation styles. Bottom left:</b> The comedy region and <b>bottom right:</b> the martial arts cluster show the embedding working at two different scales. Zoomed out, comedy specials and roasts form a visible region within the broader Performance &amp; Achievement area. Zoomed in, Hong Kong martial arts films cluster tightly within East Asian Cinema. The popup for <i>The Way of the Dragon</i> (1972) shows how Haiku's analysis.
+    <b>Top right:</b> The Tintin cluster — all the Tintin films end up as neighbors in spite of spanning decades and different animation styles. <b>Bottom left:</b> The comedy region and <b>bottom right:</b> the martial arts cluster show the embedding working at two different scales. Zoomed out, comedy specials and roasts form a visible region within the broader Performance &amp; Achievement area. Zoomed in, Hong Kong martial arts films cluster tightly within East Asian Cinema. The popup for <i>The Way of the Dragon</i> (1972) shows Haiku's thematic analysis of Bruce Lee's film.
   </div>
 </div>
 
@@ -297,7 +297,7 @@ Zooming in reveals structure that no genre taxonomy would predict. Here are four
   </div>
 </div>
 
-**Discovering new films.** These clusters show the embedding working at medium zoom. But the map is most useful at close zoom, where you can discover individual films you might never have found otherwise.
+**Discovering new films.** The clusters above show the embedding working at medium zoom. But the map is most useful at close zoom, where you can stumble across individual films you might never have found otherwise.
 
 <div class="imgcap_noborder img-expand" style="cursor:zoom-in;" onclick="openOverlay('/assets/moviescape/terminator.png')">
   <img src="/assets/moviescape/terminator.png">
@@ -307,7 +307,7 @@ Zooming in reveals structure that no genre taxonomy would predict. Here are four
   </div>
 </div>
 
-It's important to note that this map is showing you something different from "people who liked movie X also like the set of movies {Y}", which is what many recommender systems do. Rather, it shows "the themes, mood, and ideas of movie X are shared by the set of neighbors {Y}". This is a different and more first-principles way for a crurious person to discover new films.
+It's important to note that this map is showing you something different from "people who liked movie X also like the set of movies {Y}", which is what many recommender systems do. Rather, it shows "the themes, mood, and ideas of movie X are shared by the set of neighbors {Y}". This is a different and more first-principles way for a curious person to discover new films.
 
 ## Maps are better than feeds
 
