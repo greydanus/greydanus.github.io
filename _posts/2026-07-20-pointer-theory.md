@@ -106,9 +106,9 @@ Quantum mechanics makes powerful predictions about the world, but the theory its
 
 First, it breaks local realism, which is actually a pair of constraints that say "things cannot be two things at once" and "things can only interact with their immediate neighbors". It breaks both of these: regarding realism, it says that states exist in superpositions; regarding locality, it says that wavefunction collapse happens instantaneously across space and time.
 
-Second, it permits large-scale entangled systems, such as a mole of entangled atoms, which require much more information/compute than exists in the entire universe to compute/evolve. These are deep problems with quantum mechanics, and I have always felt that something about the core ansatz must be wrong.[^fn6]
+Second, it permits large-scale entangled systems, such as a mole of entangled atoms, which require much more information/compute than exists in the entire universe to compute/evolve. These are deep problems with quantum mechanics, and I have always felt that something about the core thought experiment must be wrong.[^fn6]
 
-What we might prefer is an ansatz that reveals quantum phenomena to be elegant and even perhaps inevitable properties of the universe. Finding such an ansatz is the purpose of this post.
+What we might prefer is an thought experiment that reveals quantum phenomena to be elegant and even perhaps inevitable properties of the universe. Finding such an thought experiment is the purpose of this post.
 
 ### Deriving Pointer Theory
 
@@ -291,9 +291,9 @@ QM               |M| = 4.000
 
 ### Closing thoughts
 
-This post introduces pointer theory, an alternative to quantum mechanics that is based on an ansatz where we assume the universe is simulated and is subject to massive parallelization, strictly enforced conservation laws, and a limited compute/memory budget. Pointer theory matches empirical quantum mechanics numbers and, unlike Bohmian mechanics or many-worlds, we derived it from some first principles assumptions rather than coming up with it as a post hoc fix.
+This post introduces pointer theory, an alternative explanation for what is going on in quantum mechanics. It is based on a thought experiment where we assume the universe is simulated and subject to 1) massive parallelization 2) strictly enforced conservation laws, and 3) a limited compute/memory budget. Pointer theory predicts known experimental phenomena accurately (it looks just like quantum mechanics in most regimes) but for very high numbers of effective qubits it preducts we may eventually find a soft ceiling.
 
-I find it to be a more elegant ansatz than Copenhagen, Bohmian, many-worlds, and various other existing explanations of quantum mechanics. I am particularly intrigued by the possibility that the physical universe has a maximum bond dimension. This is something that no other ansatz predicts, but it does save us from the theoretical problems associated with allowing entanglement to scale indefinitely.
+I think that this soft ceiling prediction (which, by the way, one or two [other fringe theories](https://books.google.com/books/about/The_Cellular_Automaton_Interpretation_of.html?id=ctlCDwAAQBAJ&source=kp_book_description) have as well) is one of the more interesting results, as it saves us from the theoretical problems associated with allowing entanglement to scale indefinitely.
 
 
 ### Footnotes
@@ -306,6 +306,6 @@ I find it to be a more elegant ansatz than Copenhagen, Bohmian, many-worlds, and
 
 [^fn4]: I encourage the reader to look for other approaches -- and let me know if they find any.
 
-[^fn5]: There are other nonlocal theories of quantum mechanics. The most well known of these is [Bohmian mechanics](https://en.wikipedia.org/wiki/De_Broglie%E2%80%93Bohm_theory). But unlike Bohmian mechanics, Pointer theory says that the mechanics of entanglement live outside of the universe/simulation, there are no "quantum-mechanical forces" or "complex and subtle inner structure" (Bohm and Hiley, _The undivided universe: An ontological interpretation of quantum theory_) to particles, and physical properties such as mass are not delocalized/smeared across vast regions of space (Brown et al 1995 _Bohm particles and their detection in the light of neutron interferometry_). Instead, it uses a simulation ansatz and does its best to balance the triple concerns of 1) strictly enforcing conservation laws 2) simulating everything in a massively parallel manner, and 3) maximizing computational efficiency.
+[^fn5]: There are other nonlocal theories of quantum mechanics. The most well known of these is [Bohmian mechanics](https://en.wikipedia.org/wiki/De_Broglie%E2%80%93Bohm_theory). But unlike Bohmian mechanics, Pointer theory says that the mechanics of entanglement live outside of the universe/simulation, there are no "quantum-mechanical forces" or "complex and subtle inner structure" (Bohm and Hiley, _The undivided universe: An ontological interpretation of quantum theory_) to particles, and physical properties such as mass are not delocalized/smeared across vast regions of space (Brown et al 1995 _Bohm particles and their detection in the light of neutron interferometry_). Instead, it uses a simulation thought experiment and does its best to balance the triple concerns of 1) strictly enforcing conservation laws 2) simulating everything in a massively parallel manner, and 3) maximizing computational efficiency.
 
-[^fn6]: Though if there is a correction needed to the ansatz, that correction cannot change the core empirical predictions of the theory, as these are reliably excellent.
+[^fn6]: Though if there is a correction needed to the thought experiment, that correction cannot change the core empirical predictions of the theory, as these are reliably excellent.
