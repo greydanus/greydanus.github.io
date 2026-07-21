@@ -2,7 +2,7 @@
 layout: post
 comments: true
 title:  "Pointer Theory"
-excerpt: "Entanglement, is just shared mutable state and wavefunction collapse is what happens when we edit that shared state to remove the thing that was measured."
+excerpt: "Entanglement is just shared mutable state and wavefunction collapse is what happens when we edit that shared state to remove the thing that was measured."
 
 date:   2026-07-20 10:00:00
 mathjax: true
@@ -96,7 +96,7 @@ pre {
 }
 </style>
 
-##### _How simulating the universe could give rise to quantum mechanics. A second and better essay on the topic. The first version, written a few years ago, is [here](https://greydanus.github.io/2022/03/27/how-simulating/)._ You can also read this article as a [Colab notebook](https://colab.research.google.com/drive/1W5fjFlEn3g4KDTCoTIIbY7enrq6E4Y3R?usp=sharing).
+##### _This post is about how simulating the universe could give rise to quantum mechanics. My first attempt at this topic, written a few years ago, is [here](https://greydanus.github.io/2022/03/27/how-simulating/)._ You can also read this article as a [Colab notebook](https://colab.research.google.com/drive/1W5fjFlEn3g4KDTCoTIIbY7enrq6E4Y3R?usp=sharing).
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; width:15%; min-width:200px;">
   <img src="/assets/pointer-theory/galaxy.png">
