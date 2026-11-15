@@ -17,29 +17,29 @@ includelink: true
 
 ## About me
 
-I'm a machine learning researcher. I'm the Lead AI Scientist at [Humata Health](https://www.humatahealth.com/) (acquired by [R1](https://www.r1rcm.com/)) and a research collaborator at [General Intuition](https://www.generalintuition.com/). I have worked previously at Google Brain, DARPA's Explainable AI Program, CERN and studied at Dartmouth College. This is my research blog, where I write about ideas that interest me and highlight papers I've written.
+I'm interested in how neural networks learn and generalize: interpretability and the science of deep learning, spatial priors, and AI for science. I wrote [Hamiltonian Neural Networks](../2019/05/15/hamiltonian-nns/) ([2k+](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C13&q=hamiltonian+neural+networks&oq=hamiltonian+neural+) citations; NeurIPS 2019) and co-authored [Lagrangian Neural Networks](../2020/03/10/lagrangian-nns/) (with Miles Cranmer; [1k+](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C13&q=lagrangian+neural+networks&btnG=) citations). I've also worked with Stephan Hoyer on [neural reparameterization for structural optimization](../2019/12/15/neural-reparam/), Chris Olah on [the paths perspective on value learning](https://distill.pub/2019/paths-perspective-on-value-learning/), and Dmitry Kobak on [MNIST-1D](../2020/12/01/scaling-down/) (ICML 2024).
 
-I'm interested in how neural networks learn and generalize: interpretability and the science of deep learning, scaling laws, and AI for science. I wrote [Hamiltonian Neural Networks](../2019/05/15/hamiltonian-nns/) ([2k+](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C13&q=hamiltonian+neural+networks&oq=hamiltonian+neural+) citations; NeurIPS 2019) and co-authored [Lagrangian Neural Networks](../2020/03/10/lagrangian-nns/) (with Miles Cranmer; [1k+](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C13&q=lagrangian+neural+networks&btnG=) citations); both are now widely used. I've also worked with Stephan Hoyer on [neural reparameterization for structural optimization](../2019/12/15/neural-reparam/), Chris Olah on [the paths perspective on value learning](https://distill.pub/2019/paths-perspective-on-value-learning/), and Dmitry Kobak on [MNIST-1D](../2020/12/01/scaling-down/) (ICML 2024).
+Lately I've been studying how transformers reason and generalize on data with 2D structure (think tables, algorithms, and some coding tasks). I'm also training [pen ink models](https://github.com/greydanus/pengpt) that sketch images and write realistic handwriting in any style you wish.
 
-Lately I've been studying how transformers reason and generalize on data with 2D structure (think tables, algorithms, and some coding tasks) and, for fun, training [pen ink models](https://github.com/greydanus/pengpt) that can sketch images and realistic handwriting in any style you wish.
+I'm the Lead AI Scientist at [Humata Health](https://www.humatahealth.com/) (acquired by [R1](https://www.r1rcm.com/)) and a research collaborator at [General Intuition](https://www.generalintuition.com/). Previously I worked at Google Brain, DARPA's Explainable AI Program and CERN, and studied physics at Dartmouth College. This is my research blog, where I write about ideas that interest me and highlight papers I've written.
 
 * 2013 – Physics major, Dartmouth College
 * 2015 – Particle physics intern, CERN
 * 2016 – Software engineering intern, Microsoft
-* 2017 – Co-captain of US team, International Physicist's Tournament
+* 2017 – Co-captain of US team, International Physicists' Tournament
 * 2018 – Google AI Resident, Google Brain San Francisco
 * 2019 – AI Scientist, DARPA Explainable AI Program (Oregon State)
-* 2022 – Lead AI Scientist, [Humata Health](https://www.humatahealth.com/)
-* 2026 - Research collaborator, General Intuition (still at Humata)
+* 2024 – Lead AI Scientist, [Humata Health](https://www.humatahealth.com/)
+* 2026 – Research collaborator, General Intuition (still at Humata)
 
 ## Selected papers
 
-* [Hamiltonian Neural Networks](https://arxiv.org/abs/1906.01563)&nbsp;&nbsp;·&nbsp;&nbsp;Greydanus, Dzamba, Yosinski. NeurIPS 2019.
-* [Lagrangian Neural Networks](https://arxiv.org/abs/2003.04630)&nbsp;&nbsp;·&nbsp;&nbsp;Cranmer, Greydanus, Hoyer, Battaglia, Spergel, Ho. ICLR 2020 Workshop on Integration of Deep Neural Models and Differential Equations.
-* [Visualizing and Understanding Atari Agents](https://arxiv.org/abs/1711.00138)&nbsp;&nbsp;·&nbsp;&nbsp;Greydanus, Koul, Dodge, Fern. ICML 2018.
-* [Scaling Down Deep Learning with MNIST-1D](https://arxiv.org/abs/2011.14439)&nbsp;&nbsp;·&nbsp;&nbsp;Greydanus, Kobak. ICML 2024.
-* [Neural Reparameterization Improves Structural Optimization](https://arxiv.org/abs/1909.04240)&nbsp;&nbsp;·&nbsp;&nbsp;Hoyer, Sohl-Dickstein, Greydanus. NeurIPS 2019 Workshop on Solving Inverse Problems with Deep Networks.
-* [The Paths Perspective on Value Learning](https://distill.pub/2019/paths-perspective-on-value-learning/)&nbsp;&nbsp;·&nbsp;&nbsp;Greydanus, Olah. Distill, 2019.
+* [Hamiltonian Neural Networks](https://arxiv.org/abs/1906.01563). Networks that learn to conserve energy from data (NeurIPS 2019).
+* [Lagrangian Neural Networks](https://arxiv.org/abs/2003.04630). Learns arbitrary Lagrangians without canonical coordinates (ICLR 2020 workshop).
+* [Visualizing and Understanding Atari Agents](https://arxiv.org/abs/1711.00138). Saliency maps that explain deep RL agents (ICML 2018).
+* [Scaling Down Deep Learning with MNIST-1D](https://arxiv.org/abs/2011.14439). A tiny benchmark for the science of deep learning (ICML 2024).
+* [Neural Reparameterization Improves Structural Optimization](https://arxiv.org/abs/1909.04240). Designs parameterized by a neural network come out stronger (NeurIPS 2019 workshop).
+* [The Paths Perspective on Value Learning](https://distill.pub/2019/paths-perspective-on-value-learning/). Why temporal-difference learning works, shown visually (Distill 2019).
 
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; max-width: 300px">
   <div style="width:99%; display: inline-block; vertical-align: top;">
