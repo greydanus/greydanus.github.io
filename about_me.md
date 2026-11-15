@@ -17,9 +17,9 @@ includelink: true
 
 ## About me
 
-I'm interested in how neural networks learn and generalize: interpretability and the science of deep learning, spatial priors, and AI for science. I wrote [Hamiltonian Neural Networks](../2019/05/15/hamiltonian-nns/) ([2k+](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C13&q=hamiltonian+neural+networks&oq=hamiltonian+neural+) citations; NeurIPS 2019) and co-authored [Lagrangian Neural Networks](../2020/03/10/lagrangian-nns/) (with Miles Cranmer; [1k+](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C13&q=lagrangian+neural+networks&btnG=) citations). I've also worked with Stephan Hoyer on [neural reparameterization for structural optimization](../2019/12/15/neural-reparam/), Chris Olah on [the paths perspective on value learning](https://distill.pub/2019/paths-perspective-on-value-learning/), and Dmitry Kobak on [MNIST-1D](../2020/12/01/scaling-down/) (ICML 2024).
+I'm interested in how neural networks learn and generalize: interpretability and the science of deep learning and AI for science. I wrote [Hamiltonian Neural Networks](../2019/05/15/hamiltonian-nns/) ([2k+](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C13&q=hamiltonian+neural+networks&oq=hamiltonian+neural+) citations; NeurIPS 2019) and co-authored [Lagrangian Neural Networks](../2020/03/10/lagrangian-nns/) (with Miles Cranmer). I've also worked with Stephan Hoyer on [neural reparameterization for structural optimization](../2019/12/15/neural-reparam/), Chris Olah on [the paths perspective on value learning](https://distill.pub/2019/paths-perspective-on-value-learning/), and Dmitry Kobak on [MNIST-1D](../2020/12/01/scaling-down/) (ICML 2024).
 
-Lately I've been studying how transformers reason and generalize on data with 2D structure (think tables, algorithms, and some coding tasks). I'm also training [pen ink models](https://github.com/greydanus/pengpt) that sketch images and write realistic handwriting in any style you wish.
+Lately I've been studying how transformers reason and generalize on data with 2D structure (think tables, algorithms, and some coding tasks). I'm also training [pen ink models](https://github.com/greydanus/pengpt) that sketch images and write realistic handwriting in a variety of styles.
 
 I'm the Lead AI Scientist at [Humata Health](https://www.humatahealth.com/) (acquired by [R1](https://www.r1rcm.com/)) and a research collaborator at [General Intuition](https://www.generalintuition.com/). Previously I worked at Google Brain, DARPA's Explainable AI Program and CERN, and studied physics at Dartmouth College. This is my research blog, where I write about ideas that interest me and highlight papers I've written.
 
@@ -30,7 +30,7 @@ I'm the Lead AI Scientist at [Humata Health](https://www.humatahealth.com/) (acq
 * 2018 – Google AI Resident, Google Brain San Francisco
 * 2019 – AI Scientist, DARPA Explainable AI Program (Oregon State)
 * 2024 – Lead AI Scientist, [Humata Health](https://www.humatahealth.com/)
-* 2026 – Research collaborator, General Intuition (still at Humata)
+* 2026 – Research collaborator, [General Intuition](https://www.generalintuition.com/)
 
 ## Selected papers
 
