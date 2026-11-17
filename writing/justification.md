@@ -1,5 +1,6 @@
 ---
 layout: post
+permalink: /justification/
 comments: false
 title:  "Trimmer on Justification"
 excerpt: "It's not just a matter of, is the glass half full or half empty? It really is, what is in the glass? What is actually in the glass?"
