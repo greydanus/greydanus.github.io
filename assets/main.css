@@ -619,3 +619,34 @@ span.colab-span {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
+
+/* Tap or click to enlarge: add class="zoom" to an image in a post. */
+img.zoom { cursor: zoom-in; }
+html.zoom-open { overflow: hidden; }
+.zoom-overlay {
+  display: none;
+  position: fixed;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 9999;
+  padding: 12px;
+  box-sizing: border-box;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+  cursor: zoom-out;
+}
+.zoom-overlay.active { display: flex; }
+.zoom-overlay img {
+  margin: auto;
+  max-width: 96vw;
+  max-height: 94vh;
+  border: 0;
+  padding: 0;
+}
+@media screen and (max-width: 750px) {
+  .zoom-overlay img {
+    width: 260vw;
+    max-width: none;
+    max-height: none;
+  }
+}
