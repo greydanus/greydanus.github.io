@@ -5,12 +5,11 @@
 *.egg-info
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
-*/.jekyll-cache/*
 .pytest_cache
 *.tar
 *.zip
-*.jekyll-cache*
-.jekyll-cache/*
+.jekyll-cache/
+_site/
 # *.pkl # allow pickle files
 __pycache__
 _static/*
