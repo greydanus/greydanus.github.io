@@ -8,30 +8,10 @@ date:   2026-07-20 10:00:00
 mathjax: true
 author: Sam Greydanus
 thumbnail: /assets/pointer-theory/thumbnail.png
+wide: true
 ---
 
 <style>
-.wrap {
-    max-width: 900px;
-}
-p {
-    font-family: sans-serif;
-    font-size: 16.75px;
-    font-weight: 300;
-    overflow-wrap: break-word;
-}
-.post pre,
-.post code {
-    background-color: #fafafa;
-    font-size: 14px;
-}
-pre {
- white-space: pre-wrap;
- white-space: -moz-pre-wrap;
- white-space: -pre-wrap;
- white-space: -o-pre-wrap;
- word-wrap: break-word;
-}
 .img-expand {
     position: relative;
     display: block;

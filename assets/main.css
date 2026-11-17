@@ -595,3 +595,24 @@ span.colab-span {
     background-color: #fff;
     border-color: #ccc;
 }
+
+/* Wide posts: set `wide: true` in a post's front matter.
+   :where() keeps these at the specificity of the bare selectors they replace. */
+:where(.wide) .wrap {
+  max-width: 900px;
+}
+:where(.wide) p {
+  font-family: sans-serif;
+  font-size: 16.75px;
+  font-weight: 300;
+  overflow-wrap: break-word;
+}
+:where(.wide) .post pre,
+:where(.wide) .post code {
+  background-color: #fafafa;
+  font-size: 14px;
+}
+:where(.wide) pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

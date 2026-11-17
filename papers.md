@@ -2,6 +2,7 @@
 layout: page
 title: Interesting papers
 permalink: /papers/
+jquery: true
 ---
 <body onload="start()">
 <p>A fairly random set of papers that I found interesting. Updated weekly. Filter by subject, click for details</p>

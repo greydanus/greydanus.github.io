@@ -7,30 +7,8 @@ date:   2023-03-05 12:00:00
 mathjax: true
 author: Sam Greydanus, Tim Strang, and Isabella Caruso
 thumbnail: /assets/ncf/thumbnail_tutorial.png
+wide: true
 ---
-<style>
-.wrap {
-    max-width: 900px;
-}
-p {
-    font-family: sans-serif;
-    font-size: 16.75px;
-    font-weight: 300;
-    overflow-wrap: break-word; /* allow wrapping of very very long strings, like txids */
-}
-.post pre,
-.post code {
-    background-color: #fafafa;
-    font-size: 14px; /* make code smaller for this post... */
-}
-pre {
- white-space: pre-wrap;       /* css-3 */
- white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
- white-space: -pre-wrap;      /* Opera 4-6 */
- white-space: -o-pre-wrap;    /* Opera 7 */
- word-wrap: break-word;       /* Internet Explorer 5.5+ */
-}
-</style>
 
 <div class="imgcap_noborder" style="display: inline-block; margin-left: auto; margin-right: auto; width:99.9%;margin-bottom: 0px;">
   <div style="width:225px; display: inline-block; vertical-align: top;text-align:center;padding-right:10px;">
