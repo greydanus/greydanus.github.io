@@ -650,3 +650,27 @@ html.zoom-open { overflow: hidden; }
     max-height: none;
   }
 }
+
+/* Results tables (class="ptable") and a lead paragraph under a post title (class="lede"). */
+.ptable {
+  border-collapse: collapse;
+  margin: 0 auto 1em auto;
+  width: 100%;
+  font-family: sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+}
+.ptable th, .ptable td {
+  padding: 4px 10px;
+  text-align: right;
+  border-bottom: 1px solid #eee;
+}
+.ptable th { border-bottom: 1px solid #999; font-weight: 400; }
+.ptable th:first-child, .ptable td:first-child { text-align: left; }
+.ptable tr.base td { font-weight: 500; border-bottom: 2px solid #333; }
+.post p.lede {
+  font-size: 20px;
+  line-height: 1.5;
+  color: #555;
+  margin: 0 0 1.4em 0;
+}
