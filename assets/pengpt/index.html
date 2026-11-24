@@ -31,7 +31,12 @@
   .sheet { background: #fff; border: 1px solid #ccc; border-radius: 4px; }
   #write .sheet { padding: clamp(6px, 2vw, 18px); min-height: 200px; }
   #draw { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(8px, 1.6vw, 16px); }
-  @media (max-width: 640px) { #draw { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) {
+    #draw { grid-template-columns: repeat(2, 1fr); }
+    .controls { gap: 10px 12px; }
+    .slide { flex: 1 0 100%; }
+    .slide input { flex: 1; }
+  }
   #draw .sheet { aspect-ratio: 1; }
   svg { display: block; width: 100%; height: auto; }
   svg path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
@@ -56,7 +61,7 @@
   <div class="controls" data-mode="write">
     <label>hand <select id="hand" aria-label="hand"></select></label>
     <button id="another" type="button">another hand</button>
-    <label>neat <input id="loose" type="range" min="0" max="0.7" step="0.05" value="0" aria-label="how loose the writing is"> loose</label>
+    <label class="slide">neat <input id="loose" type="range" min="0" max="0.7" step="0.05" value="0" aria-label="how loose the writing is"> loose</label>
     <button id="save" type="button">save svg</button>
     <button class="pause" type="button">pause</button>
   </div>
@@ -660,7 +665,7 @@ if (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScop
 if (typeof document !== 'undefined') {
     const $ = id => document.getElementById(id), NS = 'http://www.w3.org/2000/svg', FILE = new URL('pengpt.npz', location.href).href
     const MODES = {
-      write: {files: {model: 'hand'}, text: 'Sing, O goddess, the anger of Achilles son of Peleus, that brought countless ills upon the Achaeans.', ask: 'type something to write',
+      write: {files: {model: 'hand'}, text: 'Sing, O goddess, the anger of Achilles son of Peleus, that brought countless ills upon the Achaeans. Many a brave soul did it send hurrying down to Hades.', ask: 'type something to write',
               about: 'A 6 MB transformer writing by hand, on your device'},
       draw: {files: {model: 'sketch', words: 'words'}, text: 'a penguin wearing a top hat', ask: 'what should it draw?',
              about: 'A 50 MB transformer drawing what you ask, on your device'},
