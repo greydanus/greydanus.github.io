@@ -41,6 +41,18 @@ I'm the Lead AI Scientist at [Humata Health](https://www.humatahealth.com/) (acq
 * [Neural Reparameterization Improves Structural Optimization](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C13&q=neural+reparameterization+structural+optimization). Designs parameterized by a neural network come out stronger (NeurIPS 2019 workshop).
 * [The Paths Perspective on Value Learning](https://distill.pub/2019/paths-perspective-on-value-learning/). Why temporal-difference learning works, shown visually (Distill 2019).
 
+## Older projects
+
+* [Taming wave functions with neural networks](https://quantumfrontiers.com/2017/08/02/taming-wave-functions-with-neural-networks/). My undergraduate [thesis](/files/greydanus-dartmouth-thesis.pdf) with James Whitfield, written up for Caltech's quantum blog (2017).
+* [Higgs electroweak calibration](/cern.html). A semester at CERN simulating what happens to Higgs physics when you leave out the electroweak force (2015).
+* [Machine learning for fMRI](/cosan.html). Comparing searchlight analysis with machine learning decoders, with Luke Chang ([poster](/files/cosan_searchlight_poster.pdf)).
+* [Nearshore physics](/nearshore.html). Tracking internal waves in time-lapse footage of the Columbia River estuary ([AGU 2014 talk](/files/greydanus_holman.pdf)).
+* [Stereograms](https://github.com/greydanus/stereograms). I got so excited about depth perception that I wrote code to make my own, and an article for the Dartmouth Undergraduate Journal of Science.
+* [Fractal tree](https://greydanus.github.io/fractal_tree/index.html) and [friendly Q-learning](https://greydanus.github.io/friendly_qlearning/index.html). Two browser toys: a tree blowing in the wind and agents that learn to get along.
+* [Baby A3C](https://github.com/greydanus/baby-a3c). An Atari agent in 180 lines of PyTorch.
+* I did a Sudoku on a plane and then decided to [solve the general case](https://drive.google.com/file/d/1rcxxweV8VRzVj7nJtADkGmtX1G6hnRIi/view?usp=sharing).
+* My [old academic page](/about.html), kept as it was in 2020. Ask me about raising pigs.
+
 <div class="imgcap_noborder" style="display: block; margin-left: auto; margin-right: auto; max-width: 300px">
   <div style="width:99%; display: inline-block; vertical-align: top;">
     <img src="/assets/justification/scrollwork.jpg" style="width:100%">
