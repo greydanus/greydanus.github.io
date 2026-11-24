@@ -732,7 +732,7 @@ if (typeof document !== 'undefined') {
 
     function frame(now) {
       const waiting = queue.reduce((n, s) => n + s.points.length - s.n, 0), ms = Math.min(now - last, 100)
-      let budget = paused ? 0 : Math.ceil(ms * Math.max(0.25, waiting / 1100))
+      let budget = paused ? 0 : Math.ceil(ms * Math.max(0.19, waiting / 1430))
       last = now
       while (budget > 0 && queue.length) {
         const s = queue[0], take = Math.min(budget, s.points.length - s.n)
