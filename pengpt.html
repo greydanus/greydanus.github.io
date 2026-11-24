@@ -1,0 +1,13 @@
+---
+layout: page
+title: "PenGPT in your browser"
+excerpt: "A small transformer that writes by hand and draws, running entirely on your device."
+thumbnail: /assets/pengpt/thumbnail.png
+wide: true
+---
+
+<p>Both models from <a href="{% post_url 2026-11-12-pengpt %}">the PenGPT post</a>, running on your own device. Nothing you type leaves this page. The handwriting model is 6 MB. Switching to <b>draw</b> downloads a further 76 MB, once.</p>
+
+{% include pengpt.html %}
+
+<p>The page is two files, about 40 KB of HTML and JavaScript and one file of weights, with no libraries and no server. The code is in <a href="https://github.com/greydanus/pengpt/tree/main/web">the repository</a>.</p>
